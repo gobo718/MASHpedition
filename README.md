@@ -1,40 +1,27 @@
-# MASHpedition — Residence Shell 0.0.1
+# MASHpedition Residence — locked geometry build
 
-First clean implementation shell for MASHPEDITION.
+Unversioned structural build based on the Residence geometry reconstructed and approved on 2026-09-02.
 
-This build deliberately uses **current MASHPEDITION concepts only**. It does not import the visual language, limits, progression rules, or game logic of Billy Labs / Emoji Kitchen Explorer.
+Screen 1:
+- Five equal 20% landscape columns.
+- Left 20%: Identity occupies top 80%; profile picture and identity text split that box 50/50 vertically.
+- Bottom 20% of left column: Mailbox, Guestbook, Trick-or-Treat Box, equal side-by-side.
+- Middle 40%: one continuous Microflex Board.
+- Right 40%: upper four Atelier slots, two columns by two rows.
 
-## What this shell establishes
+Screen 2:
+- Middle 40%: continuation of the same Microflex Board.
+- Right 40%: exact duplicate of the first-screen Atelier geometry, completing a continuous 2-column × 4-row Atelier.
+- Left 20%:
+  - top 1/3: Trophy + Prize Machine
+  - next 1/6: COLLECTION
+  - next 1/3: Sticker Machine + Computer
+  - bottom 1/6: GALLERY
 
-- Landscape-first Residence.
-- Standard Residence occupies two landscape screens.
-- Upper geometry:
-  - compact Identity area on the left;
-  - Microflex Board center-left;
-  - Atelier on the right.
-- Atelier contains eight artwork positions in a 2 × 4 arrangement.
-- The upper four align with the Microflex Board region.
-- The lower four continue on the second Residence screen.
-- Gallery, Trophy Room, and Collection occupy the lower-left area and align conceptually with the lower Atelier half.
-- Mailbox, Guestbook, and Trick-or-Treat Box are present as compact Residence objects.
-- All destinations are navigation hooks only. They open explicit placeholders rather than inventing unfinished systems.
-
-## Visual policy
-
-The styling is intentionally new and restrained. It is **not** a recreation of any older mockup. The current goal is to validate geometry, proportions, phone-landscape behavior, and navigation relationships before committing to final MASHPEDITION art direction.
-
-## Run
-
-No build tooling is required. Open `index.html` in a browser.
-
-For local serving:
-
-```bash
-python -m http.server 8080
-```
-
-Then open `http://localhost:8080`.
-
-## Current implementation boundary
-
-This is the Residence shell only. It does not yet implement Gallery organization, Collection exhibits, Trophy systems, Atelier management, Microflex generation, mailbox/guestbook behavior, Blurblets, plaques, FYC, SALON ECLECTIQUE, or the reusable Exhibit room engine.
+Structural verification:
+- Board = exactly 40% width × 200% screen height.
+- Atelier = exactly 40% width × 200% screen height.
+- Every Atelier slot = exactly 20% viewport width × 50% viewport height.
+- Second-screen left menu = exact 2:1:2:1 vertical ratio.
+- Collection and Gallery are the long word-labeled buttons.
+- Trophy, Prize Machine, Sticker Machine, and Computer use symbol buttons.

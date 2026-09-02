@@ -1,119 +1,59 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="theme-color" content="#171717">
-  <title>MASHPEDITION — Residence Shell</title>
-  <link rel="stylesheet" href="styles.css">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>MASHpedition Residence</title>
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <main class="app">
-    <section class="residence" aria-label="MASHPEDITION Residence">
-      <section class="residence-screen upper-screen">
-        <header class="masthead">
-          <div>
-            <div class="wordmark">MASHPEDITION</div>
-            <h1>Residence</h1>
-          </div>
-          <div class="owner-chip">Owner View</div>
-        </header>
+<main class="residence">
 
-        <div class="upper-layout">
-          <section class="panel identity-panel">
-            <div class="identity-top">
-              <div class="avatar" aria-hidden="true">🧩</div>
-              <div>
-                <h2>Player</h2>
-                <p>Current Title</p>
-              </div>
-            </div>
+<section class="identity">
+  <div class="profile-picture"></div>
+  <div class="identity-copy">
+    <div class="player-name">PLAYER NAME</div>
+    <div class="player-title">CURRENT TITLE</div>
+    <div class="player-words">WORDS / STATUS / IDENTITY TEXT</div>
+  </div>
+</section>
 
-            <div class="object-row">
-              <button data-destination="Mailbox"><span>📬</span><b>Mailbox</b></button>
-              <button data-destination="Guestbook"><span>📖</span><b>Guestbook</b></button>
-              <button data-destination="Trick-or-Treat Box"><span>🎃</span><b>Trick-or-Treat</b></button>
-            </div>
-          </section>
+<nav class="quick-actions" aria-label="Quick actions">
+  <button aria-label="Mailbox" title="Mailbox">📬</button>
+  <button aria-label="Guestbook" title="Guestbook">📖</button>
+  <button aria-label="Trick-or-Treat Box" title="Trick-or-Treat Box">🎃</button>
+</nav>
 
-          <section class="panel microflex-panel">
-            <div class="section-head">
-              <div>
-                <small>TODAY</small>
-                <h2>Microflex Board</h2>
-              </div>
-              <span class="pin">📌</span>
-            </div>
-            <p class="microflex-copy">
-              A small brag, odd metric, joke, hint, or bit of personal game history appears here.
-            </p>
-            <div class="event-row">
-              <button class="event-card" data-destination="Event Photo">EVENT</button>
-              <button class="event-card" data-destination="Event Photo">EVENT</button>
-              <button class="event-card" data-destination="Event Photo">EVENT</button>
-            </div>
-          </section>
+<section class="microflex-board">
+  <div class="board-title">MICROFLEX BOARD</div>
+  <div class="board-space"></div>
+  <div class="event-strip"><div></div><div></div><div></div></div>
+</section>
 
-          <section class="panel atelier-panel">
-            <div class="section-head">
-              <div>
-                <small>YOUR TOP 8</small>
-                <h2>Atelier</h2>
-              </div>
-              <button class="manage" data-destination="Atelier Management">Manage</button>
-            </div>
-            <div class="atelier-grid upper-four" id="upper-four"></div>
-          </section>
-        </div>
-      </section>
+<section class="atelier" aria-label="Atelier">
+  <button class="art-slot" aria-label="Artwork 1"></button>
+  <button class="art-slot" aria-label="Artwork 2"></button>
+  <button class="art-slot" aria-label="Artwork 3"></button>
+  <button class="art-slot" aria-label="Artwork 4"></button>
+  <button class="art-slot" aria-label="Artwork 5"></button>
+  <button class="art-slot" aria-label="Artwork 6"></button>
+  <button class="art-slot" aria-label="Artwork 7"></button>
+  <button class="art-slot" aria-label="Artwork 8"></button>
+</section>
 
-      <section class="residence-screen lower-screen">
-        <section class="lower-left">
-          <div class="lower-copy">
-            <small>RESIDENCE</small>
-            <h2>Your spaces</h2>
-            <p>The lower half keeps the three major destinations aligned with the lower four Atelier pieces.</p>
-          </div>
+<nav class="second-screen-menu" aria-label="Residence destinations">
+  <div class="icon-pair">
+    <button aria-label="Trophy Room" title="Trophy Room">🏆</button>
+    <button aria-label="Prize Machine" title="Prize Machine">🎁</button>
+  </div>
+  <button class="word-button">COLLECTION</button>
+  <div class="icon-pair">
+    <button aria-label="Sticker Machine" title="Sticker Machine">🏷️</button>
+    <button aria-label="Computer" title="Computer">💻</button>
+  </div>
+  <button class="word-button">GALLERY</button>
+</nav>
 
-          <nav class="destination-grid" aria-label="Residence destinations">
-            <button class="destination" data-destination="Gallery">
-              <span>🖼️</span>
-              <div><b>Gallery</b><small>Your art</small></div>
-            </button>
-            <button class="destination" data-destination="Trophy Room">
-              <span>🏆</span>
-              <div><b>Trophy Room</b><small>Achievements</small></div>
-            </button>
-            <button class="destination" data-destination="Collection">
-              <span>🧳</span>
-              <div><b>Collection</b><small>Art you chose to collect</small></div>
-            </button>
-          </nav>
-        </section>
-
-        <section class="panel lower-atelier-panel">
-          <div class="section-head">
-            <div>
-              <small>ATELIER</small>
-              <h2>Lower Four</h2>
-            </div>
-          </div>
-          <div class="atelier-grid lower-four" id="lower-four"></div>
-        </section>
-      </section>
-    </section>
-  </main>
-
-  <dialog id="placeholder-dialog">
-    <form method="dialog">
-      <button class="dialog-x" value="close" aria-label="Close">×</button>
-      <small>SHELL PLACEHOLDER</small>
-      <h2 id="dialog-title">Destination</h2>
-      <p>This shell only establishes Residence geometry and navigation hooks. The destination is not being invented here.</p>
-      <button class="return-button" value="close">Return to Residence</button>
-    </form>
-  </dialog>
-
-  <script src="app.js"></script>
+</main>
 </body>
 </html>
