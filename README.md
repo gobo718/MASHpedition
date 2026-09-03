@@ -1,27 +1,21 @@
-# MASHpedition Residence — locked geometry build
+# MASHpedition Combined Museum + Residence Shell
 
-Unversioned structural build based on the Residence geometry reconstructed and approved on 2026-09-02.
+This package preserves both approved structural shells in one deployable site.
 
-Screen 1:
-- Five equal 20% landscape columns.
-- Left 20%: Identity occupies top 80%; profile picture and identity text split that box 50/50 vertically.
-- Bottom 20% of left column: Mailbox, Guestbook, Trick-or-Treat Box, equal side-by-side.
-- Middle 40%: one continuous Microflex Board.
-- Right 40%: upper four Atelier slots, two columns by two rows.
+Site flow:
+- `/index.html` = Museum Hub.
+- `/residence/` = Residence.
+- The Residence cell on the Museum Hub opens `/residence/`.
+- The small MUSEUM return control on the Residence returns to `/`.
 
-Screen 2:
-- Middle 40%: continuation of the same Microflex Board.
-- Right 40%: exact duplicate of the first-screen Atelier geometry, completing a continuous 2-column × 4-row Atelier.
-- Left 20%:
-  - top 1/3: Trophy + Prize Machine
-  - next 1/6: COLLECTION
-  - next 1/3: Sticker Machine + Computer
-  - bottom 1/6: GALLERY
+No Residence proportions or existing Residence cells were changed.
+No Museum Hub proportions were changed.
 
-Structural verification:
-- Board = exactly 40% width × 200% screen height.
-- Atelier = exactly 40% width × 200% screen height.
-- Every Atelier slot = exactly 20% viewport width × 50% viewport height.
-- Second-screen left menu = exact 2:1:2:1 vertical ratio.
-- Collection and Gallery are the long word-labeled buttons.
-- Trophy, Prize Machine, Sticker Machine, and Computer use symbol buttons.
+Museum Hub geometry:
+- Top 1/6: Catacombs 1/6 | Residence 2/3 | Catacombs 1/6.
+- Middle 2/3: equal 2x2 — Grand Exhibition Halls | SALON ECLECTIQUE / Studio | Lab.
+- Bottom 1/6: Information Desk 25% | FYC 50% | Gift Shop 12.5% | Control Room 12.5%.
+
+Residence:
+- Uses the approved locked Residence shell as supplied.
+- Only addition is a minimal fixed MUSEUM return control; it overlays the page rather than changing the approved grid geometry.
