@@ -1,0 +1,108 @@
+*{box-sizing:border-box}
+:root{--line:#5f5f5f;--surface:#f4f4f4;--panel:#fff}
+html,body{margin:0;min-width:100%;background:var(--surface);color:#111;font-family:Arial,sans-serif}
+button{font:inherit;color:inherit;background:var(--panel);border:1px solid var(--line);border-radius:0}
+.residence{
+  width:100%;
+  height:200dvh;
+  display:grid;
+  grid-template-columns:repeat(5,20%);
+  grid-template-rows:repeat(10,20dvh);
+  overflow:hidden
+}
+
+/* Screen 1, left 20% */
+.identity{
+  grid-column:1;
+  grid-row:1/span 4;
+  display:grid;
+  grid-template-rows:1fr 1fr;
+  border:1px solid var(--line);
+  background:var(--panel);
+  min-width:0;min-height:0
+}
+.profile-picture{
+  min-width:0;min-height:0;
+  border-bottom:1px solid var(--line);
+  background:
+    linear-gradient(135deg,transparent 49.5%,var(--line) 50%,transparent 50.5%),
+    linear-gradient(45deg,transparent 49.5%,var(--line) 50%,transparent 50.5%)
+}
+.identity-copy{
+  min-width:0;min-height:0;
+  padding:6%;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+  justify-content:center
+}
+.player-name{font-weight:700}
+.player-title,.player-words{margin-top:.35em;font-size:.78em}
+
+.quick-actions{
+  grid-column:1;
+  grid-row:5;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  min-width:0;min-height:0
+}
+.quick-actions button{min-width:0;min-height:0;font-size:clamp(20px,3.8vw,46px)}
+
+/* Middle 40%, one continuous board across both screens */
+.microflex-board{
+  grid-column:2/span 2;
+  grid-row:1/span 10;
+  border:1px solid var(--line);
+  background:var(--panel);
+  min-width:0;min-height:0;
+  display:grid;
+  grid-template-rows:auto 1fr auto;
+  overflow:hidden
+}
+.board-title{padding:8px;font-weight:700;font-size:.82em;letter-spacing:.04em}
+.board-space{min-height:0}
+.event-strip{padding:8px;display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.event-strip div{aspect-ratio:1;border:1px solid var(--line);background:var(--surface)}
+
+/* Right 40%, continuous 2 x 4 Atelier */
+.atelier{
+  grid-column:4/span 2;
+  grid-row:1/span 10;
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  grid-template-rows:repeat(4,50dvh);
+  min-width:0;min-height:0
+}
+.art-slot{width:100%;height:100%;min-width:0;min-height:0}
+
+/* Screen 2, left 20% */
+.second-screen-menu{
+  grid-column:1;
+  grid-row:6/span 5;
+  display:grid;
+  grid-template-rows:2fr 1fr 2fr 1fr;
+  min-width:0;min-height:0
+}
+.icon-pair{display:grid;grid-template-columns:repeat(2,1fr);min-width:0;min-height:0}
+.icon-pair button{min-width:0;min-height:0;font-size:clamp(22px,4vw,48px)}
+.word-button{min-width:0;min-height:0;font-weight:700;letter-spacing:.04em}
+
+@media (orientation:portrait){
+  body{overflow-x:auto}
+  .residence{min-width:900px}
+}
+
+/* Temporary navigation overlay only; does not consume Residence layout space. */
+.museum-exit{
+  position:fixed;
+  top:4px;
+  left:4px;
+  z-index:1000;
+  padding:4px 7px;
+  border:1px solid currentColor;
+  background:#fff;
+  color:#111;
+  font:700 11px Arial,sans-serif;
+  line-height:1;
+  text-decoration:none
+}

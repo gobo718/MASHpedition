@@ -1,21 +1,28 @@
-# MASHpedition Combined Museum + Residence Shell
+# MASHpedition Flat Museum + Residence Shell
 
-This package preserves both approved structural shells in one deployable site.
+All deployable files are at repository root.
 
-Site flow:
-- `/index.html` = Museum Hub.
-- `/residence/` = Residence.
-- The Residence cell on the Museum Hub opens `/residence/`.
-- The small MUSEUM return control on the Residence returns to `/`.
+- index.html = Museum Hub
+- styles.css = Museum Hub styles
+- residence.html = approved Residence shell
+- residence.css = Residence styles
+- README.md = this file
 
-No Residence proportions or existing Residence cells were changed.
-No Museum Hub proportions were changed.
+No app.js is included because the current root app.js is stale and references elements that are not present in the approved Residence shell.
+
+Navigation:
+- Museum Hub RESIDENCE -> residence.html
+- Residence temporary MUSEUM overlay -> index.html
 
 Museum Hub geometry:
-- Top 1/6: Catacombs 1/6 | Residence 2/3 | Catacombs 1/6.
-- Middle 2/3: equal 2x2 — Grand Exhibition Halls | SALON ECLECTIQUE / Studio | Lab.
-- Bottom 1/6: Information Desk 25% | FYC 50% | Gift Shop 12.5% | Control Room 12.5%.
+- Top band: Catacombs 1/6 | Residence 2/3 | Catacombs 1/6
+- Middle 2/3: equal 2x2 grid
+  - Grand Exhibition Halls | SALON ECLECTIQUE
+  - Studio | Lab
+- Bottom 1/6:
+  - Information Desk 25%
+  - For Your Consideration 50%
+  - Gift Shop 12.5%
+  - Control Room 12.5%
 
-Residence:
-- Uses the approved locked Residence shell as supplied.
-- Only addition is a minimal fixed MUSEUM return control; it overlays the page rather than changing the approved grid geometry.
+Residence geometry is otherwise unchanged from the approved live Residence shell.
