@@ -391,3 +391,28 @@ The WALL surface itself is unchanged:
 - existing corner geometry remains untouched
 
 THUMBNAIL and artwork detail remain available independently.
+
+---
+
+# Exhibit room views — v13 artwork-position renumbering
+
+This release applies the approved artwork shift without moving either door or
+changing any approved geometry.
+
+Physical-position mapping:
+- former ART 22 position -> ART 1
+- former ART 1 position -> ART 2
+- former ART 2 position -> ART 3
+- continuing the same way through former ART 21 -> ART 22
+
+Door positions are intentionally unchanged:
+- Door 1 remains physically between ART 22 and ART 1.
+- Door 2 remains physically between ART 8 and ART 9.
+
+Current prototype surfaces therefore show:
+- Left corner: ART 1 | divider | ART 2, ART 3
+- Straight wall: ART 2, ART 3, ART 4
+- Right-corner geometry: the same physical mirrored slots, now labeled ART 3,
+  ART 2, and peripheral ART 1.
+
+No CSS geometry values were changed.
