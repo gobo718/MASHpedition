@@ -10,34 +10,38 @@
 <a class="museum-exit" href="index.html" aria-label="Return to Museum">MUSEUM</a>
 <main class="laboratory">
 
-  <section class="lab-inputs" aria-label="Mutosis inputs">
+  <section class="lab-left" aria-label="Laboratory inputs and equipment">
     <div class="lab-heading">LABORATORY</div>
 
-    <div class="emoji-pair" aria-label="Emoji inputs">
-      <button class="emoji-input" type="button" aria-label="Select Emoji A">
-        <span class="emoji-slot">A</span>
-        <span class="input-label">EMOJI A</span>
-      </button>
-      <div class="plus" aria-hidden="true">+</div>
-      <button class="emoji-input" type="button" aria-label="Select Emoji B">
-        <span class="emoji-slot">B</span>
-        <span class="input-label">EMOJI B</span>
-      </button>
-    </div>
-
-    <div class="input-tools" aria-label="Mutosis guidance">
-      <button type="button">FIELDS</button>
-      <button type="button">KEYWORDS</button>
-    </div>
-
-    <section class="machine-controls" aria-label="Machine controls">
-      <div class="section-label">MACHINE CONTROLS</div>
-      <div class="weight-controls" aria-label="Weighting controls">
-        <button type="button">LEFT</button>
-        <button type="button">CENTER</button>
-        <button type="button">RIGHT</button>
+    <section class="input-zone" aria-label="Mutosis inputs">
+      <div class="emoji-pair" aria-label="Emoji inputs">
+        <button class="emoji-input" type="button" aria-label="Select Emoji A">
+          <span class="emoji-slot">A</span>
+          <span class="input-label">EMOJI A</span>
+        </button>
+        <div class="plus" aria-hidden="true">+</div>
+        <button class="emoji-input" type="button" aria-label="Select Emoji B">
+          <span class="emoji-slot">B</span>
+          <span class="input-label">EMOJI B</span>
+        </button>
       </div>
-      <div class="control-bay" aria-label="Additional unlocked machine controls"></div>
+
+      <div class="input-tools" aria-label="Laboratory tools">
+        <button type="button">FIELDS</button>
+        <button type="button">KEYWORDS</button>
+        <button type="button" class="mosaics-button">MOSAICS</button>
+      </div>
+    </section>
+
+    <section class="agglomerator" aria-label="Chimeric Agglomerator">
+      <div class="equipment-heading">CHIMERIC AGGLOMERATOR</div>
+      <div class="agglomerator-body" aria-hidden="true">
+        <div class="agglomerator-vessel">
+          <div class="gem-placeholder">GEM</div>
+        </div>
+        <div class="agglomerator-pipe pipe-left"></div>
+        <div class="agglomerator-pipe pipe-right"></div>
+      </div>
     </section>
   </section>
 
@@ -59,33 +63,6 @@
       <button type="button">REVIEW DRAFTS</button>
     </div>
   </section>
-
-  <aside class="mosaic-tracker" aria-label="Mosaic Tracker">
-    <div class="tracker-heading">MOSAIC TRACKER</div>
-    <div class="tracker-note">UNFINISHED UNLOCKED MOSAICS</div>
-
-    <button class="mosaic-row" type="button" aria-label="Mosaic with subject and all clues known">
-      <span class="mosaic-subject">SUBJECT KNOWN</span>
-      <span class="mosaic-clues"><b>✓</b><b>?</b><b>?</b><b>?</b></span>
-    </button>
-
-    <button class="mosaic-row" type="button" aria-label="Mosaic with subject known and only some clues known">
-      <span class="mosaic-subject">SUBJECT KNOWN</span>
-      <span class="mosaic-clues"><b>✓</b><b>?</b><i>HIDDEN</i><i>HIDDEN</i></span>
-    </button>
-
-    <button class="mosaic-row" type="button" aria-label="Mosaic with subject hidden and partial clues known">
-      <span class="mosaic-subject unknown">SUBJECT ???</span>
-      <span class="mosaic-clues"><b>✓</b><b>?</b><i>HIDDEN</i><i>HIDDEN</i></span>
-    </button>
-
-    <button class="mosaic-row" type="button" aria-label="Mosaic with all details hidden">
-      <span class="mosaic-subject unknown">SUBJECT ???</span>
-      <span class="mosaic-clues"><i>HIDDEN</i><i>HIDDEN</i><i>HIDDEN</i><i>HIDDEN</i></span>
-    </button>
-
-    <div class="tracker-rule">ONLY REVEALED INFORMATION APPEARS HERE</div>
-  </aside>
 
 </main>
 </body>

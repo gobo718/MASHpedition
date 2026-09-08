@@ -115,42 +115,42 @@ Exact shell proportions above are intentional and should be preserved unless exp
 
 # Laboratory Shell — Added 2026-09-07
 
-The Museum Hub **Lab** destination now opens `lab.html`.
+The Museum Hub **Lab** destination opens `lab.html`.
 
 This is a structural playground shell, not a final visual-design lock. It translates established Laboratory mechanics into a usable page without inventing progression timing.
 
-Current Laboratory shell regions:
+## Current Laboratory shell
 
-- **Left 30% — Mutosis inputs and controls**
+- **Left 34% — inputs, quick tools, and Chimeric Agglomerator**
   - Emoji A
   - Emoji B
   - Fields
   - Keywords
-  - basic Left / Center / Right weighting controls
-  - reserved physical control bay for later/unlocked machine controls
-- **Center 45% — Mutosis Machine**
+  - **Mosaics** button
+  - **Chimeric Agglomerator** — canonical name for the Gem-making Laboratory apparatus
+- **Right 66% — Mutosis Machine**
   - physical machine/result area
   - Activate Mutosis
   - Save
   - Discard / Retry
   - Submit
   - Review Drafts
-- **Right 25% — Mosaic Tracker**
-  - fast view of unlocked unfinished Mosaics
-  - supports known or hidden subject state
-  - supports all, some, or none of the missing requirements being revealed
-  - must never expose information the player has not actually learned
 
-The Mosaic Tracker is an information-state display, not a guaranteed recipe/checklist. The placeholder rows intentionally demonstrate the four visibility patterns without establishing actual Mosaic content.
+## Corrections made after the first Lab shell
 
-Files added:
+- The Mosaic Tracker is **not** a permanent section of the Laboratory interface. Mosaics may be far too numerous for that treatment. The Lab exposes a **MOSAICS button** that will open the dedicated Mosaic tracking/browsing surface.
+- The earlier permanent **Left / Center / Right** machine-control block was an incorrect interpretation of an older weighting note and has been removed.
+- The Gem-making apparatus is present under its official name: **Chimeric Agglomerator**.
+- The Chimeric Agglomerator is represented structurally only. This shell does **not** invent its final controls, progression behavior, or visual treatment.
+
+Files:
 
 - `lab.html` — Laboratory structural shell
 - `lab.css` — Laboratory shell geometry
 
-Navigation change:
+Navigation:
 
-- Museum Hub **LAB** now links to `lab.html`.
+- Museum Hub **LAB** links to `lab.html`.
 - Laboratory uses the same temporary fixed **MUSEUM** return control as the Residence.
 
-No Residence geometry was changed. No progression order, Gem unlock timing, Mosaic content, art style, or final Laboratory visual treatment is established by this shell.
+No Residence geometry was changed. No progression order, Gem unlock timing, Mosaic content, final art style, or final Laboratory visual treatment is established by this shell.
