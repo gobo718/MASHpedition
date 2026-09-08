@@ -156,3 +156,9 @@ The Laboratory is a structural playground shell. Its current geometry follows Bi
 - The shell does not invent controls for the Chimeric Agglomerator beyond the meter specified above.
 - Residence files remain unchanged.
 - Story progression, unlock timing, final art treatment, and responsive refinements are not locked by this shell.
+
+## Laboratory viewport correction — 2026-09-08
+
+- Restored the Laboratory outer canvas sizing behavior from the preceding Lab shell: `100vw × 100dvh` in landscape, with no forced 1000px minimum width or 560px minimum height.
+- The measured 20% / 50% / 10% / 20% internal Laboratory geometry is unchanged.
+- The 1000px minimum remains portrait-only, matching the earlier shell behavior.

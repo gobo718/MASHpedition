@@ -18,16 +18,14 @@ html,
 body {
   margin: 0;
   width: 100%;
-  min-width: 1000px;
   height: 100%;
-  min-height: 100dvh;
   background: var(--paper);
   color: var(--ink);
   font-family: Arial, Helvetica, sans-serif;
 }
 
 body {
-  overflow: auto hidden;
+  overflow: hidden;
 }
 
 button,
@@ -51,9 +49,7 @@ a:active {
   display: grid;
   grid-template-columns: 20% 50% 10% 20%;
   width: 100vw;
-  min-width: 1000px;
   height: 100dvh;
-  min-height: 560px;
   overflow: hidden;
   background: var(--paper);
 }
@@ -355,6 +351,6 @@ a:active {
   }
 
   .laboratory {
-    width: 1000px;
+    min-width: 1000px;
   }
 }
