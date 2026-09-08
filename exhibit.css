@@ -1,0 +1,237 @@
+:root{
+  color-scheme:light;
+  --ink:#191919;
+  --paper:#e9e3d8;
+  --wall:#f4f0e8;
+  --wall-side:#ded6c9;
+  --floor:#c9bead;
+  --line:#4a4741;
+  --control:#f7f4ed;
+  --frame:#39352f;
+  --art:#b9aa93;
+}
+*{box-sizing:border-box}
+html,body{
+  margin:0;
+  width:100%;
+  height:100%;
+  overflow:hidden;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:Arial,Helvetica,sans-serif;
+}
+button,a{font:inherit;color:inherit}
+button{border-radius:0}
+.exhibit-shell{
+  position:relative;
+  width:100vw;
+  height:100dvh;
+  overflow:hidden;
+  background:var(--paper);
+}
+.room-stage{
+  position:absolute;
+  inset:0;
+  overflow:hidden;
+  perspective:1200px;
+  background:linear-gradient(#ece7df 0 68%,#cfc5b5 68% 100%);
+}
+.museum-room{
+  position:absolute;
+  inset:0;
+  transform-style:preserve-3d;
+  transform-origin:50% 55%;
+  transition:transform .7s cubic-bezier(.2,.7,.2,1);
+}
+.room-ceiling{
+  position:absolute;
+  left:18%; right:18%; top:-8%; height:35%;
+  background:#f8f5ef;
+  clip-path:polygon(20% 100%,80% 100%,100% 0,0 0);
+  border-bottom:1px solid var(--line);
+}
+.room-floor{
+  position:absolute;
+  left:14%; right:14%; bottom:-8%; height:43%;
+  background:var(--floor);
+  clip-path:polygon(0 0,100% 0,82% 100%,18% 100%);
+  border-top:1px solid var(--line);
+}
+.wall{
+  position:absolute;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:3%;
+  border:1px solid var(--line);
+  background:var(--wall);
+  transform-style:preserve-3d;
+}
+.wall-front{
+  left:22%; top:18%; width:56%; height:53%;
+  z-index:2;
+}
+.wall-left{
+  left:-3%; top:18%; width:29%; height:53%;
+  transform-origin:right center;
+  transform:skewY(5deg);
+  background:var(--wall-side);
+  z-index:1;
+  gap:4%;
+  padding:0 4%;
+}
+.wall-right{
+  right:-3%; top:18%; width:29%; height:53%;
+  transform-origin:left center;
+  transform:skewY(-5deg);
+  background:var(--wall-side);
+  z-index:1;
+  gap:4%;
+  padding:0 4%;
+}
+.art,.wall-art{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border:clamp(3px,.55vw,8px) solid var(--frame);
+  background:var(--art);
+  color:#201d19;
+  font-weight:800;
+  letter-spacing:.05em;
+  box-shadow:0 .5vw 1vw rgba(0,0,0,.15);
+}
+.wall-left .art,.wall-right .art{
+  width:27%;
+  height:38%;
+  font-size:clamp(8px,.8vw,13px);
+}
+.wall-front .art{width:28%;height:58%;font-size:clamp(11px,1.4vw,20px)}
+.exhibit-shell[data-view="door"] .museum-room{transform:translate3d(0,0,0) scale(1)}
+.exhibit-shell[data-view="left"] .museum-room{transform:translate3d(19%,0,0) scale(1.22)}
+.exhibit-shell[data-view="right"] .museum-room{transform:translate3d(-19%,0,0) scale(1.22)}
+.exhibit-shell[data-view="left"] .wall-left,
+.exhibit-shell[data-view="right"] .wall-right{z-index:4;background:#f0ebe2}
+.wall-view,.artwork-view,.thumbnail-view{
+  position:absolute;
+  inset:0;
+  display:none;
+  background:var(--paper);
+  z-index:6;
+}
+.exhibit-shell[data-view="wall"] .wall-view,
+.exhibit-shell[data-view="zoom"] .artwork-view,
+.exhibit-shell[data-view="thumbnail"] .thumbnail-view{display:block}
+.flat-wall{
+  position:absolute;
+  inset:7% 8% 15%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border:1px solid var(--line);
+  background:var(--wall);
+}
+.wall-art{
+  width:min(42vw,54vh);
+  height:min(58vh,58vw);
+  max-width:62%;
+  max-height:78%;
+  font-size:clamp(16px,2.4vw,34px);
+}
+.artwork-view{
+  padding:5% 8% 13%;
+}
+.artwork-large{
+  position:absolute;
+  left:7%; top:7%; bottom:16%; width:58%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border:clamp(4px,.7vw,10px) solid var(--frame);
+  background:var(--art);
+  font-size:clamp(18px,3vw,42px);
+  font-weight:800;
+}
+.artwork-depth{
+  position:absolute;
+  left:68%; right:5%; top:7%; height:11%;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+}
+.artwork-depth button,.exhibit-controls button,.thumbnail-grid button{
+  min-width:0;
+  min-height:0;
+  border:1px solid var(--line);
+  background:var(--control);
+  font-weight:800;
+  letter-spacing:.035em;
+}
+.depth-panel{
+  position:absolute;
+  left:68%; right:5%; top:18%; bottom:16%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:4%;
+  border:1px solid var(--line);
+  background:#f5f1e9;
+  font-size:clamp(12px,1.5vw,22px);
+  font-weight:700;
+  text-align:center;
+}
+.thumbnail-grid{
+  position:absolute;
+  inset:9% 8% 15%;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  grid-template-rows:repeat(2,1fr);
+  gap:2%;
+}
+.thumbnail-grid button{background:var(--art);border:clamp(3px,.45vw,7px) solid var(--frame);font-size:clamp(11px,1.5vw,22px)}
+.view-label{
+  position:absolute;
+  top:2.2%;
+  left:50%;
+  transform:translateX(-50%);
+  z-index:10;
+  padding:.3em .65em;
+  border:1px solid rgba(74,71,65,.6);
+  background:rgba(247,244,237,.84);
+  font-size:clamp(9px,.9vw,13px);
+  font-weight:800;
+  letter-spacing:.08em;
+  pointer-events:none;
+}
+.exhibit-controls{
+  position:absolute;
+  z-index:12;
+  left:0;
+  right:0;
+  bottom:0;
+  height:11%;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+}
+.exhibit-controls button{font-size:clamp(11px,1.3vw,20px)}
+.museum-return{
+  position:absolute;
+  z-index:15;
+  right:6px;
+  top:6px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:.38em .65em;
+  border:1px solid var(--line);
+  background:rgba(247,244,237,.92);
+  text-decoration:none;
+  font-weight:800;
+  font-size:clamp(9px,.9vw,13px);
+  letter-spacing:.05em;
+}
+@media (orientation:portrait){
+  body{overflow-x:auto}
+  .exhibit-shell{min-width:900px}
+}
+@media (prefers-reduced-motion:reduce){
+  .museum-room{transition:none}
+}

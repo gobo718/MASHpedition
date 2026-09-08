@@ -219,3 +219,40 @@ The Museum Hub remains:
 - Atrium band: **1/6 = 16.6667% height**
 
 No Lab or Residence geometry was changed while adding the Studio shell.
+
+---
+
+# Exhibit View Shell — Added 2026-09-08
+
+A first functional exhibit-navigation shell is now linked from **GRAND EXHIBITION HALLS**.
+
+This shell implements the recovered exhibit-view behavior without treating the separate scrolling-wall overlay as the same system.
+
+## Spatial exhibit views
+
+- **Door / Room View** — the default full-room entrance view.
+- **Left Corner View** — camera shifts toward the left side/corner and presents the left three-art grouping.
+- **Right Corner View** — corresponding right-side/corner three-art grouping.
+- **Wall View** — selecting an artwork squares the view flat to that artwork/wall rather than leaving it in room perspective.
+- **Artwork View** — selecting the artwork from Wall View moves into the artwork itself.
+- Artwork depth exposes structural placeholders for **Image Detail**, **Description Plaque**, and **Blurblets**.
+- **Thumbnail View** — a non-spatial quick selector for the exhibit's artworks.
+
+## Persistent exhibit controls
+
+The recovered persistent controls are present at the bottom of the exhibit surface:
+
+- `LEFT`
+- `RIGHT`
+- `THUMBNAIL`
+- `DOOR`
+
+In Room/Corner views, Left and Right move the camera to the corresponding corner. In Wall/Artwork depth, Left and Right move among artworks while staying in the exhibit viewing system.
+
+## Structural limits
+
+- Artwork boxes are placeholders only. No exhibit art style, wall decoration, room theme, exact architectural dimensions, or final animation timing is locked by this shell.
+- The perspective geometry is a functional prototype for the previously established discrete camera positions. It is not a claim that exact room measurements were recovered from the historical record.
+- **Mosaics remain a separate presentation system.**
+- The reusable left-to-right scrolling-wall overlay used by SALON ECLECTIQUE and other temporary/ranked sets remains a separate view family: centered artwork, partial neighboring artworks at the sides, and downward scroll to plaque then Blurblets.
+- The small `MUSEUM` control remains temporary prototype navigation and does not reserve exhibit geometry.
