@@ -7,60 +7,102 @@
 <link rel="stylesheet" href="lab.css">
 </head>
 <body>
-<a class="museum-exit" href="index.html" aria-label="Return to Museum">MUSEUM</a>
-<main class="laboratory">
+<main class="laboratory" aria-label="Laboratory">
 
-  <section class="lab-left" aria-label="Laboratory inputs and equipment">
-    <div class="lab-heading">LABORATORY</div>
-
-    <section class="input-zone" aria-label="Mutosis inputs">
-      <div class="emoji-pair" aria-label="Emoji inputs">
-        <button class="emoji-input" type="button" aria-label="Select Emoji A">
-          <span class="emoji-slot">A</span>
-          <span class="input-label">EMOJI A</span>
-        </button>
-        <div class="plus" aria-hidden="true">+</div>
-        <button class="emoji-input" type="button" aria-label="Select Emoji B">
-          <span class="emoji-slot">B</span>
-          <span class="input-label">EMOJI B</span>
-        </button>
-      </div>
-
-      <div class="input-tools" aria-label="Laboratory tools">
-        <button type="button">FIELDS</button>
-        <button type="button">KEYWORDS</button>
-        <button type="button" class="mosaics-button">MOSAICS</button>
-      </div>
-    </section>
-
-    <section class="agglomerator" aria-label="Chimeric Agglomerator">
-      <div class="equipment-heading">CHIMERIC AGGLOMERATOR</div>
-      <div class="agglomerator-body" aria-hidden="true">
-        <div class="agglomerator-vessel">
-          <div class="gem-placeholder">GEM</div>
-        </div>
-        <div class="agglomerator-pipe pipe-left"></div>
-        <div class="agglomerator-pipe pipe-right"></div>
-      </div>
-    </section>
+  <section class="left-column" aria-label="Laboratory inputs and navigation">
+    <button class="left-cell emoji-a" type="button">EMOJI A</button>
+    <button class="left-cell emoji-b" type="button">EMOJI B</button>
+    <button class="left-cell mosaics-journal" type="button">MOSAICS JOURNAL</button>
+    <button class="left-cell presets" type="button">PRESETS</button>
   </section>
 
-  <section class="mutosis-machine" aria-label="Mutosis machine">
-    <div class="machine-top">MUTOSIS MACHINE</div>
-    <div class="machine-body">
-      <div class="machine-port left-port" aria-hidden="true"></div>
-      <div class="result-window" aria-label="Mashup result">
-        <div class="result-placeholder">MASHUP</div>
-      </div>
-      <div class="machine-port right-port" aria-hidden="true"></div>
-    </div>
-    <button class="activate" type="button">ACTIVATE MUTOSIS</button>
+  <section class="mutosis" aria-label="Mutosis Machine">
+    <div class="mutosis-row blank" aria-hidden="true"></div>
 
-    <div class="result-actions" aria-label="Mashup actions">
+    <div class="mutosis-row meter-row">
+      <div class="meter" aria-label="Mutosis meter">
+        <div class="meter-track"><div class="meter-fill"></div></div>
+      </div>
+    </div>
+
+    <div class="mutosis-row blank" aria-hidden="true"></div>
+
+    <div class="mutosis-row machine-screen-row">
+      <div class="screen-side-space" aria-hidden="true"></div>
+      <div class="machine-screen">
+        <div class="machine-title">MUTOSIS MACHINE</div>
+        <div class="machine-screen-placeholder">SCREEN</div>
+      </div>
+      <div class="screen-side-space" aria-hidden="true"></div>
+    </div>
+
+    <div class="mutosis-row blank" aria-hidden="true"></div>
+
+    <button class="mutosis-row activate" type="button">ACTIVATE MUTOSIS</button>
+
+    <div class="mutosis-row blank" aria-hidden="true"></div>
+
+    <div class="mutosis-row field-row" aria-label="Fields 1 and 2">
+      <div class="edge-space" aria-hidden="true"></div>
+      <button class="field" type="button">FIELD 1</button>
+      <button class="dial" type="button" aria-label="Field 1 dial"><span></span></button>
+      <div class="dial-gap" aria-hidden="true"></div>
+      <button class="dial" type="button" aria-label="Field 2 dial"><span></span></button>
+      <button class="field" type="button">FIELD 2</button>
+      <div class="edge-space" aria-hidden="true"></div>
+    </div>
+
+    <div class="mutosis-row blank" aria-hidden="true"></div>
+
+    <div class="mutosis-row field-row" aria-label="Fields 3 and 4">
+      <div class="edge-space" aria-hidden="true"></div>
+      <button class="field" type="button">FIELD 3</button>
+      <button class="dial" type="button" aria-label="Field 3 dial"><span></span></button>
+      <div class="dial-gap" aria-hidden="true"></div>
+      <button class="dial" type="button" aria-label="Field 4 dial"><span></span></button>
+      <button class="field" type="button">FIELD 4</button>
+      <div class="edge-space" aria-hidden="true"></div>
+    </div>
+
+    <div class="mutosis-row blank" aria-hidden="true"></div>
+
+    <div class="mutosis-row field-row" aria-label="Fields 5 and 6">
+      <div class="edge-space" aria-hidden="true"></div>
+      <button class="field" type="button">FIELD 5</button>
+      <button class="dial" type="button" aria-label="Field 5 dial"><span></span></button>
+      <div class="dial-gap" aria-hidden="true"></div>
+      <button class="dial" type="button" aria-label="Field 6 dial"><span></span></button>
+      <button class="field" type="button">FIELD 6</button>
+      <div class="edge-space" aria-hidden="true"></div>
+    </div>
+
+    <div class="mutosis-row blank" aria-hidden="true"></div>
+  </section>
+
+  <section class="agglomerator" aria-label="Chimeric Agglomerator">
+    <div class="agglomerator-machine">
+      <div class="agglomerator-title">CHIMERIC AGGLOMERATOR</div>
+      <div class="agglomerator-placeholder">MACHINE</div>
+    </div>
+    <div class="agglomerator-meter">
+      <div class="meter vertical-label-meter" aria-label="Chimeric Agglomerator meter">
+        <div class="meter-track"><div class="meter-fill"></div></div>
+      </div>
+    </div>
+    <a class="museum-exit" href="index.html" aria-label="Return to Museum">MUSEUM</a>
+  </section>
+
+  <section class="output-column" aria-label="Mutosis output">
+    <div class="output-area">
+      <div class="output-label">OUTPUT AREA</div>
+    </div>
+    <div class="output-actions output-actions-top">
       <button type="button">SAVE</button>
-      <button type="button">DISCARD / RETRY</button>
+      <button type="button">RETRY</button>
+    </div>
+    <div class="output-actions output-actions-bottom">
+      <button type="button">DISCARD</button>
       <button type="button">SUBMIT</button>
-      <button type="button">REVIEW DRAFTS</button>
     </div>
   </section>
 

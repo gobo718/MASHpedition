@@ -113,44 +113,46 @@ Exact shell proportions above are intentional and should be preserved unless exp
 
 ---
 
-# Laboratory Shell — Added 2026-09-07
+# Laboratory Shell — Corrected Geometry 2026-09-08
 
-The Museum Hub **Lab** destination opens `lab.html`.
+The Laboratory is a structural playground shell. Its current geometry follows Billy's explicit screen measurements and should not be reinterpreted into generic panels.
 
-This is a structural playground shell, not a final visual-design lock. It translates established Laboratory mechanics into a usable page without inventing progression timing.
+## Laboratory screen geometry
 
-## Current Laboratory shell
+- **0–20% — Input/navigation column**
+  - 0–35%: `EMOJI A`
+  - 35–70%: `EMOJI B`
+  - 70–85%: `MOSAICS JOURNAL`
+  - 85–100%: `PRESETS`
+- **20–70% — `MUTOSIS MACHINE`**
+  - 0–5% blank
+  - 5–10% meter
+  - 10–15% blank
+  - 15–40% machine screen with 2.5% whole-screen blank space on each side and a 45% whole-screen screen area
+  - 40–45% blank
+  - 45–50% `ACTIVATE MUTOSIS`
+  - 50–55% blank
+  - 55–65%: Field 1 / dial / central gap / dial / Field 2 using whole-screen widths `2.5 / 15 / 5 / 5 / 5 / 15 / 2.5`
+  - 65–70% blank
+  - 70–80%: same arrangement for Fields 3 and 4
+  - 80–85% blank
+  - 85–95%: same arrangement for Fields 5 and 6
+  - 95–100% blank
+- **70–80% — `CHIMERIC AGGLOMERATOR`**
+  - 0–90% machine
+  - 90–95% meter
+  - 95–100% temporary `MUSEUM` return control
+  - The Museum control occupies what is canonically blank space only for prototype navigation. Remove it when real navigation replaces the temporary return control.
+- **80–100% — Output**
+  - 0–80% output area
+  - 80–90%: `SAVE` | `RETRY`
+  - 90–100%: `DISCARD` | `SUBMIT`
 
-- **Left 34% — inputs, quick tools, and Chimeric Agglomerator**
-  - Emoji A
-  - Emoji B
-  - Fields
-  - Keywords
-  - **Mosaics** button
-  - **Chimeric Agglomerator** — canonical name for the Gem-making Laboratory apparatus
-- **Right 66% — Mutosis Machine**
-  - physical machine/result area
-  - Activate Mutosis
-  - Save
-  - Discard / Retry
-  - Submit
-  - Review Drafts
+## Corrections carried forward
 
-## Corrections made after the first Lab shell
-
-- The Mosaic Tracker is **not** a permanent section of the Laboratory interface. Mosaics may be far too numerous for that treatment. The Lab exposes a **MOSAICS button** that will open the dedicated Mosaic tracking/browsing surface.
-- The earlier permanent **Left / Center / Right** machine-control block was an incorrect interpretation of an older weighting note and has been removed.
-- The Gem-making apparatus is present under its official name: **Chimeric Agglomerator**.
-- The Chimeric Agglomerator is represented structurally only. This shell does **not** invent its final controls, progression behavior, or visual treatment.
-
-Files:
-
-- `lab.html` — Laboratory structural shell
-- `lab.css` — Laboratory shell geometry
-
-Navigation:
-
-- Museum Hub **LAB** links to `lab.html`.
-- Laboratory uses the same temporary fixed **MUSEUM** return control as the Residence.
-
-No Residence geometry was changed. No progression order, Gem unlock timing, Mosaic content, final art style, or final Laboratory visual treatment is established by this shell.
+- Mosaics are not a persistent Lab panel. The Lab exposes them through the `MOSAICS JOURNAL` control.
+- Generic permanent `LEFT / CENTER / RIGHT` machine controls are not part of the Lab shell. Weighting is an evolving/context-sensitive mechanic and must not be exposed as a universal toolbar.
+- **Chimeric Agglomerator** is the canonical name of the Laboratory's Gem-making apparatus.
+- The shell does not invent controls for the Chimeric Agglomerator beyond the meter specified above.
+- Residence files remain unchanged.
+- Story progression, unlock timing, final art treatment, and responsive refinements are not locked by this shell.
