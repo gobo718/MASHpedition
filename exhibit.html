@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>MASHpedition Exhibit View</title>
-<!-- v15: clickable exterior Door 1 and interior Door 1 exit -->
-<link rel="stylesheet" href="exhibit-v15.css">
+<!-- v16: complete overhead room map + thumbnails 1-22 -->
+<link rel="stylesheet" href="exhibit-v16.css">
 </head>
 <body>
 <main class="exhibit-shell" id="exhibitShell" data-view="door" aria-label="Exhibit view">
@@ -47,6 +47,83 @@
       </div>
     </section>
 
+
+    <!-- OVERHEAD: complete 24-position room map. All position buttons are
+         exactly the same screen-space size; connectors preserve wall anchors. -->
+    <section class="overhead-view" id="overheadView" aria-label="Overhead room view">
+      <div class="overhead-canvas">
+        <svg class="overhead-room-lines" viewBox="0 0 980 300" aria-hidden="true">
+          <polygon class="overhead-room-floor" points="240,18 740,18 760,282 220,282"></polygon>
+
+          <!-- Left wall anchors: ART 7 down through ART 2. -->
+          <line x1="238.3" y1="40" x2="182" y2="40"></line>
+          <line x1="235.0" y1="84" x2="182" y2="84"></line>
+          <line x1="231.7" y1="128" x2="182" y2="128"></line>
+          <line x1="228.3" y1="172" x2="182" y2="172"></line>
+          <line x1="225.0" y1="216" x2="182" y2="216"></line>
+          <line x1="221.7" y1="260" x2="182" y2="260"></line>
+
+          <!-- Top wall anchors: ART 8, DOOR 2, ART 9, ART 10, ART 11, ART 12. -->
+          <line x1="281.7" y1="18" x2="281.7" y2="32"></line>
+          <line x1="365.0" y1="18" x2="365.0" y2="78"></line>
+          <line x1="448.3" y1="18" x2="448.3" y2="32"></line>
+          <line x1="531.7" y1="18" x2="531.7" y2="78"></line>
+          <line x1="615.0" y1="18" x2="615.0" y2="32"></line>
+          <line x1="698.3" y1="18" x2="698.3" y2="78"></line>
+
+          <!-- Right wall anchors: ART 13 down through ART 18. -->
+          <line x1="741.7" y1="40" x2="798" y2="40"></line>
+          <line x1="745.0" y1="84" x2="798" y2="84"></line>
+          <line x1="748.3" y1="128" x2="798" y2="128"></line>
+          <line x1="751.7" y1="172" x2="798" y2="172"></line>
+          <line x1="755.0" y1="216" x2="798" y2="216"></line>
+          <line x1="758.3" y1="260" x2="798" y2="260"></line>
+
+          <!-- Bottom wall anchors: ART 1, DOOR 1, ART 22, ART 21, ART 20, ART 19. -->
+          <line x1="265.0" y1="282" x2="265.0" y2="268"></line>
+          <line x1="355.0" y1="282" x2="355.0" y2="222"></line>
+          <line x1="445.0" y1="282" x2="445.0" y2="268"></line>
+          <line x1="535.0" y1="282" x2="535.0" y2="222"></line>
+          <line x1="625.0" y1="282" x2="625.0" y2="268"></line>
+          <line x1="715.0" y1="282" x2="715.0" y2="222"></line>
+        </svg>
+
+        <!-- Left wall, top to bottom. -->
+        <button class="overhead-slot oh-left oh-left-1" type="button" data-room-index="7"><span></span></button>
+        <button class="overhead-slot oh-left oh-left-2" type="button" data-room-index="6"><span></span></button>
+        <button class="overhead-slot oh-left oh-left-3" type="button" data-room-index="5"><span></span></button>
+        <button class="overhead-slot oh-left oh-left-4" type="button" data-room-index="4"><span></span></button>
+        <button class="overhead-slot oh-left oh-left-5" type="button" data-room-index="3"><span></span></button>
+        <button class="overhead-slot oh-left oh-left-6" type="button" data-room-index="2"><span></span></button>
+
+        <!-- Top wall, left to right. -->
+        <button class="overhead-slot oh-top oh-top-1" type="button" data-room-index="8"><span></span></button>
+        <button class="overhead-slot oh-top oh-top-2" type="button" data-room-index="9"><span></span></button>
+        <button class="overhead-slot oh-top oh-top-3" type="button" data-room-index="10"><span></span></button>
+        <button class="overhead-slot oh-top oh-top-4" type="button" data-room-index="11"><span></span></button>
+        <button class="overhead-slot oh-top oh-top-5" type="button" data-room-index="12"><span></span></button>
+        <button class="overhead-slot oh-top oh-top-6" type="button" data-room-index="13"><span></span></button>
+
+        <!-- Right wall, top to bottom. -->
+        <button class="overhead-slot oh-right oh-right-1" type="button" data-room-index="14"><span></span></button>
+        <button class="overhead-slot oh-right oh-right-2" type="button" data-room-index="15"><span></span></button>
+        <button class="overhead-slot oh-right oh-right-3" type="button" data-room-index="16"><span></span></button>
+        <button class="overhead-slot oh-right oh-right-4" type="button" data-room-index="17"><span></span></button>
+        <button class="overhead-slot oh-right oh-right-5" type="button" data-room-index="18"><span></span></button>
+        <button class="overhead-slot oh-right oh-right-6" type="button" data-room-index="19"><span></span></button>
+
+        <!-- Bottom wall, left to right. -->
+        <button class="overhead-slot oh-bottom oh-bottom-1" type="button" data-room-index="1"><span></span></button>
+        <button class="overhead-slot oh-bottom oh-bottom-2" type="button" data-room-index="0"><span></span></button>
+        <button class="overhead-slot oh-bottom oh-bottom-3" type="button" data-room-index="23"><span></span></button>
+        <button class="overhead-slot oh-bottom oh-bottom-4" type="button" data-room-index="22"><span></span></button>
+        <button class="overhead-slot oh-bottom oh-bottom-5" type="button" data-room-index="21"><span></span></button>
+        <button class="overhead-slot oh-bottom oh-bottom-6" type="button" data-room-index="20"><span></span></button>
+
+        <div class="overhead-center-label" aria-hidden="true">ROOM</div>
+      </div>
+    </section>
+
     <!-- Existing artwork-depth placeholder retained; click design comes later. -->
     <section class="artwork-view" id="artworkView" aria-label="Artwork detail">
       <div class="artwork-large"><span id="artworkLabel">ART 1</span></div>
@@ -68,6 +145,21 @@
         <button type="button" data-art="5">ART 5</button>
         <button type="button" data-art="6">ART 6</button>
         <button type="button" data-art="7">ART 7</button>
+        <button type="button" data-art="8">ART 8</button>
+        <button type="button" data-art="9">ART 9</button>
+        <button type="button" data-art="10">ART 10</button>
+        <button type="button" data-art="11">ART 11</button>
+        <button type="button" data-art="12">ART 12</button>
+        <button type="button" data-art="13">ART 13</button>
+        <button type="button" data-art="14">ART 14</button>
+        <button type="button" data-art="15">ART 15</button>
+        <button type="button" data-art="16">ART 16</button>
+        <button type="button" data-art="17">ART 17</button>
+        <button type="button" data-art="18">ART 18</button>
+        <button type="button" data-art="19">ART 19</button>
+        <button type="button" data-art="20">ART 20</button>
+        <button type="button" data-art="21">ART 21</button>
+        <button type="button" data-art="22">ART 22</button>
       </div>
     </section>
 
@@ -77,12 +169,13 @@
   <nav class="exhibit-controls" aria-label="Exhibit navigation">
     <button type="button" id="leftBtn">LEFT</button>
     <button type="button" id="rightBtn">RIGHT</button>
+    <button type="button" id="overheadBtn">OVERHEAD</button>
     <button type="button" id="thumbnailBtn">THUMBNAIL</button>
     <button type="button" id="doorBtn">DOOR</button>
   </nav>
 
   <a class="museum-return" href="index.html">MUSEUM</a>
 </main>
-<script src="exhibit-v15.js"></script>
+<script src="exhibit-v16.js"></script>
 </body>
 </html>

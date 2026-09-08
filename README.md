@@ -492,3 +492,31 @@ Interaction:
 - tapping Door 1 from inside returns to the exterior/front-door view
 - Door 2 remains fixed and non-interactive for now
 - all approved room geometry and LEFT/RIGHT circuit behavior are preserved
+
+---
+
+# Exhibit room views — v16 overhead map + 22 thumbnails
+
+OVERHEAD is now a fifth persistent bottom control.
+
+The overhead room map shows all 24 fixed physical positions at once:
+- 22 artwork positions
+- Door 1 between Art 22 and Art 1
+- Door 2 between Art 8 and Art 9
+
+The map follows the real six-position wall runs:
+- left wall, top-to-bottom: Art 7, 6, 5, 4, 3, 2
+- top wall, left-to-right: Art 8, Door 2, Art 9, 10, 11, 12
+- right wall, top-to-bottom: Art 13, 14, 15, 16, 17, 18
+- bottom wall, left-to-right: Art 1, Door 1, Art 22, 21, 20, 19
+
+Every overhead position button is exactly 156 × 40 CSS px.
+Side-wall buttons use the full scene height with 4px clear gaps.
+Top and bottom wall buttons alternate between two inward depths so the otherwise
+empty center of the room can be used without shrinking the controls.
+
+Door 1 on the overhead map exits to the exterior. Door 2 remains a fixed,
+non-interactive placeholder.
+
+Thumbnail view behavior is unchanged; its list is simply expanded from
+Art 1–7 to Art 1–22. The grid is expanded to 6 × 4 so all 22 remain visible.
