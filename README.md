@@ -257,390 +257,54 @@ In Room/Corner views, Left and Right move the camera to the corresponding corner
 - The reusable left-to-right scrolling-wall overlay used by SALON ECLECTIQUE and other temporary/ranked sets remains a separate view family: centered artwork, partial neighboring artworks at the sides, and downward scroll to plaque then Blurblets.
 - The small `MUSEUM` control remains temporary prototype navigation and does not reserve exhibit geometry.
 
----
 
-# Exhibit left-corner geometry — v7
-
-The LEFT CORNER VIEW is now a deterministic hard-coded construction for the
-1536 × 504 CSS landscape viewport used in the approved capture.
-
-- Corner scene: 1536 × 449 px
-- Bottom navigation: 55 px
-- Base artwork viewport: 300 × 300 px
-- Art 1: x=618, y=75; its center is exactly x=768
-- Art 2: x=1078, y=75
-- Divider: x=450, width=8, height=449
-- Art 22 source square: 300 × 300 at x=220, y=0 before projection
-- Art 22 projected corners: (220,0), (370,75), (370,375), (220,450)
-- Art 22 visible width: 150 px
-- Art 22 left edge: 450 px (1.5 × base)
-- Art 22 right edge: 300 px (same as base)
-- No fake wall wedges, floor/ceiling shapes, or shadows appear in LEFT CORNER VIEW.
-- Other exhibit views are intentionally left unchanged in this geometry pass.
-
----
-
-# Exhibit left-corner geometry — v8 viewport fit
-
-Corrects the earlier assumption that the 1536-pixel screen capture was
-1536 CSS pixels. The actual landscape page viewport is 980 CSS pixels wide.
-
-LEFT CORNER VIEW:
-- Full viewport: 980 × ~337 CSS px
-- Bottom controls: 37 px
-- Art scene: 980 × 300 px
-- Base square: 200 × 200 px
-- Spacing unit: 47.5 px
-- Divider: x=295, width=8
-- Art 1: x=390, y=50; exact center x=490
-- Art 2: x=685, y=50
-- Art 22 nominal square slot: x=47.5, y=50, 200 × 200
-- Art 22 visible warped corners:
-  (147.5,0), (247.5,50), (247.5,250), (147.5,300)
-- Art 22 visible width: 100 px
-- Art 22 left edge: 300 px
-- Art 22 right edge: 200 px
-
----
-
-# Exhibit left-corner geometry — v9
-
-Implements the accepted 15% enlargement and 0.20x right-side margin.
-
-Fixed geometry:
-- Viewport width: 980 CSS px
-- Scene height: 300 CSS px
-- Art square: 230 × 230 CSS px
-- Spacing unit x: 65.9090909 px
-- Art 1: left 375, top 35; exact center x=490
-- Art 2: left 736.8181818, top 35
-- Right margin after Art 2: 13.1818182 px = 0.20x
-- Divider: left 235.1818182, width 8
-- Art 22 visible left blank: 54.2727273 px
-- Art 22-to-divider gap: 65.9090909 px = 1x
-- Art 22 visible width: 115 px
-- Art 22 left edge: 345 px high
-- Art 22 right edge: 230 px high
-- Art 22 clips 22.5 px above and below the 300 px scene by design.
-
----
-
-# Exhibit geometry — v10 completed room-view family
-
-This pass finishes the structural room-view family around the approved v9
-left-corner geometry.
-
-- LEFT CORNER: unchanged approved v9 geometry.
-- RIGHT CORNER: exact horizontal mirror of LEFT CORNER.
-- WALL: three equal 230 × 230 placeholders using the exact same 131.8181818px
-  gap as the two normal artworks in the approved corner. Side margins are
-  13.1818182px.
-- DOOR: the old fake full-room perspective illustration is removed. The Door
-  control now opens a plain wall with one centered 230 × 230 placeholder labeled
-  DOOR. No exhibit image assets are used for this temporary Door design.
-- The persistent LEFT / RIGHT / THUMBNAIL / DOOR controls remain fixed at the
-  bottom at 37px high.
-- Artwork detail and Thumbnail views remain available.
-- The legacy opening-corner label ART 22 remains temporary and can be renumbered
-  later when the entry sequence is finalized.
-
----
-
-# Exhibit room views — v11 cache-safe repair
-
-The v10 screenshots revealed a mixed-version browser load: the new v10 HTML
-was being displayed with older cached exhibit CSS/JS. That is why raw DOOR /
-ART buttons appeared at the upper left and why RIGHT behaved like the older
-prototype navigation.
-
-v11 fixes the delivery problem rather than changing the approved geometry:
-
-- `exhibit.html` now loads `exhibit-v11.css` and `exhibit-v11.js`.
-- The new filenames force a fresh browser/GitHub Pages asset request.
-- DOOR, LEFT CORNER, RIGHT CORNER, WALL, ARTWORK, and THUMBNAIL are mutually
-  exclusive display states.
-- DOOR shows only the centered temporary DOOR wall placeholder.
-- LEFT CORNER remains the approved v9 geometry.
-- RIGHT CORNER remains its exact mirror.
-- WALL remains the three-square 230px layout.
-- LEFT and RIGHT from DOOR open their corresponding corner.
-- RIGHT from LEFT CORNER opens RIGHT CORNER; it no longer falls back into the
-  stale Door/Room prototype.
-- Thumbnail remains available; no user retest of the broken v10 build is needed.
-
----
-
-# Exhibit room views — v12 wall-navigation repair
-
-v11 contained the WALL surface and its correct 230px geometry, but the directional
-buttons skipped it: LEFT/RIGHT from a corner jumped directly between corner states.
-That is why the wall was never seen.
-
-v12 changes only navigation/state sequencing:
-
-RIGHT:
-DOOR -> LEFT CORNER -> WALL -> RIGHT CORNER -> DOOR
-
-LEFT:
-DOOR -> RIGHT CORNER -> WALL -> LEFT CORNER -> DOOR
-
-The WALL surface itself is unchanged:
-- three 230 x 230 squares
-- ART 1 / ART 2 / ART 3 in temporary numbering
-- same approved inter-art spacing as the normal artwork pair in the corner view
-- existing corner geometry remains untouched
-
-THUMBNAIL and artwork detail remain available independently.
-
----
-
-# Exhibit room views — v13 artwork-position renumbering
-
-This release applies the approved artwork shift without moving either door or
-changing any approved geometry.
-
-Physical-position mapping:
-- former ART 22 position -> ART 1
-- former ART 1 position -> ART 2
-- former ART 2 position -> ART 3
-- continuing the same way through former ART 21 -> ART 22
-
-Door positions are intentionally unchanged:
-- Door 1 remains physically between ART 22 and ART 1.
-- Door 2 remains physically between ART 8 and ART 9.
-
-Current prototype surfaces therefore show:
-- Left corner: ART 1 | divider | ART 2, ART 3
-- Straight wall: ART 2, ART 3, ART 4
-- Right-corner geometry: the same physical mirrored slots, now labeled ART 3,
-  ART 2, and peripheral ART 1.
-
-No CSS geometry values were changed.
-
----
-
-# Exhibit room — v14 complete 24-position circuit
-
-v14 converts the solved geometry into the complete room circuit.
-
-## Fixed physical sequence
-
-`DOOR 1 -> ART 1 -> ART 2 -> ART 3 -> ART 4 -> ART 5 -> ART 6 -> ART 7 -> ART 8 -> DOOR 2 -> ART 9 -> ART 10 -> ART 11 -> ART 12 -> ART 13 -> ART 14 -> ART 15 -> ART 16 -> ART 17 -> ART 18 -> ART 19 -> ART 20 -> ART 21 -> ART 22 -> DOOR 1`
-
-Door positions do not move:
-- Door 1 remains between ART 22 and ART 1.
-- Door 2 remains between ART 8 and ART 9.
-
-## Full-room navigation model
-
-The 24 fixed positions form four six-position wall runs. The approved opening
-corner is between ART 1 and ART 2. Subsequent corners occur every six physical
-positions, after ART 7, ART 12, and ART 18.
-
-RIGHT advances one physical position around the room. LEFT reverses one physical
-position. Every camera state shows three consecutive physical positions.
-
-At a corner, the renderer automatically switches between the approved exact
-LEFT CORNER and mirrored RIGHT CORNER geometry. On a flat run it uses the
-approved three-square WALL geometry. No geometry numbers changed.
-
-## Door appearances from inside
-
-Each physical door appears naturally in the three consecutive camera windows
-that include its fixed slot — six inside-room door appearances total across the
-two doors.
-
-For now every inside door is only a black geometry placeholder:
-- 230px wide, exactly one artwork-slot width
-- top = 35px, identical to artwork top
-- bottom = 300px scene edge
-- height = 265px
-- solid black
-- no visible label or decoration
-
-If a door occupies the peripheral corner slot it inherits the same approved
-perspective transform as that physical slot.
-
-## Entry door state
-
-The separate DOOR control still opens the temporary entry placeholder. The final
-blurred-room/whip transition remains intentionally deferred. RIGHT from that
-placeholder enters the approved opening corner at ART 1 / ART 2.
-
-Artwork-click and thumbnail experiences are intentionally not redesigned in this
-release; v14 is the room-construction pass.
-
----
-
-# Exhibit room views — v15 front-door loop
-
-This release connects the temporary exterior/front Door 1 directly to the
-completed room circuit.
-
-Exterior Door 1:
-- centered in the 980px scene
-- width 230px
-- top 35px
-- height 265px
-- extends exactly to the 300px scene bottom
-- solid black
-- exactly matches the inside-room Door 1 dimensions
-
-Interaction:
-- tapping the exterior Door 1 enters the room at the physical Door 1 position
-- entry view is ART 22 | DOOR 1 | ART 1, with Door 1 centered
-- tapping Door 1 from inside returns to the exterior/front-door view
-- Door 2 remains fixed and non-interactive for now
-- all approved room geometry and LEFT/RIGHT circuit behavior are preserved
-
----
-
-# Exhibit room views — v16 overhead map + 22 thumbnails
-
-OVERHEAD is now a fifth persistent bottom control.
-
-The overhead room map shows all 24 fixed physical positions at once:
-- 22 artwork positions
-- Door 1 between Art 22 and Art 1
-- Door 2 between Art 8 and Art 9
-
-The map follows the real six-position wall runs:
-- left wall, top-to-bottom: Art 7, 6, 5, 4, 3, 2
-- top wall, left-to-right: Art 8, Door 2, Art 9, 10, 11, 12
-- right wall, top-to-bottom: Art 13, 14, 15, 16, 17, 18
-- bottom wall, left-to-right: Art 1, Door 1, Art 22, 21, 20, 19
-
-Every overhead position button is exactly 156 × 40 CSS px.
-Side-wall buttons use the full scene height with 4px clear gaps.
-Top and bottom wall buttons alternate between two inward depths so the otherwise
-empty center of the room can be used without shrinking the controls.
-
-Door 1 on the overhead map exits to the exterior. Door 2 remains a fixed,
-non-interactive placeholder.
-
-Thumbnail view behavior is unchanged; its list is simply expanded from
-Art 1–7 to Art 1–22. The grid is expanded to 6 × 4 so all 22 remain visible.
-
----
-
-# Shared viewing engine — v17
-
-v17 turns the existing room prototype into the reusable viewing foundation.
-The approved v9-v16 room geometry and v16 overhead/exhibit geometry are preserved.
-
-## Three view mixes
-
-- **Mix A:** Thumbnails + Endless Wall
-- **Mix B:** Exhibit View + Room View + Thumbnails
-- **Mix C:** Exhibit View + Room View + Thumbnails + Endless Wall
-
-Area-specific search choices, filters, labels, unlocks, and visual skins are deliberately
-not defined by the shared engine. Those can differ while reusing the same viewer.
-
-## Endless Wall
-
-Endless Wall reuses the exact approved straight-wall three-slot geometry:
-
-- no corners
-- no doors
-- no looping from the end back to the beginning
-- LEFT/RIGHT move through one linear result sequence
-- only three artwork positions exist in the DOM at once
-
-Large result sets are paginated internally in batches of **22**. Crossing a batch
-boundary swaps the loaded page; the page is not rendered all at once. "Endless" means
-continuous navigation, not unlimited simultaneous image loading.
-
-## Thumbnail pagination
-
-Generic large result sets render only the current page, **22 thumbnails at a time**.
-LEFT/RIGHT switch pages. The DOM never contains the complete large result set.
-
-## Grand Exhibition Hall rank layers
-
-The default v17 prototype is Mix B in GEH mode.
-
-- Room View remains rank-1-only and has no 1st/2nd/3rd selector.
-- Exhibit View has a left-side rank selector.
-- Thumbnail View has the same rank selector.
-- 2nd and 3rd do not exist in the selector until their unlock is available.
-- Selecting 2nd or 3rd replaces the same 22 Theme positions. It does **not** add
-  another 22 thumbnails or preload all 66 images.
-- Only the selected rank layer is rendered/loaded.
-
-For prototype testing, GEH unlock depth is controlled by the URL:
-
-- `exhibit.html?mix=B&ranks=1&start=exhibit` — 1st only
-- `exhibit.html?mix=B&ranks=2&start=exhibit` — 1st + 2nd
-- `exhibit.html?mix=B&ranks=3&start=exhibit` — all three
-
-## Artwork View
-
-The first screen is now the locked **340 / 300 / 340** layout inside the 980px
-landscape scene:
-
-- 340px left — area/rank/time, two emoji, Theme, creator
-- 300px center — artwork viewport, full 300px scene height
-- 340px right — plaque
-
-Scrolling down reveals Blurblets. Tapping the centered artwork or plaque opens a
-full viewing-area expansion. BACK restores the exact Artwork View scroll position.
-The old IMAGE / PLAQUE / BLURBLETS tab strip is removed.
-
-## Prototype launcher
-
-Open `viewer-test.html` to jump directly into:
-
-- Mix A
-- Mix B with 1, 2, or 3 GEH rank unlocks
-- Mix C
-- a 120-result Endless Wall pagination test
-
-The launcher is a development/testing surface only. It does not define final game UI.
-
----
-
-# Area samples + swipe navigation — v18
-
-v18 keeps the approved v17 viewer geometry and puts representative viewer states at the
-places where they actually belong, instead of requiring abstract query-string tests.
-
-## In-place samples
-
-From the Museum hub:
-
-- Grand Exhibition Halls → Mix B, with a fully-unlocked 1st/2nd/3rd sample so rank layers can be tested.
-- SALON ECLECTIQUE → Mix A.
-- For Your Consideration → Mix A.
-- Catacombs · Theme → Theme-search behavior, Mix A.
-- Catacombs · Search → non-Theme search behavior, Mix C.
-
-From the Residence second screen:
-
-- Gallery → Mix A.
-- Collection → Mix B.
-
-These are representative viewer datasets only. No area-specific search choices, filters,
-options, unlock rules, or visual skins have been invented here.
-
-## GEH rank test
-
-The Museum-hub GEH sample deliberately passes `ranks=3`, so Exhibit View and Thumbnail
-View show 1ST / 2ND / 3RD and can switch among all three 22-Theme layers. Room View remains
-1st-only and has no rank control. This is a test sample, not a statement that 2nd and 3rd
-begin unlocked in the real game.
-
-## Swipe navigation
-
-On touch/pen input:
-
-- Exhibit View: swipe left/right invokes the same movement as RIGHT/LEFT.
-- Endless Wall: swipe left/right advances/reverses through the linear result set.
-- Visible LEFT/RIGHT controls remain intact.
-- Horizontal intent requires at least 50 CSS px and must dominate vertical travel.
-- Vertical-dominant gestures are ignored.
-- A swipe that begins on an artwork button suppresses the follow-up click so it does not
-  both navigate and open the artwork.
-
-`viewer-test.html` remains as a shortcut, but the preferred test path is now `index.html`
-and the Residence links.
+## Exhibit View v7 — 2026-09-08
+
+This revision replaces the earlier freeform room mock with the user-specified fixed exhibit camera circuit.
+
+Key rules implemented:
+- Never show more than 3 mashups at once.
+- No floor or ceiling. The player is visually inside a cube-like room perimeter.
+- Three reusable room compositions only: LEFT CORNER, STRAIGHT WALL, RIGHT CORNER.
+- LEFT CORNER shows: angled side-wall image, corner, front-center image, front-right image.
+- STRAIGHT WALL shows exactly 3 front-facing images.
+- RIGHT CORNER shows: front-left image, front-center image, corner, angled side-wall image.
+- Door is a fixed architectural position in the sequence, not just a generic back button.
+
+24-state room circuit implemented:
+1. 22 / corner / 1 / 2
+2. 1 / 2 / 3
+3. 2 / 3 / 4
+4. 3 / 4 / 5
+5. 4 / 5 / 6
+6. 5 / 6 / corner / 7
+7. 6 / corner / 7 / DOOR
+8. 7 / DOOR / 8
+9. DOOR / 8 / 9
+10. 8 / 9 / 10
+11. 9 / 10 / 11
+12. 10 / 11 / corner / 12
+13. 11 / corner / 12 / 13
+14. 12 / 13 / 14
+15. 13 / 14 / 15
+16. 14 / 15 / 16
+17. 15 / 16 / 17
+18. 16 / 17 / corner / 18
+19. 17 / corner / 18 / 19
+20. 18 / 19 / 20
+21. 19 / 20 / 21
+22. 20 / 21 / DOOR
+23. 21 / DOOR / 22
+24. DOOR / 22 / corner / 1
+
+The DOOR control jumps to the canonical straight-on door position: 7 / DOOR / 8.
+Thumbnail View still provides direct access to ART 1–22.
+
+
+## Exhibit View v9 — 2026-09-08
+
+Corrections / interaction pass:
+- Straight-wall states now use three truly equal-sized, equally aligned, non-distorted wall slots. The center image is no longer enlarged.
+- Horizontal swipe is supported across the exhibit room surface, including straight-wall states and Thumbnail View. Swipe left moves one state forward around the 24-state circuit; swipe right moves one state backward. This mirrors the RIGHT / LEFT controls.
+- Thumbnail View retains all 22 room thumbnails on one screen, arranged 5 / 6 / 6 / 5. The 5-item top and bottom rows are centered.
+- Grand Exhibition Hall exhibit addressing is capped at 66 (`MAX_EXHIBITS = 66`); any requested exhibit index above 66 clamps to 66. This matches the current 66-Theme ceiling rather than allowing stray 88-exhibit values.
