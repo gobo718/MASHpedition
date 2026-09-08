@@ -256,3 +256,46 @@ In Room/Corner views, Left and Right move the camera to the corresponding corner
 - **Mosaics remain a separate presentation system.**
 - The reusable left-to-right scrolling-wall overlay used by SALON ECLECTIQUE and other temporary/ranked sets remains a separate view family: centered artwork, partial neighboring artworks at the sides, and downward scroll to plaque then Blurblets.
 - The small `MUSEUM` control remains temporary prototype navigation and does not reserve exhibit geometry.
+
+
+## Exhibit View v7 — 2026-09-08
+
+This revision replaces the earlier freeform room mock with the user-specified fixed exhibit camera circuit.
+
+Key rules implemented:
+- Never show more than 3 mashups at once.
+- No floor or ceiling. The player is visually inside a cube-like room perimeter.
+- Three reusable room compositions only: LEFT CORNER, STRAIGHT WALL, RIGHT CORNER.
+- LEFT CORNER shows: angled side-wall image, corner, front-center image, front-right image.
+- STRAIGHT WALL shows exactly 3 front-facing images.
+- RIGHT CORNER shows: front-left image, front-center image, corner, angled side-wall image.
+- Door is a fixed architectural position in the sequence, not just a generic back button.
+
+24-state room circuit implemented:
+1. 22 / corner / 1 / 2
+2. 1 / 2 / 3
+3. 2 / 3 / 4
+4. 3 / 4 / 5
+5. 4 / 5 / 6
+6. 5 / 6 / corner / 7
+7. 6 / corner / 7 / DOOR
+8. 7 / DOOR / 8
+9. DOOR / 8 / 9
+10. 8 / 9 / 10
+11. 9 / 10 / 11
+12. 10 / 11 / corner / 12
+13. 11 / corner / 12 / 13
+14. 12 / 13 / 14
+15. 13 / 14 / 15
+16. 14 / 15 / 16
+17. 15 / 16 / 17
+18. 16 / 17 / corner / 18
+19. 17 / corner / 18 / 19
+20. 18 / 19 / 20
+21. 19 / 20 / 21
+22. 20 / 21 / DOOR
+23. 21 / DOOR / 22
+24. DOOR / 22 / corner / 1
+
+The DOOR control jumps to the canonical straight-on door position: 7 / DOOR / 8.
+Thumbnail View still provides direct access to ART 1–22.
