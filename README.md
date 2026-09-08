@@ -367,3 +367,27 @@ v11 fixes the delivery problem rather than changing the approved geometry:
 - RIGHT from LEFT CORNER opens RIGHT CORNER; it no longer falls back into the
   stale Door/Room prototype.
 - Thumbnail remains available; no user retest of the broken v10 build is needed.
+
+---
+
+# Exhibit room views — v12 wall-navigation repair
+
+v11 contained the WALL surface and its correct 230px geometry, but the directional
+buttons skipped it: LEFT/RIGHT from a corner jumped directly between corner states.
+That is why the wall was never seen.
+
+v12 changes only navigation/state sequencing:
+
+RIGHT:
+DOOR -> LEFT CORNER -> WALL -> RIGHT CORNER -> DOOR
+
+LEFT:
+DOOR -> RIGHT CORNER -> WALL -> LEFT CORNER -> DOOR
+
+The WALL surface itself is unchanged:
+- three 230 x 230 squares
+- ART 1 / ART 2 / ART 3 in temporary numbering
+- same approved inter-art spacing as the normal artwork pair in the corner view
+- existing corner geometry remains untouched
+
+THUMBNAIL and artwork detail remain available independently.
