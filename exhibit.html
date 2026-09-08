@@ -7,28 +7,49 @@
 <link rel="stylesheet" href="exhibit.css">
 </head>
 <body>
-<main class="exhibit-shell" id="exhibitShell" data-view="room" aria-label="Exhibit view">
-  <section class="room-stage" id="roomStage" aria-live="polite">
-    <div class="room-frame" id="roomFrame">
-      <button class="slot angled-left" id="angledLeft" type="button" hidden></button>
-      <div class="corner left-corner" id="leftCorner" hidden aria-hidden="true"></div>
-      <button class="slot flat-left" id="flatLeft" type="button" hidden></button>
-      <button class="slot flat-center" id="flatCenter" type="button" hidden></button>
-      <button class="slot flat-right" id="flatRight" type="button" hidden></button>
-      <div class="corner right-corner" id="rightCorner" hidden aria-hidden="true"></div>
-      <button class="slot angled-right" id="angledRight" type="button" hidden></button>
+<main class="exhibit-shell" id="exhibitShell" data-view="door" aria-label="Exhibit view">
+  <section class="room-stage" aria-live="polite">
+    <div class="museum-room" id="museumRoom">
+      <div class="room-ceiling"></div>
+      <div class="room-floor"></div>
+
+      <section class="wall wall-left" aria-label="Left exhibit wall">
+        <button class="art art-1" type="button" data-art="1"><span>ART 1</span></button>
+        <button class="art art-2" type="button" data-art="2"><span>ART 2</span></button>
+        <button class="art art-3" type="button" data-art="3"><span>ART 3</span></button>
+      </section>
+
+      <section class="wall wall-front" aria-label="Front exhibit wall">
+        <button class="art art-4" type="button" data-art="4"><span>ART 4</span></button>
+      </section>
+
+      <section class="wall wall-right" aria-label="Right exhibit wall">
+        <button class="art art-5" type="button" data-art="5"><span>ART 5</span></button>
+        <button class="art art-6" type="button" data-art="6"><span>ART 6</span></button>
+        <button class="art art-7" type="button" data-art="7"><span>ART 7</span></button>
+      </section>
     </div>
+
+
+    <section class="left-corner-view" id="leftCornerView" aria-label="Left corner view">
+      <div class="left-corner-canvas">
+        <button class="corner-art corner-art-22" type="button" data-art="22"><span>ART 22</span></button>
+        <div class="corner-divider" aria-hidden="true"></div>
+        <button class="corner-art corner-art-1" type="button" data-art="1"><span>ART 1</span></button>
+        <button class="corner-art corner-art-2" type="button" data-art="2"><span>ART 2</span></button>
+      </div>
+    </section>
 
     <section class="wall-view" id="wallView" aria-label="Wall view">
       <div class="flat-wall">
         <button class="wall-art" id="wallArt" type="button" aria-label="Zoom artwork">
-          <span id="wallArtLabel">ART 1</span>
+          <span id="wallArtLabel">ART 4</span>
         </button>
       </div>
     </section>
 
     <section class="artwork-view" id="artworkView" aria-label="Artwork detail">
-      <div class="artwork-large"><span id="artworkLabel">ART 1</span></div>
+      <div class="artwork-large"><span id="artworkLabel">ART 4</span></div>
       <nav class="artwork-depth" aria-label="Artwork information">
         <button type="button" data-depth="image">IMAGE</button>
         <button type="button" data-depth="plaque">PLAQUE</button>
@@ -38,10 +59,18 @@
     </section>
 
     <section class="thumbnail-view" id="thumbnailView" aria-label="Thumbnail view">
-      <div class="thumbnail-grid" id="thumbnailGrid"></div>
+      <div class="thumbnail-grid">
+        <button type="button" data-art="1">ART 1</button>
+        <button type="button" data-art="2">ART 2</button>
+        <button type="button" data-art="3">ART 3</button>
+        <button type="button" data-art="4">ART 4</button>
+        <button type="button" data-art="5">ART 5</button>
+        <button type="button" data-art="6">ART 6</button>
+        <button type="button" data-art="7">ART 7</button>
+      </div>
     </section>
 
-    <div class="view-label" id="viewLabel">LEFT CORNER VIEW</div>
+    <div class="view-label" id="viewLabel">DOOR / ROOM VIEW</div>
   </section>
 
   <nav class="exhibit-controls" aria-label="Exhibit navigation">

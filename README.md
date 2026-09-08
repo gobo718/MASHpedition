@@ -257,45 +257,23 @@ In Room/Corner views, Left and Right move the camera to the corresponding corner
 - The reusable left-to-right scrolling-wall overlay used by SALON ECLECTIQUE and other temporary/ranked sets remains a separate view family: centered artwork, partial neighboring artworks at the sides, and downward scroll to plaque then Blurblets.
 - The small `MUSEUM` control remains temporary prototype navigation and does not reserve exhibit geometry.
 
+---
 
-## Exhibit View v7 — 2026-09-08
+# Exhibit left-corner geometry — v7
 
-This revision replaces the earlier freeform room mock with the user-specified fixed exhibit camera circuit.
+The LEFT CORNER VIEW is now a deterministic hard-coded construction for the
+1536 × 504 CSS landscape viewport used in the approved capture.
 
-Key rules implemented:
-- Never show more than 3 mashups at once.
-- No floor or ceiling. The player is visually inside a cube-like room perimeter.
-- Three reusable room compositions only: LEFT CORNER, STRAIGHT WALL, RIGHT CORNER.
-- LEFT CORNER shows: angled side-wall image, corner, front-center image, front-right image.
-- STRAIGHT WALL shows exactly 3 front-facing images.
-- RIGHT CORNER shows: front-left image, front-center image, corner, angled side-wall image.
-- Door is a fixed architectural position in the sequence, not just a generic back button.
-
-24-state room circuit implemented:
-1. 22 / corner / 1 / 2
-2. 1 / 2 / 3
-3. 2 / 3 / 4
-4. 3 / 4 / 5
-5. 4 / 5 / 6
-6. 5 / 6 / corner / 7
-7. 6 / corner / 7 / DOOR
-8. 7 / DOOR / 8
-9. DOOR / 8 / 9
-10. 8 / 9 / 10
-11. 9 / 10 / 11
-12. 10 / 11 / corner / 12
-13. 11 / corner / 12 / 13
-14. 12 / 13 / 14
-15. 13 / 14 / 15
-16. 14 / 15 / 16
-17. 15 / 16 / 17
-18. 16 / 17 / corner / 18
-19. 17 / corner / 18 / 19
-20. 18 / 19 / 20
-21. 19 / 20 / 21
-22. 20 / 21 / DOOR
-23. 21 / DOOR / 22
-24. DOOR / 22 / corner / 1
-
-The DOOR control jumps to the canonical straight-on door position: 7 / DOOR / 8.
-Thumbnail View still provides direct access to ART 1–22.
+- Corner scene: 1536 × 449 px
+- Bottom navigation: 55 px
+- Base artwork viewport: 300 × 300 px
+- Art 1: x=618, y=75; its center is exactly x=768
+- Art 2: x=1078, y=75
+- Divider: x=450, width=8, height=449
+- Art 22 source square: 300 × 300 at x=220, y=0 before projection
+- Art 22 projected corners: (220,0), (370,75), (370,375), (220,450)
+- Art 22 visible width: 150 px
+- Art 22 left edge: 450 px (1.5 × base)
+- Art 22 right edge: 300 px (same as base)
+- No fake wall wedges, floor/ceiling shapes, or shadows appear in LEFT CORNER VIEW.
+- Other exhibit views are intentionally left unchanged in this geometry pass.
