@@ -238,63 +238,64 @@ button{border-radius:0}
 
 
 /* ------------------------------------------------------------------
-   v9 exact left-corner geometry — 15% larger art + 0.20x right margin
+   v10 exhibit room geometry
 
-   Hard-coded landscape exhibit viewport:
-     width          W = 980px
-     scene height   H = 300px
-     control band      = 37px
+   Approved landscape viewport geometry:
+     scene width  = 980 CSS px
+     scene height = 300 CSS px
+     controls     = 37 CSS px
+     square       = 230 × 230 CSS px
+     2x gap       = 131.8181818 CSS px
+     wall margin  = 13.1818182 CSS px
 
-   Base artwork square:
-     S = 230px
-
-   Art 1 is centered exactly:
-     left = 490 - S/2 = 375px
-
-   Solve spacing x using the requested 0.20x margin after Art 2:
-     Art2 right = 835 + 2x
-     right margin = 980 - (835 + 2x) = 0.20x
-     145 = 2.20x
-     x = 65.9090909px
-
-   Result:
-     Art22 visible left edge -> viewport = 54.2727273px  (< 1x)
-     Art22 visible right -> divider    = 65.9090909px  (= 1x)
-     divider right -> Art1             = 131.8181818px (= 2x)
-     Art1 -> Art2                      = 131.8181818px (= 2x)
-     Art2 -> viewport right            = 13.1818182px  (= 0.20x)
-
-   Art22:
-     source square = 230 × 230
-     visible width = 115 (= 0.5S)
-     left edge     = 345 (= 1.5S), centered vertically
-     right edge    = 230 (= 1.0S), centered vertically
-     tall left edge intentionally clips 22.5px above and below scene.
-
-   No fake side walls, wedges, floors, ceilings, or shadows.
+   LEFT CORNER is the approved v9 geometry.
+   RIGHT CORNER is its exact horizontal mirror.
+   WALL uses three equal 230px squares with the same spacing as the two
+   normal squares in the approved corner.
+   DOOR removes the old fake-room perspective entirely. For now it is
+   a plain wall with a centered square placeholder labelled DOOR.
    ------------------------------------------------------------------ */
 
-.left-corner-view{
+.room-stage{
+  position:absolute;
+  inset:0;
+  overflow:hidden;
+  background:var(--wall);
+  perspective:none;
+}
+
+/* Retire the old full-room drawing completely. */
+.museum-room{display:none!important}
+
+.left-corner-view,
+.right-corner-view,
+.wall-view,
+.door-wall-view,
+.artwork-view,
+.thumbnail-view{
   position:absolute;
   left:0;
   right:0;
   top:0;
   bottom:37px;
   display:none;
-  z-index:5;
   overflow:hidden;
   background:var(--wall);
 }
 
-.exhibit-shell[data-view="left"] .museum-room{
-  display:none;
-}
-
-.exhibit-shell[data-view="left"] .left-corner-view{
+.exhibit-shell[data-view="left"] .left-corner-view,
+.exhibit-shell[data-view="right"] .right-corner-view,
+.exhibit-shell[data-view="wall"] .wall-view,
+.exhibit-shell[data-view="door"] .door-wall-view,
+.exhibit-shell[data-view="zoom"] .artwork-view,
+.exhibit-shell[data-view="thumbnail"] .thumbnail-view{
   display:block;
 }
 
-.left-corner-canvas{
+.left-corner-canvas,
+.right-corner-canvas,
+.wall-canvas,
+.door-wall-canvas{
   position:absolute;
   left:50%;
   top:0;
@@ -305,7 +306,11 @@ button{border-radius:0}
   background:transparent;
 }
 
-.corner-art{
+.corner-art,
+.right-normal-art,
+.right-perspective-art,
+.wall-triplet-art,
+.door-placeholder{
   position:absolute;
   box-sizing:border-box;
   width:230px;
@@ -326,12 +331,12 @@ button{border-radius:0}
   font-size:14px;
   overflow:hidden;
 }
+.corner-art span,
+.right-normal-art span,
+.right-perspective-art span,
+.wall-triplet-art span{pointer-events:none}
 
-.corner-art span{
-  pointer-events:none;
-}
-
-/* Thick vertical corner line. */
+/* LEFT CORNER — approved v9. */
 .corner-divider{
   position:absolute;
   left:235.1818182px;
@@ -340,39 +345,8 @@ button{border-radius:0}
   height:300px;
   background:var(--frame);
 }
-
-/* Exact viewport center: 375 + 115 = 490. */
-.corner-art-1{
-  left:375px;
-  top:35px;
-}
-
-/* 2x = 131.8181818px after Art 1. */
-.corner-art-2{
-  left:736.8181818px;
-  top:35px;
-}
-
-/*
-  Art22 nominal 230×230 square:
-     left = -60.7272727
-     top  = 35
-
-  Homography maps source corners to:
-     TL (115,-57.5)
-     TR (230,0)
-     BR (230,230)
-     BL (115,287.5)
-
-  Absolute visible corners:
-     TL (54.2727273,-22.5)
-     TR (169.2727273,35)
-     BR (169.2727273,265)
-     BL (54.2727273,322.5)
-
-  Therefore the visible left-side blank is 54.27px, which is
-  smaller than the 65.91px Art22-to-divider gap.
-*/
+.corner-art-1{left:375px;top:35px}
+.corner-art-2{left:736.8181818px;top:35px}
 .corner-art-22{
   left:-60.7272727px;
   top:35px;
@@ -385,12 +359,77 @@ button{border-radius:0}
   );
 }
 
-@media (orientation:landscape){
-  .exhibit-controls{height:37px}
+/* RIGHT CORNER — exact horizontal mirror of LEFT CORNER. */
+.right-corner-canvas{
+  transform:translateX(-50%) scaleX(-1);
+}
+.right-normal-art-1{left:375px;top:35px}
+.right-normal-art-2{left:736.8181818px;top:35px}
+.right-corner-divider{
+  position:absolute;
+  left:235.1818182px;
+  top:0;
+  width:8px;
+  height:300px;
+  background:var(--frame);
+}
+.right-perspective-art{
+  left:-60.7272727px;
+  top:35px;
+  transform-origin:0 0;
+  transform:matrix3d(
+    1,.25,0,.002173913043,
+    0,1.5,0,0,
+    0,0,1,0,
+    115,-57.5,0,1
+  );
+}
+/* Counter-mirror text only; the geometry remains an exact canvas mirror. */
+.right-normal-art span,
+.right-perspective-art span{transform:scaleX(-1)}
+
+/* STRAIGHT WALL — same 230px squares and same 2x gap as approved corner. */
+.wall-triplet-left{left:13.1818182px;top:35px}
+.wall-triplet-center{left:375px;top:35px}
+.wall-triplet-right{left:736.8181818px;top:35px}
+
+/* DOOR — temporary placeholder only; no fake full-room image/assets. */
+.door-placeholder{
+  left:375px;
+  top:35px;
+  background:var(--wall-side);
 }
 
-.exhibit-shell[data-view="left"] .room-ceiling,
-.exhibit-shell[data-view="left"] .room-floor,
-.exhibit-shell[data-view="left"] .wall{
-  box-shadow:none;
+/* Existing detail/thumbnail surfaces keep their established behavior. */
+.artwork-view{padding:5% 8% 13%}
+.artwork-large{
+  position:absolute;
+  left:7%;top:7%;bottom:16%;width:58%;
+  display:flex;align-items:center;justify-content:center;
+  border:clamp(4px,.7vw,10px) solid var(--frame);
+  background:var(--art);
+  font-size:clamp(18px,3vw,42px);
+  font-weight:800;
 }
+.artwork-depth{
+  position:absolute;left:68%;right:5%;top:7%;height:11%;
+  display:grid;grid-template-columns:repeat(3,1fr)
+}
+.depth-panel{
+  position:absolute;left:68%;right:5%;top:18%;bottom:16%;
+  display:flex;align-items:center;justify-content:center;padding:4%;
+  border:1px solid var(--line);background:#f5f1e9;
+  font-size:clamp(12px,1.5vw,22px);font-weight:700;text-align:center
+}
+.thumbnail-grid{
+  position:absolute;inset:9% 8% 15%;display:grid;
+  grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(2,1fr);gap:2%
+}
+.thumbnail-grid button{
+  background:var(--art);border:clamp(3px,.45vw,7px) solid var(--frame);
+  font-size:clamp(11px,1.5vw,22px)
+}
+
+.exhibit-controls{height:37px}
+
+@media (orientation:landscape){.exhibit-controls{height:37px}}

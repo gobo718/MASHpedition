@@ -322,3 +322,24 @@ Fixed geometry:
 - Art 22 left edge: 345 px high
 - Art 22 right edge: 230 px high
 - Art 22 clips 22.5 px above and below the 300 px scene by design.
+
+---
+
+# Exhibit geometry — v10 completed room-view family
+
+This pass finishes the structural room-view family around the approved v9
+left-corner geometry.
+
+- LEFT CORNER: unchanged approved v9 geometry.
+- RIGHT CORNER: exact horizontal mirror of LEFT CORNER.
+- WALL: three equal 230 × 230 placeholders using the exact same 131.8181818px
+  gap as the two normal artworks in the approved corner. Side margins are
+  13.1818182px.
+- DOOR: the old fake full-room perspective illustration is removed. The Door
+  control now opens a plain wall with one centered 230 × 230 placeholder labeled
+  DOOR. No exhibit image assets are used for this temporary Door design.
+- The persistent LEFT / RIGHT / THUMBNAIL / DOOR controls remain fixed at the
+  bottom at 37px high.
+- Artwork detail and Thumbnail views remain available.
+- The legacy opening-corner label ART 22 remains temporary and can be renumbered
+  later when the entry sequence is finalized.

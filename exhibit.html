@@ -9,27 +9,12 @@
 <body>
 <main class="exhibit-shell" id="exhibitShell" data-view="door" aria-label="Exhibit view">
   <section class="room-stage" aria-live="polite">
-    <div class="museum-room" id="museumRoom">
-      <div class="room-ceiling"></div>
-      <div class="room-floor"></div>
 
-      <section class="wall wall-left" aria-label="Left exhibit wall">
-        <button class="art art-1" type="button" data-art="1"><span>ART 1</span></button>
-        <button class="art art-2" type="button" data-art="2"><span>ART 2</span></button>
-        <button class="art art-3" type="button" data-art="3"><span>ART 3</span></button>
-      </section>
-
-      <section class="wall wall-front" aria-label="Front exhibit wall">
-        <button class="art art-4" type="button" data-art="4"><span>ART 4</span></button>
-      </section>
-
-      <section class="wall wall-right" aria-label="Right exhibit wall">
-        <button class="art art-5" type="button" data-art="5"><span>ART 5</span></button>
-        <button class="art art-6" type="button" data-art="6"><span>ART 6</span></button>
-        <button class="art art-7" type="button" data-art="7"><span>ART 7</span></button>
-      </section>
-    </div>
-
+    <section class="door-wall-view" id="doorWallView" aria-label="Door placeholder view">
+      <div class="door-wall-canvas">
+        <div class="door-placeholder">DOOR</div>
+      </div>
+    </section>
 
     <section class="left-corner-view" id="leftCornerView" aria-label="Left corner view">
       <div class="left-corner-canvas">
@@ -40,16 +25,25 @@
       </div>
     </section>
 
+    <section class="right-corner-view" id="rightCornerView" aria-label="Right corner view">
+      <div class="right-corner-canvas">
+        <button class="right-perspective-art" type="button" data-art="22"><span>ART 22</span></button>
+        <div class="right-corner-divider" aria-hidden="true"></div>
+        <button class="right-normal-art right-normal-art-1" type="button" data-art="1"><span>ART 1</span></button>
+        <button class="right-normal-art right-normal-art-2" type="button" data-art="2"><span>ART 2</span></button>
+      </div>
+    </section>
+
     <section class="wall-view" id="wallView" aria-label="Wall view">
-      <div class="flat-wall">
-        <button class="wall-art" id="wallArt" type="button" aria-label="Zoom artwork">
-          <span id="wallArtLabel">ART 4</span>
-        </button>
+      <div class="wall-canvas">
+        <button class="wall-triplet-art wall-triplet-left" id="wallLeftArt" type="button"><span id="wallLeftLabel">ART 1</span></button>
+        <button class="wall-triplet-art wall-triplet-center" id="wallCenterArt" type="button"><span id="wallCenterLabel">ART 2</span></button>
+        <button class="wall-triplet-art wall-triplet-right" id="wallRightArt" type="button"><span id="wallRightLabel">ART 3</span></button>
       </div>
     </section>
 
     <section class="artwork-view" id="artworkView" aria-label="Artwork detail">
-      <div class="artwork-large"><span id="artworkLabel">ART 4</span></div>
+      <div class="artwork-large"><span id="artworkLabel">ART 1</span></div>
       <nav class="artwork-depth" aria-label="Artwork information">
         <button type="button" data-depth="image">IMAGE</button>
         <button type="button" data-depth="plaque">PLAQUE</button>
@@ -70,7 +64,7 @@
       </div>
     </section>
 
-    <div class="view-label" id="viewLabel">DOOR / ROOM VIEW</div>
+    <div class="view-label" id="viewLabel">DOOR</div>
   </section>
 
   <nav class="exhibit-controls" aria-label="Exhibit navigation">
