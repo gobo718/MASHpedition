@@ -308,3 +308,42 @@ Corrections / interaction pass:
 - Horizontal swipe is supported across the exhibit room surface, including straight-wall states and Thumbnail View. Swipe left moves one state forward around the 24-state circuit; swipe right moves one state backward. This mirrors the RIGHT / LEFT controls.
 - Thumbnail View retains all 22 room thumbnails on one screen, arranged 5 / 6 / 6 / 5. The 5-item top and bottom rows are centered.
 - Grand Exhibition Hall exhibit addressing is capped at 66 (`MAX_EXHIBITS = 66`); any requested exhibit index above 66 clamps to 66. This matches the current 66-Theme ceiling rather than allowing stray 88-exhibit values.
+
+
+## Exhibit View v10 — 2026-09-08
+
+Fast correction pass to separate the exhibit room circuit from the endless-wall browser concept.
+
+What changed:
+- The exhibit room remains the fixed 24-state room circuit with corners and fixed DOOR positions.
+- The room's head-on three-art states are relabeled as FRONT WALL VIEW rather than being treated as a separate endless-wall system.
+- FRONT WALL presentation was corrected to look like three equal artworks hanging on a wall, with more visible wall space around them.
+- Added a separate ENDLESS WALL VIEW prototype on the same surface: no doors, no corners, no wrapping topology, just the repeated 3-art sequence 1/2/3 -> 2/3/4 -> 3/4/5 and so on forever.
+- THUMBNAIL cycles to THUMBNAIL VIEW, then ENDLESS WALL VIEW, then back to the exhibit room.
+- In ENDLESS WALL VIEW, LEFT/RIGHT and swipe move through the repeating 3-art sequence.
+- DOOR from ENDLESS WALL VIEW returns to the exhibit room.
+
+This is a fast structural correction so the two systems stop being conflated.
+
+
+## v10 — Exhibit vs Endless Wall separation
+
+The earlier build incorrectly conflated the Exhibit room's front-facing camera composition with the separate Endless Wall browsing system. They are now separate surfaces.
+
+### Exhibit View
+- Remains a physical 22-position exhibit room with the existing 24-state camera circuit.
+- It still includes left-corner, front-wall, and right-corner camera positions, including the fixed architectural door positions previously specified.
+- Front-wall camera positions now use three equal, normally sized framed works with visible wall around them.
+- The user-facing label now says EXHIBIT — FRONT WALL so it is not confused with Endless Wall.
+
+### Endless Wall
+- New separate `endless-wall.html` surface.
+- No room topology.
+- No doors.
+- No corners.
+- No dedicated exhibit spots.
+- No wraparound.
+- It simply repeats the Exhibit front-wall visual component forever: 1/2/3, then 2/3/4, then 3/4/5, etc.
+- Horizontal swipe and LEFT/RIGHT controls advance the sequence by one item.
+- Thumbnail View is a moving 22-item browsing window, arranged 5/6/6/5 with the first and last rows centered.
+- SALON ECLECTIQUE temporarily links to this surface because SALON uses the non-room scrolling-wall family rather than dedicated exhibit-room topology.

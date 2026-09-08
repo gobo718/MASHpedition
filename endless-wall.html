@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>MASHpedition Endless Wall</title>
+<link rel="stylesheet" href="endless-wall.css">
+</head>
+<body>
+<main class="endless-shell" id="endlessShell" data-view="wall" aria-label="Endless Wall view">
+  <section class="endless-stage" id="endlessStage" aria-live="polite">
+    <div class="endless-wall" id="endlessWall">
+      <button class="endless-art" id="wallA" type="button"></button>
+      <button class="endless-art" id="wallB" type="button"></button>
+      <button class="endless-art" id="wallC" type="button"></button>
+    </div>
+
+    <section class="endless-thumbnails" id="thumbnailView" aria-label="Thumbnail view">
+      <div class="thumbnail-grid" id="thumbnailGrid"></div>
+    </section>
+
+    <div class="view-label" id="viewLabel">ENDLESS WALL</div>
+  </section>
+
+  <nav class="endless-controls" aria-label="Endless Wall navigation">
+    <button type="button" id="leftBtn">LEFT</button>
+    <button type="button" id="rightBtn">RIGHT</button>
+    <button type="button" id="thumbnailBtn">THUMBNAILS</button>
+    <a href="index.html">MUSEUM</a>
+  </nav>
+</main>
+<script src="endless-wall.js"></script>
+</body>
+</html>
