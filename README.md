@@ -343,3 +343,27 @@ left-corner geometry.
 - Artwork detail and Thumbnail views remain available.
 - The legacy opening-corner label ART 22 remains temporary and can be renumbered
   later when the entry sequence is finalized.
+
+---
+
+# Exhibit room views — v11 cache-safe repair
+
+The v10 screenshots revealed a mixed-version browser load: the new v10 HTML
+was being displayed with older cached exhibit CSS/JS. That is why raw DOOR /
+ART buttons appeared at the upper left and why RIGHT behaved like the older
+prototype navigation.
+
+v11 fixes the delivery problem rather than changing the approved geometry:
+
+- `exhibit.html` now loads `exhibit-v11.css` and `exhibit-v11.js`.
+- The new filenames force a fresh browser/GitHub Pages asset request.
+- DOOR, LEFT CORNER, RIGHT CORNER, WALL, ARTWORK, and THUMBNAIL are mutually
+  exclusive display states.
+- DOOR shows only the centered temporary DOOR wall placeholder.
+- LEFT CORNER remains the approved v9 geometry.
+- RIGHT CORNER remains its exact mirror.
+- WALL remains the three-square 230px layout.
+- LEFT and RIGHT from DOOR open their corresponding corner.
+- RIGHT from LEFT CORNER opens RIGHT CORNER; it no longer falls back into the
+  stale Door/Room prototype.
+- Thumbnail remains available; no user retest of the broken v10 build is needed.
