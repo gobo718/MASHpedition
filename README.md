@@ -520,3 +520,80 @@ non-interactive placeholder.
 
 Thumbnail view behavior is unchanged; its list is simply expanded from
 Art 1–7 to Art 1–22. The grid is expanded to 6 × 4 so all 22 remain visible.
+
+---
+
+# Shared viewing engine — v17
+
+v17 turns the existing room prototype into the reusable viewing foundation.
+The approved v9-v16 room geometry and v16 overhead/exhibit geometry are preserved.
+
+## Three view mixes
+
+- **Mix A:** Thumbnails + Endless Wall
+- **Mix B:** Exhibit View + Room View + Thumbnails
+- **Mix C:** Exhibit View + Room View + Thumbnails + Endless Wall
+
+Area-specific search choices, filters, labels, unlocks, and visual skins are deliberately
+not defined by the shared engine. Those can differ while reusing the same viewer.
+
+## Endless Wall
+
+Endless Wall reuses the exact approved straight-wall three-slot geometry:
+
+- no corners
+- no doors
+- no looping from the end back to the beginning
+- LEFT/RIGHT move through one linear result sequence
+- only three artwork positions exist in the DOM at once
+
+Large result sets are paginated internally in batches of **22**. Crossing a batch
+boundary swaps the loaded page; the page is not rendered all at once. "Endless" means
+continuous navigation, not unlimited simultaneous image loading.
+
+## Thumbnail pagination
+
+Generic large result sets render only the current page, **22 thumbnails at a time**.
+LEFT/RIGHT switch pages. The DOM never contains the complete large result set.
+
+## Grand Exhibition Hall rank layers
+
+The default v17 prototype is Mix B in GEH mode.
+
+- Room View remains rank-1-only and has no 1st/2nd/3rd selector.
+- Exhibit View has a left-side rank selector.
+- Thumbnail View has the same rank selector.
+- 2nd and 3rd do not exist in the selector until their unlock is available.
+- Selecting 2nd or 3rd replaces the same 22 Theme positions. It does **not** add
+  another 22 thumbnails or preload all 66 images.
+- Only the selected rank layer is rendered/loaded.
+
+For prototype testing, GEH unlock depth is controlled by the URL:
+
+- `exhibit.html?mix=B&ranks=1&start=exhibit` — 1st only
+- `exhibit.html?mix=B&ranks=2&start=exhibit` — 1st + 2nd
+- `exhibit.html?mix=B&ranks=3&start=exhibit` — all three
+
+## Artwork View
+
+The first screen is now the locked **340 / 300 / 340** layout inside the 980px
+landscape scene:
+
+- 340px left — area/rank/time, two emoji, Theme, creator
+- 300px center — artwork viewport, full 300px scene height
+- 340px right — plaque
+
+Scrolling down reveals Blurblets. Tapping the centered artwork or plaque opens a
+full viewing-area expansion. BACK restores the exact Artwork View scroll position.
+The old IMAGE / PLAQUE / BLURBLETS tab strip is removed.
+
+## Prototype launcher
+
+Open `viewer-test.html` to jump directly into:
+
+- Mix A
+- Mix B with 1, 2, or 3 GEH rank unlocks
+- Mix C
+- a 120-result Endless Wall pagination test
+
+The launcher is a development/testing surface only. It does not define final game UI.

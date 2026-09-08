@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>MASHpedition Exhibit View</title>
-<!-- v16: complete overhead room map + thumbnails 1-22 -->
-<link rel="stylesheet" href="exhibit-v16.css">
+<!-- v17: shared viewing engine + endless wall + GEH rank layers + artwork view -->
+<link rel="stylesheet" href="exhibit-v17.css">
 </head>
 <body>
 <main class="exhibit-shell" id="exhibitShell" data-view="door" aria-label="Exhibit view">
@@ -120,62 +120,98 @@
         <button class="overhead-slot oh-bottom oh-bottom-5" type="button" data-room-index="21"><span></span></button>
         <button class="overhead-slot oh-bottom oh-bottom-6" type="button" data-room-index="20"><span></span></button>
 
+        <nav class="rank-selector exhibit-ranks" id="exhibitRanks" aria-label="Grand Exhibition Hall rank layer">
+          <button type="button" data-rank="1">1ST</button>
+          <button type="button" data-rank="2">2ND</button>
+          <button type="button" data-rank="3">3RD</button>
+        </nav>
+
         <div class="overhead-center-label" aria-hidden="true">ROOM</div>
       </div>
     </section>
 
-    <!-- Existing artwork-depth placeholder retained; click design comes later. -->
+    <!-- v17 Artwork View: exact 340 / 300 / 340 first screen. -->
     <section class="artwork-view" id="artworkView" aria-label="Artwork detail">
-      <div class="artwork-large"><span id="artworkLabel">ART 1</span></div>
-      <nav class="artwork-depth" aria-label="Artwork information">
-        <button type="button" data-depth="image">IMAGE</button>
-        <button type="button" data-depth="plaque">PLAQUE</button>
-        <button type="button" data-depth="blurblets">BLURBLETS</button>
-      </nav>
-      <div class="depth-panel" id="depthPanel">IMAGE DETAIL</div>
+      <div class="artwork-scroll" id="artworkScroll">
+        <div class="artwork-top-row">
+          <section class="artwork-metadata" aria-label="Artwork metadata">
+            <button class="artwork-back" id="artworkBack" type="button">BACK</button>
+            <div class="artwork-meta-copy">
+              <strong id="artworkArea">GRAND EXHIBITION HALL</strong>
+              <span id="artworkRankTime">#1 · ALL TIME</span>
+              <span class="artwork-emojis" id="artworkEmojis">🎭 ✨</span>
+              <span id="artworkTheme">THEME 1</span>
+              <button class="creator-link" id="creatorLink" type="button">Creator01</button>
+            </div>
+          </section>
+
+          <button class="artwork-center" id="artworkCenter" type="button" aria-label="Expand artwork">
+            <span id="artworkLabel">ART 1</span>
+          </button>
+
+          <button class="artwork-plaque" id="artworkPlaque" type="button" aria-label="Expand plaque">
+            <strong>PLAQUE</strong>
+            <span id="plaqueText">A placeholder plaque for this artwork. Tap to fill the viewing area.</span>
+          </button>
+        </div>
+
+        <section class="blurblet-section" aria-label="Blurblets">
+          <header>
+            <strong>BLURBLETS</strong>
+            <span>TOP · TIME</span>
+          </header>
+          <article><strong>Blurblet 1</strong><p>Placeholder comment layer for the selected artwork.</p></article>
+          <article><strong>Blurblet 2</strong><p>Normal lighting shows ordinary Blurblets. Spotlight behavior stays separate.</p></article>
+          <article><strong>Blurblet 3</strong><p>This section can continue vertically without changing the first-screen geometry.</p></article>
+        </section>
+      </div>
     </section>
 
-    <!-- Thumbnail behavior is not being redesigned in this room-construction pass. -->
+    <!-- Thumbnails render only the current page. GEH rank layers replace
+         the same 22 slots rather than loading 66 images at once. -->
     <section class="thumbnail-view" id="thumbnailView" aria-label="Thumbnail view">
-      <div class="thumbnail-grid">
-        <button type="button" data-art="1">ART 1</button>
-        <button type="button" data-art="2">ART 2</button>
-        <button type="button" data-art="3">ART 3</button>
-        <button type="button" data-art="4">ART 4</button>
-        <button type="button" data-art="5">ART 5</button>
-        <button type="button" data-art="6">ART 6</button>
-        <button type="button" data-art="7">ART 7</button>
-        <button type="button" data-art="8">ART 8</button>
-        <button type="button" data-art="9">ART 9</button>
-        <button type="button" data-art="10">ART 10</button>
-        <button type="button" data-art="11">ART 11</button>
-        <button type="button" data-art="12">ART 12</button>
-        <button type="button" data-art="13">ART 13</button>
-        <button type="button" data-art="14">ART 14</button>
-        <button type="button" data-art="15">ART 15</button>
-        <button type="button" data-art="16">ART 16</button>
-        <button type="button" data-art="17">ART 17</button>
-        <button type="button" data-art="18">ART 18</button>
-        <button type="button" data-art="19">ART 19</button>
-        <button type="button" data-art="20">ART 20</button>
-        <button type="button" data-art="21">ART 21</button>
-        <button type="button" data-art="22">ART 22</button>
+      <nav class="rank-selector thumbnail-ranks" id="thumbnailRanks" aria-label="Grand Exhibition Hall rank layer">
+        <button type="button" data-rank="1">1ST</button>
+        <button type="button" data-rank="2">2ND</button>
+        <button type="button" data-rank="3">3RD</button>
+      </nav>
+      <div class="thumbnail-status" id="thumbnailStatus"></div>
+      <div class="thumbnail-grid" id="thumbnailGrid"></div>
+    </section>
+
+    <!-- ENDLESS WALL: approved straight-wall geometry with a linear result
+         sequence. No corners, no doors, no wraparound. -->
+    <section class="endless-view" id="endlessView" aria-label="Endless wall view">
+      <div class="endless-canvas">
+        <button class="endless-art endless-left" id="endlessLeftArt" type="button"><span></span></button>
+        <button class="endless-art endless-center" id="endlessCenterArt" type="button"><span></span></button>
+        <button class="endless-art endless-right" id="endlessRightArt" type="button"><span></span></button>
+        <div class="endless-status" id="endlessStatus"></div>
       </div>
+    </section>
+
+    <!-- Expanded artwork/plaque overlay. Returning restores the exact
+         Artwork View scroll position. -->
+    <section class="artwork-expand" id="artworkExpand" aria-label="Expanded artwork information">
+      <button class="expand-back" id="expandBack" type="button">BACK</button>
+      <div class="expand-content" id="expandContent"></div>
     </section>
 
     <div class="view-label" id="viewLabel">DOOR</div>
   </section>
 
-  <nav class="exhibit-controls" aria-label="Exhibit navigation">
+  <nav class="exhibit-controls" id="exhibitControls" aria-label="Viewing navigation">
     <button type="button" id="leftBtn">LEFT</button>
     <button type="button" id="rightBtn">RIGHT</button>
-    <button type="button" id="overheadBtn">OVERHEAD</button>
-    <button type="button" id="thumbnailBtn">THUMBNAIL</button>
+    <button type="button" id="overheadBtn" data-capability="exhibit">EXHIBIT</button>
+    <button type="button" id="roomBtn" data-capability="room">ROOM</button>
+    <button type="button" id="thumbnailBtn" data-capability="thumbnail">THUMBNAILS</button>
+    <button type="button" id="endlessBtn" data-capability="endless">ENDLESS</button>
     <button type="button" id="doorBtn">DOOR</button>
   </nav>
 
   <a class="museum-return" href="index.html">MUSEUM</a>
 </main>
-<script src="exhibit-v16.js"></script>
+<script src="exhibit-v17.js"></script>
 </body>
 </html>

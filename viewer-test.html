@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>MASHpedition v17 Viewer Test</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;padding:28px;background:#e9e3d8;color:#191919;font-family:Arial,Helvetica,sans-serif}
+main{max-width:760px;margin:0 auto}
+h1{font-size:22px;margin:0 0 18px}
+p{font-size:14px;line-height:1.4}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+a{display:flex;min-height:54px;align-items:center;justify-content:center;padding:10px;border:2px solid #39352f;background:#f7f4ed;color:#191919;text-align:center;text-decoration:none;font-weight:800}
+small{display:block;margin-top:20px;line-height:1.45}
+</style>
+</head>
+<body>
+<main>
+<h1>v17 Shared Viewer Test</h1>
+<p>These are engine test presets only. They do not define the final search/options UI for any area.</p>
+<div class="grid">
+  <a href="exhibit.html?mix=A&amp;start=thumbnail">MIX A<br>Thumbnails + Endless Wall</a>
+  <a href="exhibit.html?mix=B&amp;ranks=1&amp;start=exhibit">MIX B · GEH START<br>1st only</a>
+  <a href="exhibit.html?mix=B&amp;ranks=2&amp;start=exhibit">MIX B · GEH<br>1st + 2nd unlocked</a>
+  <a href="exhibit.html?mix=B&amp;ranks=3&amp;start=exhibit">MIX B · GEH<br>1st + 2nd + 3rd unlocked</a>
+  <a href="exhibit.html?mix=C&amp;start=exhibit">MIX C<br>All four views</a>
+  <a href="exhibit.html?mix=C&amp;start=endless&amp;count=120">ENDLESS WALL<br>120-result pagination test</a>
+</div>
+<small>Generic Thumbnail and Endless Wall result sets use pages of 22. GEH Thumbnail rank switching replaces the same 22 Theme slots; it never creates a 66-image page.</small>
+</main>
+</body>
+</html>
