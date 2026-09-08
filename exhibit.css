@@ -238,25 +238,50 @@ button{border-radius:0}
 
 
 /* ------------------------------------------------------------------
-   v7 exact left-corner geometry
-   Target CSS viewport from the approved landscape capture:
-   1536px wide × 504px high.
-   Bottom controls: 55px.
-   Usable corner scene: 1536px × 449px.
+   v8 exact left-corner geometry — fitted to Billy's actual landscape
+   CSS viewport.
 
-   Base art viewport: 300px × 300px.
-   Art 1 is centered exactly at x=768.
-   Art 22 is homography-warped from the same 300px square:
-     visible width = 150px
-     left edge     = 450px tall
-     right edge    = 300px tall
-   No shadows, side-wall wedges, floor/ceiling shapes, or decorative
-   perspective geometry are used in this left-corner view.
+   Physical capture: 1536 × 607 px.
+   Browser/page scale observed from the 300 CSS px v7 artwork:
+   1 CSS px = 1.5 capture px.
+   Therefore the page viewport is 980 CSS px wide and ~337 CSS px tall.
+
+   Hard-coded exhibit viewport:
+     full viewport: 980 × 337
+     bottom controls: 37
+     usable art scene: 980 × 300
+
+   Base square S = 200.
+   It is the largest square that allows Art 22's 1.5× left edge
+   to remain completely visible: 1.5 × 200 = 300.
+
+   Horizontal spacing unit X = (980 - 3×200) / 8 = 47.5.
+
+   Nominal square layout:
+     47.5 | Art22 200 | 47.5 | LINE |
+     95 | Art1 200 | 95 | Art2 200 | 95
+
+   Art1 center:
+     x = 390 + 100 = 490 = exact viewport center.
+
+   Art22 is then projectively warped inside its nominal 200×200 slot.
+   Its visible result occupies the RIGHT half of that slot, leaving the
+   unused half transparent:
+     visible width = 100 (half of 200)
+     left edge = 300 high (1.5×)
+     right edge = 200 high
+     both edges vertically centered in the 300-high scene.
+
+   No fake room walls, shadows, wedges, floors, ceilings, or side shapes
+   are shown in LEFT CORNER VIEW.
    ------------------------------------------------------------------ */
 
 .left-corner-view{
   position:absolute;
-  inset:0;
+  left:0;
+  right:0;
+  top:0;
+  bottom:37px;
   display:none;
   z-index:5;
   overflow:hidden;
@@ -275,8 +300,8 @@ button{border-radius:0}
   position:absolute;
   left:50%;
   top:0;
-  width:1536px;
-  height:449px;
+  width:980px;
+  height:300px;
   transform:translateX(-50%);
   overflow:visible;
   background:transparent;
@@ -284,14 +309,14 @@ button{border-radius:0}
 
 .corner-art{
   position:absolute;
-  width:300px;
-  height:300px;
+  width:200px;
+  height:200px;
   margin:0;
   padding:0;
   display:flex;
   align-items:center;
   justify-content:center;
-  border:8px solid var(--frame);
+  border:5px solid var(--frame);
   border-radius:0;
   background:var(--art);
   color:#201d19;
@@ -299,7 +324,7 @@ button{border-radius:0}
   appearance:none;
   font-weight:800;
   letter-spacing:.05em;
-  font-size:20px;
+  font-size:14px;
   overflow:hidden;
 }
 
@@ -309,58 +334,39 @@ button{border-radius:0}
 
 .corner-divider{
   position:absolute;
-  left:450px;
+  left:295px;
   top:0;
   width:8px;
-  height:449px;
+  height:300px;
   background:var(--frame);
 }
 
-/* Art 1: exact horizontal center of 1536px viewport. */
 .corner-art-1{
-  left:618px;
-  top:75px;
+  left:390px;
+  top:50px;
 }
 
-/* 160px gap (= 2 × 80px) after Art 1. */
 .corner-art-2{
-  left:1078px;
-  top:75px;
+  left:685px;
+  top:50px;
 }
 
-/*
-  Art 22 begins as the same 300×300 square as Art 1/2.
-  This fixed projective matrix maps its corners to:
-    TL (0,0)
-    TR (150,75)
-    BR (150,375)
-    BL (0,450)
-
-  Result:
-    - horizontal compression to 1/2 base width
-    - right side remains 300px high
-    - left side becomes 450px high (1.5×)
-    - both sides remain vertically centered on y=224.5
-*/
 .corner-art-22{
-  left:220px;
-  top:0;
+  left:47.5px;
+  top:50px;
   transform-origin:0 0;
   transform:matrix3d(
-    .75,.375,0,.0016666667,
+    1,.25,0,.0025,
     0,1.5,0,0,
     0,0,1,0,
-    0,0,0,1
+    100,-50,0,1
   );
 }
 
-/* Use actual landscape navigation height rather than a percentage guess. */
-@media (orientation:landscape) and (min-width:1200px){
-  .exhibit-controls{height:55px}
+@media (orientation:landscape){
+  .exhibit-controls{height:37px}
 }
 
-/* The left-corner construction deliberately suppresses the old fake-room
-   geometry only while LEFT CORNER VIEW is active. */
 .exhibit-shell[data-view="left"] .room-ceiling,
 .exhibit-shell[data-view="left"] .room-floor,
 .exhibit-shell[data-view="left"] .wall{

@@ -277,3 +277,26 @@ The LEFT CORNER VIEW is now a deterministic hard-coded construction for the
 - Art 22 right edge: 300 px (same as base)
 - No fake wall wedges, floor/ceiling shapes, or shadows appear in LEFT CORNER VIEW.
 - Other exhibit views are intentionally left unchanged in this geometry pass.
+
+---
+
+# Exhibit left-corner geometry — v8 viewport fit
+
+Corrects the earlier assumption that the 1536-pixel screen capture was
+1536 CSS pixels. The actual landscape page viewport is 980 CSS pixels wide.
+
+LEFT CORNER VIEW:
+- Full viewport: 980 × ~337 CSS px
+- Bottom controls: 37 px
+- Art scene: 980 × 300 px
+- Base square: 200 × 200 px
+- Spacing unit: 47.5 px
+- Divider: x=295, width=8
+- Art 1: x=390, y=50; exact center x=490
+- Art 2: x=685, y=50
+- Art 22 nominal square slot: x=47.5, y=50, 200 × 200
+- Art 22 visible warped corners:
+  (147.5,0), (247.5,50), (247.5,250), (147.5,300)
+- Art 22 visible width: 100 px
+- Art 22 left edge: 300 px
+- Art 22 right edge: 200 px
