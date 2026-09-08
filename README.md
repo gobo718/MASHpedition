@@ -109,3 +109,48 @@ The Museum Hub shell currently defines structural geography only. It does not es
 
 Exact shell proportions above are intentional and should be preserved unless explicitly revised.
 
+
+
+---
+
+# Laboratory Shell — Added 2026-09-07
+
+The Museum Hub **Lab** destination now opens `lab.html`.
+
+This is a structural playground shell, not a final visual-design lock. It translates established Laboratory mechanics into a usable page without inventing progression timing.
+
+Current Laboratory shell regions:
+
+- **Left 30% — Mutosis inputs and controls**
+  - Emoji A
+  - Emoji B
+  - Fields
+  - Keywords
+  - basic Left / Center / Right weighting controls
+  - reserved physical control bay for later/unlocked machine controls
+- **Center 45% — Mutosis Machine**
+  - physical machine/result area
+  - Activate Mutosis
+  - Save
+  - Discard / Retry
+  - Submit
+  - Review Drafts
+- **Right 25% — Mosaic Tracker**
+  - fast view of unlocked unfinished Mosaics
+  - supports known or hidden subject state
+  - supports all, some, or none of the missing requirements being revealed
+  - must never expose information the player has not actually learned
+
+The Mosaic Tracker is an information-state display, not a guaranteed recipe/checklist. The placeholder rows intentionally demonstrate the four visibility patterns without establishing actual Mosaic content.
+
+Files added:
+
+- `lab.html` — Laboratory structural shell
+- `lab.css` — Laboratory shell geometry
+
+Navigation change:
+
+- Museum Hub **LAB** now links to `lab.html`.
+- Laboratory uses the same temporary fixed **MUSEUM** return control as the Residence.
+
+No Residence geometry was changed. No progression order, Gem unlock timing, Mosaic content, art style, or final Laboratory visual treatment is established by this shell.

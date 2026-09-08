@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>MASHpedition Laboratory</title>
+<link rel="stylesheet" href="lab.css">
+</head>
+<body>
+<a class="museum-exit" href="index.html" aria-label="Return to Museum">MUSEUM</a>
+<main class="laboratory">
+
+  <section class="lab-inputs" aria-label="Mutosis inputs">
+    <div class="lab-heading">LABORATORY</div>
+
+    <div class="emoji-pair" aria-label="Emoji inputs">
+      <button class="emoji-input" type="button" aria-label="Select Emoji A">
+        <span class="emoji-slot">A</span>
+        <span class="input-label">EMOJI A</span>
+      </button>
+      <div class="plus" aria-hidden="true">+</div>
+      <button class="emoji-input" type="button" aria-label="Select Emoji B">
+        <span class="emoji-slot">B</span>
+        <span class="input-label">EMOJI B</span>
+      </button>
+    </div>
+
+    <div class="input-tools" aria-label="Mutosis guidance">
+      <button type="button">FIELDS</button>
+      <button type="button">KEYWORDS</button>
+    </div>
+
+    <section class="machine-controls" aria-label="Machine controls">
+      <div class="section-label">MACHINE CONTROLS</div>
+      <div class="weight-controls" aria-label="Weighting controls">
+        <button type="button">LEFT</button>
+        <button type="button">CENTER</button>
+        <button type="button">RIGHT</button>
+      </div>
+      <div class="control-bay" aria-label="Additional unlocked machine controls"></div>
+    </section>
+  </section>
+
+  <section class="mutosis-machine" aria-label="Mutosis machine">
+    <div class="machine-top">MUTOSIS MACHINE</div>
+    <div class="machine-body">
+      <div class="machine-port left-port" aria-hidden="true"></div>
+      <div class="result-window" aria-label="Mashup result">
+        <div class="result-placeholder">MASHUP</div>
+      </div>
+      <div class="machine-port right-port" aria-hidden="true"></div>
+    </div>
+    <button class="activate" type="button">ACTIVATE MUTOSIS</button>
+
+    <div class="result-actions" aria-label="Mashup actions">
+      <button type="button">SAVE</button>
+      <button type="button">DISCARD / RETRY</button>
+      <button type="button">SUBMIT</button>
+      <button type="button">REVIEW DRAFTS</button>
+    </div>
+  </section>
+
+  <aside class="mosaic-tracker" aria-label="Mosaic Tracker">
+    <div class="tracker-heading">MOSAIC TRACKER</div>
+    <div class="tracker-note">UNFINISHED UNLOCKED MOSAICS</div>
+
+    <button class="mosaic-row" type="button" aria-label="Mosaic with subject and all clues known">
+      <span class="mosaic-subject">SUBJECT KNOWN</span>
+      <span class="mosaic-clues"><b>✓</b><b>?</b><b>?</b><b>?</b></span>
+    </button>
+
+    <button class="mosaic-row" type="button" aria-label="Mosaic with subject known and only some clues known">
+      <span class="mosaic-subject">SUBJECT KNOWN</span>
+      <span class="mosaic-clues"><b>✓</b><b>?</b><i>HIDDEN</i><i>HIDDEN</i></span>
+    </button>
+
+    <button class="mosaic-row" type="button" aria-label="Mosaic with subject hidden and partial clues known">
+      <span class="mosaic-subject unknown">SUBJECT ???</span>
+      <span class="mosaic-clues"><b>✓</b><b>?</b><i>HIDDEN</i><i>HIDDEN</i></span>
+    </button>
+
+    <button class="mosaic-row" type="button" aria-label="Mosaic with all details hidden">
+      <span class="mosaic-subject unknown">SUBJECT ???</span>
+      <span class="mosaic-clues"><i>HIDDEN</i><i>HIDDEN</i><i>HIDDEN</i><i>HIDDEN</i></span>
+    </button>
+
+    <div class="tracker-rule">ONLY REVEALED INFORMATION APPEARS HERE</div>
+  </aside>
+
+</main>
+</body>
+</html>
