@@ -238,42 +238,40 @@ button{border-radius:0}
 
 
 /* ------------------------------------------------------------------
-   v8 exact left-corner geometry — fitted to Billy's actual landscape
-   CSS viewport.
+   v9 exact left-corner geometry — 15% larger art + 0.20x right margin
 
-   Physical capture: 1536 × 607 px.
-   Browser/page scale observed from the 300 CSS px v7 artwork:
-   1 CSS px = 1.5 capture px.
-   Therefore the page viewport is 980 CSS px wide and ~337 CSS px tall.
+   Hard-coded landscape exhibit viewport:
+     width          W = 980px
+     scene height   H = 300px
+     control band      = 37px
 
-   Hard-coded exhibit viewport:
-     full viewport: 980 × 337
-     bottom controls: 37
-     usable art scene: 980 × 300
+   Base artwork square:
+     S = 230px
 
-   Base square S = 200.
-   It is the largest square that allows Art 22's 1.5× left edge
-   to remain completely visible: 1.5 × 200 = 300.
+   Art 1 is centered exactly:
+     left = 490 - S/2 = 375px
 
-   Horizontal spacing unit X = (980 - 3×200) / 8 = 47.5.
+   Solve spacing x using the requested 0.20x margin after Art 2:
+     Art2 right = 835 + 2x
+     right margin = 980 - (835 + 2x) = 0.20x
+     145 = 2.20x
+     x = 65.9090909px
 
-   Nominal square layout:
-     47.5 | Art22 200 | 47.5 | LINE |
-     95 | Art1 200 | 95 | Art2 200 | 95
+   Result:
+     Art22 visible left edge -> viewport = 54.2727273px  (< 1x)
+     Art22 visible right -> divider    = 65.9090909px  (= 1x)
+     divider right -> Art1             = 131.8181818px (= 2x)
+     Art1 -> Art2                      = 131.8181818px (= 2x)
+     Art2 -> viewport right            = 13.1818182px  (= 0.20x)
 
-   Art1 center:
-     x = 390 + 100 = 490 = exact viewport center.
+   Art22:
+     source square = 230 × 230
+     visible width = 115 (= 0.5S)
+     left edge     = 345 (= 1.5S), centered vertically
+     right edge    = 230 (= 1.0S), centered vertically
+     tall left edge intentionally clips 22.5px above and below scene.
 
-   Art22 is then projectively warped inside its nominal 200×200 slot.
-   Its visible result occupies the RIGHT half of that slot, leaving the
-   unused half transparent:
-     visible width = 100 (half of 200)
-     left edge = 300 high (1.5×)
-     right edge = 200 high
-     both edges vertically centered in the 300-high scene.
-
-   No fake room walls, shadows, wedges, floors, ceilings, or side shapes
-   are shown in LEFT CORNER VIEW.
+   No fake side walls, wedges, floors, ceilings, or shadows.
    ------------------------------------------------------------------ */
 
 .left-corner-view{
@@ -303,14 +301,15 @@ button{border-radius:0}
   width:980px;
   height:300px;
   transform:translateX(-50%);
-  overflow:visible;
+  overflow:hidden;
   background:transparent;
 }
 
 .corner-art{
   position:absolute;
-  width:200px;
-  height:200px;
+  box-sizing:border-box;
+  width:230px;
+  height:230px;
   margin:0;
   padding:0;
   display:flex;
@@ -332,34 +331,57 @@ button{border-radius:0}
   pointer-events:none;
 }
 
+/* Thick vertical corner line. */
 .corner-divider{
   position:absolute;
-  left:295px;
+  left:235.1818182px;
   top:0;
   width:8px;
   height:300px;
   background:var(--frame);
 }
 
+/* Exact viewport center: 375 + 115 = 490. */
 .corner-art-1{
-  left:390px;
-  top:50px;
+  left:375px;
+  top:35px;
 }
 
+/* 2x = 131.8181818px after Art 1. */
 .corner-art-2{
-  left:685px;
-  top:50px;
+  left:736.8181818px;
+  top:35px;
 }
 
+/*
+  Art22 nominal 230×230 square:
+     left = -60.7272727
+     top  = 35
+
+  Homography maps source corners to:
+     TL (115,-57.5)
+     TR (230,0)
+     BR (230,230)
+     BL (115,287.5)
+
+  Absolute visible corners:
+     TL (54.2727273,-22.5)
+     TR (169.2727273,35)
+     BR (169.2727273,265)
+     BL (54.2727273,322.5)
+
+  Therefore the visible left-side blank is 54.27px, which is
+  smaller than the 65.91px Art22-to-divider gap.
+*/
 .corner-art-22{
-  left:47.5px;
-  top:50px;
+  left:-60.7272727px;
+  top:35px;
   transform-origin:0 0;
   transform:matrix3d(
-    1,.25,0,.0025,
+    1,.25,0,.002173913043,
     0,1.5,0,0,
     0,0,1,0,
-    100,-50,0,1
+    115,-57.5,0,1
   );
 }
 

@@ -300,3 +300,25 @@ LEFT CORNER VIEW:
 - Art 22 visible width: 100 px
 - Art 22 left edge: 300 px
 - Art 22 right edge: 200 px
+
+---
+
+# Exhibit left-corner geometry — v9
+
+Implements the accepted 15% enlargement and 0.20x right-side margin.
+
+Fixed geometry:
+- Viewport width: 980 CSS px
+- Scene height: 300 CSS px
+- Art square: 230 × 230 CSS px
+- Spacing unit x: 65.9090909 px
+- Art 1: left 375, top 35; exact center x=490
+- Art 2: left 736.8181818, top 35
+- Right margin after Art 2: 13.1818182 px = 0.20x
+- Divider: left 235.1818182, width 8
+- Art 22 visible left blank: 54.2727273 px
+- Art 22-to-divider gap: 65.9090909 px = 1x
+- Art 22 visible width: 115 px
+- Art 22 left edge: 345 px high
+- Art 22 right edge: 230 px high
+- Art 22 clips 22.5 px above and below the 300 px scene by design.
