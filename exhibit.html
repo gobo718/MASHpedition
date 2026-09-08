@@ -4,47 +4,52 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>MASHpedition Exhibit View</title>
-<!-- v13: artwork numbering shifted one physical position left; doors stay fixed -->
-<link rel="stylesheet" href="exhibit-v13.css">
+<!-- v14: complete 24-position exhibit-room circuit -->
+<link rel="stylesheet" href="exhibit-v14.css">
 </head>
 <body>
 <main class="exhibit-shell" id="exhibitShell" data-view="door" aria-label="Exhibit view">
   <section class="room-stage" aria-live="polite">
 
-    <section class="door-wall-view" id="doorWallView" aria-label="Door placeholder view">
+    <!-- Entry transition remains intentionally temporary. -->
+    <section class="door-wall-view" id="doorWallView" aria-label="Door entry placeholder view">
       <div class="door-wall-canvas">
         <div class="door-placeholder">DOOR</div>
       </div>
     </section>
 
+    <!-- LEFT CORNER: perspective slot on screen-left, then two normal slots. -->
     <section class="left-corner-view" id="leftCornerView" aria-label="Left corner view">
       <div class="left-corner-canvas">
-        <button class="corner-art corner-art-22" type="button" data-art="1"><span>ART 1</span></button>
+        <button class="corner-art corner-art-22" id="leftPerspectiveSlot" type="button"><span></span></button>
         <div class="corner-divider" aria-hidden="true"></div>
-        <button class="corner-art corner-art-1" type="button" data-art="2"><span>ART 2</span></button>
-        <button class="corner-art corner-art-2" type="button" data-art="3"><span>ART 3</span></button>
+        <button class="corner-art corner-art-1" id="leftNormalSlot1" type="button"><span></span></button>
+        <button class="corner-art corner-art-2" id="leftNormalSlot2" type="button"><span></span></button>
       </div>
     </section>
 
+    <!-- RIGHT CORNER: exact geometry mirror. DOM order differs from visual order. -->
     <section class="right-corner-view" id="rightCornerView" aria-label="Right corner view">
       <div class="right-corner-canvas">
-        <button class="right-perspective-art" type="button" data-art="1"><span>ART 1</span></button>
+        <button class="right-perspective-art" id="rightPerspectiveSlot" type="button"><span></span></button>
         <div class="right-corner-divider" aria-hidden="true"></div>
-        <button class="right-normal-art right-normal-art-1" type="button" data-art="2"><span>ART 2</span></button>
-        <button class="right-normal-art right-normal-art-2" type="button" data-art="3"><span>ART 3</span></button>
+        <button class="right-normal-art right-normal-art-1" id="rightNormalSlot1" type="button"><span></span></button>
+        <button class="right-normal-art right-normal-art-2" id="rightNormalSlot2" type="button"><span></span></button>
       </div>
     </section>
 
+    <!-- STRAIGHT WALL: three equal approved 230px slots. -->
     <section class="wall-view" id="wallView" aria-label="Wall view">
       <div class="wall-canvas">
-        <button class="wall-triplet-art wall-triplet-left" id="wallLeftArt" type="button"><span id="wallLeftLabel">ART 2</span></button>
-        <button class="wall-triplet-art wall-triplet-center" id="wallCenterArt" type="button"><span id="wallCenterLabel">ART 3</span></button>
-        <button class="wall-triplet-art wall-triplet-right" id="wallRightArt" type="button"><span id="wallRightLabel">ART 4</span></button>
+        <button class="wall-triplet-art wall-triplet-left" id="wallLeftArt" type="button"><span id="wallLeftLabel"></span></button>
+        <button class="wall-triplet-art wall-triplet-center" id="wallCenterArt" type="button"><span id="wallCenterLabel"></span></button>
+        <button class="wall-triplet-art wall-triplet-right" id="wallRightArt" type="button"><span id="wallRightLabel"></span></button>
       </div>
     </section>
 
+    <!-- Existing artwork-depth placeholder retained; click design comes later. -->
     <section class="artwork-view" id="artworkView" aria-label="Artwork detail">
-      <div class="artwork-large"><span id="artworkLabel">ART 3</span></div>
+      <div class="artwork-large"><span id="artworkLabel">ART 1</span></div>
       <nav class="artwork-depth" aria-label="Artwork information">
         <button type="button" data-depth="image">IMAGE</button>
         <button type="button" data-depth="plaque">PLAQUE</button>
@@ -53,15 +58,16 @@
       <div class="depth-panel" id="depthPanel">IMAGE DETAIL</div>
     </section>
 
+    <!-- Thumbnail behavior is not being redesigned in this room-construction pass. -->
     <section class="thumbnail-view" id="thumbnailView" aria-label="Thumbnail view">
       <div class="thumbnail-grid">
+        <button type="button" data-art="1">ART 1</button>
         <button type="button" data-art="2">ART 2</button>
         <button type="button" data-art="3">ART 3</button>
         <button type="button" data-art="4">ART 4</button>
         <button type="button" data-art="5">ART 5</button>
         <button type="button" data-art="6">ART 6</button>
         <button type="button" data-art="7">ART 7</button>
-        <button type="button" data-art="8">ART 8</button>
       </div>
     </section>
 
@@ -77,6 +83,6 @@
 
   <a class="museum-return" href="index.html">MUSEUM</a>
 </main>
-<script src="exhibit-v13.js"></script>
+<script src="exhibit-v14.js"></script>
 </body>
 </html>

@@ -1,0 +1,519 @@
+:root{
+  color-scheme:light;
+  --ink:#191919;
+  --paper:#e9e3d8;
+  --wall:#f4f0e8;
+  --wall-side:#ded6c9;
+  --floor:#c9bead;
+  --line:#4a4741;
+  --control:#f7f4ed;
+  --frame:#39352f;
+  --art:#b9aa93;
+}
+*{box-sizing:border-box}
+html,body{
+  margin:0;
+  width:100%;
+  height:100%;
+  overflow:hidden;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:Arial,Helvetica,sans-serif;
+}
+button,a{font:inherit;color:inherit}
+button{border-radius:0}
+.exhibit-shell{
+  position:relative;
+  width:100vw;
+  height:100dvh;
+  overflow:hidden;
+  background:var(--paper);
+}
+.room-stage{
+  position:absolute;
+  inset:0;
+  overflow:hidden;
+  perspective:1200px;
+  background:linear-gradient(#ece7df 0 68%,#cfc5b5 68% 100%);
+}
+.museum-room{
+  position:absolute;
+  inset:0;
+  transform-style:preserve-3d;
+  transform-origin:50% 55%;
+  transition:transform .7s cubic-bezier(.2,.7,.2,1);
+}
+.room-ceiling{
+  position:absolute;
+  left:18%; right:18%; top:-8%; height:35%;
+  background:#f8f5ef;
+  clip-path:polygon(20% 100%,80% 100%,100% 0,0 0);
+  border-bottom:1px solid var(--line);
+}
+.room-floor{
+  position:absolute;
+  left:14%; right:14%; bottom:-8%; height:43%;
+  background:var(--floor);
+  clip-path:polygon(0 0,100% 0,82% 100%,18% 100%);
+  border-top:1px solid var(--line);
+}
+.wall{
+  position:absolute;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:3%;
+  border:1px solid var(--line);
+  background:var(--wall);
+  transform-style:preserve-3d;
+}
+.wall-front{
+  left:22%; top:18%; width:56%; height:53%;
+  z-index:2;
+}
+.wall-left{
+  left:-3%; top:18%; width:29%; height:53%;
+  transform-origin:right center;
+  transform:skewY(5deg);
+  background:var(--wall-side);
+  z-index:1;
+  gap:4%;
+  padding:0 4%;
+}
+.wall-right{
+  right:-3%; top:18%; width:29%; height:53%;
+  transform-origin:left center;
+  transform:skewY(-5deg);
+  background:var(--wall-side);
+  z-index:1;
+  gap:4%;
+  padding:0 4%;
+}
+.art,.wall-art{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border:clamp(3px,.55vw,8px) solid var(--frame);
+  background:var(--art);
+  color:#201d19;
+  font-weight:800;
+  letter-spacing:.05em;
+  box-shadow:0 .5vw 1vw rgba(0,0,0,.15);
+}
+.wall-left .art,.wall-right .art{
+  width:27%;
+  height:38%;
+  font-size:clamp(8px,.8vw,13px);
+}
+.wall-front .art{width:28%;height:58%;font-size:clamp(11px,1.4vw,20px)}
+.exhibit-shell[data-view="door"] .museum-room{transform:translate3d(0,0,0) scale(1)}
+.exhibit-shell[data-view="left"] .museum-room{transform:translate3d(19%,0,0) scale(1.22)}
+.exhibit-shell[data-view="right"] .museum-room{transform:translate3d(-19%,0,0) scale(1.22)}
+.exhibit-shell[data-view="left"] .wall-left,
+.exhibit-shell[data-view="right"] .wall-right{z-index:4;background:#f0ebe2}
+.wall-view,.artwork-view,.thumbnail-view{
+  position:absolute;
+  inset:0;
+  display:none;
+  background:var(--paper);
+  z-index:6;
+}
+.exhibit-shell[data-view="wall"] .wall-view,
+.exhibit-shell[data-view="zoom"] .artwork-view,
+.exhibit-shell[data-view="thumbnail"] .thumbnail-view{display:block}
+.flat-wall{
+  position:absolute;
+  inset:7% 8% 15%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border:1px solid var(--line);
+  background:var(--wall);
+}
+.wall-art{
+  width:min(42vw,54vh);
+  height:min(58vh,58vw);
+  max-width:62%;
+  max-height:78%;
+  font-size:clamp(16px,2.4vw,34px);
+}
+.artwork-view{
+  padding:5% 8% 13%;
+}
+.artwork-large{
+  position:absolute;
+  left:7%; top:7%; bottom:16%; width:58%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border:clamp(4px,.7vw,10px) solid var(--frame);
+  background:var(--art);
+  font-size:clamp(18px,3vw,42px);
+  font-weight:800;
+}
+.artwork-depth{
+  position:absolute;
+  left:68%; right:5%; top:7%; height:11%;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+}
+.artwork-depth button,.exhibit-controls button,.thumbnail-grid button{
+  min-width:0;
+  min-height:0;
+  border:1px solid var(--line);
+  background:var(--control);
+  font-weight:800;
+  letter-spacing:.035em;
+}
+.depth-panel{
+  position:absolute;
+  left:68%; right:5%; top:18%; bottom:16%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:4%;
+  border:1px solid var(--line);
+  background:#f5f1e9;
+  font-size:clamp(12px,1.5vw,22px);
+  font-weight:700;
+  text-align:center;
+}
+.thumbnail-grid{
+  position:absolute;
+  inset:9% 8% 15%;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  grid-template-rows:repeat(2,1fr);
+  gap:2%;
+}
+.thumbnail-grid button{background:var(--art);border:clamp(3px,.45vw,7px) solid var(--frame);font-size:clamp(11px,1.5vw,22px)}
+.view-label{
+  position:absolute;
+  top:2.2%;
+  left:50%;
+  transform:translateX(-50%);
+  z-index:10;
+  padding:.3em .65em;
+  border:1px solid rgba(74,71,65,.6);
+  background:rgba(247,244,237,.84);
+  font-size:clamp(9px,.9vw,13px);
+  font-weight:800;
+  letter-spacing:.08em;
+  pointer-events:none;
+}
+.exhibit-controls{
+  position:absolute;
+  z-index:12;
+  left:0;
+  right:0;
+  bottom:0;
+  height:11%;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+}
+.exhibit-controls button{font-size:clamp(11px,1.3vw,20px)}
+.museum-return{
+  position:absolute;
+  z-index:15;
+  right:6px;
+  top:6px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:.38em .65em;
+  border:1px solid var(--line);
+  background:rgba(247,244,237,.92);
+  text-decoration:none;
+  font-weight:800;
+  font-size:clamp(9px,.9vw,13px);
+  letter-spacing:.05em;
+}
+@media (orientation:portrait){
+  body{overflow-x:auto}
+  .exhibit-shell{min-width:900px}
+}
+@media (prefers-reduced-motion:reduce){
+  .museum-room{transition:none}
+}
+
+
+/* ------------------------------------------------------------------
+   v10 exhibit room geometry
+
+   Approved landscape viewport geometry:
+     scene width  = 980 CSS px
+     scene height = 300 CSS px
+     controls     = 37 CSS px
+     square       = 230 × 230 CSS px
+     2x gap       = 131.8181818 CSS px
+     wall margin  = 13.1818182 CSS px
+
+   LEFT CORNER is the approved v9 geometry.
+   RIGHT CORNER is its exact horizontal mirror.
+   WALL uses three equal 230px squares with the same spacing as the two
+   normal squares in the approved corner.
+   DOOR removes the old fake-room perspective entirely. For now it is
+   a plain wall with a centered square placeholder labelled DOOR.
+   ------------------------------------------------------------------ */
+
+.room-stage{
+  position:absolute;
+  inset:0;
+  overflow:hidden;
+  background:var(--wall);
+  perspective:none;
+}
+
+/* Retire the old full-room drawing completely. */
+.museum-room{display:none!important}
+
+.left-corner-view,
+.right-corner-view,
+.wall-view,
+.door-wall-view,
+.artwork-view,
+.thumbnail-view{
+  position:absolute;
+  left:0;
+  right:0;
+  top:0;
+  bottom:37px;
+  display:none;
+  overflow:hidden;
+  background:var(--wall);
+}
+
+.exhibit-shell[data-view="left"] .left-corner-view,
+.exhibit-shell[data-view="right"] .right-corner-view,
+.exhibit-shell[data-view="wall"] .wall-view,
+.exhibit-shell[data-view="door"] .door-wall-view,
+.exhibit-shell[data-view="zoom"] .artwork-view,
+.exhibit-shell[data-view="thumbnail"] .thumbnail-view{
+  display:block;
+}
+
+.left-corner-canvas,
+.right-corner-canvas,
+.wall-canvas,
+.door-wall-canvas{
+  position:absolute;
+  left:50%;
+  top:0;
+  width:980px;
+  height:300px;
+  transform:translateX(-50%);
+  overflow:hidden;
+  background:transparent;
+}
+
+.corner-art,
+.right-normal-art,
+.right-perspective-art,
+.wall-triplet-art,
+.door-placeholder{
+  position:absolute;
+  box-sizing:border-box;
+  width:230px;
+  height:230px;
+  margin:0;
+  padding:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border:5px solid var(--frame);
+  border-radius:0;
+  background:var(--art);
+  color:#201d19;
+  box-shadow:none;
+  appearance:none;
+  font-weight:800;
+  letter-spacing:.05em;
+  font-size:14px;
+  overflow:hidden;
+}
+.corner-art span,
+.right-normal-art span,
+.right-perspective-art span,
+.wall-triplet-art span{pointer-events:none}
+
+/* LEFT CORNER — approved v9. */
+.corner-divider{
+  position:absolute;
+  left:235.1818182px;
+  top:0;
+  width:8px;
+  height:300px;
+  background:var(--frame);
+}
+.corner-art-1{left:375px;top:35px}
+.corner-art-2{left:736.8181818px;top:35px}
+.corner-art-22{
+  left:-60.7272727px;
+  top:35px;
+  transform-origin:0 0;
+  transform:matrix3d(
+    1,.25,0,.002173913043,
+    0,1.5,0,0,
+    0,0,1,0,
+    115,-57.5,0,1
+  );
+}
+
+/* RIGHT CORNER — exact horizontal mirror of LEFT CORNER. */
+.right-corner-canvas{
+  transform:translateX(-50%) scaleX(-1);
+}
+.right-normal-art-1{left:375px;top:35px}
+.right-normal-art-2{left:736.8181818px;top:35px}
+.right-corner-divider{
+  position:absolute;
+  left:235.1818182px;
+  top:0;
+  width:8px;
+  height:300px;
+  background:var(--frame);
+}
+.right-perspective-art{
+  left:-60.7272727px;
+  top:35px;
+  transform-origin:0 0;
+  transform:matrix3d(
+    1,.25,0,.002173913043,
+    0,1.5,0,0,
+    0,0,1,0,
+    115,-57.5,0,1
+  );
+}
+/* Counter-mirror text only; the geometry remains an exact canvas mirror. */
+.right-normal-art span,
+.right-perspective-art span{transform:scaleX(-1)}
+
+/* STRAIGHT WALL — same 230px squares and same 2x gap as approved corner. */
+.wall-triplet-left{left:13.1818182px;top:35px}
+.wall-triplet-center{left:375px;top:35px}
+.wall-triplet-right{left:736.8181818px;top:35px}
+
+/* DOOR — temporary placeholder only; no fake full-room image/assets. */
+.door-placeholder{
+  left:375px;
+  top:35px;
+  background:var(--wall-side);
+}
+
+/* Existing detail/thumbnail surfaces keep their established behavior. */
+.artwork-view{padding:5% 8% 13%}
+.artwork-large{
+  position:absolute;
+  left:7%;top:7%;bottom:16%;width:58%;
+  display:flex;align-items:center;justify-content:center;
+  border:clamp(4px,.7vw,10px) solid var(--frame);
+  background:var(--art);
+  font-size:clamp(18px,3vw,42px);
+  font-weight:800;
+}
+.artwork-depth{
+  position:absolute;left:68%;right:5%;top:7%;height:11%;
+  display:grid;grid-template-columns:repeat(3,1fr)
+}
+.depth-panel{
+  position:absolute;left:68%;right:5%;top:18%;bottom:16%;
+  display:flex;align-items:center;justify-content:center;padding:4%;
+  border:1px solid var(--line);background:#f5f1e9;
+  font-size:clamp(12px,1.5vw,22px);font-weight:700;text-align:center
+}
+.thumbnail-grid{
+  position:absolute;inset:9% 8% 15%;display:grid;
+  grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(2,1fr);gap:2%
+}
+.thumbnail-grid button{
+  background:var(--art);border:clamp(3px,.45vw,7px) solid var(--frame);
+  font-size:clamp(11px,1.5vw,22px)
+}
+
+.exhibit-controls{height:37px}
+
+@media (orientation:landscape){.exhibit-controls{height:37px}}
+
+
+/* ------------------------------------------------------------------
+   v11 cache-safe view isolation
+   This block intentionally duplicates the active-view visibility contract.
+   It protects the current room HTML from stale/default browser styles and
+   guarantees that DOOR cannot expose unstyled corner/wall buttons.
+   ------------------------------------------------------------------ */
+.room-stage > .door-wall-view,
+.room-stage > .left-corner-view,
+.room-stage > .right-corner-view,
+.room-stage > .wall-view,
+.room-stage > .artwork-view,
+.room-stage > .thumbnail-view{
+  display:none !important;
+}
+
+.exhibit-shell[data-view="door"] .room-stage > .door-wall-view,
+.exhibit-shell[data-view="left"] .room-stage > .left-corner-view,
+.exhibit-shell[data-view="right"] .room-stage > .right-corner-view,
+.exhibit-shell[data-view="wall"] .room-stage > .wall-view,
+.exhibit-shell[data-view="zoom"] .room-stage > .artwork-view,
+.exhibit-shell[data-view="thumbnail"] .room-stage > .thumbnail-view{
+  display:block !important;
+}
+
+
+/* ------------------------------------------------------------------
+   v14 — complete room-circuit behavior
+
+   The geometry values remain the approved v9/v10 values. v14 makes the
+   three spatial surfaces reusable across all 24 physical positions.
+
+   Inside-room door placeholder:
+     width = one normal art slot = 230px
+     top   = normal art top      = 35px
+     bottom reaches scene edge   = 300px
+     height = 265px
+     fill = solid black
+
+   Door slots inherit whichever normal/perspective POSITION they occupy.
+   ------------------------------------------------------------------ */
+
+/* Art slots keep the established art treatment. */
+.corner-art.is-art-slot,
+.right-normal-art.is-art-slot,
+.right-perspective-art.is-art-slot,
+.wall-triplet-art.is-art-slot{
+  height:230px;
+  background:var(--art);
+  border:5px solid var(--frame);
+  cursor:pointer;
+}
+
+/* Inside-room doors: exactly one art-position wide, same top, extended down
+   to the 300px scene edge, solid black, no decorative treatment. */
+.corner-art.is-door-slot,
+.right-normal-art.is-door-slot,
+.right-perspective-art.is-door-slot,
+.wall-triplet-art.is-door-slot{
+  width:230px;
+  height:265px;
+  background:#000;
+  border:0;
+  color:transparent;
+  cursor:default;
+  opacity:1;
+}
+
+/* Disabled native buttons must not gray the black doorway. */
+.corner-art.is-door-slot:disabled,
+.right-normal-art.is-door-slot:disabled,
+.right-perspective-art.is-door-slot:disabled,
+.wall-triplet-art.is-door-slot:disabled{
+  background:#000;
+  opacity:1;
+}
+
+/* The right-corner canvas counter-mirrors all visible content. A black door
+   is unaffected visually; art labels remain readable. */
+.right-normal-art.is-door-slot span,
+.right-perspective-art.is-door-slot span{
+  display:none;
+}

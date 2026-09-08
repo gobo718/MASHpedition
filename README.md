@@ -416,3 +416,56 @@ Current prototype surfaces therefore show:
   ART 2, and peripheral ART 1.
 
 No CSS geometry values were changed.
+
+---
+
+# Exhibit room — v14 complete 24-position circuit
+
+v14 converts the solved geometry into the complete room circuit.
+
+## Fixed physical sequence
+
+`DOOR 1 -> ART 1 -> ART 2 -> ART 3 -> ART 4 -> ART 5 -> ART 6 -> ART 7 -> ART 8 -> DOOR 2 -> ART 9 -> ART 10 -> ART 11 -> ART 12 -> ART 13 -> ART 14 -> ART 15 -> ART 16 -> ART 17 -> ART 18 -> ART 19 -> ART 20 -> ART 21 -> ART 22 -> DOOR 1`
+
+Door positions do not move:
+- Door 1 remains between ART 22 and ART 1.
+- Door 2 remains between ART 8 and ART 9.
+
+## Full-room navigation model
+
+The 24 fixed positions form four six-position wall runs. The approved opening
+corner is between ART 1 and ART 2. Subsequent corners occur every six physical
+positions, after ART 7, ART 12, and ART 18.
+
+RIGHT advances one physical position around the room. LEFT reverses one physical
+position. Every camera state shows three consecutive physical positions.
+
+At a corner, the renderer automatically switches between the approved exact
+LEFT CORNER and mirrored RIGHT CORNER geometry. On a flat run it uses the
+approved three-square WALL geometry. No geometry numbers changed.
+
+## Door appearances from inside
+
+Each physical door appears naturally in the three consecutive camera windows
+that include its fixed slot — six inside-room door appearances total across the
+two doors.
+
+For now every inside door is only a black geometry placeholder:
+- 230px wide, exactly one artwork-slot width
+- top = 35px, identical to artwork top
+- bottom = 300px scene edge
+- height = 265px
+- solid black
+- no visible label or decoration
+
+If a door occupies the peripheral corner slot it inherits the same approved
+perspective transform as that physical slot.
+
+## Entry door state
+
+The separate DOOR control still opens the temporary entry placeholder. The final
+blurred-room/whip transition remains intentionally deferred. RIGHT from that
+placeholder enters the approved opening corner at ART 1 / ART 2.
+
+Artwork-click and thumbnail experiences are intentionally not redesigned in this
+release; v14 is the room-construction pass.
