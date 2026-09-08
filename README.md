@@ -162,3 +162,60 @@ The Laboratory is a structural playground shell. Its current geometry follows Bi
 - Restored the Laboratory outer canvas sizing behavior from the preceding Lab shell: `100vw × 100dvh` in landscape, with no forced 1000px minimum width or 560px minimum height.
 - The measured 20% / 50% / 10% / 20% internal Laboratory geometry is unchanged.
 - The 1000px minimum remains portrait-only, matching the earlier shell behavior.
+
+---
+
+# Studio Shell — Percentage Geometry Added 2026-09-08
+
+The Studio now has its established all-open playground geometry. These are structural proportions, not progression timing.
+
+## Full Studio geometry
+
+The Studio occupies one landscape viewport and is divided vertically:
+
+- **0–20%:** top equipment band
+- **20–50%:** upper middle row
+- **50–80%:** lower middle row
+- **80–100%:** bottom equipment band
+
+Top band:
+
+- **Chromatic Attic — 75% width**
+- **Chromatic Amalgamator — 25% width**
+
+Upper middle row:
+
+- **Easel — 50% width**
+- **The Rough Stuff — 50% width**
+
+Lower middle row:
+
+- **Creation Station — 50% width**
+- **Presentation Station — 50% width**
+
+Bottom band:
+
+- **Paint Mixer — 25% width**
+- **Color Cellar — 75% width**
+
+This preserves the established progression geometry in its fully opened state: the original central 2×2 workspace occupies two 30%-high rows, Chromatic Attic / Chromatic Amalgamator occupy the top 20%, and Paint Mixer / Color Cellar occupy the bottom 20%.
+
+The small fixed `MUSEUM` control is temporary prototype navigation only and does not consume or resize Studio geometry.
+
+## Museum Atrium geometry — explicit percentage lock
+
+The existing Museum Hub already contained the intended Atrium proportions. They are now expressed explicitly in CSS rather than only as fractional units:
+
+- Entire Atrium band: **bottom 1/6 = 16.6667% of the viewport height**
+- **Information Desk — 25% width**
+- **For Your Consideration — 50% width**
+- **Gift Shop — 12.5% width**
+- **Control Room — 12.5% width**
+
+The Museum Hub remains:
+
+- top band: **1/6 = 16.6667% height**
+- central region: **2/3 = 66.6667% height**
+- Atrium band: **1/6 = 16.6667% height**
+
+No Lab or Residence geometry was changed while adding the Studio shell.

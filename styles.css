@@ -27,7 +27,7 @@ button,.hub-link{
   width:100vw;
   height:100dvh;
   display:grid;
-  grid-template-rows:1fr 4fr 1fr
+  grid-template-rows:16.6666667% 66.6666666% 16.6666667%
 }
 .top-band{
   display:grid;
@@ -40,7 +40,7 @@ button,.hub-link{
 }
 .atrium-band{
   display:grid;
-  grid-template-columns:2fr 4fr 1fr 1fr
+  grid-template-columns:25% 50% 12.5% 12.5%
 }
 .fyc{font-size:1.08em}
 @media (orientation:portrait){
