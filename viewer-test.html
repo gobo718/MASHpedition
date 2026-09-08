@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>MASHpedition v17 Viewer Test</title>
+<title>MASHpedition v18 Area Samples</title>
 <style>
 *{box-sizing:border-box}
 body{margin:0;padding:28px;background:#e9e3d8;color:#191919;font-family:Arial,Helvetica,sans-serif}
@@ -17,17 +17,19 @@ small{display:block;margin-top:20px;line-height:1.45}
 </head>
 <body>
 <main>
-<h1>v17 Shared Viewer Test</h1>
-<p>These are engine test presets only. They do not define the final search/options UI for any area.</p>
+<h1>v18 Area Samples</h1>
+<p>The same samples are now linked from their actual Museum/Residence locations. This page is only a shortcut.</p>
 <div class="grid">
-  <a href="exhibit.html?mix=A&amp;start=thumbnail">MIX A<br>Thumbnails + Endless Wall</a>
-  <a href="exhibit.html?mix=B&amp;ranks=1&amp;start=exhibit">MIX B · GEH START<br>1st only</a>
-  <a href="exhibit.html?mix=B&amp;ranks=2&amp;start=exhibit">MIX B · GEH<br>1st + 2nd unlocked</a>
-  <a href="exhibit.html?mix=B&amp;ranks=3&amp;start=exhibit">MIX B · GEH<br>1st + 2nd + 3rd unlocked</a>
-  <a href="exhibit.html?mix=C&amp;start=exhibit">MIX C<br>All four views</a>
-  <a href="exhibit.html?mix=C&amp;start=endless&amp;count=120">ENDLESS WALL<br>120-result pagination test</a>
+  <a href="exhibit.html?area=gallery&amp;start=thumbnail&amp;count=88">GALLERY<br>Thumbnails + Endless</a>
+  <a href="exhibit.html?area=collection&amp;start=exhibit">COLLECTION<br>Exhibit + Room + Thumbnails</a>
+  <a href="exhibit.html?area=fyc&amp;start=thumbnail&amp;count=88">FYC<br>Thumbnails + Endless</a>
+  <a href="exhibit.html?area=se&amp;start=thumbnail&amp;count=88">SALON ECLECTIQUE<br>Thumbnails + Endless</a>
+  <a href="exhibit.html?area=geh&amp;ranks=3&amp;start=exhibit">GRAND EXHIBITION HALL<br>1st + 2nd + 3rd sample</a>
+  <a href="exhibit.html?area=cat-theme&amp;start=thumbnail&amp;count=88">CATACOMBS · THEME SEARCH<br>Thumbnails + Endless</a>
+  <a href="exhibit.html?area=cat-search&amp;start=exhibit&amp;count=88">CATACOMBS · OTHER SEARCH<br>All four views</a>
+  <a href="index.html">MUSEUM HUB<br>Test them in-place</a>
 </div>
-<small>Generic Thumbnail and Endless Wall result sets use pages of 22. GEH Thumbnail rank switching replaces the same 22 Theme slots; it never creates a 66-image page.</small>
+<small>Large generic result samples use 88 records so Thumbnail and Endless Wall pagination can be exercised without inventing real game data. Swipe left/right works in Exhibit View and Endless Wall on touch devices.</small>
 </main>
 </body>
 </html>

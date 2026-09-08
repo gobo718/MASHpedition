@@ -597,3 +597,50 @@ Open `viewer-test.html` to jump directly into:
 - a 120-result Endless Wall pagination test
 
 The launcher is a development/testing surface only. It does not define final game UI.
+
+---
+
+# Area samples + swipe navigation — v18
+
+v18 keeps the approved v17 viewer geometry and puts representative viewer states at the
+places where they actually belong, instead of requiring abstract query-string tests.
+
+## In-place samples
+
+From the Museum hub:
+
+- Grand Exhibition Halls → Mix B, with a fully-unlocked 1st/2nd/3rd sample so rank layers can be tested.
+- SALON ECLECTIQUE → Mix A.
+- For Your Consideration → Mix A.
+- Catacombs · Theme → Theme-search behavior, Mix A.
+- Catacombs · Search → non-Theme search behavior, Mix C.
+
+From the Residence second screen:
+
+- Gallery → Mix A.
+- Collection → Mix B.
+
+These are representative viewer datasets only. No area-specific search choices, filters,
+options, unlock rules, or visual skins have been invented here.
+
+## GEH rank test
+
+The Museum-hub GEH sample deliberately passes `ranks=3`, so Exhibit View and Thumbnail
+View show 1ST / 2ND / 3RD and can switch among all three 22-Theme layers. Room View remains
+1st-only and has no rank control. This is a test sample, not a statement that 2nd and 3rd
+begin unlocked in the real game.
+
+## Swipe navigation
+
+On touch/pen input:
+
+- Exhibit View: swipe left/right invokes the same movement as RIGHT/LEFT.
+- Endless Wall: swipe left/right advances/reverses through the linear result set.
+- Visible LEFT/RIGHT controls remain intact.
+- Horizontal intent requires at least 50 CSS px and must dominate vertical travel.
+- Vertical-dominant gestures are ignored.
+- A swipe that begins on an artwork button suppresses the follow-up click so it does not
+  both navigate and open the artwork.
+
+`viewer-test.html` remains as a shortcut, but the preferred test path is now `index.html`
+and the Residence links.
