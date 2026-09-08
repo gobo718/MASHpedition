@@ -11,14 +11,10 @@
   const wallArt=document.getElementById('wallArt');
   const thumbnailGrid=document.getElementById('thumbnailGrid');
   const roomFrame=document.getElementById('roomFrame');
-  const endlessLeft=document.getElementById('endlessLeft');
-  const endlessCenter=document.getElementById('endlessCenter');
-  const endlessRight=document.getElementById('endlessRight');
   const MAX_EXHIBITS=66;
   const requestedExhibit=Number(new URLSearchParams(location.search).get('exhibit')||1);
   const exhibitNumber=Math.max(1,Math.min(MAX_EXHIBITS,Number.isFinite(requestedExhibit)?Math.trunc(requestedExhibit):1));
   shell.dataset.exhibit=String(exhibitNumber);
-
   const slots={
     angledLeft:document.getElementById('angledLeft'),
     flatLeft:document.getElementById('flatLeft'),
@@ -58,7 +54,6 @@
 
   let stateIndex=0;
   let selectedArt='1';
-  let endlessStart=1;
 
   function itemLabel(item){ return item==='DOOR' ? 'DOOR' : `ART ${item}`; }
   function isDoor(item){ return item==='DOOR'; }
@@ -66,14 +61,11 @@
   function setView(view){
     shell.dataset.view=view;
     if(view==='thumbnail') viewLabel.textContent='THUMBNAIL VIEW';
-    else if(view==='wall') viewLabel.textContent='ART FOCUS';
+    else if(view==='wall') viewLabel.textContent='WALL VIEW';
     else if(view==='zoom') viewLabel.textContent='ARTWORK VIEW';
-    else if(view==='endless') viewLabel.textContent='ENDLESS WALL VIEW';
     else {
       const type=states[stateIndex].type;
-      if(type==='left') viewLabel.textContent='LEFT CORNER VIEW';
-      else if(type==='right') viewLabel.textContent='RIGHT CORNER VIEW';
-      else viewLabel.textContent='FRONT WALL VIEW';
+      viewLabel.textContent=type==='left' ? 'LEFT CORNER VIEW' : type==='right' ? 'RIGHT CORNER VIEW' : 'STRAIGHT WALL VIEW';
     }
   }
 
@@ -113,17 +105,6 @@
     setView('room');
   }
 
-  function renderEndless(){
-    const ids=[endlessStart,endlessStart+1,endlessStart+2].map(n=>((n-1)%22)+1);
-    [endlessLeft,endlessCenter,endlessRight].forEach((btn,i)=>{
-      const item=String(ids[i]);
-      btn.dataset.item=item;
-      btn.textContent=itemLabel(item);
-      btn.setAttribute('aria-label',itemLabel(item));
-    });
-    setView('endless');
-  }
-
   function selectArt(item,goWall=true){
     if(isDoor(item)) return;
     selectedArt=String(item);
@@ -136,26 +117,17 @@
   [slots.angledLeft,slots.flatLeft,slots.flatCenter,slots.flatRight,slots.angledRight].forEach(btn=>{
     btn.addEventListener('click',()=>selectArt(btn.dataset.item,true));
   });
-  [endlessLeft,endlessCenter,endlessRight].forEach(btn=>btn.addEventListener('click',()=>selectArt(btn.dataset.item,true)));
 
-  function moveRoom(delta){ stateIndex=(stateIndex+delta+states.length)%states.length; renderRoom(); }
-  function moveEndless(delta){ endlessStart=((endlessStart-1+delta)%22+22)%22+1; renderEndless(); }
-
-  function moveActive(delta){
-    const view=shell.dataset.view;
-    if(view==='endless') moveEndless(delta);
-    else moveRoom(delta);
+  function moveRoom(delta){
+    stateIndex=(stateIndex+delta+states.length)%states.length;
+    renderRoom();
   }
 
-  leftBtn.addEventListener('click',()=>moveActive(-1));
-  rightBtn.addEventListener('click',()=>moveActive(1));
+  leftBtn.addEventListener('click',()=>moveRoom(-1));
+  rightBtn.addEventListener('click',()=>moveRoom(1));
 
-  thumbnailBtn.addEventListener('click',()=>{
-    if(shell.dataset.view==='thumbnail'){ renderEndless(); }
-    else if(shell.dataset.view==='endless'){ renderRoom(); }
-    else setView('thumbnail');
-  });
-  doorBtn.addEventListener('click',()=>{ if(shell.dataset.view==='endless'){ renderRoom(); } else { stateIndex=7; renderRoom(); } });
+  thumbnailBtn.addEventListener('click',()=>setView('thumbnail'));
+  doorBtn.addEventListener('click',()=>{ stateIndex=7; renderRoom(); });
   wallArt.addEventListener('click',()=>setView('zoom'));
 
   document.querySelectorAll('[data-depth]').forEach(btn=>{
@@ -165,18 +137,52 @@
     });
   });
 
-  let touchStartX=0, touchStartY=0, trackingSwipe=false, suppressClickUntil=0;
+  // Horizontal swipes are navigation-equivalent to RIGHT/LEFT everywhere on the exhibit surface,
+  // including straight-wall states and Thumbnail View. A completed swipe suppresses the synthetic click.
+  let touchStartX=0;
+  let touchStartY=0;
+  let trackingSwipe=false;
+  let suppressClickUntil=0;
   const SWIPE_MIN=42;
+
   const swipeSurface=document.getElementById('roomStage');
-  swipeSurface.addEventListener('touchstart',e=>{ if(e.touches.length!==1){ trackingSwipe=false; return; } const t=e.touches[0]; touchStartX=t.clientX; touchStartY=t.clientY; trackingSwipe=true; },{passive:true});
-  swipeSurface.addEventListener('touchmove',e=>{ if(!trackingSwipe || e.touches.length!==1) return; const t=e.touches[0]; const dx=t.clientX-touchStartX; const dy=t.clientY-touchStartY; if(Math.abs(dx)>14 && Math.abs(dx)>Math.abs(dy)*1.15) e.preventDefault(); },{passive:false});
-  swipeSurface.addEventListener('touchend',e=>{ if(!trackingSwipe) return; trackingSwipe=false; const t=e.changedTouches[0]; const dx=t.clientX-touchStartX; const dy=t.clientY-touchStartY; if(Math.abs(dx)<SWIPE_MIN || Math.abs(dx)<=Math.abs(dy)*1.15) return; suppressClickUntil=Date.now()+450; moveActive(dx<0?1:-1); },{passive:true});
+  swipeSurface.addEventListener('touchstart',e=>{
+    if(e.touches.length!==1){ trackingSwipe=false; return; }
+    const t=e.touches[0];
+    touchStartX=t.clientX;
+    touchStartY=t.clientY;
+    trackingSwipe=true;
+  },{passive:true});
+
+  swipeSurface.addEventListener('touchmove',e=>{
+    if(!trackingSwipe || e.touches.length!==1) return;
+    const t=e.touches[0];
+    const dx=t.clientX-touchStartX;
+    const dy=t.clientY-touchStartY;
+    if(Math.abs(dx)>14 && Math.abs(dx)>Math.abs(dy)*1.15) e.preventDefault();
+  },{passive:false});
+
+  swipeSurface.addEventListener('touchend',e=>{
+    if(!trackingSwipe){ return; }
+    trackingSwipe=false;
+    const t=e.changedTouches[0];
+    const dx=t.clientX-touchStartX;
+    const dy=t.clientY-touchStartY;
+    if(Math.abs(dx)<SWIPE_MIN || Math.abs(dx)<=Math.abs(dy)*1.15) return;
+    suppressClickUntil=Date.now()+450;
+    moveRoom(dx<0?1:-1);
+  },{passive:true});
+
   swipeSurface.addEventListener('touchcancel',()=>{trackingSwipe=false;},{passive:true});
-  swipeSurface.addEventListener('click',e=>{ if(Date.now()<suppressClickUntil){ e.preventDefault(); e.stopPropagation(); } },true);
+  swipeSurface.addEventListener('click',e=>{
+    if(Date.now()<suppressClickUntil){ e.preventDefault(); e.stopPropagation(); }
+  },true);
 
   for(let i=1;i<=22;i++){
     const b=document.createElement('button');
-    b.type='button'; b.textContent=`ART ${i}`; b.dataset.item=String(i);
+    b.type='button';
+    b.textContent=`ART ${i}`;
+    b.dataset.item=String(i);
     b.addEventListener('click',()=>selectArt(String(i),true));
     thumbnailGrid.appendChild(b);
   }
