@@ -469,3 +469,26 @@ placeholder enters the approved opening corner at ART 1 / ART 2.
 
 Artwork-click and thumbnail experiences are intentionally not redesigned in this
 release; v14 is the room-construction pass.
+
+---
+
+# Exhibit room views — v15 front-door loop
+
+This release connects the temporary exterior/front Door 1 directly to the
+completed room circuit.
+
+Exterior Door 1:
+- centered in the 980px scene
+- width 230px
+- top 35px
+- height 265px
+- extends exactly to the 300px scene bottom
+- solid black
+- exactly matches the inside-room Door 1 dimensions
+
+Interaction:
+- tapping the exterior Door 1 enters the room at the physical Door 1 position
+- entry view is ART 22 | DOOR 1 | ART 1, with Door 1 centered
+- tapping Door 1 from inside returns to the exterior/front-door view
+- Door 2 remains fixed and non-interactive for now
+- all approved room geometry and LEFT/RIGHT circuit behavior are preserved

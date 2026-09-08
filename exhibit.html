@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>MASHpedition Exhibit View</title>
-<!-- v14: complete 24-position exhibit-room circuit -->
-<link rel="stylesheet" href="exhibit-v14.css">
+<!-- v15: clickable exterior Door 1 and interior Door 1 exit -->
+<link rel="stylesheet" href="exhibit-v15.css">
 </head>
 <body>
 <main class="exhibit-shell" id="exhibitShell" data-view="door" aria-label="Exhibit view">
@@ -14,7 +14,7 @@
     <!-- Entry transition remains intentionally temporary. -->
     <section class="door-wall-view" id="doorWallView" aria-label="Door entry placeholder view">
       <div class="door-wall-canvas">
-        <div class="door-placeholder">DOOR</div>
+        <button class="door-placeholder" id="frontDoor" type="button" aria-label="Enter exhibit"></button>
       </div>
     </section>
 
@@ -83,6 +83,6 @@
 
   <a class="museum-return" href="index.html">MUSEUM</a>
 </main>
-<script src="exhibit-v14.js"></script>
+<script src="exhibit-v15.js"></script>
 </body>
 </html>
