@@ -276,11 +276,14 @@
       button.classList.add('is-overhead-door');
       button.dataset.door=String(slot.number);
       button.disabled=slot.number!==1;
+      const displayedDoorNumber=slot.number+roomPage;
       button.setAttribute(
         'aria-label',
-        slot.number===1 ? 'Door 1 — exit exhibit' : 'Door 2'
+        roomPage===0 && slot.number===1
+          ? 'Door 1 — exit exhibit'
+          : `Door ${displayedDoorNumber}`
       );
-      if(span) span.textContent=`DOOR ${slot.number}`;
+      if(span) span.textContent=`DOOR ${displayedDoorNumber}`;
       return;
     }
 
