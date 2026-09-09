@@ -691,11 +691,19 @@ button{border-radius:0}
 }
 .overhead-slot.is-overhead-door[data-door="1"]{cursor:pointer}
 
-.overhead-center-label{
+.aerial-center-unit{
   position:absolute;
   left:50%;
   top:50%;
   transform:translate(-50%,-50%);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:4px;
+  z-index:6;
+}
+.overhead-center-label{
+  position:static;
   color:var(--ink);
   font-size:clamp(9px,.9vw,13px);
   font-weight:800;
@@ -881,20 +889,15 @@ button{border-radius:0}
 }
 .rank-selector button[hidden]{display:none !important}
 
-/* v35 Stage 4 — GEH rank controls only.
-   Aerial uses the existing 50×30 rank buttons as a compact horizontal row
-   centered beneath the existing center identity. The 15px vertical offset is
-   exactly half the established 30px rank-button height. Thumbnail ranks move
-   down one established 31px button + 5px gap pitch: 61px → 97px. */
+/* v37 Stage 4 center-unit correction.
+   Aerial identity + GEH rank controls are centered together as one unit.
+   The vertical gap reuses the established 4px rank-button gap. Thumbnail ranks
+   retain the approved one-button-pitch move from v35. */
 .exhibit-ranks{
-  position:absolute;
-  left:50%;
-  top:calc(50% + 15px);
+  position:static;
   width:auto;
-  transform:translateX(-50%);
   flex-direction:row;
   gap:4px;
-  z-index:6;
 }
 .exhibit-ranks button{
   width:50px;

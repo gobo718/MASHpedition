@@ -244,12 +244,13 @@
     const span=button.querySelector('span');
 
     if(slot.kind==='door'){
+      const displayedDoorNumber=slot.number+roomPage;
       button.classList.add('is-door-slot');
-      button.dataset.door=String(slot.number);
-      button.disabled=slot.number!==1;
+      button.dataset.door=String(displayedDoorNumber);
+      button.disabled=displayedDoorNumber===4;
       button.setAttribute(
         'aria-label',
-        slot.number===1 ? 'Exit exhibit through Door 1' : `Door ${slot.number}`
+        displayedDoorNumber===1 ? 'Door 1 — entrance' : `Door ${displayedDoorNumber}`
       );
       if(span) span.textContent='';
       return;
@@ -273,14 +274,14 @@
     const span=button.querySelector('span');
 
     if(slot.kind==='door'){
-      button.classList.add('is-overhead-door');
-      button.dataset.door=String(slot.number);
-      button.disabled=slot.number!==1;
       const displayedDoorNumber=slot.number+roomPage;
+      button.classList.add('is-overhead-door');
+      button.dataset.door=String(displayedDoorNumber);
+      button.disabled=displayedDoorNumber===4;
       button.setAttribute(
         'aria-label',
-        roomPage===0 && slot.number===1
-          ? 'Door 1 — exit exhibit'
+        displayedDoorNumber===1
+          ? 'Door 1 — entrance'
           : `Door ${displayedDoorNumber}`
       );
       if(span) span.textContent=`DOOR ${displayedDoorNumber}`;
@@ -812,10 +813,48 @@
   installHorizontalSwipe(endlessView,'endless');
   installHorizontalSwipe(artworkScroll,'zoom');
 
+  function roomPageAcrossDoor(doorNumber){
+    doorNumber=Number(doorNumber);
+    if(doorNumber===1){
+      setView('door');
+      return;
+    }
+    if(doorNumber===4) return;
+
+    // Door 2 connects Exhibit Rooms 1 and 2; Door 3 connects Rooms 2 and 3.
+    const lowerPage=doorNumber-2;
+    const upperPage=doorNumber-1;
+    let nextPage=null;
+    if(roomPage===lowerPage) nextPage=upperPage;
+    else if(roomPage===upperPage) nextPage=lowerPage;
+    if(nextPage===null || nextPage<0 || nextPage>=pageCount()) return;
+
+    roomPage=nextPage;
+    thumbnailPage=nextPage;
+  }
+
+  function useAerialDoor(doorNumber){
+    const before=roomPage;
+    roomPageAcrossDoor(doorNumber);
+    if(shell.dataset.view==='door' || roomPage===before) return;
+    renderOverhead();
+  }
+
+  function useExhibitDoor(doorNumber){
+    const before=roomPage;
+    roomPageAcrossDoor(doorNumber);
+    if(shell.dataset.view==='door' || roomPage===before) return;
+
+    // Enter the connected room facing the same doorway. The first physical
+    // door slot centers at camera start 23; the second centers at start 8.
+    const targetLocalDoor=Number(doorNumber)-roomPage;
+    renderRoom(targetLocalDoor===1 ? 23 : 8);
+  }
+
   allRoomSlotButtons.forEach(button=>{
     button.addEventListener('click',()=>{
       if(button.classList.contains('is-door-slot')){
-        if(button.dataset.door==='1') setView('door');
+        useExhibitDoor(button.dataset.door);
         return;
       }
       openArtwork(button.dataset.art,1);
@@ -825,7 +864,7 @@
   overheadSlots.forEach(button=>{
     button.addEventListener('click',()=>{
       if(button.classList.contains('is-overhead-door')){
-        if(button.dataset.door==='1') setView('door');
+        useAerialDoor(button.dataset.door);
         return;
       }
       openArtwork(button.dataset.art,gehMode?gehRank:1);

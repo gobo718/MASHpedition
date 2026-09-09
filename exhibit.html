@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>MASHpedition Shared Artwork Viewer</title>
 <!-- v18: area samples + swipe navigation on Exhibit/Endless + v17 shared viewer -->
-<link rel="stylesheet" href="exhibit.css?v=35">
+<link rel="stylesheet" href="exhibit.css?v=37">
 </head>
 <body>
 <main class="exhibit-shell" id="exhibitShell" data-view="door" aria-label="Exhibit view">
@@ -120,13 +120,14 @@
         <button class="overhead-slot oh-bottom oh-bottom-5" type="button" data-room-index="21"><span></span></button>
         <button class="overhead-slot oh-bottom oh-bottom-6" type="button" data-room-index="20"><span></span></button>
 
-        <nav class="rank-selector exhibit-ranks" id="exhibitRanks" aria-label="Grand Exhibition Hall rank layer">
-          <button type="button" data-rank="1">1ST</button>
-          <button type="button" data-rank="2">2ND</button>
-          <button type="button" data-rank="3">3RD</button>
-        </nav>
-
-        <div class="overhead-center-label" id="overheadCenterIdentity" aria-hidden="true">LOCATION - 😀 😎 - THEME</div>
+        <div class="aerial-center-unit">
+          <div class="overhead-center-label" id="overheadCenterIdentity" aria-hidden="true">LOCATION - 😀 😎 - THEME</div>
+          <nav class="rank-selector exhibit-ranks" id="exhibitRanks" aria-label="Grand Exhibition Hall rank layer">
+            <button type="button" data-rank="1">1ST</button>
+            <button type="button" data-rank="2">2ND</button>
+            <button type="button" data-rank="3">3RD</button>
+          </nav>
+        </div>
       </div>
     </section>
 
@@ -219,11 +220,11 @@
     <button type="button" id="roomBtn" data-capability="room">EXHIBIT</button>
     <button type="button" id="thumbnailBtn" data-capability="thumbnail">THUMBNAILS</button>
     <button type="button" id="endlessBtn" data-capability="endless">ENDLESS</button>
-    <button type="button" id="doorBtn">DOOR</button>
+    <button type="button" id="doorBtn">ENTRANCE</button>
   </nav>
 
   <a class="museum-return" href="index.html">MUSEUM</a>
 </main>
-<script src="exhibit.js?v=34"></script>
+<script src="exhibit.js?v=36"></script>
 </body>
 </html>
