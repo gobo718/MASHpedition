@@ -347,3 +347,31 @@ The earlier build incorrectly conflated the Exhibit room's front-facing camera c
 - Horizontal swipe and LEFT/RIGHT controls advance the sequence by one item.
 - Thumbnail View is a moving 22-item browsing window, arranged 5/6/6/5 with the first and last rows centered.
 - SALON ECLECTIQUE temporarily links to this surface because SALON uses the non-room scrolling-wall family rather than dedicated exhibit-room topology.
+
+---
+
+# Shared Viewing Matrix Restoration — 2026-09-08
+
+The previously established area/view matrix is restored without changing the Museum, Residence, Lab, or Studio geometry.
+
+- Mix A = Thumbnails + Endless Wall
+- Mix B = Exhibit View + Room View + Thumbnails
+- Mix C = Exhibit View + Room View + Thumbnails + Endless Wall
+
+Area routing:
+- Grand Exhibition Halls = Mix B
+- SALON ECLECTIQUE = Mix A
+- For Your Consideration = Mix A
+- Gallery = Mix A
+- Collection = Mix B
+- Catacombs · Theme = Mix A
+- Catacombs · Search (no Theme specified) = Mix C
+
+Rules preserved:
+- Exhibit View is only available where the result can populate Theme spots.
+- GEH 1ST / 2ND / 3RD controls appear only in Exhibit View and Thumbnail View; Room View remains first-place only.
+- Endless Wall is linear: no doors, no corners, no wrapping.
+- Endless Wall reuses the same three-image straight-wall dimensions as Room View.
+- Thumbnail View uses 22 positions in a centered 5 / 6 / 6 / 5 arrangement.
+- Generic large sets page 22 thumbnails at a time instead of rendering the full set at once.
+- Mosaics remain separate and are not routed through this viewer.
