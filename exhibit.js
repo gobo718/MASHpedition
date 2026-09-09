@@ -18,6 +18,10 @@
   const thumbnailView=document.getElementById('thumbnailView');
   const thumbnailStatus=document.getElementById('thumbnailStatus');
   const endlessStatus=document.getElementById('endlessStatus');
+  const pageNav=document.getElementById('pageNav');
+  const pagePrevBtn=document.getElementById('pagePrevBtn');
+  const pageNextBtn=document.getElementById('pageNextBtn');
+  const pageStatus=document.getElementById('pageStatus');
   const endlessSlots=[
     document.getElementById('endlessLeftArt'),
     document.getElementById('endlessCenterArt'),
@@ -76,10 +80,10 @@
 
   const AREA_PRESETS={
     gallery:{mix:'A',label:'GALLERY',count:66,start:'thumbnail'},
-    collection:{mix:'B',label:'COLLECTION',count:22,start:'exhibit'},
+    collection:{mix:'B',label:'COLLECTION',count:66,start:'exhibit'},
     fyc:{mix:'A',label:'FOR YOUR CONSIDERATION',count:66,start:'thumbnail'},
     se:{mix:'A',label:'SALON ECLECTIQUE',count:66,start:'thumbnail'},
-    geh:{mix:'B',label:'GRAND EXHIBITION HALL',count:22,start:'exhibit',geh:true},
+    geh:{mix:'B',label:'GRAND EXHIBITION HALL',count:66,start:'exhibit',geh:true},
     'cat-theme':{mix:'A',label:'CATACOMBS · THEME SEARCH',count:66,start:'thumbnail'},
     'cat-search':{mix:'C',label:'CATACOMBS · SEARCH',count:66,start:'exhibit'}
   };
@@ -143,6 +147,7 @@
   let selectedArt=1;
   let selectedRank=1;
   let gehRank=1;
+  let roomPage=0;
   let thumbnailPage=0;
   let endlessIndex=0;
   let artworkReturn=null;
@@ -192,6 +197,7 @@
     shell.dataset.view=next;
     viewLabel.textContent=labels[next]||next.toUpperCase();
     updateNavigationState();
+    updatePageNav();
   }
 
   function applyCapabilities(){
@@ -247,10 +253,11 @@
     }
 
     button.classList.add('is-art-slot');
-    button.dataset.art=String(slot.number);
+    const artNumber=roomPage*PAGE_SIZE+slot.number;
+    button.dataset.art=String(artNumber);
     button.dataset.rank='1';
-    button.setAttribute('aria-label',`Art ${slot.number}`);
-    if(span) span.textContent=`ART ${slot.number}`;
+    button.setAttribute('aria-label',`Art ${artNumber}`);
+    if(span) span.textContent=`ART ${artNumber}`;
   }
 
   function paintOverheadSlot(button,slot){
@@ -275,11 +282,12 @@
     }
 
     button.classList.add('is-overhead-art');
-    button.dataset.art=String(slot.number);
+    const artNumber=roomPage*PAGE_SIZE+slot.number;
+    button.dataset.art=String(artNumber);
     button.dataset.rank=String(gehMode?gehRank:1);
     const suffix=gehMode?` · ${rankWord(gehRank)}`:'';
-    button.setAttribute('aria-label',`Art ${slot.number}${gehMode?`, ${rankWord(gehRank)} place`:''}`);
-    if(span) span.textContent=`ART ${slot.number}${suffix}`;
+    button.setAttribute('aria-label',`Art ${artNumber}${gehMode?`, ${rankWord(gehRank)} place`:''}`);
+    if(span) span.textContent=`ART ${artNumber}${suffix}`;
   }
 
   function renderOverhead(){
@@ -327,8 +335,13 @@
     thumbnailGrid.replaceChildren();
 
     if(gehMode){
-      thumbnailPage=0;
-      for(let art=1;art<=22;art++){
+      const pageCount=currentGenericPageCount();
+      thumbnailPage=Math.max(0,Math.min(pageCount-1,thumbnailPage));
+      roomPage=thumbnailPage;
+      const start=thumbnailPage*PAGE_SIZE;
+      const end=Math.min(genericResultCount,start+PAGE_SIZE);
+      for(let i=start;i<end;i++){
+        const art=i+1;
         const button=document.createElement('button');
         button.type='button';
         button.dataset.art=String(art);
@@ -338,11 +351,12 @@
         button.addEventListener('click',()=>openArtwork(art,gehRank,'thumbnail'));
         thumbnailGrid.appendChild(button);
       }
-      thumbnailStatus.textContent=`${areaLabel} · ${rankWord(gehRank)} · 22 THEMES`;
+      thumbnailStatus.textContent=`${areaLabel} · ${rankWord(gehRank)} · PAGE ${thumbnailPage+1} / ${pageCount} · ${start+1}–${end}`;
       updateRankButtons();
     }else{
       const pageCount=currentGenericPageCount();
       thumbnailPage=Math.max(0,Math.min(pageCount-1,thumbnailPage));
+      roomPage=thumbnailPage;
       const start=thumbnailPage*PAGE_SIZE;
       const end=Math.min(genericResultCount,start+PAGE_SIZE);
       for(let i=start;i<end;i++){
@@ -415,6 +429,7 @@
     artworkReturn={
       view:shell.dataset.view,
       roomStart:lastRoomStart,
+      roomPage,
       thumbnailPage,
       endlessIndex,
       gehRank
@@ -425,7 +440,7 @@
     selectedArt=Number(number)||1;
     selectedRank=Number(rank)||1;
 
-    const theme=((selectedArt-1)%22)+1;
+    const theme=((selectedArt-1)%66)+1;
     const pair=emojiPairs[(theme-1)%emojiPairs.length];
 
     artworkLabel.textContent=gehMode
@@ -458,6 +473,7 @@
     }
 
     const target=artworkReturn;
+    roomPage=target.roomPage ?? roomPage;
     thumbnailPage=target.thumbnailPage;
     endlessIndex=target.endlessIndex;
     gehRank=target.gehRank;
@@ -504,6 +520,49 @@
     });
   }
 
+  function currentPageForView(){
+    const view=shell.dataset.view;
+    if(view==='endless') return Math.floor(endlessIndex/PAGE_SIZE);
+    if(view==='thumbnail') return thumbnailPage;
+    return roomPage;
+  }
+
+  function pageCount(){
+    return Math.max(1,currentGenericPageCount());
+  }
+
+  function updatePageNav(){
+    if(!pageNav) return;
+    const view=shell.dataset.view;
+    const show=['overhead','thumbnail','endless'].includes(view) && pageCount()>1;
+    pageNav.hidden=!show;
+    if(!show) return;
+    const page=Math.max(0,Math.min(pageCount()-1,currentPageForView()));
+    const start=page*PAGE_SIZE+1;
+    const end=Math.min(genericResultCount,start+PAGE_SIZE-1);
+    pagePrevBtn.disabled=page<=0;
+    pageNextBtn.disabled=page>=pageCount()-1;
+    pageStatus.textContent=`${start}–${end}`;
+  }
+
+  function renderCurrentViewAfterPageChange(view){
+    if(view==='overhead') renderOverhead();
+    else if(view==='thumbnail') renderThumbnailPage();
+    else if(view==='endless') renderEndless();
+    else if(['left','wall','right'].includes(view)) renderRoom(lastRoomStart);
+  }
+
+  function changePage(delta){
+    const view=shell.dataset.view;
+    const current=currentPageForView();
+    const next=Math.max(0,Math.min(pageCount()-1,current+delta));
+    if(next===current) return;
+    roomPage=next;
+    thumbnailPage=next;
+    if(view==='endless') endlessIndex=next*PAGE_SIZE;
+    renderCurrentViewAfterPageChange(view);
+  }
+
   function updateNavigationState(){
     const view=shell.dataset.view;
 
@@ -511,14 +570,9 @@
     rightBtn.disabled=false;
 
     if(view==='thumbnail'){
-      if(gehMode){
-        leftBtn.disabled=true;
-        rightBtn.disabled=true;
-      }else{
-        const pageCount=currentGenericPageCount();
-        leftBtn.disabled=thumbnailPage<=0;
-        rightBtn.disabled=thumbnailPage>=pageCount-1;
-      }
+      const pages=currentGenericPageCount();
+      leftBtn.disabled=thumbnailPage<=0;
+      rightBtn.disabled=thumbnailPage>=pages-1;
     }else if(view==='endless'){
       leftBtn.disabled=endlessIndex<=0;
       rightBtn.disabled=endlessIndex>=genericResultCount-1;
@@ -535,12 +589,14 @@
     const view=shell.dataset.view;
 
     if(view==='thumbnail'){
-      if(!gehMode && thumbnailPage>0){
-        thumbnailPage-=1;
+      if(thumbnailPage>0){
+        thumbnailPage-=1; roomPage=thumbnailPage;
         renderThumbnailPage();
       }
       return;
     }
+
+    if(view==='overhead'){ changePage(-1); return; }
 
     if(view==='endless'){
       if(endlessIndex>0){
@@ -565,12 +621,14 @@
     const view=shell.dataset.view;
 
     if(view==='thumbnail'){
-      if(!gehMode && thumbnailPage<currentGenericPageCount()-1){
-        thumbnailPage+=1;
+      if(thumbnailPage<currentGenericPageCount()-1){
+        thumbnailPage+=1; roomPage=thumbnailPage;
         renderThumbnailPage();
       }
       return;
     }
+
+    if(view==='overhead'){ changePage(1); return; }
 
     if(view==='endless'){
       if(endlessIndex<genericResultCount-1){
@@ -597,7 +655,7 @@
   // invokes the exact same LEFT/RIGHT behavior as the visible buttons.
   // Vertical-dominant gestures are ignored so normal page scrolling wins.
   // ---------------------------------------------------------------
-  function installHorizontalSwipe(element,viewName){
+  function installHorizontalSwipe(element,viewName,swipeMode='navigation'){
     if(!element || !window.PointerEvent) return;
 
     let gesture=null;
@@ -629,8 +687,12 @@
       if(Math.abs(dx)<=Math.abs(dy)*HORIZONTAL_BIAS) return;
 
       suppressClickUntil=performance.now()+350;
-      if(dx<0) handleRight();
-      else handleLeft();
+      if(swipeMode==='page'){
+        changePage(dx<0?1:-1);
+      }else{
+        if(dx<0) handleRight();
+        else handleLeft();
+      }
     },{passive:true});
 
     // A swipe can begin on an artwork button. Suppress the synthetic click
@@ -646,11 +708,11 @@
   // Room camera states advance/reverse the 24-state circuit; Thumbnail View
   // mirrors its current LEFT/RIGHT paging behavior; Exhibit and Endless Wall
   // keep their existing swipe behavior.
-  installHorizontalSwipe(roomStage,'left');
-  installHorizontalSwipe(roomStage,'wall');
-  installHorizontalSwipe(roomStage,'right');
+  installHorizontalSwipe(roomStage,'left','page');
+  installHorizontalSwipe(roomStage,'wall','page');
+  installHorizontalSwipe(roomStage,'right','page');
   installHorizontalSwipe(thumbnailView,'thumbnail');
-  installHorizontalSwipe(overheadView,'overhead');
+  installHorizontalSwipe(overheadView,'overhead','page');
   installHorizontalSwipe(endlessView,'endless');
 
   allRoomSlotButtons.forEach(button=>{
@@ -687,6 +749,9 @@
   rankButtons.forEach(button=>{
     button.addEventListener('click',()=>setRank(button.dataset.rank));
   });
+
+  pagePrevBtn?.addEventListener('click',()=>changePage(-1));
+  pageNextBtn?.addEventListener('click',()=>changePage(1));
 
   leftBtn.addEventListener('click',handleLeft);
   rightBtn.addEventListener('click',handleRight);

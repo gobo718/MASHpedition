@@ -1212,3 +1212,25 @@ button{border-radius:0}
   touch-action:pan-y;
 }
 
+
+/* v19 page navigation: overlay controls only; existing view geometry is unchanged. */
+.page-nav{
+  position:absolute;
+  left:1.5%;
+  bottom:12%;
+  z-index:13;
+  display:flex;
+  align-items:center;
+  gap:.35rem;
+}
+.page-nav[hidden]{display:none}
+.page-nav button,.page-nav span{
+  min-height:28px;
+  padding:.3em .55em;
+  border:1px solid var(--line);
+  background:var(--control);
+  color:var(--ink);
+  font-weight:800;
+  font-size:clamp(9px,.9vw,13px);
+}
+.page-nav span{background:rgba(247,244,237,.92)}
