@@ -1196,9 +1196,10 @@ button{border-radius:0}
 }
 
 
-/* v18 touch navigation: horizontal swipes are handled by JS while
-   vertical gestures remain available to the browser. */
-.overhead-view,.endless-view{touch-action:pan-y}
+/* v18/v33 touch navigation: horizontal swipes are handled by JS while
+   vertical gestures remain available to the browser. Artwork selection
+   uses the same gesture contract; fullscreen art intentionally does not. */
+.overhead-view,.endless-view,.artwork-scroll{touch-action:pan-y}
 
 /* ---------------------------------------------------------------
    THUMBNAIL LAYOUT ONLY — no Exhibit/Room geometry changes.

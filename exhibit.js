@@ -605,8 +605,19 @@
       rightBtn.disabled=endlessIndex>=genericResultCount-1;
     }else if(view==='zoom'){
       if(artworkSequenceViews.has(artworkReturn?.view)){
-        leftBtn.disabled=selectedArt<=1;
-        rightBtn.disabled=selectedArt>=genericResultCount;
+        const sourceView=artworkReturn?.view;
+        const fromExhibit=['left','wall','right'].includes(sourceView);
+        if(fromExhibit){
+          const page=artworkReturn?.roomPage ?? roomPage;
+          const pageStart=page*PAGE_SIZE+1;
+          const pageEnd=Math.min(genericResultCount,pageStart+PAGE_SIZE-1);
+          const hasMultiple=pageEnd>pageStart;
+          leftBtn.disabled=!hasMultiple;
+          rightBtn.disabled=!hasMultiple;
+        }else{
+          leftBtn.disabled=selectedArt<=1;
+          rightBtn.disabled=selectedArt>=genericResultCount;
+        }
       }else{
         leftBtn.disabled=true;
         rightBtn.disabled=true;
@@ -621,14 +632,33 @@
     const sourceView=artworkReturn?.view;
     if(!artworkSequenceViews.has(sourceView)) return;
 
-    const nextArt=selectedArt+delta;
-    if(nextArt<1 || nextArt>genericResultCount) return;
+    const fromExhibit=['left','wall','right'].includes(sourceView);
+    let nextArt;
+
+    if(fromExhibit){
+      // Artwork opened from Exhibit View stays inside that physical room.
+      // LEFT/RIGHT and selection-view swipe loop only through that room's
+      // 22 artwork positions; moving to another Exhibit room requires a door.
+      const page=artworkReturn?.roomPage ?? roomPage;
+      const pageStart=page*PAGE_SIZE+1;
+      const pageEnd=Math.min(genericResultCount,pageStart+PAGE_SIZE-1);
+      if(pageEnd<=pageStart) return;
+
+      nextArt=selectedArt+delta;
+      if(nextArt<pageStart) nextArt=pageEnd;
+      else if(nextArt>pageEnd) nextArt=pageStart;
+    }else{
+      nextArt=selectedArt+delta;
+      if(nextArt<1 || nextArt>genericResultCount) return;
+    }
 
     updateArtworkCopy(nextArt,selectedRank);
     const nextPage=Math.floor((nextArt-1)/PAGE_SIZE);
 
-    roomPage=nextPage;
-    artworkReturn.roomPage=nextPage;
+    if(!fromExhibit){
+      roomPage=nextPage;
+      artworkReturn.roomPage=nextPage;
+    }
 
     if(sourceView==='thumbnail'){
       thumbnailPage=nextPage;
