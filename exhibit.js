@@ -1,5 +1,6 @@
 (()=>{
   const shell=document.getElementById('exhibitShell');
+  const roomStage=shell.querySelector('.room-stage');
   const viewLabel=document.getElementById('viewLabel');
   const leftBtn=document.getElementById('leftBtn');
   const rightBtn=document.getElementById('rightBtn');
@@ -14,6 +15,7 @@
   const endlessView=document.getElementById('endlessView');
 
   const thumbnailGrid=document.getElementById('thumbnailGrid');
+  const thumbnailView=document.getElementById('thumbnailView');
   const thumbnailStatus=document.getElementById('thumbnailStatus');
   const endlessStatus=document.getElementById('endlessStatus');
   const endlessSlots=[
@@ -640,6 +642,14 @@
     },true);
   }
 
+  // Restore the approved swipe behavior without changing any room geometry.
+  // Room camera states advance/reverse the 24-state circuit; Thumbnail View
+  // mirrors its current LEFT/RIGHT paging behavior; Exhibit and Endless Wall
+  // keep their existing swipe behavior.
+  installHorizontalSwipe(roomStage,'left');
+  installHorizontalSwipe(roomStage,'wall');
+  installHorizontalSwipe(roomStage,'right');
+  installHorizontalSwipe(thumbnailView,'thumbnail');
   installHorizontalSwipe(overheadView,'overhead');
   installHorizontalSwipe(endlessView,'endless');
 

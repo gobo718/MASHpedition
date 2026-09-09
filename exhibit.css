@@ -1176,3 +1176,28 @@ button{border-radius:0}
 /* v18 touch navigation: horizontal swipes are handled by JS while
    vertical gestures remain available to the browser. */
 .overhead-view,.endless-view{touch-action:pan-y}
+
+/* ---------------------------------------------------------------
+   RESTORED INTERACTION ONLY — no Exhibit/Room geometry changes.
+   Thumbnail View uses the approved centered 5 / 6 / 6 / 5 stack.
+   Horizontal touch gestures are reserved for the active browse surface.
+   --------------------------------------------------------------- */
+.thumbnail-grid{
+  grid-template-columns:repeat(12,minmax(0,1fr));
+  grid-template-rows:repeat(4,minmax(0,1fr));
+  gap:6px;
+}
+.thumbnail-grid button{
+  grid-column:span 2;
+}
+.thumbnail-grid button:nth-child(1),
+.thumbnail-grid button:nth-child(18){
+  grid-column:2 / span 2;
+}
+.left-corner-view,
+.right-corner-view,
+.wall-view,
+.thumbnail-view{
+  touch-action:pan-y;
+}
+
