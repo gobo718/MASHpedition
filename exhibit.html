@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>MASHpedition Shared Artwork Viewer</title>
 <!-- v18: area samples + swipe navigation on Exhibit/Endless + v17 shared viewer -->
-<link rel="stylesheet" href="exhibit.css">
+<link rel="stylesheet" href="exhibit.css?v=25">
 </head>
 <body>
 <main class="exhibit-shell" id="exhibitShell" data-view="door" aria-label="Exhibit view">
@@ -126,7 +126,7 @@
           <button type="button" data-rank="3">3RD</button>
         </nav>
 
-        <div class="overhead-center-label" aria-hidden="true">ROOM</div>
+        <div class="overhead-center-label" id="overheadCenterIdentity" aria-hidden="true">LOCATION - 😀 😎 - THEME</div>
       </div>
     </section>
 
@@ -186,6 +186,7 @@
         <button class="endless-art endless-left" id="endlessLeftArt" type="button"><span></span></button>
         <button class="endless-art endless-center" id="endlessCenterArt" type="button"><span></span></button>
         <button class="endless-art endless-right" id="endlessRightArt" type="button"><span></span></button>
+        <div class="endless-theme-identity" aria-hidden="true">😀 😎 - THEME</div>
         <div class="endless-status" id="endlessStatus"></div>
       </div>
     </section>
@@ -223,6 +224,6 @@
 
   <a class="museum-return" href="index.html">MUSEUM</a>
 </main>
-<script src="exhibit.js"></script>
+<script src="exhibit.js?v=25"></script>
 </body>
 </html>

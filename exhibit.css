@@ -696,15 +696,24 @@ button{border-radius:0}
   left:50%;
   top:50%;
   transform:translate(-50%,-50%);
-  color:rgba(57,53,47,.28);
-  font-size:24px;
-  font-weight:900;
-  letter-spacing:.18em;
+  color:var(--ink);
+  font-size:clamp(9px,.9vw,13px);
+  font-weight:800;
+  letter-spacing:.08em;
+  white-space:nowrap;
+  text-align:center;
   pointer-events:none;
 }
 
 /* Keep the existing floating label from consuming the overhead map's top edge. */
 .exhibit-shell[data-view="overhead"] .view-label{display:none}
+.exhibit-shell[data-view="left"] .view-label,
+.exhibit-shell[data-view="wall"] .view-label,
+.exhibit-shell[data-view="right"] .view-label{
+  border:0;
+  background:transparent;
+}
+.exhibit-shell[data-view="thumbnail"] .view-label{display:none}
 
 /* Thumbnail view expansion only: same behavior/style, now 22 items. */
 .thumbnail-grid{
@@ -821,6 +830,20 @@ button{border-radius:0}
   font-weight:800;
   letter-spacing:.055em;
   white-space:nowrap;
+}
+.endless-theme-identity{
+  position:absolute;
+  left:1.5%;
+  top:4px;
+  z-index:3;
+  padding:2px 7px;
+  border:0;
+  background:transparent;
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:.055em;
+  white-space:nowrap;
+  pointer-events:none;
 }
 .exhibit-shell[data-view="endless"] .view-label{display:none}
 
@@ -1253,7 +1276,7 @@ button{border-radius:0}
 .exhibit-shell[data-view="thumbnail"] .thumbnail-theme-placeholder{
   position:absolute;
   left:1.5%;
-  top:1%;
+  top:12%;
   z-index:13;
   display:flex;
   flex-direction:column;
@@ -1269,7 +1292,7 @@ button{border-radius:0}
   pointer-events:none;
 }
 .thumbnail-theme-emojis{
-  font-size:5em;
+  font-size:4em;
   line-height:1;
   white-space:nowrap;
 }

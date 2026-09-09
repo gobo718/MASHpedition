@@ -12,6 +12,7 @@
   const frontDoor=document.getElementById('frontDoor');
   const exhibitControls=document.getElementById('exhibitControls');
   const overheadView=document.getElementById('overheadView');
+  const overheadCenterIdentity=document.getElementById('overheadCenterIdentity');
   const endlessView=document.getElementById('endlessView');
 
   const thumbnailGrid=document.getElementById('thumbnailGrid');
@@ -96,6 +97,8 @@
   const gehMode=areaPreset?.geh===true || params.get('geh')==='1' ||
     (!areaPreset && params.get('geh')!=='0' && mix==='B');
   const areaLabel=areaPreset?.label || (gehMode?'GRAND EXHIBITION HALL':'VIEWER SAMPLE');
+  const centerIdentityText=`${areaLabel} - 😀 😎 - THEME`;
+  overheadCenterIdentity.textContent=centerIdentityText;
   const defaultResultCount=areaPreset?.count ?? (mix==='A'?120:22);
   const genericResultCount=Math.max(1,Math.min(5000,Number(params.get('count'))||defaultResultCount));
   const defaultStart=areaPreset?.start || 'door';
@@ -155,9 +158,9 @@
 
   const labels={
     door:'DOOR',
-    left:'EXHIBIT VIEW',
-    wall:'EXHIBIT VIEW',
-    right:'EXHIBIT VIEW',
+    left:centerIdentityText,
+    wall:centerIdentityText,
+    right:centerIdentityText,
     zoom:'ARTWORK VIEW',
     thumbnail:'THUMBNAILS',
     overhead:'AERIAL VIEW',
