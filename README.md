@@ -375,3 +375,17 @@ Rules preserved:
 - Thumbnail View uses 22 positions in a centered 7 / 8 / 7 arrangement.
 - Generic large sets page 22 thumbnails at a time instead of rendering the full set at once.
 - Mosaics remain separate and are not routed through this viewer.
+
+
+---
+
+# GEH Rank Layout v34 — 2026-09-09
+
+- Grand Exhibition Hall rank vocabulary now supports 1ST through 10TH.
+- Spatial Exhibit/Room camera views now expose the active GEH rank layer.
+- On those room views, 1ST–5TH flank the centered title on the left and 6TH–10TH flank it on the right. The two groups are positioned symmetrically from the viewport edges; the temporary MUSEUM control does not affect title centering.
+- Thumbnail View uses a vertically centered two-column rank rail: 1ST–5TH in the left column and 6TH–10TH in the right column.
+- The Thumbnail left reserve is widened to 110px while thumbnail square sizing remains unchanged, allowing horizontal breathing room to narrow naturally rather than shrinking the artwork viewports.
+- Aerial layout is unchanged in this pass; its existing selector geometry is preserved for a later dedicated layout decision.
+- Rank unlock behavior remains controlled by the `ranks` query parameter; locked higher ranks stay absent.
+- Endless Wall remains unchanged and receives no GEH rank selector.

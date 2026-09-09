@@ -93,7 +93,7 @@
   const areaPreset=AREA_PRESETS[requestedArea]||null;
   const requestedMix=(params.get('mix') || areaPreset?.mix || 'B').toUpperCase();
   const mix=['A','B','C'].includes(requestedMix)?requestedMix:'B';
-  const maxUnlockedRank=Math.max(1,Math.min(3,Number(params.get('ranks'))||1));
+  const maxUnlockedRank=Math.max(1,Math.min(10,Number(params.get('ranks'))||1));
   const gehMode=areaPreset?.geh===true || params.get('geh')==='1' ||
     (!areaPreset && params.get('geh')!=='0' && mix==='B');
   const areaLabel=areaPreset?.label || (gehMode?'GRAND EXHIBITION HALL':'VIEWER SAMPLE');
@@ -191,7 +191,10 @@
   }
 
   function rankWord(rank){
-    return rank===1?'1ST':rank===2?'2ND':'3RD';
+    const n=Math.max(1,Number(rank)||1);
+    const mod100=n%100;
+    const suffix=(mod100>=11 && mod100<=13)?'TH':({1:'ST',2:'ND',3:'RD'}[n%10]||'TH');
+    return `${n}${suffix}`;
   }
 
   function setView(view){
@@ -244,13 +247,12 @@
     const span=button.querySelector('span');
 
     if(slot.kind==='door'){
-      const displayedDoorNumber=slot.number+roomPage;
       button.classList.add('is-door-slot');
-      button.dataset.door=String(displayedDoorNumber);
-      button.disabled=displayedDoorNumber===4;
+      button.dataset.door=String(slot.number);
+      button.disabled=slot.number!==1;
       button.setAttribute(
         'aria-label',
-        displayedDoorNumber===1 ? 'Door 1 — entrance' : `Door ${displayedDoorNumber}`
+        slot.number===1 ? 'Exit exhibit through Door 1' : `Door ${slot.number}`
       );
       if(span) span.textContent='';
       return;
@@ -258,9 +260,10 @@
 
     button.classList.add('is-art-slot');
     const artNumber=roomPage*PAGE_SIZE+slot.number;
+    const activeRank=gehMode?gehRank:1;
     button.dataset.art=String(artNumber);
-    button.dataset.rank='1';
-    button.setAttribute('aria-label',`Art ${artNumber}`);
+    button.dataset.rank=String(activeRank);
+    button.setAttribute('aria-label',`Art ${artNumber}${gehMode?`, ${rankWord(activeRank)} place`:''}`);
     if(span) span.textContent=`ART ${artNumber}`;
   }
 
@@ -274,17 +277,14 @@
     const span=button.querySelector('span');
 
     if(slot.kind==='door'){
-      const displayedDoorNumber=slot.number+roomPage;
       button.classList.add('is-overhead-door');
-      button.dataset.door=String(displayedDoorNumber);
-      button.disabled=displayedDoorNumber===4;
+      button.dataset.door=String(slot.number);
+      button.disabled=slot.number!==1;
       button.setAttribute(
         'aria-label',
-        displayedDoorNumber===1
-          ? 'Door 1 — entrance'
-          : `Door ${displayedDoorNumber}`
+        slot.number===1 ? 'Door 1 — exit exhibit' : 'Door 2'
       );
-      if(span) span.textContent=`DOOR ${displayedDoorNumber}`;
+      if(span) span.textContent=`DOOR ${slot.number}`;
       return;
     }
 
@@ -430,6 +430,7 @@
 
     if(shell.dataset.view==='overhead') renderOverhead();
     else if(shell.dataset.view==='thumbnail') renderThumbnailPage();
+    else if(['left','wall','right'].includes(shell.dataset.view)) renderRoom(lastRoomStart);
   }
 
   function rememberArtworkReturn(){
@@ -813,58 +814,20 @@
   installHorizontalSwipe(endlessView,'endless');
   installHorizontalSwipe(artworkScroll,'zoom');
 
-  function roomPageAcrossDoor(doorNumber){
-    doorNumber=Number(doorNumber);
-    if(doorNumber===1){
-      setView('door');
-      return;
-    }
-    if(doorNumber===4) return;
-
-    // Door 2 connects Exhibit Rooms 1 and 2; Door 3 connects Rooms 2 and 3.
-    const lowerPage=doorNumber-2;
-    const upperPage=doorNumber-1;
-    let nextPage=null;
-    if(roomPage===lowerPage) nextPage=upperPage;
-    else if(roomPage===upperPage) nextPage=lowerPage;
-    if(nextPage===null || nextPage<0 || nextPage>=pageCount()) return;
-
-    roomPage=nextPage;
-    thumbnailPage=nextPage;
-  }
-
-  function useAerialDoor(doorNumber){
-    const before=roomPage;
-    roomPageAcrossDoor(doorNumber);
-    if(shell.dataset.view==='door' || roomPage===before) return;
-    renderOverhead();
-  }
-
-  function useExhibitDoor(doorNumber){
-    const before=roomPage;
-    roomPageAcrossDoor(doorNumber);
-    if(shell.dataset.view==='door' || roomPage===before) return;
-
-    // Enter the connected room facing the same doorway. The first physical
-    // door slot centers at camera start 23; the second centers at start 8.
-    const targetLocalDoor=Number(doorNumber)-roomPage;
-    renderRoom(targetLocalDoor===1 ? 23 : 8);
-  }
-
   allRoomSlotButtons.forEach(button=>{
     button.addEventListener('click',()=>{
       if(button.classList.contains('is-door-slot')){
-        useExhibitDoor(button.dataset.door);
+        if(button.dataset.door==='1') setView('door');
         return;
       }
-      openArtwork(button.dataset.art,1);
+      openArtwork(button.dataset.art,gehMode?(Number(button.dataset.rank)||gehRank):1);
     });
   });
 
   overheadSlots.forEach(button=>{
     button.addEventListener('click',()=>{
       if(button.classList.contains('is-overhead-door')){
-        useAerialDoor(button.dataset.door);
+        if(button.dataset.door==='1') setView('door');
         return;
       }
       openArtwork(button.dataset.art,gehMode?gehRank:1);
