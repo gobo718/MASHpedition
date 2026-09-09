@@ -3,42 +3,174 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>MASHpedition Artwork Viewer</title>
+<title>MASHpedition Shared Artwork Viewer</title>
+<!-- v18: area samples + swipe navigation on Exhibit/Endless + v17 shared viewer -->
 <link rel="stylesheet" href="exhibit.css">
 </head>
 <body>
-<main class="viewer-shell" id="viewerShell" data-view="thumbnail" aria-label="Artwork viewer">
-  <section class="viewer-stage" id="viewerStage" aria-live="polite">
+<main class="exhibit-shell" id="exhibitShell" data-view="door" aria-label="Exhibit view">
+  <section class="room-stage" aria-live="polite">
 
-    <section class="exhibit-map-view" id="exhibitMapView" aria-label="Exhibit view">
-      <nav class="rank-selector" id="exhibitRanks" aria-label="Grand Exhibition Hall rank layer">
-        <button type="button" data-rank="1">1ST</button>
-        <button type="button" data-rank="2">2ND</button>
-        <button type="button" data-rank="3">3RD</button>
-      </nav>
-      <div class="exhibit-map" id="exhibitMap">
-        <div class="map-wall map-top" id="mapTop"></div>
-        <div class="map-wall map-left" id="mapLeft"></div>
-        <div class="map-center" id="mapCenter">EXHIBIT</div>
-        <div class="map-wall map-right" id="mapRight"></div>
-        <div class="map-wall map-bottom" id="mapBottom"></div>
+    <!-- Entry transition remains intentionally temporary. -->
+    <section class="door-wall-view" id="doorWallView" aria-label="Door entry placeholder view">
+      <div class="door-wall-canvas">
+        <button class="door-placeholder" id="frontDoor" type="button" aria-label="Enter exhibit"></button>
       </div>
     </section>
 
-    <section class="room-view" id="roomView" aria-label="Room view">
-      <div class="room-frame" id="roomFrame">
-        <button class="slot angled-left" id="angledLeft" type="button" hidden></button>
-        <div class="corner left-corner" id="leftCorner" hidden aria-hidden="true"></div>
-        <button class="slot flat-left" id="flatLeft" type="button" hidden></button>
-        <button class="slot flat-center" id="flatCenter" type="button" hidden></button>
-        <button class="slot flat-right" id="flatRight" type="button" hidden></button>
-        <div class="corner right-corner" id="rightCorner" hidden aria-hidden="true"></div>
-        <button class="slot angled-right" id="angledRight" type="button" hidden></button>
+    <!-- LEFT CORNER: perspective slot on screen-left, then two normal slots. -->
+    <section class="left-corner-view" id="leftCornerView" aria-label="Left corner view">
+      <div class="left-corner-canvas">
+        <button class="corner-art corner-art-22" id="leftPerspectiveSlot" type="button"><span></span></button>
+        <div class="corner-divider" aria-hidden="true"></div>
+        <button class="corner-art corner-art-1" id="leftNormalSlot1" type="button"><span></span></button>
+        <button class="corner-art corner-art-2" id="leftNormalSlot2" type="button"><span></span></button>
       </div>
     </section>
 
+    <!-- RIGHT CORNER: exact geometry mirror. DOM order differs from visual order. -->
+    <section class="right-corner-view" id="rightCornerView" aria-label="Right corner view">
+      <div class="right-corner-canvas">
+        <button class="right-perspective-art" id="rightPerspectiveSlot" type="button"><span></span></button>
+        <div class="right-corner-divider" aria-hidden="true"></div>
+        <button class="right-normal-art right-normal-art-1" id="rightNormalSlot1" type="button"><span></span></button>
+        <button class="right-normal-art right-normal-art-2" id="rightNormalSlot2" type="button"><span></span></button>
+      </div>
+    </section>
+
+    <!-- STRAIGHT WALL: three equal approved 230px slots. -->
+    <section class="wall-view" id="wallView" aria-label="Wall view">
+      <div class="wall-canvas">
+        <button class="wall-triplet-art wall-triplet-left" id="wallLeftArt" type="button"><span id="wallLeftLabel"></span></button>
+        <button class="wall-triplet-art wall-triplet-center" id="wallCenterArt" type="button"><span id="wallCenterLabel"></span></button>
+        <button class="wall-triplet-art wall-triplet-right" id="wallRightArt" type="button"><span id="wallRightLabel"></span></button>
+      </div>
+    </section>
+
+
+    <!-- OVERHEAD: complete 24-position room map. All position buttons are
+         exactly the same screen-space size; connectors preserve wall anchors. -->
+    <section class="overhead-view" id="overheadView" aria-label="Overhead room view">
+      <div class="overhead-canvas">
+        <svg class="overhead-room-lines" viewBox="0 0 980 300" aria-hidden="true">
+          <polygon class="overhead-room-floor" points="240,18 740,18 760,282 220,282"></polygon>
+
+          <!-- Left wall anchors: ART 7 down through ART 2. -->
+          <line x1="238.3" y1="40" x2="182" y2="40"></line>
+          <line x1="235.0" y1="84" x2="182" y2="84"></line>
+          <line x1="231.7" y1="128" x2="182" y2="128"></line>
+          <line x1="228.3" y1="172" x2="182" y2="172"></line>
+          <line x1="225.0" y1="216" x2="182" y2="216"></line>
+          <line x1="221.7" y1="260" x2="182" y2="260"></line>
+
+          <!-- Top wall anchors: ART 8, DOOR 2, ART 9, ART 10, ART 11, ART 12. -->
+          <line x1="281.7" y1="18" x2="281.7" y2="32"></line>
+          <line x1="365.0" y1="18" x2="365.0" y2="78"></line>
+          <line x1="448.3" y1="18" x2="448.3" y2="32"></line>
+          <line x1="531.7" y1="18" x2="531.7" y2="78"></line>
+          <line x1="615.0" y1="18" x2="615.0" y2="32"></line>
+          <line x1="698.3" y1="18" x2="698.3" y2="78"></line>
+
+          <!-- Right wall anchors: ART 13 down through ART 18. -->
+          <line x1="741.7" y1="40" x2="798" y2="40"></line>
+          <line x1="745.0" y1="84" x2="798" y2="84"></line>
+          <line x1="748.3" y1="128" x2="798" y2="128"></line>
+          <line x1="751.7" y1="172" x2="798" y2="172"></line>
+          <line x1="755.0" y1="216" x2="798" y2="216"></line>
+          <line x1="758.3" y1="260" x2="798" y2="260"></line>
+
+          <!-- Bottom wall anchors: ART 1, DOOR 1, ART 22, ART 21, ART 20, ART 19. -->
+          <line x1="265.0" y1="282" x2="265.0" y2="268"></line>
+          <line x1="355.0" y1="282" x2="355.0" y2="222"></line>
+          <line x1="445.0" y1="282" x2="445.0" y2="268"></line>
+          <line x1="535.0" y1="282" x2="535.0" y2="222"></line>
+          <line x1="625.0" y1="282" x2="625.0" y2="268"></line>
+          <line x1="715.0" y1="282" x2="715.0" y2="222"></line>
+        </svg>
+
+        <!-- Left wall, top to bottom. -->
+        <button class="overhead-slot oh-left oh-left-1" type="button" data-room-index="7"><span></span></button>
+        <button class="overhead-slot oh-left oh-left-2" type="button" data-room-index="6"><span></span></button>
+        <button class="overhead-slot oh-left oh-left-3" type="button" data-room-index="5"><span></span></button>
+        <button class="overhead-slot oh-left oh-left-4" type="button" data-room-index="4"><span></span></button>
+        <button class="overhead-slot oh-left oh-left-5" type="button" data-room-index="3"><span></span></button>
+        <button class="overhead-slot oh-left oh-left-6" type="button" data-room-index="2"><span></span></button>
+
+        <!-- Top wall, left to right. -->
+        <button class="overhead-slot oh-top oh-top-1" type="button" data-room-index="8"><span></span></button>
+        <button class="overhead-slot oh-top oh-top-2" type="button" data-room-index="9"><span></span></button>
+        <button class="overhead-slot oh-top oh-top-3" type="button" data-room-index="10"><span></span></button>
+        <button class="overhead-slot oh-top oh-top-4" type="button" data-room-index="11"><span></span></button>
+        <button class="overhead-slot oh-top oh-top-5" type="button" data-room-index="12"><span></span></button>
+        <button class="overhead-slot oh-top oh-top-6" type="button" data-room-index="13"><span></span></button>
+
+        <!-- Right wall, top to bottom. -->
+        <button class="overhead-slot oh-right oh-right-1" type="button" data-room-index="14"><span></span></button>
+        <button class="overhead-slot oh-right oh-right-2" type="button" data-room-index="15"><span></span></button>
+        <button class="overhead-slot oh-right oh-right-3" type="button" data-room-index="16"><span></span></button>
+        <button class="overhead-slot oh-right oh-right-4" type="button" data-room-index="17"><span></span></button>
+        <button class="overhead-slot oh-right oh-right-5" type="button" data-room-index="18"><span></span></button>
+        <button class="overhead-slot oh-right oh-right-6" type="button" data-room-index="19"><span></span></button>
+
+        <!-- Bottom wall, left to right. -->
+        <button class="overhead-slot oh-bottom oh-bottom-1" type="button" data-room-index="1"><span></span></button>
+        <button class="overhead-slot oh-bottom oh-bottom-2" type="button" data-room-index="0"><span></span></button>
+        <button class="overhead-slot oh-bottom oh-bottom-3" type="button" data-room-index="23"><span></span></button>
+        <button class="overhead-slot oh-bottom oh-bottom-4" type="button" data-room-index="22"><span></span></button>
+        <button class="overhead-slot oh-bottom oh-bottom-5" type="button" data-room-index="21"><span></span></button>
+        <button class="overhead-slot oh-bottom oh-bottom-6" type="button" data-room-index="20"><span></span></button>
+
+        <nav class="rank-selector exhibit-ranks" id="exhibitRanks" aria-label="Grand Exhibition Hall rank layer">
+          <button type="button" data-rank="1">1ST</button>
+          <button type="button" data-rank="2">2ND</button>
+          <button type="button" data-rank="3">3RD</button>
+        </nav>
+
+        <div class="overhead-center-label" aria-hidden="true">ROOM</div>
+      </div>
+    </section>
+
+    <!-- Artwork View: exact locked 340 / 300 / 340 first screen. -->
+    <section class="artwork-view" id="artworkView" aria-label="Artwork detail">
+      <div class="artwork-scroll" id="artworkScroll">
+        <div class="artwork-top-row">
+          <section class="artwork-metadata" aria-label="Artwork metadata">
+            <button class="artwork-back" id="artworkBack" type="button">BACK</button>
+            <div class="artwork-meta-copy">
+              <strong id="artworkArea">GRAND EXHIBITION HALL</strong>
+              <span id="artworkRankTime">#1 · ALL TIME</span>
+              <span class="artwork-emojis" id="artworkEmojis">🎭 ✨</span>
+              <span id="artworkTheme">THEME 1</span>
+              <button class="creator-link" id="creatorLink" type="button">Creator01</button>
+            </div>
+          </section>
+
+          <button class="artwork-center" id="artworkCenter" type="button" aria-label="Expand artwork">
+            <span id="artworkLabel">ART 1</span>
+          </button>
+
+          <button class="artwork-plaque" id="artworkPlaque" type="button" aria-label="Expand plaque">
+            <strong>PLAQUE</strong>
+            <span id="plaqueText">A placeholder plaque for this artwork. Tap to fill the viewing area.</span>
+          </button>
+        </div>
+
+        <section class="blurblet-section" aria-label="Blurblets">
+          <header>
+            <strong>BLURBLETS</strong>
+            <span>TOP · TIME</span>
+          </header>
+          <article><strong>Blurblet 1</strong><p>Placeholder comment layer for the selected artwork.</p></article>
+          <article><strong>Blurblet 2</strong><p>Normal lighting shows ordinary Blurblets. Spotlight behavior stays separate.</p></article>
+          <article><strong>Blurblet 3</strong><p>This section can continue vertically without changing the first-screen geometry.</p></article>
+        </section>
+      </div>
+    </section>
+
+    <!-- Thumbnails render only the current page. GEH rank layers replace
+         the same 22 slots rather than loading 66 images at once. -->
     <section class="thumbnail-view" id="thumbnailView" aria-label="Thumbnail view">
-      <nav class="rank-selector" id="thumbnailRanks" aria-label="Grand Exhibition Hall rank layer">
+      <nav class="rank-selector thumbnail-ranks" id="thumbnailRanks" aria-label="Grand Exhibition Hall rank layer">
         <button type="button" data-rank="1">1ST</button>
         <button type="button" data-rank="2">2ND</button>
         <button type="button" data-rank="3">3RD</button>
@@ -47,34 +179,38 @@
       <div class="thumbnail-grid" id="thumbnailGrid"></div>
     </section>
 
+    <!-- ENDLESS WALL: approved straight-wall geometry with a linear result
+         sequence. No corners, no doors, no wraparound. -->
     <section class="endless-view" id="endlessView" aria-label="Endless wall view">
-      <div class="endless-wall" id="endlessWall">
-        <button class="endless-art" id="endlessA" type="button"></button>
-        <button class="endless-art" id="endlessB" type="button"></button>
-        <button class="endless-art" id="endlessC" type="button"></button>
+      <div class="endless-canvas">
+        <button class="endless-art endless-left" id="endlessLeftArt" type="button"><span></span></button>
+        <button class="endless-art endless-center" id="endlessCenterArt" type="button"><span></span></button>
+        <button class="endless-art endless-right" id="endlessRightArt" type="button"><span></span></button>
+        <div class="endless-status" id="endlessStatus"></div>
       </div>
-      <div class="endless-status" id="endlessStatus"></div>
     </section>
 
-    <section class="artwork-view" id="artworkView" aria-label="Artwork detail">
-      <button class="artwork-back" id="artworkBack" type="button">BACK</button>
-      <div class="artwork-large" id="artworkLarge"><span id="artworkLabel">ART 1</span></div>
-      <div class="artwork-copy" id="artworkCopy"></div>
+    <!-- Expanded artwork/plaque overlay. Returning restores the exact
+         Artwork View scroll position. -->
+    <section class="artwork-expand" id="artworkExpand" aria-label="Expanded artwork information">
+      <button class="expand-back" id="expandBack" type="button">BACK</button>
+      <div class="expand-content" id="expandContent"></div>
     </section>
 
-    <div class="view-label" id="viewLabel"></div>
+    <div class="view-label" id="viewLabel">DOOR</div>
   </section>
 
-  <nav class="viewer-controls" id="viewerControls" aria-label="Viewing navigation">
+  <nav class="exhibit-controls" id="exhibitControls" aria-label="Viewing navigation">
     <button type="button" id="leftBtn">LEFT</button>
     <button type="button" id="rightBtn">RIGHT</button>
-    <button type="button" id="exhibitBtn" data-capability="exhibit">EXHIBIT</button>
+    <button type="button" id="overheadBtn" data-capability="exhibit">EXHIBIT</button>
     <button type="button" id="roomBtn" data-capability="room">ROOM</button>
     <button type="button" id="thumbnailBtn" data-capability="thumbnail">THUMBNAILS</button>
     <button type="button" id="endlessBtn" data-capability="endless">ENDLESS</button>
-    <button type="button" id="doorBtn" data-capability="room">DOOR</button>
-    <a href="index.html">MUSEUM</a>
+    <button type="button" id="doorBtn">DOOR</button>
   </nav>
+
+  <a class="museum-return" href="index.html">MUSEUM</a>
 </main>
 <script src="exhibit.js"></script>
 </body>
