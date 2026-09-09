@@ -537,7 +537,7 @@
   function updatePageNav(){
     if(!pageNav) return;
     const view=shell.dataset.view;
-    const show=['overhead','thumbnail','endless'].includes(view) && pageCount()>1;
+    const show=['thumbnail','endless'].includes(view) && pageCount()>1;
     pageNav.hidden=!show;
     if(!show) return;
     const page=Math.max(0,Math.min(pageCount()-1,currentPageForView()));
