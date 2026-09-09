@@ -881,12 +881,18 @@ button{border-radius:0}
 }
 .rank-selector button[hidden]{display:none !important}
 
+/* v35 Stage 4 — GEH rank controls only.
+   Aerial uses the existing 50×30 rank buttons as a compact horizontal row
+   centered beneath the existing center identity. The 15px vertical offset is
+   exactly half the established 30px rank-button height. Thumbnail ranks move
+   down one established 31px button + 5px gap pitch: 61px → 97px. */
 .exhibit-ranks{
   position:absolute;
-  left:184px;
-  top:98px;
-  width:50px;
-  flex-direction:column;
+  left:50%;
+  top:calc(50% + 15px);
+  width:auto;
+  transform:translateX(-50%);
+  flex-direction:row;
   gap:4px;
   z-index:6;
 }
@@ -899,7 +905,7 @@ button{border-radius:0}
 .thumbnail-ranks{
   position:absolute;
   left:3px;
-  top:61px;
+  top:97px;
   width:43px;
   flex-direction:column;
   gap:5px;
