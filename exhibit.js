@@ -150,12 +150,12 @@
 
   const labels={
     door:'DOOR',
-    left:'ROOM VIEW',
-    wall:'ROOM VIEW',
-    right:'ROOM VIEW',
+    left:'EXHIBIT VIEW',
+    wall:'EXHIBIT VIEW',
+    right:'EXHIBIT VIEW',
     zoom:'ARTWORK VIEW',
     thumbnail:'THUMBNAILS',
-    overhead:'EXHIBIT VIEW',
+    overhead:'AERIAL VIEW',
     endless:'ENDLESS WALL VIEW'
   };
 
