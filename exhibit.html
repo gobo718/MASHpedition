@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>MASHpedition Shared Artwork Viewer</title>
 <!-- v18: area samples + swipe navigation on Exhibit/Endless + v17 shared viewer -->
-<link rel="stylesheet" href="exhibit.css?v=34">
+<link rel="stylesheet" href="exhibit.css?v=37">
 </head>
 <body>
 <main class="exhibit-shell" id="exhibitShell" data-view="door" aria-label="Exhibit view">
@@ -120,13 +120,14 @@
         <button class="overhead-slot oh-bottom oh-bottom-5" type="button" data-room-index="21"><span></span></button>
         <button class="overhead-slot oh-bottom oh-bottom-6" type="button" data-room-index="20"><span></span></button>
 
-        <nav class="rank-selector exhibit-ranks" id="exhibitRanks" aria-label="Grand Exhibition Hall rank layer">
-          <button type="button" data-rank="1">1ST</button>
-          <button type="button" data-rank="2">2ND</button>
-          <button type="button" data-rank="3">3RD</button>
-        </nav>
-
-        <div class="overhead-center-label" id="overheadCenterIdentity" aria-hidden="true">LOCATION - 😀 😎 - THEME</div>
+        <div class="aerial-center-unit">
+          <div class="overhead-center-label" id="overheadCenterIdentity" aria-hidden="true">LOCATION - 😀 😎 - THEME</div>
+          <nav class="rank-selector exhibit-ranks" id="exhibitRanks" aria-label="Grand Exhibition Hall rank layer">
+            <button type="button" data-rank="1">1ST</button>
+            <button type="button" data-rank="2">2ND</button>
+            <button type="button" data-rank="3">3RD</button>
+          </nav>
+        </div>
       </div>
     </section>
 
@@ -174,13 +175,6 @@
         <button type="button" data-rank="1">1ST</button>
         <button type="button" data-rank="2">2ND</button>
         <button type="button" data-rank="3">3RD</button>
-        <button type="button" data-rank="4">4TH</button>
-        <button type="button" data-rank="5">5TH</button>
-        <button type="button" data-rank="6">6TH</button>
-        <button type="button" data-rank="7">7TH</button>
-        <button type="button" data-rank="8">8TH</button>
-        <button type="button" data-rank="9">9TH</button>
-        <button type="button" data-rank="10">10TH</button>
       </nav>
       <div class="thumbnail-status" id="thumbnailStatus"></div>
       <div class="thumbnail-grid" id="thumbnailGrid"></div>
@@ -205,23 +199,6 @@
       <div class="expand-content" id="expandContent"></div>
     </section>
 
-    <nav class="rank-selector room-ranks" id="roomRanks" aria-label="Grand Exhibition Hall room rank layer">
-      <span class="room-rank-group room-rank-left">
-        <button type="button" data-rank="1">1ST</button>
-        <button type="button" data-rank="2">2ND</button>
-        <button type="button" data-rank="3">3RD</button>
-        <button type="button" data-rank="4">4TH</button>
-        <button type="button" data-rank="5">5TH</button>
-      </span>
-      <span class="room-rank-group room-rank-right">
-        <button type="button" data-rank="6">6TH</button>
-        <button type="button" data-rank="7">7TH</button>
-        <button type="button" data-rank="8">8TH</button>
-        <button type="button" data-rank="9">9TH</button>
-        <button type="button" data-rank="10">10TH</button>
-      </span>
-    </nav>
-
     <div class="thumbnail-theme-placeholder" aria-label="Theme placeholder">
       <div class="thumbnail-theme-emojis" aria-hidden="true">😀 😎</div>
       <div class="thumbnail-theme-label">THEME</div>
@@ -243,11 +220,11 @@
     <button type="button" id="roomBtn" data-capability="room">EXHIBIT</button>
     <button type="button" id="thumbnailBtn" data-capability="thumbnail">THUMBNAILS</button>
     <button type="button" id="endlessBtn" data-capability="endless">ENDLESS</button>
-    <button type="button" id="doorBtn">DOOR</button>
+    <button type="button" id="doorBtn">ENTRANCE</button>
   </nav>
 
   <a class="museum-return" href="index.html">MUSEUM</a>
 </main>
-<script src="exhibit.js?v=34"></script>
+<script src="exhibit.js?v=36"></script>
 </body>
 </html>

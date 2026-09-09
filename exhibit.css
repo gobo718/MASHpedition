@@ -691,11 +691,19 @@ button{border-radius:0}
 }
 .overhead-slot.is-overhead-door[data-door="1"]{cursor:pointer}
 
-.overhead-center-label{
+.aerial-center-unit{
   position:absolute;
   left:50%;
   top:50%;
   transform:translate(-50%,-50%);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:4px;
+  z-index:6;
+}
+.overhead-center-label{
+  position:static;
   color:var(--ink);
   font-size:clamp(9px,.9vw,13px);
   font-weight:800;
@@ -881,14 +889,15 @@ button{border-radius:0}
 }
 .rank-selector button[hidden]{display:none !important}
 
+/* v37 Stage 4 center-unit correction.
+   Aerial identity + GEH rank controls are centered together as one unit.
+   The vertical gap reuses the established 4px rank-button gap. Thumbnail ranks
+   retain the approved one-button-pitch move from v35. */
 .exhibit-ranks{
-  position:absolute;
-  left:184px;
-  top:98px;
-  width:50px;
-  flex-direction:column;
+  position:static;
+  width:auto;
+  flex-direction:row;
   gap:4px;
-  z-index:6;
 }
 .exhibit-ranks button{
   width:50px;
@@ -899,7 +908,7 @@ button{border-radius:0}
 .thumbnail-ranks{
   position:absolute;
   left:3px;
-  top:61px;
+  top:97px;
   width:43px;
   flex-direction:column;
   gap:5px;
@@ -1353,80 +1362,3 @@ button{border-radius:0}
   visibility:hidden;
 }
 
-
-
-/* ---------------------------------------------------------------
-   v34 — GEH 1st–10th rank controls.
-
-   Room/front-wall/corner views:
-   - Title stays centered from the viewport edges.
-   - 1ST–5TH sit left of the title; 6TH–10TH sit right of it.
-   - Both groups use the same outer screen inset, so the temporary MUSEUM
-     button does not shift the header off true center.
-
-   Thumbnail view:
-   - Rank rail is two columns (1ST–5TH / 6TH–10TH), vertically centered.
-   - The left thumbnail reserve grows from 50px to 110px. Thumbnail square
-     sizing is unchanged; only the available inter-thumbnail space tightens.
-
-   --------------------------------------------------------------- */
-
-/* Each GEH surface chooses its own display geometry. */
-.exhibit-shell.geh-mode[data-view="thumbnail"] .thumbnail-ranks{display:grid}
-.exhibit-shell.geh-mode[data-view="left"] .room-ranks,
-.exhibit-shell.geh-mode[data-view="wall"] .room-ranks,
-.exhibit-shell.geh-mode[data-view="right"] .room-ranks{display:block}
-
-/* Spatial room header: independent left/right groups around a truly centered title. */
-.room-ranks{
-  position:absolute;
-  inset:0 0 auto 0;
-  height:34px;
-  z-index:14;
-  pointer-events:none;
-}
-.room-rank-group{
-  position:absolute;
-  top:5px;
-  display:flex;
-  gap:4px;
-  pointer-events:auto;
-}
-.room-rank-left{left:clamp(130px,11vw,170px)}
-.room-rank-right{right:clamp(130px,11vw,170px)}
-.room-ranks button{
-  width:43px;
-  height:27px;
-  font-size:9px;
-}
-.room-rank-right button:last-child{width:46px}
-
-/* Thumbnail rank rail: two columns, vertically centered in the viewing area. */
-.thumbnail-ranks{
-  left:3px;
-  top:50%;
-  width:91px;
-  transform:translateY(-50%);
-  grid-template-rows:repeat(5,31px);
-  grid-auto-flow:column;
-  grid-auto-columns:43px;
-  gap:5px;
-}
-.thumbnail-ranks button{
-  width:43px;
-  height:31px;
-  font-size:9px;
-}
-
-/* Preserve square size; widen only the reserved left rail. */
-.thumbnail-grid{
-  left:110px;
-}
-.thumbnail-status{
-  left:110px;
-}
-
-@media (orientation:portrait){
-  .room-rank-left{left:130px}
-  .room-rank-right{right:130px}
-}
