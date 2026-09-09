@@ -1253,7 +1253,7 @@ button{border-radius:0}
 .exhibit-shell[data-view="thumbnail"] .thumbnail-theme-placeholder{
   position:absolute;
   left:1.5%;
-  top:12%;
+  top:1%;
   z-index:13;
   display:flex;
   flex-direction:column;
@@ -1261,7 +1261,7 @@ button{border-radius:0}
   justify-content:center;
   gap:.35rem;
   padding:.55em;
-  background:var(--paper);
+  background:transparent;
   color:var(--ink);
   font-size:clamp(9px,.9vw,13px);
   font-weight:800;
@@ -1269,7 +1269,7 @@ button{border-radius:0}
   pointer-events:none;
 }
 .thumbnail-theme-emojis{
-  font-size:3em;
+  font-size:5em;
   line-height:1;
   white-space:nowrap;
 }
