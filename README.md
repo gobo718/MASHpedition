@@ -306,7 +306,7 @@ Thumbnail View still provides direct access to ART 1–22.
 Corrections / interaction pass:
 - Straight-wall states now use three truly equal-sized, equally aligned, non-distorted wall slots. The center image is no longer enlarged.
 - Horizontal swipe is supported across the exhibit room surface, including straight-wall states and Thumbnail View. Swipe left moves one state forward around the 24-state circuit; swipe right moves one state backward. This mirrors the RIGHT / LEFT controls.
-- Thumbnail View retains all 22 room thumbnails on one screen, arranged 5 / 6 / 6 / 5. The 5-item top and bottom rows are centered.
+- Thumbnail View retains all 22 room thumbnails on one screen, arranged 7 / 8 / 7. The 7-item top and bottom rows are centered.
 - Grand Exhibition Hall exhibit addressing is capped at 66 (`MAX_EXHIBITS = 66`); any requested exhibit index above 66 clamps to 66. This matches the current 66-Theme ceiling rather than allowing stray 88-exhibit values.
 
 
@@ -345,7 +345,7 @@ The earlier build incorrectly conflated the Exhibit room's front-facing camera c
 - No wraparound.
 - It simply repeats the Exhibit front-wall visual component forever: 1/2/3, then 2/3/4, then 3/4/5, etc.
 - Horizontal swipe and LEFT/RIGHT controls advance the sequence by one item.
-- Thumbnail View is a moving 22-item browsing window, arranged 5/6/6/5 with the first and last rows centered.
+- Thumbnail View is a moving 22-item browsing window, arranged 7/8/7 with the first and last rows centered.
 - SALON ECLECTIQUE temporarily links to this surface because SALON uses the non-room scrolling-wall family rather than dedicated exhibit-room topology.
 
 ---
@@ -372,6 +372,6 @@ Rules preserved:
 - GEH 1ST / 2ND / 3RD controls appear only in Exhibit View and Thumbnail View; Room View remains first-place only.
 - Endless Wall is linear: no doors, no corners, no wrapping.
 - Endless Wall reuses the same three-image straight-wall dimensions as Room View.
-- Thumbnail View uses 22 positions in a centered 5 / 6 / 6 / 5 arrangement.
+- Thumbnail View uses 22 positions in a centered 7 / 8 / 7 arrangement.
 - Generic large sets page 22 thumbnails at a time instead of rendering the full set at once.
 - Mosaics remain separate and are not routed through this viewer.
