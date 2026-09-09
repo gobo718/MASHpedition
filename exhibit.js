@@ -771,12 +771,13 @@
   // Room camera states advance/reverse the 24-state circuit; Thumbnail View
   // mirrors its current LEFT/RIGHT paging behavior; Exhibit and Endless Wall
   // keep their existing swipe behavior.
-  installHorizontalSwipe(roomStage,'left','page');
-  installHorizontalSwipe(roomStage,'wall','page');
-  installHorizontalSwipe(roomStage,'right','page');
+  installHorizontalSwipe(roomStage,'left');
+  installHorizontalSwipe(roomStage,'wall');
+  installHorizontalSwipe(roomStage,'right');
   installHorizontalSwipe(thumbnailView,'thumbnail');
   installHorizontalSwipe(overheadView,'overhead','page');
   installHorizontalSwipe(endlessView,'endless');
+  installHorizontalSwipe(artworkScroll,'zoom');
 
   allRoomSlotButtons.forEach(button=>{
     button.addEventListener('click',()=>{
