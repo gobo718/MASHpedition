@@ -537,7 +537,7 @@
   function updatePageNav(){
     if(!pageNav) return;
     const view=shell.dataset.view;
-    const show=['thumbnail','endless'].includes(view) && pageCount()>1;
+    const show=view==='endless' && pageCount()>1;
     pageNav.hidden=!show;
     if(!show) return;
     const page=Math.max(0,Math.min(pageCount()-1,currentPageForView()));
@@ -580,8 +580,13 @@
       leftBtn.disabled=endlessIndex<=0;
       rightBtn.disabled=endlessIndex>=genericResultCount-1;
     }else if(view==='zoom'){
-      leftBtn.disabled=true;
-      rightBtn.disabled=true;
+      if(artworkReturn?.view==='thumbnail'){
+        leftBtn.disabled=selectedArt<=1;
+        rightBtn.disabled=selectedArt>=genericResultCount;
+      }else{
+        leftBtn.disabled=true;
+        rightBtn.disabled=true;
+      }
     }else if(view==='overhead' && !capabilities.room){
       leftBtn.disabled=true;
       rightBtn.disabled=true;
@@ -609,7 +614,19 @@
       return;
     }
 
-    if(view==='zoom') return;
+    if(view==='zoom'){
+      if(artworkReturn?.view==='thumbnail' && selectedArt>1){
+        const nextArt=selectedArt-1;
+        updateArtworkCopy(nextArt,selectedRank);
+        thumbnailPage=Math.floor((nextArt-1)/PAGE_SIZE);
+        roomPage=thumbnailPage;
+        artworkReturn.thumbnailPage=thumbnailPage;
+        artworkReturn.roomPage=roomPage;
+        artworkScroll.scrollTop=0;
+        updateNavigationState();
+      }
+      return;
+    }
 
     if(view==='door'){
       if(capabilities.room) renderRoom(0);
@@ -641,7 +658,19 @@
       return;
     }
 
-    if(view==='zoom') return;
+    if(view==='zoom'){
+      if(artworkReturn?.view==='thumbnail' && selectedArt<genericResultCount){
+        const nextArt=selectedArt+1;
+        updateArtworkCopy(nextArt,selectedRank);
+        thumbnailPage=Math.floor((nextArt-1)/PAGE_SIZE);
+        roomPage=thumbnailPage;
+        artworkReturn.thumbnailPage=thumbnailPage;
+        artworkReturn.roomPage=roomPage;
+        artworkScroll.scrollTop=0;
+        updateNavigationState();
+      }
+      return;
+    }
 
     if(view==='door'){
       if(capabilities.room) renderRoom(1);
