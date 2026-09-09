@@ -1307,3 +1307,48 @@ button{border-radius:0}
   font-size:1em;
   letter-spacing:.08em;
 }
+
+/* v29 Stage 2 — selected-art navigation and true artwork fullscreen.
+   LEFT/RIGHT now step one artwork at a time from every artwork-producing
+   viewer surface. Fullscreen art preserves the selected art's square
+   placeholder proportions, covers the entire viewport, and hides all HUD. */
+.artwork-expand.is-art-fullscreen{
+  inset:0;
+  bottom:0;
+  z-index:30;
+  background:#000;
+}
+.artwork-expand.is-art-fullscreen .expand-back{
+  display:none;
+}
+.artwork-expand.is-art-fullscreen .expand-content{
+  left:0;
+  top:0;
+  width:100%;
+  height:100%;
+  transform:none;
+}
+.artwork-expand.is-art-fullscreen .expand-art{
+  width:min(100vw,100dvh);
+  height:min(100vw,100dvh);
+  max-width:100vw;
+  max-height:100dvh;
+  aspect-ratio:1 / 1;
+  border:0;
+  cursor:pointer;
+  outline:0;
+}
+.artwork-expand.is-art-fullscreen .expand-art img{
+  max-width:100%;
+  max-height:100%;
+  width:auto;
+  height:auto;
+  object-fit:contain;
+}
+.exhibit-shell.is-art-fullscreen .exhibit-controls,
+.exhibit-shell.is-art-fullscreen .museum-return,
+.exhibit-shell.is-art-fullscreen .view-label,
+.exhibit-shell.is-art-fullscreen .page-nav{
+  visibility:hidden;
+}
+

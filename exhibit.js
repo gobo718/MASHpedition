@@ -494,6 +494,11 @@
   function openExpanded(kind){
     expandedScrollTop=artworkScroll.scrollTop;
     expandContent.replaceChildren();
+    const artFullscreen=kind==='art';
+
+    artworkExpand.classList.toggle('is-art-fullscreen',artFullscreen);
+    shell.classList.toggle('is-art-fullscreen',artFullscreen);
+    expandBack.hidden=artFullscreen;
 
     if(kind==='plaque'){
       const panel=document.createElement('div');
@@ -508,18 +513,35 @@
       const art=document.createElement('div');
       art.className='expand-art';
       art.textContent=artworkLabel.textContent;
+      art.setAttribute('role','button');
+      art.setAttribute('tabindex','0');
+      art.setAttribute('aria-label','Return to artwork selection');
+      art.addEventListener('click',closeExpanded);
+      art.addEventListener('keydown',event=>{
+        if(event.key==='Enter' || event.key===' '){
+          event.preventDefault();
+          closeExpanded();
+        }
+      });
       expandContent.appendChild(art);
     }
 
     artworkExpand.classList.add('is-open');
-    expandBack.focus({preventScroll:true});
+    if(artFullscreen){
+      expandContent.firstElementChild?.focus({preventScroll:true});
+    }else{
+      expandBack.focus({preventScroll:true});
+    }
   }
 
   function closeExpanded(){
-    artworkExpand.classList.remove('is-open');
+    artworkExpand.classList.remove('is-open','is-art-fullscreen');
+    shell.classList.remove('is-art-fullscreen');
+    expandBack.hidden=false;
     expandContent.replaceChildren();
     requestAnimationFrame(()=>{
       artworkScroll.scrollTop=expandedScrollTop;
+      artworkCenter.focus({preventScroll:true});
     });
   }
 
@@ -566,6 +588,8 @@
     renderCurrentViewAfterPageChange(view);
   }
 
+  const artworkSequenceViews=new Set(['thumbnail','overhead','left','wall','right','endless']);
+
   function updateNavigationState(){
     const view=shell.dataset.view;
 
@@ -580,7 +604,7 @@
       leftBtn.disabled=endlessIndex<=0;
       rightBtn.disabled=endlessIndex>=genericResultCount-1;
     }else if(view==='zoom'){
-      if(artworkReturn?.view==='thumbnail'){
+      if(artworkSequenceViews.has(artworkReturn?.view)){
         leftBtn.disabled=selectedArt<=1;
         rightBtn.disabled=selectedArt>=genericResultCount;
       }else{
@@ -591,6 +615,31 @@
       leftBtn.disabled=true;
       rightBtn.disabled=true;
     }
+  }
+
+  function stepSelectedArtwork(delta){
+    const sourceView=artworkReturn?.view;
+    if(!artworkSequenceViews.has(sourceView)) return;
+
+    const nextArt=selectedArt+delta;
+    if(nextArt<1 || nextArt>genericResultCount) return;
+
+    updateArtworkCopy(nextArt,selectedRank);
+    const nextPage=Math.floor((nextArt-1)/PAGE_SIZE);
+
+    roomPage=nextPage;
+    artworkReturn.roomPage=nextPage;
+
+    if(sourceView==='thumbnail'){
+      thumbnailPage=nextPage;
+      artworkReturn.thumbnailPage=nextPage;
+    }else if(sourceView==='endless'){
+      endlessIndex=nextArt-1;
+      artworkReturn.endlessIndex=endlessIndex;
+    }
+
+    artworkScroll.scrollTop=0;
+    updateNavigationState();
   }
 
   function handleLeft(){
@@ -615,16 +664,7 @@
     }
 
     if(view==='zoom'){
-      if(artworkReturn?.view==='thumbnail' && selectedArt>1){
-        const nextArt=selectedArt-1;
-        updateArtworkCopy(nextArt,selectedRank);
-        thumbnailPage=Math.floor((nextArt-1)/PAGE_SIZE);
-        roomPage=thumbnailPage;
-        artworkReturn.thumbnailPage=thumbnailPage;
-        artworkReturn.roomPage=roomPage;
-        artworkScroll.scrollTop=0;
-        updateNavigationState();
-      }
+      stepSelectedArtwork(-1);
       return;
     }
 
@@ -659,16 +699,7 @@
     }
 
     if(view==='zoom'){
-      if(artworkReturn?.view==='thumbnail' && selectedArt<genericResultCount){
-        const nextArt=selectedArt+1;
-        updateArtworkCopy(nextArt,selectedRank);
-        thumbnailPage=Math.floor((nextArt-1)/PAGE_SIZE);
-        roomPage=thumbnailPage;
-        artworkReturn.thumbnailPage=thumbnailPage;
-        artworkReturn.roomPage=roomPage;
-        artworkScroll.scrollTop=0;
-        updateNavigationState();
-      }
+      stepSelectedArtwork(1);
       return;
     }
 
