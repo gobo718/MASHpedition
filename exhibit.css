@@ -1234,3 +1234,46 @@ button{border-radius:0}
   font-size:clamp(9px,.9vw,13px);
 }
 .page-nav span{background:rgba(247,244,237,.92)}
+
+
+/* v21 THUMBNAILS ONLY — corner page stack + mirrored Theme placeholder.
+   Reuses the established v19 page-nav edge offsets, gap, and text sizing.
+   Aerial/Endless page controls retain their v19 layout unchanged. */
+.exhibit-shell[data-view="thumbnail"] .page-nav{
+  flex-direction:column;
+  align-items:stretch;
+}
+.exhibit-shell[data-view="thumbnail"] .page-nav #pageStatus{
+  display:none;
+}
+
+.thumbnail-theme-placeholder{
+  display:none;
+}
+.exhibit-shell[data-view="thumbnail"] .thumbnail-theme-placeholder{
+  position:absolute;
+  left:1.5%;
+  top:12%;
+  z-index:13;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:.35rem;
+  padding:.55em;
+  background:var(--paper);
+  color:var(--ink);
+  font-size:clamp(9px,.9vw,13px);
+  font-weight:800;
+  text-align:center;
+  pointer-events:none;
+}
+.thumbnail-theme-emojis{
+  font-size:3em;
+  line-height:1;
+  white-space:nowrap;
+}
+.thumbnail-theme-label{
+  font-size:1em;
+  letter-spacing:.08em;
+}
