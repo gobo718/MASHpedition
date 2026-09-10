@@ -445,3 +445,10 @@ v46 (2026-09-10): Entrance emoji-only refinement. Raised emoji pair 8px while pr
 - Catacombs hides the legacy emoji/Theme children and uses dedicated DETAILS OF SEARCH context.
 - Raises special entrance supporting copy on one shared high anchor.
 - GEH and Collection identity behavior untouched.
+
+## v53 — Catacombs entrance correction
+- Catacombs Entrance no longer displays an emoji pair.
+- Removed the stray upper-left DETAILS OF SEARCH element that leaked into Entrance.
+- Entrance retains only the established right-side search details plus Selections Curated by Community Vote.
+- Catacombs Thumbnails retain text-only DETAILS OF SEARCH with no emoji/Theme placeholder.
+- Other v52 art-space cleanup remains unchanged.

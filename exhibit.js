@@ -23,7 +23,6 @@
   const thumbnailIdentity=document.getElementById('thumbnailIdentity');
   const thumbnailIdentityPrimary=document.getElementById('thumbnailIdentityPrimary');
   const thumbnailIdentitySecondary=document.getElementById('thumbnailIdentitySecondary');
-  const catacombsSearchContext=document.getElementById('catacombsSearchContext');
   const endlessView=document.getElementById('endlessView');
 
   const thumbnailGrid=document.getElementById('thumbnailGrid');
@@ -134,7 +133,7 @@
 
   entranceLocation.textContent=entranceKind==='catacombs'?'CATACOMBS':areaLabel;
   entranceEmojis.textContent=entranceEmojiText;
-  entranceEmojis.hidden=['gallery','fyc','salon'].includes(entranceKind);
+  entranceEmojis.hidden=['gallery','fyc','salon','catacombs'].includes(entranceKind);
   entranceRank.hidden=entranceKind!=='geh';
   entranceSearch.hidden=entranceKind!=='catacombs';
   if(entranceKind==='geh') entranceRank.textContent=`${rankWord(requestedRank)} PLACE`;
@@ -169,7 +168,6 @@
   const salonDescription=params.get('description') || 'A curious assortment selected in response to your request.';
 
   function updatePresentationIdentity(){
-    if(catacombsSearchContext) catacombsSearchContext.hidden=!(requestedArea==='cat-search' || requestedArea==='cat-theme');
     if(endlessIdentity){
       if(requestedArea==='cat-search' || requestedArea==='cat-theme'){
         endlessIdentity.hidden=false;
@@ -186,8 +184,8 @@
     if(thumbnailIdentity){
       if(requestedArea==='cat-search' || requestedArea==='cat-theme'){
         thumbnailIdentity.hidden=false;
-        thumbnailIdentityPrimary.textContent='DETAILS OF SEARCH';
-        thumbnailIdentitySecondary.textContent='';
+        thumbnailIdentityPrimary.textContent='';
+        thumbnailIdentitySecondary.textContent='DETAILS OF SEARCH';
       }else if(requestedArea==='fyc' || requestedArea==='se' || requestedArea==='gallery'){
         thumbnailIdentity.hidden=true;
       }else if(hasSharedPresentationPair){

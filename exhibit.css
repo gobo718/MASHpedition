@@ -1550,13 +1550,17 @@ button{border-radius:0}
 .exhibit-shell[data-area="gallery"] .endless-theme-identity{display:none !important;}
 
 .exhibit-shell[data-area="cat-search"] .thumbnail-theme-emojis,
-.exhibit-shell[data-area="cat-theme"] .thumbnail-theme-emojis,
+.exhibit-shell[data-area="cat-theme"] .thumbnail-theme-emojis{display:none !important;}
 .exhibit-shell[data-area="cat-search"] .thumbnail-theme-label,
-.exhibit-shell[data-area="cat-theme"] .thumbnail-theme-label{display:none !important;}
+.exhibit-shell[data-area="cat-theme"] .thumbnail-theme-label{
+  display:block !important;
+  font-size:18px;
+  line-height:1.12;
+  text-align:center;
+}
 
 /* Shared high anchor for special entrance supporting copy. */
 .exhibit-shell[data-area="se"] .entrance-selections,
 .exhibit-shell[data-area="fyc"] .entrance-selections,
 .exhibit-shell[data-area="gallery"] .entrance-selections{position:relative;top:-42px;}
 
-.catacombs-search-context{position:absolute;left:20px;top:14px;width:130px;font-size:18px;line-height:1.12;font-weight:800;text-align:center;}
