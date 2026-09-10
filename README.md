@@ -397,3 +397,9 @@ Rules preserved:
 - Catacombs: search details + “Selections Curated by Community Vote”.
 - No single Theme appears on the entrance; Themes represent individual selections inside the Exhibit.
 - Query samples: `?area=geh&rank=1&emojis=😀%20😎`, `?area=collection&resident=Creator01&emojis=🎭%20✨`, `?area=cat-search&search=SEARCH%20DETAILS&emojis=👻%20🌙`.
+
+v45 entrance alignment refinement (2026-09-10):
+- Raised the left location-name banner using the internal 980x300 entrance coordinate system.
+- Right-side emoji block now starts at the same internal Y coordinate as the location banner.
+- Increased vertical separation between emoji, rank/search detail, and selections message.
+- No viewer geometry or non-Entrance behavior changed.

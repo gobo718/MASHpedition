@@ -1435,7 +1435,7 @@ button{border-radius:0}
 }
 
 /* ------------------------------------------------------------------
-   v44 — Exhibit ENTRANCE information facade
+   v45 — Exhibit ENTRANCE vertical alignment refinement
 
    Uses the authoritative 980 x 300 scene and existing Door 1 geometry:
      Door: left 375, width 230, top 35, bottom 300.
@@ -1446,7 +1446,7 @@ button{border-radius:0}
 .entrance-location-banner{
   position:absolute;
   left:0;
-  top:112px;
+  top:70px;
   width:375px;
   min-height:111px;
   padding:10px 22px;
@@ -1464,14 +1464,14 @@ button{border-radius:0}
 .entrance-exhibit-info{
   position:absolute;
   left:605px;
-  top:35px;
+  top:70px;
   width:375px;
-  height:265px;
-  padding:12px 18px 10px;
+  height:230px;
+  padding:0 18px 10px;
   display:flex;
   flex-direction:column;
   align-items:center;
-  justify-content:center;
+  justify-content:flex-start;
   text-align:center;
   overflow:hidden;
 }
@@ -1479,14 +1479,14 @@ button{border-radius:0}
   font-size:78px;
   line-height:1;
   white-space:nowrap;
-  margin-bottom:8px;
+  margin-bottom:18px;
 }
 .entrance-rank{
   font-size:30px;
   line-height:1.05;
   font-weight:900;
   letter-spacing:.045em;
-  margin-bottom:8px;
+  margin-bottom:16px;
 }
 .entrance-search{
   max-width:100%;
@@ -1494,7 +1494,7 @@ button{border-radius:0}
   line-height:1.08;
   font-weight:900;
   letter-spacing:.025em;
-  margin-bottom:8px;
+  margin-bottom:16px;
   overflow-wrap:anywhere;
 }
 .entrance-selections{
