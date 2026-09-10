@@ -1371,8 +1371,65 @@ button{border-radius:0}
 }
 
 
-/* v41: GEH Thumbnail Top 10 must use the locked 2-column x 5-row grid.
-   This higher-specificity override defeats the earlier shared flex display rule. */
+
+/* v40 GEH Top 10 — Exhibit placement.
+   The room scene is the established 980px canvas. Rank buttons reuse the
+   established Aerial 50x30 geometry and 4px internal gap. Five buttons occupy
+   266px per side. The 50px spacing beside the identity reuses one established
+   rank-button width. Vertical placement is derived from the existing 35px art
+   top: 35 - 30 - 4 = 1px, preserving the established 4px breathing gap. */
+.geh-room-top-unit{
+  display:none;
+}
+.exhibit-shell.geh-mode[data-view="left"] .geh-room-top-unit,
+.exhibit-shell.geh-mode[data-view="wall"] .geh-room-top-unit,
+.exhibit-shell.geh-mode[data-view="right"] .geh-room-top-unit{
+  position:absolute;
+  left:50%;
+  top:1px;
+  width:980px;
+  transform:translateX(-50%);
+  z-index:13;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:50px;
+  pointer-events:none;
+}
+.exhibit-shell.geh-mode[data-view="left"] .view-label,
+.exhibit-shell.geh-mode[data-view="wall"] .view-label,
+.exhibit-shell.geh-mode[data-view="right"] .view-label{
+  display:none;
+}
+.geh-room-center-identity{
+  flex:0 0 auto;
+  color:var(--ink);
+  font-size:clamp(9px,.9vw,13px);
+  font-weight:800;
+  letter-spacing:.08em;
+  line-height:30px;
+  white-space:nowrap;
+  text-align:center;
+}
+.room-ranks{
+  position:static;
+  flex:0 0 auto;
+  gap:4px;
+  pointer-events:auto;
+}
+.exhibit-shell.geh-mode[data-view="left"] .room-ranks,
+.exhibit-shell.geh-mode[data-view="wall"] .room-ranks,
+.exhibit-shell.geh-mode[data-view="right"] .room-ranks{
+  display:flex;
+}
+.room-ranks button{
+  width:50px;
+  height:30px;
+  font-size:10px;
+}
+
+/* v42 — narrow correction only: preserve v40 GEH Exhibit Top 10 and force the
+   approved GEH Thumbnail Top 10 selector to its locked 2-column x 5-row grid. */
 .exhibit-shell.geh-mode[data-view="thumbnail"] .thumbnail-ranks{
   display:grid;
 }

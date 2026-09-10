@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>MASHpedition Shared Artwork Viewer</title>
 <!-- v18: area samples + swipe navigation on Exhibit/Endless + v17 shared viewer -->
-<link rel="stylesheet" href="exhibit.css?v=41">
+<link rel="stylesheet" href="exhibit.css?v=42">
 </head>
 <body>
 <main class="exhibit-shell" id="exhibitShell" data-view="door" aria-label="Exhibit view">
@@ -224,6 +224,24 @@
       <button type="button" id="pageNextBtn">PAGE NEXT</button>
     </nav>
 
+    <div class="geh-room-top-unit" aria-label="Grand Exhibition Hall rank layer">
+      <nav class="rank-selector room-ranks room-ranks-left" aria-label="Grand Exhibition Hall ranks 1 through 5">
+        <button type="button" data-rank="1">1ST</button>
+        <button type="button" data-rank="2">2ND</button>
+        <button type="button" data-rank="3">3RD</button>
+        <button type="button" data-rank="4">4TH</button>
+        <button type="button" data-rank="5">5TH</button>
+      </nav>
+      <div class="geh-room-center-identity" id="roomCenterIdentity" aria-hidden="true">LOCATION - 😀 😎 - THEME</div>
+      <nav class="rank-selector room-ranks room-ranks-right" aria-label="Grand Exhibition Hall ranks 6 through 10">
+        <button type="button" data-rank="6">6TH</button>
+        <button type="button" data-rank="7">7TH</button>
+        <button type="button" data-rank="8">8TH</button>
+        <button type="button" data-rank="9">9TH</button>
+        <button type="button" data-rank="10">10TH</button>
+      </nav>
+    </div>
+
     <div class="view-label" id="viewLabel">DOOR</div>
   </section>
 
@@ -239,6 +257,6 @@
 
   <a class="museum-return" href="index.html">MUSEUM</a>
 </main>
-<script src="exhibit.js?v=39"></script>
+<script src="exhibit.js?v=40"></script>
 </body>
 </html>
