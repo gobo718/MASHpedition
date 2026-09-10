@@ -375,3 +375,14 @@ Rules preserved:
 - Thumbnail View uses 22 positions in a centered 7 / 8 / 7 arrangement.
 - Generic large sets page 22 thumbnails at a time instead of rendering the full set at once.
 - Mosaics remain separate and are not routed through this viewer.
+
+
+---
+
+# v43 — Museum Geography + Exhibit Entrance Template — 2026-09-10
+
+- Museum Hub left top-band label changed from `CATACOMBS · THEME` to player-facing `CATACOMBS`; its existing `cat-theme` route is preserved.
+- Museum Hub right top-band slot changed from `CATACOMBS · SEARCH` to `COMMON GROUNDS CAFÉ`.
+- `common-grounds.html` is a neutral Common Grounds destination shell only. It does **not** use Exhibit/Aerial and does not invent the still-TBD Installation geometry.
+- `exhibit-entrance.html` is a separate, generic entrance-template shell for exhibit-capable museum destinations. It is **not** the Common Grounds entrance and is intentionally not wired into the Museum Hub yet.
+- Existing v42 Exhibit/Aerial/Thumbnail/Endless viewer files and geometry were not modified.
