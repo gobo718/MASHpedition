@@ -13,6 +13,7 @@
   const exhibitControls=document.getElementById('exhibitControls');
   const overheadView=document.getElementById('overheadView');
   const overheadCenterIdentity=document.getElementById('overheadCenterIdentity');
+  const roomCenterIdentity=document.getElementById('roomCenterIdentity');
   const endlessView=document.getElementById('endlessView');
 
   const thumbnailGrid=document.getElementById('thumbnailGrid');
@@ -99,6 +100,7 @@
   const areaLabel=areaPreset?.label || (gehMode?'GRAND EXHIBITION HALL':'VIEWER SAMPLE');
   const centerIdentityText=`${areaLabel} - 😀 😎 - THEME`;
   overheadCenterIdentity.textContent=centerIdentityText;
+  roomCenterIdentity.textContent=centerIdentityText;
   const defaultResultCount=areaPreset?.count ?? (mix==='A'?120:22);
   const genericResultCount=Math.max(1,Math.min(5000,Number(params.get('count'))||defaultResultCount));
   const defaultStart=areaPreset?.start || 'door';
@@ -260,8 +262,8 @@
     button.classList.add('is-art-slot');
     const artNumber=roomPage*PAGE_SIZE+slot.number;
     button.dataset.art=String(artNumber);
-    button.dataset.rank='1';
-    button.setAttribute('aria-label',`Art ${artNumber}`);
+    button.dataset.rank=String(gehMode?gehRank:1);
+    button.setAttribute('aria-label',`Art ${artNumber}${gehMode?`, ${rankWord(gehRank)} place`:''}`);
     if(span) span.textContent=`ART ${artNumber}`;
   }
 
@@ -431,6 +433,7 @@
 
     if(shell.dataset.view==='overhead') renderOverhead();
     else if(shell.dataset.view==='thumbnail') renderThumbnailPage();
+    else if(shell.dataset.view==='left' || shell.dataset.view==='wall' || shell.dataset.view==='right') renderRoom(lastRoomStart);
   }
 
   function rememberArtworkReturn(){
@@ -858,7 +861,7 @@
         useExhibitDoor(button.dataset.door);
         return;
       }
-      openArtwork(button.dataset.art,1);
+      openArtwork(button.dataset.art,gehMode?gehRank:1);
     });
   });
 
