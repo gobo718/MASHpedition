@@ -1564,3 +1564,36 @@ button{border-radius:0}
 .exhibit-shell[data-area="fyc"] .entrance-selections,
 .exhibit-shell[data-area="gallery"] .entrance-selections{position:relative;top:-42px;}
 
+
+
+/* v54 adaptive partial-page thumbnail packing.
+   22 retains the approved 7 / 8 / 7 geometry. Below 22, JS evaluates every
+   valid 1–3-row brick composition (adjacent row counts may not match), chooses
+   the arrangement with the largest square thumbnail, and centers every row and
+   the complete stack. */
+.thumbnail-grid.adaptive-brick{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:6px;
+}
+.thumbnail-grid.adaptive-brick .thumbnail-brick-row{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:6px;
+  width:100%;
+  height:var(--adaptive-thumb-size);
+  flex:0 0 var(--adaptive-thumb-size);
+}
+.thumbnail-grid.adaptive-brick .thumbnail-brick-row > button{
+  width:var(--adaptive-thumb-size);
+  height:var(--adaptive-thumb-size);
+  flex:0 0 var(--adaptive-thumb-size);
+  aspect-ratio:1 / 1;
+  align-self:center;
+  justify-self:auto;
+  grid-row:auto;
+  grid-column:auto;
+}

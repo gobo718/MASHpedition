@@ -433,6 +433,67 @@
     return Math.ceil(genericResultCount/PAGE_SIZE);
   }
 
+
+  function thumbnailBrickCompositions(count){
+    const candidates=[];
+    const visit=(remaining,rows)=>{
+      if(remaining===0){
+        if(rows.length>=1 && rows.length<=3) candidates.push(rows.slice());
+        return;
+      }
+      if(rows.length>=3) return;
+      for(let n=1;n<=Math.min(8,remaining);n++){
+        if(rows.length && rows[rows.length-1]===n) continue;
+        rows.push(n); visit(remaining-n,rows); rows.pop();
+      }
+    };
+    visit(count,[]);
+    return candidates;
+  }
+
+  function chooseThumbnailBrick(count){
+    if(count>=PAGE_SIZE) return null; // preserve established 22 = 7 / 8 / 7
+    const width=thumbnailGrid.clientWidth;
+    const height=thumbnailGrid.clientHeight;
+    const gap=6;
+    let best=null;
+    for(const rows of thumbnailBrickCompositions(count)){
+      const widest=Math.max(...rows);
+      const size=Math.min(
+        (width-gap*(widest-1))/widest,
+        (height-gap*(rows.length-1))/rows.length
+      );
+      if(size<=0) continue;
+      // Primary: largest square. Tie: fewer rows, then more balanced outer silhouette.
+      const spread=Math.max(...rows)-Math.min(...rows);
+      const score={rows,size,spread};
+      if(!best || size>best.size+.5 ||
+         (Math.abs(size-best.size)<=.5 && rows.length<best.rows.length) ||
+         (Math.abs(size-best.size)<=.5 && rows.length===best.rows.length && spread<best.spread)) best=score;
+    }
+    return best;
+  }
+
+  function applyAdaptiveThumbnailBrick(){
+    const buttons=[...thumbnailGrid.querySelectorAll(':scope > button')];
+    thumbnailGrid.classList.remove('adaptive-brick');
+    thumbnailGrid.style.removeProperty('--adaptive-thumb-size');
+    if(!buttons.length || buttons.length>=PAGE_SIZE) return;
+    const best=chooseThumbnailBrick(buttons.length);
+    if(!best) return;
+    thumbnailGrid.classList.add('adaptive-brick');
+    thumbnailGrid.style.setProperty('--adaptive-thumb-size',`${best.size}px`);
+    thumbnailGrid.replaceChildren();
+    let offset=0;
+    for(const count of best.rows){
+      const row=document.createElement('div');
+      row.className='thumbnail-brick-row';
+      for(let i=0;i<count;i++) row.appendChild(buttons[offset++]);
+      thumbnailGrid.appendChild(row);
+    }
+    thumbnailGrid.dataset.brick=best.rows.join('/');
+  }
+
   function renderThumbnailPage(){
     if(!capabilities.thumbnail) return;
 
@@ -477,6 +538,7 @@
         : `${areaLabel} · PAGE ${thumbnailPage+1} / ${pageCount} · ${start+1}–${end} OF ${genericResultCount}`;
     }
 
+    applyAdaptiveThumbnailBrick();
     setView('thumbnail');
   }
 

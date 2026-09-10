@@ -452,3 +452,10 @@ v46 (2026-09-10): Entrance emoji-only refinement. Raised emoji pair 8px while pr
 - Entrance retains only the established right-side search details plus Selections Curated by Community Vote.
 - Catacombs Thumbnails retain text-only DETAILS OF SEARCH with no emoji/Theme placeholder.
 - Other v52 art-space cleanup remains unchanged.
+
+## v54 — Adaptive brick thumbnails
+- Partial thumbnail pages (<22) now test every valid 1–3-row brick composition.
+- Adjacent rows cannot contain the same number of thumbnails.
+- The winning composition is the one that permits the largest square thumbnails in the existing thumbnail canvas.
+- Each row and the complete stack are centered.
+- The established 22-thumbnail 7 / 8 / 7 layout is unchanged.
