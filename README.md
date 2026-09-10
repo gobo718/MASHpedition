@@ -403,3 +403,5 @@ v45 entrance alignment refinement (2026-09-10):
 - Right-side emoji block now starts at the same internal Y coordinate as the location banner.
 - Increased vertical separation between emoji, rank/search detail, and selections message.
 - No viewer geometry or non-Entrance behavior changed.
+
+v46 (2026-09-10): Entrance emoji-only refinement. Raised emoji pair 8px while preserving the existing location, rank, and curator-line positions. Removed clipping on the entrance information container so native emoji glyphs are not cropped across their tops. No viewer geometry changes elsewhere.

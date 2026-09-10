@@ -1504,3 +1504,17 @@ button{border-radius:0}
   font-weight:700;
   letter-spacing:.02em;
 }
+
+/* v46 — Entrance emoji vertical refinement.
+   Keep location/rank/curator geometry unchanged. Emoji pair alone rises 8px.
+   The right information zone allows the emoji glyphs to render outside their
+   line box so platform emoji ascenders are not clipped into a flat top. */
+.entrance-exhibit-info{
+  overflow:visible;
+}
+.entrance-emojis{
+  position:relative;
+  top:-8px;
+  margin-bottom:10px; /* -8px top offset + 10px gap preserves following rank Y */
+  overflow:visible;
+}
