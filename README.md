@@ -469,3 +469,11 @@ v46 (2026-09-10): Entrance emoji-only refinement. Raised emoji pair 8px while pr
 - Aligns the top of the right-side search block with the top of the left CATACOMBS text.
 - Position is calculated from the established 980×300 entrance geometry, not estimated from the screenshot.
 - No other entrance, thumbnail, room, or control geometry changed.
+
+
+## v58 — Emoji-pair Main-room location labels
+- Corrects v57 scope: the booked `01 - Celebration` through `22 - Joy` names belong to the Main room's numbered locations anywhere an art-space location is defined by one shared emoji pair, not only the Exhibit presentation.
+- Applies the names to Collection Main-room thumbnails/artwork detail as well as the already-labeled Exhibit/Aerial surfaces and GEH Main-room surfaces.
+- Search/non-pair spaces remain result-labeled. Catacombs remains excluded from shared-pair naming.
+- Existing rank suffixes remain and use `1st`, `2nd`, `3rd`, etc. casing.
+- No geometry changed.

@@ -131,6 +131,12 @@
     (requestedArea==='cat-search' || requestedArea==='cat-theme'?'catacombs':'generic')
   );
 
+  // v58: the booked 01–22 Main-room Theme names follow the numbered
+  // locations anywhere the art space is defined by one shared emoji pair.
+  // Catacombs is intentionally excluded: its search presentations do not
+  // carry a shared pair.
+  const emojiPairDefinedLocation=gehMode || requestedArea==='collection';
+
   entranceLocation.textContent=entranceKind==='catacombs'?'CATACOMBS':areaLabel;
   entranceEmojis.textContent=entranceEmojiText;
   entranceEmojis.hidden=['gallery','fyc','salon','catacombs'].includes(entranceKind);
@@ -286,9 +292,21 @@
     return 'wall';
   }
 
+  const mainExhibitThemes=[
+    'Celebration','Playful','Adorable','UglyCute','Disgusting','CreepyCute',
+    'Funny','Goofy','Whimsical','Psychedelic','Weird','Absurd','Dreamy','Nostalgia',
+    'Tragic','Angry','Intense','Scary','Epic','Beautiful','Cozy','Joy'
+  ];
+
+  function exhibitArtLabel(artNumber){
+    const number=Number(artNumber);
+    const theme=mainExhibitThemes[number-1];
+    return theme ? `${String(number).padStart(2,'0')} - ${theme}` : `Art ${number}`;
+  }
+
   function rankWord(rank){
-    const words=['','1ST','2ND','3RD','4TH','5TH','6TH','7TH','8TH','9TH','10TH'];
-    return words[Number(rank)] || `${rank}TH`;
+    const words=['','1st','2nd','3rd','4th','5th','6th','7th','8th','9th','10th'];
+    return words[Number(rank)] || `${rank}th`;
   }
 
   function setView(view){
@@ -357,8 +375,8 @@
     const artNumber=roomPage*PAGE_SIZE+slot.number;
     button.dataset.art=String(artNumber);
     button.dataset.rank=String(gehMode?gehRank:1);
-    button.setAttribute('aria-label',`Art ${artNumber}${gehMode?`, ${rankWord(gehRank)} place`:''}`);
-    if(span) span.textContent=`ART ${artNumber}`;
+    button.setAttribute('aria-label',`${exhibitArtLabel(artNumber)}${gehMode?`, ${rankWord(gehRank)} place`:''}`);
+    if(span) span.textContent=exhibitArtLabel(artNumber);
   }
 
   function paintOverheadSlot(button,slot){
@@ -390,8 +408,8 @@
     button.dataset.art=String(artNumber);
     button.dataset.rank=String(gehMode?gehRank:1);
     const suffix=gehMode?` · ${rankWord(gehRank)}`:'';
-    button.setAttribute('aria-label',`Art ${artNumber}${gehMode?`, ${rankWord(gehRank)} place`:''}`);
-    if(span) span.textContent=`ART ${artNumber}${suffix}`;
+    button.setAttribute('aria-label',`${exhibitArtLabel(artNumber)}${gehMode?`, ${rankWord(gehRank)} place`:''}`);
+    if(span) span.textContent=`${exhibitArtLabel(artNumber)}${suffix}`;
   }
 
   function renderOverhead(){
@@ -511,8 +529,8 @@
         button.type='button';
         button.dataset.art=String(art);
         button.dataset.rank=String(gehRank);
-        button.textContent=`ART ${art} · ${rankWord(gehRank)}`;
-        button.setAttribute('aria-label',`Art ${art}, ${rankWord(gehRank)} place`);
+        button.textContent=`${exhibitArtLabel(art)} · ${rankWord(gehRank)}`;
+        button.setAttribute('aria-label',`${exhibitArtLabel(art)}, ${rankWord(gehRank)} place`);
         button.addEventListener('click',()=>openArtwork(art,gehRank,'thumbnail'));
         thumbnailGrid.appendChild(button);
       }
@@ -528,9 +546,11 @@
         const button=document.createElement('button');
         button.type='button';
         button.dataset.result=String(i);
-        button.textContent=`RESULT ${i+1}`;
-        button.setAttribute('aria-label',`Result ${i+1}`);
-        button.addEventListener('click',()=>openArtwork(i+1,1,'thumbnail'));
+        const artNumber=i+1;
+        const useMainRoomLabel=emojiPairDefinedLocation && artNumber<=PAGE_SIZE;
+        button.textContent=useMainRoomLabel?exhibitArtLabel(artNumber):`RESULT ${artNumber}`;
+        button.setAttribute('aria-label',useMainRoomLabel?exhibitArtLabel(artNumber):`Result ${artNumber}`);
+        button.addEventListener('click',()=>openArtwork(artNumber,1,'thumbnail'));
         thumbnailGrid.appendChild(button);
       }
       thumbnailStatus.textContent=requestedArea==='se'
@@ -620,8 +640,10 @@
       : emojiPairs[(theme-1)%emojiPairs.length];
 
     artworkLabel.textContent=gehMode
-      ? `ART ${selectedArt} · ${rankWord(selectedRank)}`
-      : `RESULT ${selectedArt}`;
+      ? `${exhibitArtLabel(selectedArt)} · ${rankWord(selectedRank)}`
+      : (emojiPairDefinedLocation && selectedArt<=PAGE_SIZE
+        ? exhibitArtLabel(selectedArt)
+        : `RESULT ${selectedArt}`);
 
     artworkArea.textContent=areaLabel;
     artworkRankTime.textContent=gehMode
