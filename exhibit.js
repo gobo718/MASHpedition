@@ -10,6 +10,11 @@
   const endlessBtn=document.getElementById('endlessBtn');
   const doorBtn=document.getElementById('doorBtn');
   const frontDoor=document.getElementById('frontDoor');
+  const entranceLocation=document.getElementById('entranceLocation');
+  const entranceEmojis=document.getElementById('entranceEmojis');
+  const entranceRank=document.getElementById('entranceRank');
+  const entranceSearch=document.getElementById('entranceSearch');
+  const entranceSelections=document.getElementById('entranceSelections');
   const exhibitControls=document.getElementById('exhibitControls');
   const overheadView=document.getElementById('overheadView');
   const overheadCenterIdentity=document.getElementById('overheadCenterIdentity');
@@ -104,6 +109,24 @@
   const defaultResultCount=areaPreset?.count ?? (mix==='A'?120:22);
   const genericResultCount=Math.max(1,Math.min(5000,Number(params.get('count'))||defaultResultCount));
   const defaultStart=areaPreset?.start || 'door';
+
+  // Exhibit ENTRANCE facade. Theme is intentionally absent: the exhibit's
+  // individual selections are represented by Themes inside the room.
+  const entranceEmojiText=params.get('emojis') || '😀 😎';
+  const residentName=params.get('resident') || 'USERNAME OF RESIDENT';
+  const searchDetails=params.get('search') || 'DETAILS OF SEARCH';
+  const requestedRank=Math.max(1,Math.min(10,Number(params.get('rank'))||1));
+  const entranceKind=gehMode?'geh':(requestedArea==='collection'?'collection':(requestedArea==='cat-search' || requestedArea==='cat-theme'?'catacombs':'generic'));
+
+  entranceLocation.textContent=entranceKind==='catacombs'?'CATACOMBS':areaLabel;
+  entranceEmojis.textContent=entranceEmojiText;
+  entranceRank.hidden=entranceKind!=='geh';
+  entranceSearch.hidden=entranceKind!=='catacombs';
+  if(entranceKind==='geh') entranceRank.textContent=`${rankWord(requestedRank)} PLACE`;
+  if(entranceKind==='catacombs') entranceSearch.textContent=searchDetails;
+  entranceSelections.textContent=entranceKind==='collection'
+    ? `Selections Curated by ${residentName}`
+    : 'Selections Curated by Community Vote';
 
   const capabilities={
     A:{exhibit:false,room:false,thumbnail:true,endless:true},

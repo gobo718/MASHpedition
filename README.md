@@ -386,3 +386,14 @@ Rules preserved:
 - `common-grounds.html` is a neutral Common Grounds destination shell only. It does **not** use Exhibit/Aerial and does not invent the still-TBD Installation geometry.
 - `exhibit-entrance.html` is a separate, generic entrance-template shell for exhibit-capable museum destinations. It is **not** the Common Grounds entrance and is intentionally not wired into the Museum Hub yet.
 - Existing v42 Exhibit/Aerial/Thumbnail/Endless viewer files and geometry were not modified.
+
+
+## v44 — Exhibit Entrance Facades
+- Replaces the temporary Door-only ENTRANCE view with the first shared exterior Exhibit facade.
+- Geometry is calculated from the existing authoritative 980x300 scene and 230px Door 1 at x=375; no screenshot measurements used.
+- Left of Door 1: large location banner. Right of Door 1: large emoji pair plus location-specific supporting copy.
+- GEH: ordinal PLACE + “Selections Curated by Community Vote”.
+- Collection: “Selections Curated by [resident username]”.
+- Catacombs: search details + “Selections Curated by Community Vote”.
+- No single Theme appears on the entrance; Themes represent individual selections inside the Exhibit.
+- Query samples: `?area=geh&rank=1&emojis=😀%20😎`, `?area=collection&resident=Creator01&emojis=🎭%20✨`, `?area=cat-search&search=SEARCH%20DETAILS&emojis=👻%20🌙`.

@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>MASHpedition Shared Artwork Viewer</title>
 <!-- v18: area samples + swipe navigation on Exhibit/Endless + v17 shared viewer -->
-<link rel="stylesheet" href="exhibit.css?v=42">
+<link rel="stylesheet" href="exhibit.css?v=44">
 </head>
 <body>
 <main class="exhibit-shell" id="exhibitShell" data-view="door" aria-label="Exhibit view">
@@ -14,7 +14,14 @@
     <!-- Entry transition remains intentionally temporary. -->
     <section class="door-wall-view" id="doorWallView" aria-label="Door entry placeholder view">
       <div class="door-wall-canvas">
+        <div class="entrance-location-banner" id="entranceLocation">LOCATION</div>
         <button class="door-placeholder" id="frontDoor" type="button" aria-label="Enter exhibit"></button>
+        <section class="entrance-exhibit-info" aria-label="Exhibit entrance information">
+          <div class="entrance-emojis" id="entranceEmojis" aria-label="Emoji pair">😀 😎</div>
+          <div class="entrance-rank" id="entranceRank" hidden>1ST PLACE</div>
+          <div class="entrance-search" id="entranceSearch" hidden>SEARCH DETAILS</div>
+          <div class="entrance-selections" id="entranceSelections">Selections Curated by Community Vote</div>
+        </section>
       </div>
     </section>
 
@@ -257,6 +264,6 @@
 
   <a class="museum-return" href="index.html">MUSEUM</a>
 </main>
-<script src="exhibit.js?v=40"></script>
+<script src="exhibit.js?v=44"></script>
 </body>
 </html>
