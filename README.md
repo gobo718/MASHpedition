@@ -439,3 +439,9 @@ v46 (2026-09-10): Entrance emoji-only refinement. Raised emoji pair 8px while pr
 - Catacombs non-Exhibit views remove generic emoji/Theme identity; Thumbnails uses smaller DETAILS OF SEARCH and Endless uses search details.
 - LEFT/RIGHT remain directional controls, not layouts.
 - Approved viewer geometry remains unchanged.
+
+## v52 — Verified internal identity cleanup
+- Force-hides the actual legacy emoji/Theme block in Thumbnails and Endless for FYC, Salon Eclectique, and Private Gallery.
+- Catacombs hides the legacy emoji/Theme children and uses dedicated DETAILS OF SEARCH context.
+- Raises special entrance supporting copy on one shared high anchor.
+- GEH and Collection identity behavior untouched.

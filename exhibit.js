@@ -23,6 +23,7 @@
   const thumbnailIdentity=document.getElementById('thumbnailIdentity');
   const thumbnailIdentityPrimary=document.getElementById('thumbnailIdentityPrimary');
   const thumbnailIdentitySecondary=document.getElementById('thumbnailIdentitySecondary');
+  const catacombsSearchContext=document.getElementById('catacombsSearchContext');
   const endlessView=document.getElementById('endlessView');
 
   const thumbnailGrid=document.getElementById('thumbnailGrid');
@@ -168,6 +169,7 @@
   const salonDescription=params.get('description') || 'A curious assortment selected in response to your request.';
 
   function updatePresentationIdentity(){
+    if(catacombsSearchContext) catacombsSearchContext.hidden=!(requestedArea==='cat-search' || requestedArea==='cat-theme');
     if(endlessIdentity){
       if(requestedArea==='cat-search' || requestedArea==='cat-theme'){
         endlessIdentity.hidden=false;
