@@ -405,3 +405,10 @@ v45 entrance alignment refinement (2026-09-10):
 - No viewer geometry or non-Entrance behavior changed.
 
 v46 (2026-09-10): Entrance emoji-only refinement. Raised emoji pair 8px while preserving the existing location, rank, and curator-line positions. Removed clipping on the entrance information container so native emoji glyphs are not cropped across their tops. No viewer geometry changes elsewhere.
+
+
+v47 targeted patch (2026-09-10)
+- GEH Exhibit rank controls now read across rows: 1ST/2ND, 3RD/4TH, 5TH/6TH, 7TH/8TH, 9TH/10TH, without changing button geometry.
+- Collection Entrance curator block moved down exactly 8px; resident username is forced to its own line.
+- COMMON GROUNDS CAFÉ is centered in its existing Museum Hub cell.
+- No other intended viewer geometry changes.

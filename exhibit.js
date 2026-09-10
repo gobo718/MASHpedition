@@ -124,9 +124,15 @@
   entranceSearch.hidden=entranceKind!=='catacombs';
   if(entranceKind==='geh') entranceRank.textContent=`${rankWord(requestedRank)} PLACE`;
   if(entranceKind==='catacombs') entranceSearch.textContent=searchDetails;
-  entranceSelections.textContent=entranceKind==='collection'
-    ? `Selections Curated by ${residentName}`
-    : 'Selections Curated by Community Vote';
+  if(entranceKind==='collection') {
+    const curatorLead=document.createElement('span');
+    curatorLead.textContent='Selections Curated by';
+    const curatorName=document.createElement('span');
+    curatorName.textContent=residentName;
+    entranceSelections.replaceChildren(curatorLead,curatorName);
+  } else {
+    entranceSelections.textContent='Selections Curated by Community Vote';
+  }
 
   const capabilities={
     A:{exhibit:false,room:false,thumbnail:true,endless:true},
