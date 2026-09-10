@@ -464,3 +464,8 @@ v46 (2026-09-10): Entrance emoji-only refinement. Raised emoji pair 8px while pr
 - Fixes adaptive brick packing running while Thumbnail view was still hidden and therefore measuring a 0×0 grid.
 - Thumbnail view is now activated first, then the optimizer measures the real canvas and applies the chosen brick composition.
 - No optimizer rules or approved 22-item 7/8/7 geometry changed.
+
+## v56 — Catacombs entrance top alignment
+- Aligns the top of the right-side search block with the top of the left CATACOMBS text.
+- Position is calculated from the established 980×300 entrance geometry, not estimated from the screenshot.
+- No other entrance, thumbnail, room, or control geometry changed.

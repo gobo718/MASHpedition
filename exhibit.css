@@ -1597,3 +1597,13 @@ button{border-radius:0}
   grid-row:auto;
   grid-column:auto;
 }
+
+/* v56 — Catacombs entrance vertical alignment.
+   Derived from established entrance geometry, not screenshot measurement:
+   left banner top 70px; min-height 111px; CATACOMBS line box 34px * 1.02.
+   Matching top = 70 + (111 - 34*1.02)/2 = 108.16px. */
+.exhibit-shell[data-area="cat-search"] .entrance-exhibit-info,
+.exhibit-shell[data-area="cat-theme"] .entrance-exhibit-info{
+  top:108.16px;
+  height:191.84px;
+}
