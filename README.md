@@ -406,9 +406,20 @@ v45 entrance alignment refinement (2026-09-10):
 
 v46 (2026-09-10): Entrance emoji-only refinement. Raised emoji pair 8px while preserving the existing location, rank, and curator-line positions. Removed clipping on the entrance information container so native emoji glyphs are not cropped across their tops. No viewer geometry changes elsewhere.
 
+## v47 — Entrance Final Refinements — 2026-09-10
 
-v47 targeted patch (2026-09-10)
-- GEH Exhibit rank controls now read across rows: 1ST/2ND, 3RD/4TH, 5TH/6TH, 7TH/8TH, 9TH/10TH, without changing button geometry.
-- Collection Entrance curator block moved down exactly 8px; resident username is forced to its own line.
-- COMMON GROUNDS CAFÉ is centered in its existing Museum Hub cell.
-- No other intended viewer geometry changes.
+- Collection entrance curator block moved down 8px without moving the location or emoji pair.
+- Collection curator copy split into two lines: `Selections Curated by` followed by the dynamic resident username.
+- Museum Hub `COMMON GROUNDS CAFÉ` label centered within its existing map box without changing the box geometry or museum geography.
+- A GEH rank-selector edit in v47 targeted the wrong rank controls; that specific rank-control change is not authoritative and was corrected in v48.
+
+## v48 — Art-Space Entrance Completion — 2026-09-10
+
+- Preserves the valid v47 Collection and Common Grounds map refinements above.
+- Restores the GEH Exhibit-room side rank controls to their established left `1ST–5TH` / right `6TH–10TH` arrangement.
+- GEH Thumbnail rank selector keeps its established 2-column × 5-row geometry but reads row-major: `1ST 2ND`, `3RD 4TH`, `5TH 6TH`, `7TH 8TH`, `9TH 10TH`.
+- FOR YOUR CONSIDERATION entrance: `Freshly Painted Selections Begging for Your Opinion`; no entrance emoji pair, rank, or community-curated line.
+- PRIVATE GALLERY entrance: `The Works of [USERNAME]`; no entrance emoji pair or curator line.
+- SALON ECLECTIQUE entrance: `Bespoke selections tailored to your requests, presented via curation by a personal docent.`; no entrance emoji pair.
+- Standard emoji-pair Exhibits use the exhibit-wide entrance emoji pair consistently for artwork display; mixed-pair art spaces are excluded from that rule.
+- Entrance rule: show an emoji pair only when every image in that Exhibit shares that pair.

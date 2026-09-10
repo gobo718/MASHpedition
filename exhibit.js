@@ -86,7 +86,7 @@
   const PAGE_SIZE=22;
 
   const AREA_PRESETS={
-    gallery:{mix:'A',label:'GALLERY',count:66,start:'thumbnail'},
+    gallery:{mix:'A',label:'PRIVATE GALLERY',count:66,start:'thumbnail'},
     collection:{mix:'B',label:'COLLECTION',count:66,start:'exhibit'},
     fyc:{mix:'A',label:'FOR YOUR CONSIDERATION',count:66,start:'thumbnail'},
     se:{mix:'A',label:'SALON ECLECTIQUE',count:66,start:'thumbnail'},
@@ -116,10 +116,17 @@
   const residentName=params.get('resident') || 'USERNAME OF RESIDENT';
   const searchDetails=params.get('search') || 'DETAILS OF SEARCH';
   const requestedRank=Math.max(1,Math.min(10,Number(params.get('rank'))||1));
-  const entranceKind=gehMode?'geh':(requestedArea==='collection'?'collection':(requestedArea==='cat-search' || requestedArea==='cat-theme'?'catacombs':'generic'));
+  const entranceKind=gehMode?'geh':(
+    requestedArea==='collection'?'collection':
+    requestedArea==='gallery'?'gallery':
+    requestedArea==='fyc'?'fyc':
+    requestedArea==='se'?'salon':
+    (requestedArea==='cat-search' || requestedArea==='cat-theme'?'catacombs':'generic')
+  );
 
   entranceLocation.textContent=entranceKind==='catacombs'?'CATACOMBS':areaLabel;
   entranceEmojis.textContent=entranceEmojiText;
+  entranceEmojis.hidden=['gallery','fyc','salon'].includes(entranceKind);
   entranceRank.hidden=entranceKind!=='geh';
   entranceSearch.hidden=entranceKind!=='catacombs';
   if(entranceKind==='geh') entranceRank.textContent=`${rankWord(requestedRank)} PLACE`;
@@ -130,6 +137,12 @@
     const curatorName=document.createElement('span');
     curatorName.textContent=residentName;
     entranceSelections.replaceChildren(curatorLead,curatorName);
+  } else if(entranceKind==='gallery') {
+    entranceSelections.textContent=`The Works of ${residentName}`;
+  } else if(entranceKind==='fyc') {
+    entranceSelections.textContent='Freshly Painted Selections Begging for Your Opinion';
+  } else if(entranceKind==='salon') {
+    entranceSelections.textContent='Bespoke selections tailored to your requests, presented via curation by a personal docent.';
   } else {
     entranceSelections.textContent='Selections Curated by Community Vote';
   }
@@ -481,7 +494,9 @@
     selectedRank=Number(rank)||1;
 
     const theme=((selectedArt-1)%66)+1;
-    const pair=emojiPairs[(theme-1)%emojiPairs.length];
+    const pair=['geh','collection','catacombs'].includes(entranceKind)
+      ? entranceEmojiText.split(/\s+/).slice(0,2)
+      : emojiPairs[(theme-1)%emojiPairs.length];
 
     artworkLabel.textContent=gehMode
       ? `ART ${selectedArt} · ${rankWord(selectedRank)}`

@@ -48,8 +48,5 @@ button,.hub-link{
   .museum-hub{min-width:900px}
 }
 
-
-/* v47 — center Common Grounds Café inside its existing Museum Hub cell. */
-.top-band .hub-link[href="common-grounds.html"]{
-  text-align:center;
-}
+/* v48 — center Common Grounds Cafe label inside its existing Museum Hub box. */
+.top-band .hub-link[href="common-grounds.html"]{text-align:center;}
