@@ -93,7 +93,7 @@
   const areaPreset=AREA_PRESETS[requestedArea]||null;
   const requestedMix=(params.get('mix') || areaPreset?.mix || 'B').toUpperCase();
   const mix=['A','B','C'].includes(requestedMix)?requestedMix:'B';
-  const maxUnlockedRank=Math.max(1,Math.min(3,Number(params.get('ranks'))||1));
+  const maxUnlockedRank=Math.max(1,Math.min(10,Number(params.get('ranks'))||1));
   const gehMode=areaPreset?.geh===true || params.get('geh')==='1' ||
     (!areaPreset && params.get('geh')!=='0' && mix==='B');
   const areaLabel=areaPreset?.label || (gehMode?'GRAND EXHIBITION HALL':'VIEWER SAMPLE');
@@ -191,7 +191,8 @@
   }
 
   function rankWord(rank){
-    return rank===1?'1ST':rank===2?'2ND':'3RD';
+    const words=['','1ST','2ND','3RD','4TH','5TH','6TH','7TH','8TH','9TH','10TH'];
+    return words[Number(rank)] || `${rank}TH`;
   }
 
   function setView(view){

@@ -889,10 +889,11 @@ button{border-radius:0}
 }
 .rank-selector button[hidden]{display:none !important}
 
-/* v37 Stage 4 center-unit correction.
-   Aerial identity + GEH rank controls are centered together as one unit.
-   The vertical gap reuses the established 4px rank-button gap. Thumbnail ranks
-   retain the approved one-button-pitch move from v35. */
+/* v39 GEH Top 10 — approved Aerial + Thumbnail placements.
+   Aerial keeps the established centered identity/rank unit. Thumbnail ranks use
+   two 43px columns x five rows, centered vertically, with the established 5px
+   rank gap. The GEH thumbnail field reuses the existing side-gutter model and
+   expands the left reservation from 50px to exactly 100px: 3 + 43 + 5 + 43 + 6. */
 .exhibit-ranks{
   position:static;
   width:auto;
@@ -908,9 +909,13 @@ button{border-radius:0}
 .thumbnail-ranks{
   position:absolute;
   left:3px;
-  top:97px;
-  width:43px;
-  flex-direction:column;
+  top:50%;
+  transform:translateY(-50%);
+  width:91px;
+  display:grid;
+  grid-template-columns:repeat(2,43px);
+  grid-template-rows:repeat(5,31px);
+  grid-auto-flow:column;
   gap:5px;
   z-index:5;
 }
@@ -918,6 +923,9 @@ button{border-radius:0}
   width:43px;
   height:31px;
   font-size:9px;
+}
+.exhibit-shell.geh-mode[data-view="thumbnail"] .thumbnail-grid{
+  left:100px;
 }
 
 /* ---------------------------------------------------------------
