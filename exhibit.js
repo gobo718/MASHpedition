@@ -538,8 +538,11 @@
         : `${areaLabel} · PAGE ${thumbnailPage+1} / ${pageCount} · ${start+1}–${end} OF ${genericResultCount}`;
     }
 
-    applyAdaptiveThumbnailBrick();
+    // Make the thumbnail surface measurable before adaptive packing. When this
+    // ran while the view was still display:none, clientWidth/clientHeight were 0
+    // and the optimizer correctly found no usable composition.
     setView('thumbnail');
+    applyAdaptiveThumbnailBrick();
   }
 
   function paintEndlessSlot(button,index){

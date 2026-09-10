@@ -459,3 +459,8 @@ v46 (2026-09-10): Entrance emoji-only refinement. Raised emoji pair 8px while pr
 - The winning composition is the one that permits the largest square thumbnails in the existing thumbnail canvas.
 - Each row and the complete stack are centered.
 - The established 22-thumbnail 7 / 8 / 7 layout is unchanged.
+
+## v55 — Adaptive thumbnail invocation fix
+- Fixes adaptive brick packing running while Thumbnail view was still hidden and therefore measuring a 0×0 grid.
+- Thumbnail view is now activated first, then the optimizer measures the real canvas and applies the chosen brick composition.
+- No optimizer rules or approved 22-item 7/8/7 geometry changed.
