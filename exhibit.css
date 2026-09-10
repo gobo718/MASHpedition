@@ -1528,3 +1528,14 @@ button{border-radius:0}
 .exhibit-shell[data-area="gallery"] .entrance-exhibit-info,
 .exhibit-shell[data-area="fyc"] .entrance-exhibit-info,
 .exhibit-shell[data-area="se"] .entrance-exhibit-info{justify-content:center;}
+
+/* v51 — scoped art-space cleanup; established geometry unchanged */
+.exhibit-shell[data-area="gallery"] .entrance-selections{
+  position:relative;top:-20px;max-width:350px;font-size:24px;line-height:1.18;
+  font-weight:800;text-align:center;
+}
+.exhibit-shell[data-area="gallery"] .entrance-selections span{display:block;}
+.exhibit-shell[data-area="cat-theme"] .thumbnail-theme-placeholder,
+.exhibit-shell[data-area="cat-search"] .thumbnail-theme-placeholder{
+  font-size:18px;line-height:1.12;text-align:center;
+}

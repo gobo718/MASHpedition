@@ -432,3 +432,10 @@ v46 (2026-09-10): Entrance emoji-only refinement. Raised emoji pair 8px while pr
 - Salon Eclectique Endless/Thumbnails use docent name plus a deliberately vague selection description instead of emoji/Theme.
 - Salon initial sample is 3–22 selections and avoids announcing a closed/final total, allowing the docent to offer more later.
 - Approved room/viewer geometry preserved.
+
+## v51 — Art-space internal presentation cleanup
+- Private Gallery entrance copy centered, raised, enlarged, and split into The Works of / [USERNAME].
+- Removed presentation-level emoji/Theme identity from FYC, Salon Eclectique, and Private Gallery Endless/Thumbnails.
+- Catacombs non-Exhibit views remove generic emoji/Theme identity; Thumbnails uses smaller DETAILS OF SEARCH and Endless uses search details.
+- LEFT/RIGHT remain directional controls, not layouts.
+- Approved viewer geometry remains unchanged.

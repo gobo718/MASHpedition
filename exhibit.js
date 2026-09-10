@@ -145,7 +145,11 @@
     curatorName.textContent=residentName;
     entranceSelections.replaceChildren(curatorLead,curatorName);
   } else if(entranceKind==='gallery') {
-    entranceSelections.textContent=`The Works of ${residentName}`;
+    const worksLead=document.createElement('span');
+    worksLead.textContent='The Works of';
+    const worksName=document.createElement('span');
+    worksName.textContent=residentName;
+    entranceSelections.replaceChildren(worksLead,worksName);
   } else if(entranceKind==='fyc') {
     entranceSelections.textContent='Freshly Painted Selections Begging for Your Opinion';
   } else if(entranceKind==='salon') {
@@ -165,12 +169,11 @@
 
   function updatePresentationIdentity(){
     if(endlessIdentity){
-      if(requestedArea==='se'){
+      if(requestedArea==='cat-search' || requestedArea==='cat-theme'){
         endlessIdentity.hidden=false;
-        endlessIdentity.textContent=`${docentName} — ${salonDescription}`;
-      }else if(isThemeFilteredCatacombs){
-        endlessIdentity.hidden=false;
-        endlessIdentity.textContent=presentationTheme;
+        endlessIdentity.textContent=searchDetails;
+      }else if(requestedArea==='fyc' || requestedArea==='se' || requestedArea==='gallery'){
+        endlessIdentity.hidden=true;
       }else if(hasSharedPresentationPair){
         endlessIdentity.hidden=false;
         endlessIdentity.textContent=entranceEmojiText;
@@ -179,14 +182,12 @@
       }
     }
     if(thumbnailIdentity){
-      if(requestedArea==='se'){
+      if(requestedArea==='cat-search' || requestedArea==='cat-theme'){
         thumbnailIdentity.hidden=false;
-        thumbnailIdentityPrimary.textContent=docentName;
-        thumbnailIdentitySecondary.textContent=salonDescription;
-      }else if(isThemeFilteredCatacombs){
-        thumbnailIdentity.hidden=false;
-        thumbnailIdentityPrimary.textContent=presentationTheme;
+        thumbnailIdentityPrimary.textContent='DETAILS OF SEARCH';
         thumbnailIdentitySecondary.textContent='';
+      }else if(requestedArea==='fyc' || requestedArea==='se' || requestedArea==='gallery'){
+        thumbnailIdentity.hidden=true;
       }else if(hasSharedPresentationPair){
         thumbnailIdentity.hidden=false;
         thumbnailIdentityPrimary.textContent=entranceEmojiText;
