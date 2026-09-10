@@ -19,6 +19,10 @@
   const overheadView=document.getElementById('overheadView');
   const overheadCenterIdentity=document.getElementById('overheadCenterIdentity');
   const roomCenterIdentity=document.getElementById('roomCenterIdentity');
+  const endlessIdentity=document.getElementById('endlessIdentity');
+  const thumbnailIdentity=document.getElementById('thumbnailIdentity');
+  const thumbnailIdentityPrimary=document.getElementById('thumbnailIdentityPrimary');
+  const thumbnailIdentitySecondary=document.getElementById('thumbnailIdentitySecondary');
   const endlessView=document.getElementById('endlessView');
 
   const thumbnailGrid=document.getElementById('thumbnailGrid');
@@ -89,7 +93,7 @@
     gallery:{mix:'A',label:'PRIVATE GALLERY',count:66,start:'thumbnail'},
     collection:{mix:'B',label:'COLLECTION',count:66,start:'exhibit'},
     fyc:{mix:'A',label:'FOR YOUR CONSIDERATION',count:66,start:'thumbnail'},
-    se:{mix:'A',label:'SALON ECLECTIQUE',count:66,start:'thumbnail'},
+    se:{mix:'A',label:'SALON ECLECTIQUE',count:12,start:'thumbnail'},
     geh:{mix:'B',label:'GRAND EXHIBITION HALL',count:66,start:'exhibit',geh:true},
     'cat-theme':{mix:'A',label:'CATACOMBS · THEME SEARCH',count:66,start:'thumbnail'},
     'cat-search':{mix:'C',label:'CATACOMBS · SEARCH',count:66,start:'exhibit'}
@@ -103,11 +107,14 @@
   const gehMode=areaPreset?.geh===true || params.get('geh')==='1' ||
     (!areaPreset && params.get('geh')!=='0' && mix==='B');
   const areaLabel=areaPreset?.label || (gehMode?'GRAND EXHIBITION HALL':'VIEWER SAMPLE');
-  const centerIdentityText=`${areaLabel} - 😀 😎 - THEME`;
+  const centerIdentityText=`${areaLabel} - ${params.get('emojis') || '😀 😎'}`;
   overheadCenterIdentity.textContent=centerIdentityText;
   roomCenterIdentity.textContent=centerIdentityText;
   const defaultResultCount=areaPreset?.count ?? (mix==='A'?120:22);
-  const genericResultCount=Math.max(1,Math.min(5000,Number(params.get('count'))||defaultResultCount));
+  const requestedCount=Number(params.get('count'))||defaultResultCount;
+  const genericResultCount=requestedArea==='se'
+    ? Math.max(3,Math.min(22,requestedCount))
+    : Math.max(1,Math.min(5000,requestedCount));
   const defaultStart=areaPreset?.start || 'door';
 
   // Exhibit ENTRANCE facade. Theme is intentionally absent: the exhibit's
@@ -146,6 +153,50 @@
   } else {
     entranceSelections.textContent='Selections Curated by Community Vote';
   }
+
+
+  // Presentation identity: Theme is set-level context only when Theme defines the set.
+  const presentationTheme=params.get('theme') || 'THEME';
+  const sharedPairAreas=new Set(['collection','cat-search']);
+  const hasSharedPresentationPair=gehMode || sharedPairAreas.has(requestedArea);
+  const isThemeFilteredCatacombs=requestedArea==='cat-theme';
+  const docentName=params.get('docent') || 'DOCENT NAME';
+  const salonDescription=params.get('description') || 'A curious assortment selected in response to your request.';
+
+  function updatePresentationIdentity(){
+    if(endlessIdentity){
+      if(requestedArea==='se'){
+        endlessIdentity.hidden=false;
+        endlessIdentity.textContent=`${docentName} — ${salonDescription}`;
+      }else if(isThemeFilteredCatacombs){
+        endlessIdentity.hidden=false;
+        endlessIdentity.textContent=presentationTheme;
+      }else if(hasSharedPresentationPair){
+        endlessIdentity.hidden=false;
+        endlessIdentity.textContent=entranceEmojiText;
+      }else{
+        endlessIdentity.hidden=true;
+      }
+    }
+    if(thumbnailIdentity){
+      if(requestedArea==='se'){
+        thumbnailIdentity.hidden=false;
+        thumbnailIdentityPrimary.textContent=docentName;
+        thumbnailIdentitySecondary.textContent=salonDescription;
+      }else if(isThemeFilteredCatacombs){
+        thumbnailIdentity.hidden=false;
+        thumbnailIdentityPrimary.textContent=presentationTheme;
+        thumbnailIdentitySecondary.textContent='';
+      }else if(hasSharedPresentationPair){
+        thumbnailIdentity.hidden=false;
+        thumbnailIdentityPrimary.textContent=entranceEmojiText;
+        thumbnailIdentitySecondary.textContent='';
+      }else{
+        thumbnailIdentity.hidden=true;
+      }
+    }
+  }
+  updatePresentationIdentity();
 
   const capabilities={
     A:{exhibit:false,room:false,thumbnail:true,endless:true},
@@ -193,7 +244,7 @@
   let lastRoomStart=1;
   let selectedArt=1;
   let selectedRank=1;
-  let gehRank=1;
+  let gehRank=requestedRank;
   let roomPage=0;
   let thumbnailPage=0;
   let endlessIndex=0;
@@ -420,7 +471,9 @@
         button.addEventListener('click',()=>openArtwork(i+1,1,'thumbnail'));
         thumbnailGrid.appendChild(button);
       }
-      thumbnailStatus.textContent=`${areaLabel} · PAGE ${thumbnailPage+1} / ${pageCount} · ${start+1}–${end} OF ${genericResultCount}`;
+      thumbnailStatus.textContent=requestedArea==='se'
+        ? `${areaLabel} · CURRENT SELECTIONS`
+        : `${areaLabel} · PAGE ${thumbnailPage+1} / ${pageCount} · ${start+1}–${end} OF ${genericResultCount}`;
     }
 
     setView('thumbnail');
@@ -461,8 +514,9 @@
     const loadedPage=Math.floor(endlessIndex/PAGE_SIZE);
     const loadedStart=loadedPage*PAGE_SIZE;
     const loadedEnd=Math.min(genericResultCount,loadedStart+PAGE_SIZE);
-    endlessStatus.textContent=
-      `${areaLabel} · RESULT ${endlessIndex+1} OF ${genericResultCount} · LOADED ${loadedStart+1}–${loadedEnd}`;
+    endlessStatus.textContent=requestedArea==='se'
+      ? `${areaLabel} · CURRENT SELECTION`
+      : `${areaLabel} · RESULT ${endlessIndex+1} OF ${genericResultCount} · LOADED ${loadedStart+1}–${loadedEnd}`;
 
     setView('endless');
   }
@@ -471,6 +525,7 @@
     rank=Number(rank);
     if(!gehMode || rank<1 || rank>maxUnlockedRank) return;
     gehRank=rank;
+    entranceRank.textContent=`${rankWord(gehRank)} PLACE`;
     updateRankButtons();
 
     if(shell.dataset.view==='overhead') renderOverhead();

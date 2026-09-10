@@ -423,3 +423,12 @@ v46 (2026-09-10): Entrance emoji-only refinement. Raised emoji pair 8px while pr
 - SALON ECLECTIQUE entrance: `Bespoke selections tailored to your requests, presented via curation by a personal docent.`; no entrance emoji pair.
 - Standard emoji-pair Exhibits use the exhibit-wide entrance emoji pair consistently for artwork display; mixed-pair art spaces are excluded from that rule.
 - Entrance rule: show an emoji pair only when every image in that Exhibit shares that pair.
+
+## v50 — Art-space presentation cleanup
+- GEH selected rank persists when returning to ENTRANCE; selecting 6TH renders 6TH PLACE.
+- Removed presentation-level Theme from normal viewer identity. Theme is set-level context only when Theme defines the result set (currently Theme-filtered Catacombs; Common Grounds Theme Top 20 will use the same rule when built).
+- Presentation-level emoji pair remains only where the whole set shares the pair.
+- For Your Consideration and Private Gallery no longer show a false shared emoji/Theme identity in Endless/Thumbnails.
+- Salon Eclectique Endless/Thumbnails use docent name plus a deliberately vague selection description instead of emoji/Theme.
+- Salon initial sample is 3–22 selections and avoids announcing a closed/final total, allowing the docent to offer more later.
+- Approved room/viewer geometry preserved.

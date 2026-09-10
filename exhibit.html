@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>MASHpedition Shared Artwork Viewer</title>
 <!-- v18: area samples + swipe navigation on Exhibit/Endless + v17 shared viewer -->
-<link rel="stylesheet" href="exhibit.css?v=48">
+<link rel="stylesheet" href="exhibit.css?v=50">
 </head>
 <body>
 <main class="exhibit-shell" id="exhibitShell" data-view="door" aria-label="Exhibit view">
@@ -208,7 +208,7 @@
         <button class="endless-art endless-left" id="endlessLeftArt" type="button"><span></span></button>
         <button class="endless-art endless-center" id="endlessCenterArt" type="button"><span></span></button>
         <button class="endless-art endless-right" id="endlessRightArt" type="button"><span></span></button>
-        <div class="endless-theme-identity" aria-hidden="true">😀 😎 - THEME</div>
+        <div class="endless-theme-identity" id="endlessIdentity" aria-hidden="true">😀 😎</div>
         <div class="endless-status" id="endlessStatus"></div>
       </div>
     </section>
@@ -220,9 +220,9 @@
       <div class="expand-content" id="expandContent"></div>
     </section>
 
-    <div class="thumbnail-theme-placeholder" aria-label="Theme placeholder">
-      <div class="thumbnail-theme-emojis" aria-hidden="true">😀 😎</div>
-      <div class="thumbnail-theme-label">THEME</div>
+    <div class="thumbnail-theme-placeholder" id="thumbnailIdentity" aria-label="Presentation identity">
+      <div class="thumbnail-theme-emojis" id="thumbnailIdentityPrimary" aria-hidden="true">😀 😎</div>
+      <div class="thumbnail-theme-label" id="thumbnailIdentitySecondary"></div>
     </div>
 
     <nav class="page-nav" id="pageNav" aria-label="Exhibit room page navigation" hidden>
@@ -264,6 +264,6 @@
 
   <a class="museum-return" href="index.html">MUSEUM</a>
 </main>
-<script src="exhibit.js?v=48"></script>
+<script src="exhibit.js?v=50"></script>
 </body>
 </html>
