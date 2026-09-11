@@ -331,7 +331,8 @@
   let selectedArt=1;
   let selectedRank=1;
   let gehRank=requestedRank;
-  let roomPage=0;
+  const requestedRoomPage=Number(params.get('roomPage'));
+  let roomPage=Number.isInteger(requestedRoomPage) && requestedRoomPage>=0 ? requestedRoomPage : 0;
   let thumbnailPage=0;
   let endlessIndex=0;
   let artworkReturn=null;
@@ -1121,14 +1122,27 @@
     return params.get('returnArea') || 'geh';
   }
 
+  function standardRoomForReturn(){
+    const raw=params.get('returnRoomPage');
+    const saved=raw===null ? NaN : Number(raw);
+    return Number.isInteger(saved) && saved>=0 ? saved : 2;
+  }
+
   function navigateDoor4(presentation){
     const next=new URLSearchParams(params);
     if(zazzlyMode){
       const returnArea=standardAreaForReturn();
+      const returnRoomPage=standardRoomForReturn();
       next.delete('returnArea');
+      next.delete('returnRoomPage');
       next.set('area',returnArea);
+      next.set('roomPage',String(returnRoomPage));
+      next.set('entryDoor','4');
     }else{
       if(requestedArea) next.set('returnArea',requestedArea);
+      next.set('returnRoomPage',String(roomPage));
+      next.delete('roomPage');
+      next.delete('entryDoor');
       next.set('area','zazzly');
     }
     next.set('start',presentation==='overhead'?'exhibit':'room');
@@ -1264,7 +1278,11 @@
 
   const requestedStart=(params.get('start')||defaultStart).toLowerCase();
   if(requestedStart==='exhibit' && capabilities.exhibit && !(catacombsMode && catSearchHasTheme)) renderOverhead();
-  else if(requestedStart==='room' && capabilities.room && !(catacombsMode && catSearchHasTheme)) renderRoom(zazzlyMode?13:1);
+  else if(requestedStart==='room' && capabilities.room && !(catacombsMode && catSearchHasTheme)){
+    const entryDoor=Number(params.get('entryDoor'));
+    const targetLocalDoor=entryDoor-roomPage;
+    renderRoom(zazzlyMode?13:(entryDoor && targetLocalDoor===1 ? 23 : entryDoor ? 8 : 1));
+  }
   else if(requestedStart==='thumbnail' && capabilities.thumbnail) renderThumbnailPage();
   else if(requestedStart==='endless' && capabilities.endless && !(catacombsMode && !catSearchHasTheme)) renderEndless();
   else setView('door');
