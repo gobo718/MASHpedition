@@ -36,7 +36,8 @@ main{width:100vw;height:100dvh;display:flex;align-items:center;justify-content:c
 .installation-stage{position:relative;width:980px;height:337px;background:#f4f0e8;overflow:hidden;flex:none}
 .installation-scene{position:absolute;left:0;top:0;width:980px;height:300px;overflow:hidden;background:#f4f0e8}
 .installation-position{position:absolute;left:50%;top:8px;transform:translateX(-50%);font-size:12px;font-weight:900;letter-spacing:.08em;z-index:9}
-/* v71: ratio-solved Installation geometry.
+/* v72: ratio-solved Installation geometry; corrected mirrored B placement and black entrance blanks.
+   v71 basis:
    Base unit U=65px, front art S=230px. The visible layout is solved as relationships,
    not independent coordinates: outer=58.501, front gap=2U=130, front->corner=U,
    corner=8, corner->angled=U. Angled projection is .8413S=193.499px.
@@ -61,17 +62,26 @@ main{width:100vw;height:100dvh;display:flex;align-items:center;justify-content:c
 .installation-scene[data-template="B"] .installation-front-art,
 .installation-scene[data-template="B"] .installation-corner-left,
 .installation-scene[data-template="B"] .installation-side-left{display:flex}
+.installation-scene[data-template="B"] .installation-front-left{left:331.499px}
+.installation-scene[data-template="B"] .installation-front-right{left:691.499px}
+.installation-empty{position:absolute;top:0;height:300px;background:#000;display:none;z-index:2}
+.installation-empty-left{left:0;width:258.499px}
+.installation-empty-right{left:721.501px;width:258.499px}
+.installation-empty-slot{left:418.501px;top:35px;width:230px;height:230px}
 /* Entrance/open-side states reuse the solved templates and simply omit the missing wall. */
 .installation-scene[data-template="ENTRY_START"] .installation-front-art,
-.installation-scene[data-template="ENTRY_START"] .installation-corner-left{display:flex}
+.installation-scene[data-template="ENTRY_START"] .installation-corner-left,
+.installation-scene[data-template="ENTRY_START"] .installation-empty-left{display:flex}
 .installation-scene[data-template="ENTRY_START"] .installation-front-left{left:331.499px}
 .installation-scene[data-template="ENTRY_START"] .installation-front-right{left:691.499px}
 .installation-scene[data-template="ENTRY_END"] .installation-front-art,
-.installation-scene[data-template="ENTRY_END"] .installation-corner-right{display:flex}
+.installation-scene[data-template="ENTRY_END"] .installation-corner-right,
+.installation-scene[data-template="ENTRY_END"] .installation-empty-right{display:flex}
 /* 20 | open entrance | angled 1: Art20 uses the last straight-wall slot; Art1 enters on the far wall. */
 .installation-scene[data-template="ENTRY_WRAP"] .installation-front-left,
 .installation-scene[data-template="ENTRY_WRAP"] .installation-corner-right,
-.installation-scene[data-template="ENTRY_WRAP"] .installation-side-right{display:flex}
+.installation-scene[data-template="ENTRY_WRAP"] .installation-side-right,
+.installation-scene[data-template="ENTRY_WRAP"] .installation-empty-slot{display:flex}
 .installation-scene[data-template="ENTRY_WRAP"] .installation-front-left{left:58.501px}
 .installation-controls{position:absolute;left:0;right:0;bottom:0;height:37px;display:grid;grid-template-columns:1fr 1fr 1fr 1fr;border-top:2px solid #26221d}
 .installation-controls button{border:0;border-right:2px solid #26221d;background:#fff;font-weight:900;font-size:12px;letter-spacing:.05em}.installation-controls button:last-child{border-right:0}
@@ -112,11 +122,14 @@ main{width:100vw;height:100dvh;display:flex;align-items:center;justify-content:c
   <section class="installation-stage" aria-label="Installation player view">
     <div id="installationScene" class="installation-scene" data-template="ENTRY_START">
       <div class="installation-position" id="installationPosition">1–2</div>
+      <div class="installation-empty installation-empty-left" aria-hidden="true"></div>
       <button class="installation-side-art installation-side-left" id="installationSideLeft" type="button"><svg viewBox="0 0 193.499 354.338" aria-hidden="true"><polygon class="side-fill" points="0,62.169 193.499,0 193.499,354.338 0,292.169"/></svg><span>2</span></button>
       <div class="installation-corner-line installation-corner-left" aria-hidden="true"></div>
       <button class="installation-front-art installation-front-left" id="installationFrontLeft" type="button"><span>1</span></button>
       <button class="installation-front-art installation-front-right" id="installationFrontRight" type="button"><span>2</span></button>
+      <div class="installation-empty installation-empty-slot" aria-hidden="true"></div>
       <div class="installation-corner-line installation-corner-right" aria-hidden="true"></div>
+      <div class="installation-empty installation-empty-right" aria-hidden="true"></div>
       <button class="installation-side-art installation-side-right" id="installationSideRight" type="button"><svg viewBox="0 0 193.499 354.338" aria-hidden="true"><polygon class="side-fill" points="0,62.169 193.499,0 193.499,354.338 0,292.169"/></svg><span>3</span></button>
     </div>
     <nav class="installation-controls" aria-label="Installation navigation">
