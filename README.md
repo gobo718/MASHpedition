@@ -517,3 +517,12 @@ v68 Installation repair: one-artwork stepping, fixed clockwise/counterclockwise 
 - Endless selector uses the same lower baseline as page navigation.
 - Aerial selector is compact and aligned to the center identity line.
 - No approved room/art geometry changed.
+
+
+## v85 — Zazzly 12-art room prototype
+- Adds `area=zazzly` as a compact premium room using only the approved Exhibit 1 90-degree geometry.
+- Physical circuit: south `12 | Door 4 | 1`; west `2–5`; north `6 | Door 5 | 7`; east `8–11`.
+- Corner geometry is copied from Exhibit 1 at the four transitions (1/2, 5/6, 7/8, 11/12); no new perspective math was introduced.
+- Zazzly artwork labels occupy global 67–78.
+- Door 4 in Room 3 now opens the Zazzly room. Door 5 is present as the balanced north door but has no destination yet.
+- Aerial/Thumbnails/Endless are intentionally withheld for this first room-only build rather than showing layouts that have not yet been designed for the 12-art room.

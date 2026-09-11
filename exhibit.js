@@ -96,6 +96,7 @@
     collection:{mix:'B',label:'COLLECTION',count:66,start:'exhibit'},
     fyc:{mix:'A',label:'FOR YOUR CONSIDERATION',count:66,start:'thumbnail'},
     se:{mix:'A',label:'SALON ECLECTIQUE',count:12,start:'thumbnail'},
+    zazzly:{mix:'C',label:'ZAZZLY EXHIBIT',count:12,start:'room'},
     geh:{mix:'B',label:'GRAND EXHIBITION HALL',count:66,start:'exhibit',geh:true},
     'cat-theme':{mix:'A',label:'CATACOMBS',count:66,start:'thumbnail'},
     'cat-search':{mix:'C',label:'CATACOMBS · SEARCH',count:66,start:'exhibit'}
@@ -103,6 +104,7 @@
 
   const requestedArea=(params.get('area')||'').toLowerCase();
   const catacombsMode=requestedArea==='cat-theme' || requestedArea==='cat-search';
+  const zazzlyMode=requestedArea==='zazzly';
   let catSearchHasTheme=requestedArea!=='cat-search';
   const areaPreset=AREA_PRESETS[requestedArea]||null;
   const requestedMix=(params.get('mix') || areaPreset?.mix || 'B').toUpperCase();
@@ -209,7 +211,9 @@
   }
   updatePresentationIdentity();
 
-  const capabilities=catacombsMode
+  const capabilities=zazzlyMode
+    ? {exhibit:true,room:true,thumbnail:true,endless:true}
+    : catacombsMode
     ? {exhibit:true,room:true,thumbnail:true,endless:true}
     : ({
         A:{exhibit:false,room:false,thumbnail:true,endless:true},
@@ -222,9 +226,26 @@
   shell.classList.toggle('geh-mode',gehMode);
   shell.classList.toggle('catacombs-mode',catacombsMode);
 
-  // 24 fixed physical positions around the approved room:
-  // 22 artwork positions + two fixed doors.
-  const roomSlots=[
+  // Physical room circuit. The Zazzly DLC room deliberately reuses the
+  // approved Exhibit 1 90-degree wall/corner geometry, but with a compact
+  // 12-art / 2-door circuit:
+  // SOUTH 12 | DOOR 4 | 1; WEST 2-5; NORTH 6 | DOOR 5 | 7; EAST 8-11.
+  const roomSlots=zazzlyMode ? [
+    {kind:'door',number:4},
+    {kind:'art',number:1},
+    {kind:'art',number:2},
+    {kind:'art',number:3},
+    {kind:'art',number:4},
+    {kind:'art',number:5},
+    {kind:'art',number:6},
+    {kind:'door',number:5},
+    {kind:'art',number:7},
+    {kind:'art',number:8},
+    {kind:'art',number:9},
+    {kind:'art',number:10},
+    {kind:'art',number:11},
+    {kind:'art',number:12}
+  ] : [
     {kind:'door',number:1},
     {kind:'art',number:1},
     {kind:'art',number:2},
@@ -251,8 +272,9 @@
     {kind:'art',number:22}
   ];
 
-  // Approved corners. Do not change these without changing room geometry.
-  const cornerAfter=new Set([1,7,13,19]);
+  // Zazzly corners are copied directly from the user's Exhibit-1 geometry
+  // recipe: 1/2, 5/6, 7/8, 11/12 are the four 90-degree transitions.
+  const cornerAfter=new Set(zazzlyMode ? [1,5,8,12] : [1,7,13,19]);
 
   let roomStart=1;
   let lastRoomStart=1;
@@ -314,6 +336,10 @@
       'Excess','PartyTime','Freakshow','Medicated','Scandalarious','Schadenfreude','Mockery',
       'Grotesque','Collapse','Corrupted','Cursed','Aggressive','Outrage','Monstrous','Horror',
       'Nightmarish','Phantasmagoric','Foreboding','Vulnerable','Paranoia','Despair','Shame'
+    ],
+    [
+      'Zazzly','Cheeky','Fleshy','Humiliation','Raunchy','Exposure',
+      'FreakyDeaky','Sadomasochism','Seduction','Lewd','Zazzploitation','ZazzlyParty'
     ]
   ];
 
@@ -323,6 +349,14 @@
     const localNumber=((number-1)%PAGE_SIZE)+1;
     const theme=exhibitRoomThemes[page]?.[localNumber-1];
     return theme ? `${String(number).padStart(2,'0')} - ${theme}` : `Art ${number}`;
+  }
+
+  function roomArtNumber(slot){
+    return zazzlyMode ? 66+slot.number : roomPage*PAGE_SIZE+slot.number;
+  }
+
+  function roomDoorNumber(slot){
+    return zazzlyMode ? slot.number : slot.number+roomPage;
   }
 
   function rankWord(rank){
@@ -398,10 +432,10 @@
     const span=button.querySelector('span');
 
     if(slot.kind==='door'){
-      const displayedDoorNumber=slot.number+roomPage;
+      const displayedDoorNumber=roomDoorNumber(slot);
       button.classList.add('is-door-slot');
       button.dataset.door=String(displayedDoorNumber);
-      button.disabled=displayedDoorNumber===4;
+      button.disabled=false;
       button.setAttribute(
         'aria-label',
         displayedDoorNumber===1 ? 'Door 1 — entrance' : `Door ${displayedDoorNumber}`
@@ -411,7 +445,7 @@
     }
 
     button.classList.add('is-art-slot');
-    const artNumber=roomPage*PAGE_SIZE+slot.number;
+    const artNumber=roomArtNumber(slot);
     button.dataset.art=String(artNumber);
     button.dataset.rank=String(gehMode?gehRank:1);
     button.setAttribute('aria-label',`${exhibitArtLabel(artNumber)}${gehMode?`, ${rankWord(gehRank)} place`:''}`);
@@ -428,10 +462,10 @@
     const span=button.querySelector('span');
 
     if(slot.kind==='door'){
-      const displayedDoorNumber=slot.number+roomPage;
+      const displayedDoorNumber=roomDoorNumber(slot);
       button.classList.add('is-overhead-door');
       button.dataset.door=String(displayedDoorNumber);
-      button.disabled=displayedDoorNumber===4;
+      button.disabled=false;
       button.setAttribute(
         'aria-label',
         displayedDoorNumber===1
@@ -443,7 +477,7 @@
     }
 
     button.classList.add('is-overhead-art');
-    const artNumber=roomPage*PAGE_SIZE+slot.number;
+    const artNumber=roomArtNumber(slot);
     button.dataset.art=String(artNumber);
     button.dataset.rank=String(gehMode?gehRank:1);
     const suffix=gehMode?` · ${rankWord(gehRank)}`:'';
@@ -451,15 +485,32 @@
     if(span) span.textContent=`${exhibitArtLabel(artNumber)}${suffix}`;
   }
 
+  // Aerial layout for the compact Zazzly room. Values are roomSlots indices
+  // in the existing overhead DOM order: left 6, top 6, right 6, bottom 6.
+  // SOUTH: 12 | DOOR 4 | 1; WEST: 2-5; NORTH: 6 | DOOR 5 | 7; EAST: 8-11.
+  const zazzlyOverheadMap=[
+    5,4,3,2,null,null,
+    6,7,8,null,null,null,
+    9,10,11,12,null,null,
+    13,0,1,null,null,null
+  ];
+
   function renderOverhead(){
     if(catacombsMode && catSearchHasTheme) return;
     if(!capabilities.exhibit){
       renderThumbnailPage();
       return;
     }
-    overheadSlots.forEach(button=>{
-      const index=Number(button.dataset.roomIndex);
-      paintOverheadSlot(button,roomSlots[wrap(index)]);
+    overheadSlots.forEach((button,i)=>{
+      if(zazzlyMode){
+        const index=zazzlyOverheadMap[i];
+        button.hidden=index==null;
+        if(index!=null) paintOverheadSlot(button,roomSlots[index]);
+      }else{
+        button.hidden=false;
+        const index=Number(button.dataset.roomIndex);
+        paintOverheadSlot(button,roomSlots[wrap(index)]);
+      }
     });
     updateRankButtons();
     setView('overhead');
@@ -588,10 +639,11 @@
         button.type='button';
         button.dataset.result=String(i);
         const artNumber=i+1;
-        const useMainRoomLabel=emojiPairDefinedLocation && artNumber<=PAGE_SIZE;
-        button.textContent=useMainRoomLabel?exhibitArtLabel(artNumber):`RESULT ${artNumber}`;
-        button.setAttribute('aria-label',useMainRoomLabel?exhibitArtLabel(artNumber):`Result ${artNumber}`);
-        button.addEventListener('click',()=>openArtwork(artNumber,1,'thumbnail'));
+        const displayedArtNumber=zazzlyMode?66+artNumber:artNumber;
+        const useRoomLabel=zazzlyMode || (emojiPairDefinedLocation && artNumber<=PAGE_SIZE);
+        button.textContent=useRoomLabel?exhibitArtLabel(displayedArtNumber):`RESULT ${artNumber}`;
+        button.setAttribute('aria-label',useRoomLabel?exhibitArtLabel(displayedArtNumber):`Result ${artNumber}`);
+        button.addEventListener('click',()=>openArtwork(displayedArtNumber,1,'thumbnail'));
         thumbnailGrid.appendChild(button);
       }
       thumbnailStatus.textContent=requestedArea==='se'
@@ -620,8 +672,10 @@
     }
 
     button.dataset.result=String(index);
-    button.setAttribute('aria-label',`Result ${index+1}`);
-    if(span) span.textContent=`RESULT ${index+1}`;
+    const displayedArtNumber=zazzlyMode?67+index:index+1;
+    const displayedLabel=zazzlyMode?exhibitArtLabel(displayedArtNumber):`RESULT ${index+1}`;
+    button.setAttribute('aria-label',displayedLabel);
+    if(span) span.textContent=displayedLabel;
   }
 
   // Endless Wall displays only three DOM image positions. PAGE_SIZE controls
@@ -1048,11 +1102,18 @@
 
   function roomPageAcrossDoor(doorNumber){
     doorNumber=Number(doorNumber);
+    if(zazzlyMode){
+      if(doorNumber===4) setView('door');
+      return;
+    }
     if(doorNumber===1){
       setView('door');
       return;
     }
-    if(doorNumber===4) return;
+    if(doorNumber===4){
+      window.location.href='exhibit.html?area=zazzly&start=room';
+      return;
+    }
 
     // Door 2 connects Exhibit Rooms 1 and 2; Door 3 connects Rooms 2 and 3.
     const lowerPage=doorNumber-2;
@@ -1134,13 +1195,13 @@
   // Exterior Door 1 enters at its exact interior physical position:
   // ART 22 | DOOR 1 | ART 1, with Door 1 centered.
   frontDoor.addEventListener('click',()=>{
-    if(capabilities.room) renderRoom(23);
+    if(capabilities.room) renderRoom(zazzlyMode?13:23);
     else if(capabilities.thumbnail) renderThumbnailPage();
   });
 
   doorBtn.addEventListener('click',()=>{
-    roomStart=23;
-    lastRoomStart=23;
+    roomStart=zazzlyMode?13:23;
+    lastRoomStart=zazzlyMode?13:23;
     setView('door');
   });
 
@@ -1163,7 +1224,7 @@
 
   const requestedStart=(params.get('start')||defaultStart).toLowerCase();
   if(requestedStart==='exhibit' && capabilities.exhibit && !(catacombsMode && catSearchHasTheme)) renderOverhead();
-  else if(requestedStart==='room' && capabilities.room && !(catacombsMode && catSearchHasTheme)) renderRoom(1);
+  else if(requestedStart==='room' && capabilities.room && !(catacombsMode && catSearchHasTheme)) renderRoom(zazzlyMode?13:1);
   else if(requestedStart==='thumbnail' && capabilities.thumbnail) renderThumbnailPage();
   else if(requestedStart==='endless' && capabilities.endless && !(catacombsMode && !catSearchHasTheme)) renderEndless();
   else setView('door');
