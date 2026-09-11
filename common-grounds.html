@@ -11,20 +11,25 @@ body{overflow:hidden}
 main{width:100vw;height:100dvh;display:flex;align-items:center;justify-content:center;position:relative}
 .cg-canvas{position:relative;width:980px;height:300px;background:#e8e3da;border:3px solid #26221d;overflow:hidden;flex:none}
 .zone{position:absolute;border:3px solid #26221d;background:#f7f3eb;display:flex;align-items:center;justify-content:center;text-align:center;font-weight:900;letter-spacing:.05em;z-index:3}
-.zone small{display:block;font-size:9px;line-height:1.25;letter-spacing:.025em;margin-top:5px;font-weight:700}
-.donors{left:16px;top:62px;width:132px;height:220px;flex-direction:column;padding:8px}
-.donors .tiers{font-size:8px;line-height:1.55;margin-top:9px;font-weight:700;letter-spacing:.01em}
-.cafe{left:166px;top:16px;width:300px;height:74px;flex-direction:column}
+.donors{left:16px;top:16px;width:132px;height:220px;flex-direction:column;padding:8px}
+.cafe{left:210px;top:16px;width:300px;height:74px;flex-direction:column}
 .bookshop{right:16px;top:48px;width:92px;height:234px;flex-direction:column;padding:6px}
 .bookshop .vertical-title{writing-mode:vertical-rl;transform:rotate(180deg);font-size:17px;letter-spacing:.08em}
-.bookshop small{writing-mode:vertical-rl;transform:rotate(180deg);margin-top:0;margin-left:8px}
-.installation-label{position:absolute;left:735px;top:18px;transform:translateX(-50%);font-size:10px;font-weight:900;letter-spacing:.07em;z-index:4;white-space:nowrap}
-.hendec-svg{position:absolute;inset:0;width:980px;height:300px;z-index:1;overflow:visible}
+.hendec-svg{position:absolute;inset:0;width:980px;height:300px;z-index:2;overflow:visible;pointer-events:none}
 .hendec-fill{fill:#eee9df;stroke:none}
 .hendec-side{stroke:#26221d;stroke-width:4;stroke-linecap:square}
-.art-box{fill:#fff;stroke:#26221d;stroke-width:1.7}
-.art-num{font-size:7px;font-weight:800;text-anchor:middle;dominant-baseline:middle}
-.hendec-entry-label{position:absolute;font-size:9px;font-weight:900;letter-spacing:.06em;z-index:4;text-align:center;white-space:nowrap}
+.installation-button{position:absolute;left:666px;top:150px;transform:translate(-50%,-50%);width:154px;height:58px;border:3px solid #26221d;background:#fff;color:#111;font-size:18px;font-weight:900;letter-spacing:.06em;z-index:4;cursor:pointer}
+
+.map-overlay{position:fixed;inset:0;background:rgba(0,0,0,.72);z-index:20;display:none;align-items:center;justify-content:center;padding:18px}
+.map-overlay.open{display:flex}
+.map-card{position:relative;width:min(94vw,980px);height:min(88vh,720px);background:#e8e3da;border:3px solid #26221d}
+.map-close{position:absolute;right:10px;top:8px;z-index:3;border:2px solid #26221d;background:#fff;font-size:24px;font-weight:900;width:42px;height:42px;cursor:pointer}
+.map-title{position:absolute;left:50%;top:12px;transform:translateX(-50%);font-size:18px;font-weight:900;letter-spacing:.06em;white-space:nowrap}
+.large-map-svg{position:absolute;left:0;top:48px;width:100%;height:calc(100% - 48px)}
+.large-side{stroke:#26221d;stroke-width:5;stroke-linecap:square}
+.large-art{fill:#fff;stroke:#26221d;stroke-width:2}
+.large-num{font-size:13px;font-weight:900;text-anchor:middle;dominant-baseline:middle}
+
 .front-door{position:absolute;left:286px;bottom:0;width:60px;height:31px;border:3px solid #26221d;border-bottom:0;background:#111;z-index:4}
 .front-door-label{position:absolute;left:316px;bottom:34px;transform:translateX(-50%);font-size:8px;font-weight:900;letter-spacing:.06em;z-index:4;white-space:nowrap}
 .museum{position:fixed;left:12px;bottom:12px;border:1px solid #555;background:#fff;color:#111;text-decoration:none;font-weight:700;padding:10px 14px}
@@ -36,54 +41,52 @@ main{width:100vw;height:100dvh;display:flex;align-items:center;justify-content:c
   <section class="cg-canvas" aria-label="Common Grounds aerial room prototype">
     <div class="zone donors">DONOR'S CLUB
     </div>
-    <div class="zone cafe">CAFÉ<small>FOOD · DRINKS · ELIXIRS</small></div>
-    <div class="zone bookshop"><span class="vertical-title">BOOKSHOP</span><small>BOOKS · LORE · SECRETS</small></div>
+    <div class="zone cafe">CAFÉ</div>
+    <div class="zone bookshop"><span class="vertical-title">BOOKSHOP</span></div>
 
-    <div class="installation-label">20-IMAGE HENDECAGON INSTALLATION</div>
-    <svg class="hendec-svg" viewBox="0 0 980 300" aria-label="Regular hendecagon installation with southwest opening">
+    <svg class="hendec-svg" viewBox="0 0 980 300" aria-hidden="true">
       <g id="hendecagonGeometry"></g>
     </svg>
-    <div id="hendecEntryLabel" class="hendec-entry-label">INSTALLATION ENTRANCE</div>
+    <button id="hendecMapButton" class="installation-button" aria-label="Open Installation map">INSTALLATION</button>
 
     <div class="front-door" aria-label="Front door"></div>
     <div class="front-door-label">FRONT DOOR</div>
   </section>
   <a class="museum" href="index.html">MUSEUM</a>
 </main>
+<div id="installationMap" class="map-overlay" aria-hidden="true">
+  <div class="map-card" role="dialog" aria-modal="true" aria-label="Installation map">
+    <button id="mapClose" class="map-close" aria-label="Close map">×</button>
+    <div class="map-title">INSTALLATION</div>
+    <svg class="large-map-svg" viewBox="0 0 980 620" aria-label="20 artwork Installation map"><g id="largeHendecagon"></g></svg>
+  </div>
+</div>
 
 <script>
 (()=>{
   const svgNS='http://www.w3.org/2000/svg';
-  const g=document.getElementById('hendecagonGeometry');
-  const cx=735, cy=159, r=112, n=11;
-  // Vertex rotation chosen so side 7 is the southwest-facing entrance side.
-  const start=-Math.PI/2;
-  const pts=Array.from({length:n},(_,i)=>{const a=start+i*2*Math.PI/n;return{x:cx+r*Math.cos(a),y:cy+r*Math.sin(a)}});
-  const poly=document.createElementNS(svgNS,'polygon');
-  poly.setAttribute('points',pts.map(p=>`${p.x},${p.y}`).join(' '));
-  poly.setAttribute('class','hendec-fill'); g.appendChild(poly);
-  const entranceSide=7;
-  let artNo=1;
-  for(let i=0;i<n;i++){
-    const a=pts[i], b=pts[(i+1)%n];
-    if(i===entranceSide) continue;
-    const line=document.createElementNS(svgNS,'line');
-    line.setAttribute('x1',a.x);line.setAttribute('y1',a.y);line.setAttribute('x2',b.x);line.setAttribute('y2',b.y);line.setAttribute('class','hendec-side');g.appendChild(line);
-    const dx=b.x-a.x, dy=b.y-a.y, len=Math.hypot(dx,dy), ux=dx/len, uy=dy/len;
-    const nx=-uy, ny=ux;
-    for(const t of [0.34,0.66]){
-      const mx=a.x+dx*t+nx*10, my=a.y+dy*t+ny*10;
-      const box=document.createElementNS(svgNS,'rect');
-      box.setAttribute('x',-14);box.setAttribute('y',-7);box.setAttribute('width',28);box.setAttribute('height',14);box.setAttribute('rx',1);box.setAttribute('class','art-box');
-      const angle=Math.atan2(dy,dx)*180/Math.PI;
-      box.setAttribute('transform',`translate(${mx} ${my}) rotate(${angle})`);g.appendChild(box);
-      const text=document.createElementNS(svgNS,'text');text.setAttribute('x',mx);text.setAttribute('y',my+.5);text.setAttribute('class','art-num');text.textContent=artNo++;g.appendChild(text);
+  const n=11, entranceSide=7, start=-Math.PI/2;
+  const points=(cx,cy,r)=>Array.from({length:n},(_,i)=>{const a=start+i*2*Math.PI/n;return{x:cx+r*Math.cos(a),y:cy+r*Math.sin(a)}});
+  function drawRoom(){
+    const g=document.getElementById('hendecagonGeometry'), pts=points(666,150,112);
+    const poly=document.createElementNS(svgNS,'polygon');
+    poly.setAttribute('points',pts.map(p=>`${p.x},${p.y}`).join(' ')); poly.setAttribute('class','hendec-fill'); g.appendChild(poly);
+    for(let i=0;i<n;i++){ if(i===entranceSide) continue; const a=pts[i],b=pts[(i+1)%n]; const line=document.createElementNS(svgNS,'line');
+      line.setAttribute('x1',a.x);line.setAttribute('y1',a.y);line.setAttribute('x2',b.x);line.setAttribute('y2',b.y);line.setAttribute('class','hendec-side');g.appendChild(line); }
+  }
+  function drawLarge(){
+    const g=document.getElementById('largeHendecagon'), pts=points(490,320,255); let artNo=1;
+    for(let i=0;i<n;i++){ if(i===entranceSide) continue; const a=pts[i],b=pts[(i+1)%n]; const line=document.createElementNS(svgNS,'line');
+      line.setAttribute('x1',a.x);line.setAttribute('y1',a.y);line.setAttribute('x2',b.x);line.setAttribute('y2',b.y);line.setAttribute('class','large-side');g.appendChild(line);
+      const dx=b.x-a.x,dy=b.y-a.y,len=Math.hypot(dx,dy),nx=-dy/len,ny=dx/len,angle=Math.atan2(dy,dx)*180/Math.PI;
+      for(const t of [.34,.66]){const mx=a.x+dx*t+nx*24,my=a.y+dy*t+ny*24;const box=document.createElementNS(svgNS,'rect');box.setAttribute('x',-30);box.setAttribute('y',-18);box.setAttribute('width',60);box.setAttribute('height',36);box.setAttribute('class','large-art');box.setAttribute('transform',`translate(${mx} ${my}) rotate(${angle})`);g.appendChild(box);const text=document.createElementNS(svgNS,'text');text.setAttribute('x',mx);text.setAttribute('y',my);text.setAttribute('class','large-num');text.textContent=artNo++;g.appendChild(text);}
     }
   }
-  const a=pts[entranceSide], b=pts[(entranceSide+1)%n];
-  const mx=(a.x+b.x)/2, my=(a.y+b.y)/2;
-  const label=document.getElementById('hendecEntryLabel');
-  label.style.left=(mx-43)+'px'; label.style.top=(my+8)+'px';
+  drawRoom(); drawLarge();
+  const overlay=document.getElementById('installationMap'),button=document.getElementById('hendecMapButton'),close=document.getElementById('mapClose');
+  const openMap=()=>{overlay.classList.add('open');overlay.setAttribute('aria-hidden','false');close.focus()};
+  const closeMap=()=>{overlay.classList.remove('open');overlay.setAttribute('aria-hidden','true');button.focus()};
+  button.addEventListener('click',openMap);close.addEventListener('click',closeMap);overlay.addEventListener('click',e=>{if(e.target===overlay)closeMap()});document.addEventListener('keydown',e=>{if(e.key==='Escape'&&overlay.classList.contains('open'))closeMap()});
 })();
 </script>
 </body>
