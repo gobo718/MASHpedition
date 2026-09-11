@@ -292,15 +292,24 @@
     return 'wall';
   }
 
-  const mainExhibitThemes=[
-    'Celebration','Playful','Adorable','UglyCute','Disgusting','CreepyCute',
-    'Funny','Goofy','Whimsical','Psychedelic','Weird','Absurd','Dreamy','Nostalgia',
-    'Tragic','Angry','Intense','Scary','Epic','Beautiful','Cozy','Joy'
+  const exhibitRoomThemes=[
+    [
+      'Celebration','Playful','Adorable','UglyCute','Disgusting','CreepyCute',
+      'Funny','Goofy','Whimsical','Psychedelic','Weird','Absurd','Dreamy','Nostalgia',
+      'Tragic','Angry','Intense','Scary','Epic','Beautiful','Cozy','Joy'
+    ],
+    [
+      'Mundane','Poignant','Satisfying','Romance','Festive','Halloween','Eerie','Magical',
+      'Spirituality','Ethereal','Strange','Hilarious','Grossout','Chaotic','Overstimulated',
+      'Cringe','Bougie','Camp','Sassy','Badass','Glory','Bittersweet'
+    ]
   ];
 
   function exhibitArtLabel(artNumber){
     const number=Number(artNumber);
-    const theme=mainExhibitThemes[number-1];
+    const page=Math.floor((number-1)/PAGE_SIZE);
+    const localNumber=((number-1)%PAGE_SIZE)+1;
+    const theme=exhibitRoomThemes[page]?.[localNumber-1];
     return theme ? `${String(number).padStart(2,'0')} - ${theme}` : `Art ${number}`;
   }
 
