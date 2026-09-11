@@ -97,7 +97,7 @@
     fyc:{mix:'A',label:'FOR YOUR CONSIDERATION',count:66,start:'thumbnail'},
     se:{mix:'A',label:'SALON ECLECTIQUE',count:12,start:'thumbnail'},
     geh:{mix:'B',label:'GRAND EXHIBITION HALL',count:66,start:'exhibit',geh:true},
-    'cat-theme':{mix:'A',label:'CATACOMBS · THEME SEARCH',count:66,start:'thumbnail'},
+    'cat-theme':{mix:'A',label:'CATACOMBS',count:66,start:'thumbnail'},
     'cat-search':{mix:'C',label:'CATACOMBS · SEARCH',count:66,start:'exhibit'}
   };
 
