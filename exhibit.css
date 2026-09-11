@@ -1696,3 +1696,15 @@ button{border-radius:0}
 .exhibit-shell[data-area="zazzly"] .oh-bottom-1,
 .exhibit-shell[data-area="zazzly"] .oh-bottom-2,
 .exhibit-shell[data-area="zazzly"] .oh-bottom-3{top:242px}
+
+/* v91 — Zazzly aerial corrected as a centered, non-overlapping 3/4/3/4 perimeter.
+   Scene center is x=490. Side columns return outside the room footprint;
+   north/south three-button groups are centered exactly on x=490. */
+.exhibit-shell[data-area="zazzly"] .oh-left{left:26px}
+.exhibit-shell[data-area="zazzly"] .oh-right{left:798px}
+.exhibit-shell[data-area="zazzly"] .oh-top-1,
+.exhibit-shell[data-area="zazzly"] .oh-bottom-1{left:198px}
+.exhibit-shell[data-area="zazzly"] .oh-top-2,
+.exhibit-shell[data-area="zazzly"] .oh-bottom-2{left:412px}
+.exhibit-shell[data-area="zazzly"] .oh-top-3,
+.exhibit-shell[data-area="zazzly"] .oh-bottom-3{left:626px}
