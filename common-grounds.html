@@ -68,6 +68,10 @@ main{width:100vw;height:100dvh;display:flex;align-items:center;justify-content:c
 .installation-empty-left{left:0;width:258.499px}
 .installation-empty-right{left:721.501px;width:258.499px}
 .installation-empty-slot{left:418.501px;top:0;width:295px;height:300px}
+/* Straight-on entrance side: one continuous black architectural wall occupying the same
+   visible span as the two front artwork positions plus their inter-art gap. */
+.installation-empty-pair-left{left:58.501px;width:590px}
+.installation-empty-pair-right{left:331.499px;width:590px}
 /* Entrance/open-side states reuse the solved templates and simply omit the missing wall. */
 .installation-scene[data-template="ENTRY_START"] .installation-front-art,
 .installation-scene[data-template="ENTRY_START"] .installation-corner-left,
@@ -77,12 +81,14 @@ main{width:100vw;height:100dvh;display:flex;align-items:center;justify-content:c
 .installation-scene[data-template="ENTRY_END"] .installation-front-art,
 .installation-scene[data-template="ENTRY_END"] .installation-corner-right,
 .installation-scene[data-template="ENTRY_END"] .installation-empty-right{display:flex}
-/* 20 | open entrance wall | angled 1: the entrance is one continuous architectural side, not a black artwork slot. The black field fills from the second wall position through the corner boundary. */
-.installation-scene[data-template="ENTRY_WRAP"] .installation-front-left,
-.installation-scene[data-template="ENTRY_WRAP"] .installation-corner-right,
-.installation-scene[data-template="ENTRY_WRAP"] .installation-side-right,
-.installation-scene[data-template="ENTRY_WRAP"] .installation-empty-slot{display:flex}
-.installation-scene[data-template="ENTRY_WRAP"] .installation-front-left{left:58.501px}
+/* Entrance transition 1: angled 20 | BLACK BLACK. */
+.installation-scene[data-template="ENTRY_20_BLACKBLACK"] .installation-side-left,
+.installation-scene[data-template="ENTRY_20_BLACKBLACK"] .installation-corner-left,
+.installation-scene[data-template="ENTRY_20_BLACKBLACK"] .installation-empty-pair-right{display:flex}
+/* Entrance transition 2: BLACK BLACK | angled 1. */
+.installation-scene[data-template="ENTRY_BLACKBLACK_1"] .installation-empty-pair-left,
+.installation-scene[data-template="ENTRY_BLACKBLACK_1"] .installation-corner-right,
+.installation-scene[data-template="ENTRY_BLACKBLACK_1"] .installation-side-right{display:flex}
 .installation-controls{position:absolute;left:0;right:0;bottom:0;height:37px;display:grid;grid-template-columns:1fr 1fr 1fr 1fr;border-top:2px solid #26221d}
 .installation-controls button{border:0;border-right:2px solid #26221d;background:#fff;font-weight:900;font-size:12px;letter-spacing:.05em}.installation-controls button:last-child{border-right:0}
 @media(max-width:1000px){.installation-stage{transform:scale(calc((100vw - 12px)/980));transform-origin:center center}}
@@ -128,6 +134,8 @@ main{width:100vw;height:100dvh;display:flex;align-items:center;justify-content:c
       <button class="installation-front-art installation-front-left" id="installationFrontLeft" type="button"><span>1</span></button>
       <button class="installation-front-art installation-front-right" id="installationFrontRight" type="button"><span>2</span></button>
       <div class="installation-empty installation-empty-slot" aria-hidden="true"></div>
+      <div class="installation-empty installation-empty-pair-left" aria-hidden="true"></div>
+      <div class="installation-empty installation-empty-pair-right" aria-hidden="true"></div>
       <div class="installation-corner-line installation-corner-right" aria-hidden="true"></div>
       <div class="installation-empty installation-empty-right" aria-hidden="true"></div>
       <button class="installation-side-art installation-side-right" id="installationSideRight" type="button"><svg viewBox="0 0 193.499 354.338" aria-hidden="true"><polygon class="side-fill" points="0,62.169 193.499,0 193.499,354.338 0,292.169"/></svg><span>3</span></button>
@@ -172,7 +180,7 @@ main{width:100vw;height:100dvh;display:flex;align-items:center;justify-content:c
   const fl=document.getElementById('installationFrontLeft'),fr=document.getElementById('installationFrontRight'),sl=document.getElementById('installationSideLeft'),sr=document.getElementById('installationSideRight'),pos=document.getElementById('installationPosition');
   /* Exact clockwise walk supplied by Billy. There are only two repeating templates:
      A = straight pair + angled next; B = angled previous + straight pair.
-     The three entrance states represent the open eleventh wall. */
+     The three entrance states are: angled 20 | BLACK BLACK; BLACK BLACK | angled 1; BLACK | 1–2. */
   const states=[
     {t:'ENTRY_START',f:[1,2],label:'1–2'},
     {t:'A',f:[1,2],r:3,label:'1–2 · 3 angled'},
@@ -193,8 +201,8 @@ main{width:100vw;height:100dvh;display:flex;align-items:center;justify-content:c
     {t:'B',l:16,f:[17,18],label:'16 angled · 17–18'},
     {t:'A',f:[17,18],r:19,label:'17–18 · 19 angled'},
     {t:'B',l:18,f:[19,20],label:'18 angled · 19–20'},
-    {t:'ENTRY_END',f:[19,20],label:'19–20'},
-    {t:'ENTRY_WRAP',f:[20,null],r:1,label:'20 · entrance · 1 angled'}
+    {t:'ENTRY_20_BLACKBLACK',l:20,label:'20 angled · entrance'},
+    {t:'ENTRY_BLACKBLACK_1',r:1,label:'entrance · 1 angled'}
   ];
   let stateIndex=0;
   const setLabel=(el,value)=>{const span=el.querySelector('span');if(span)span.textContent=value??'';};
