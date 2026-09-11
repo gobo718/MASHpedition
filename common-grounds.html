@@ -72,22 +72,18 @@ main{width:100vw;height:100dvh;display:flex;align-items:center;justify-content:c
    visible span as the two front artwork positions plus their inter-art gap. */
 .installation-empty-pair-left{left:58.501px;width:590px}
 .installation-empty-pair-right{left:331.499px;width:590px}
-/* Entrance/open-side states reuse the solved templates and simply omit the missing wall. */
+/* Entrance/open-side states: black opening itself forms the architectural edge; no corner crease/divider is drawn beside it. */
 .installation-scene[data-template="ENTRY_START"] .installation-front-art,
-.installation-scene[data-template="ENTRY_START"] .installation-corner-left,
 .installation-scene[data-template="ENTRY_START"] .installation-empty-left{display:flex}
 .installation-scene[data-template="ENTRY_START"] .installation-front-left{left:331.499px}
 .installation-scene[data-template="ENTRY_START"] .installation-front-right{left:691.499px}
 .installation-scene[data-template="ENTRY_END"] .installation-front-art,
-.installation-scene[data-template="ENTRY_END"] .installation-corner-right,
 .installation-scene[data-template="ENTRY_END"] .installation-empty-right{display:flex}
 /* Entrance transition 1: angled 20 | BLACK BLACK. */
 .installation-scene[data-template="ENTRY_20_BLACKBLACK"] .installation-side-left,
-.installation-scene[data-template="ENTRY_20_BLACKBLACK"] .installation-corner-left,
 .installation-scene[data-template="ENTRY_20_BLACKBLACK"] .installation-empty-pair-right{display:flex}
 /* Entrance transition 2: BLACK BLACK | angled 1. */
 .installation-scene[data-template="ENTRY_BLACKBLACK_1"] .installation-empty-pair-left,
-.installation-scene[data-template="ENTRY_BLACKBLACK_1"] .installation-corner-right,
 .installation-scene[data-template="ENTRY_BLACKBLACK_1"] .installation-side-right{display:flex}
 .installation-controls{position:absolute;left:0;right:0;bottom:0;height:37px;display:grid;grid-template-columns:1fr 1fr 1fr 1fr;border-top:2px solid #26221d}
 .installation-controls button{border:0;border-right:2px solid #26221d;background:#fff;font-weight:900;font-size:12px;letter-spacing:.05em}.installation-controls button:last-child{border-right:0}
