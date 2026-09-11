@@ -35,23 +35,39 @@ main{width:100vw;height:100dvh;display:flex;align-items:center;justify-content:c
 .installation-view.open{display:flex}
 .installation-stage{position:relative;width:980px;height:337px;background:#f4f0e8;overflow:hidden;flex:none}
 .installation-scene{position:absolute;left:0;top:0;width:980px;height:300px;overflow:hidden;background:#f4f0e8}
-.installation-position{position:absolute;left:50%;top:8px;transform:translateX(-50%);font-size:12px;font-weight:900;letter-spacing:.08em;z-index:6}
-.installation-front-art{position:absolute;box-sizing:border-box;width:230px;height:230px;top:35px;margin:0;padding:0;border:5px solid #26221d;background:#fff;color:#201d19;font-weight:900;font-size:18px;letter-spacing:.05em;display:flex;align-items:center;justify-content:center;overflow:hidden}
-/* Reuse the approved Exhibit corner positions instead of inventing new blank spacing. */
-.installation-front-left{left:375px}.installation-front-right{left:736.8181818px}
-.installation-corner-line{position:absolute;left:235.1818182px;top:0;width:8px;height:300px;background:#26221d;z-index:5}
-/* Hendecagon side-art recipe: 0.8413 x 230 = 193.499px apparent span.
-   Far edge = 230px; near edge = 1.5406 x 230 = 354.338px.
-   Draw the frame as its own polygon so ALL FOUR black edges survive perspective. */
-.installation-side-art{position:absolute;left:41.6828182px;top:-27.169px;width:193.499px;height:354.338px;border:0;margin:0;padding:0;background:#26221d;color:#201d19;font-weight:900;font-size:18px;letter-spacing:.05em;clip-path:polygon(0 0,100% 17.55%,100% 82.45%,0 100%);overflow:hidden;z-index:4}
-.installation-side-art::before{content:"";position:absolute;inset:5px;background:#fff;clip-path:polygon(0 0,100% 17.55%,100% 82.45%,0 100%);z-index:-1}
-.installation-side-art span{position:relative;z-index:2;display:flex;width:100%;height:100%;align-items:center;justify-content:center}
-/* Clockwise is the canonical construction. Counterclockwise is its exact mirror. */
-.installation-scene[data-side="right"]{transform:scaleX(-1)}
-.installation-scene[data-side="right"] .installation-front-art span,
-.installation-scene[data-side="right"] .installation-side-art span,
-.installation-scene[data-side="right"] .installation-position{transform:scaleX(-1)}
-.installation-scene[data-side="right"] .installation-position{left:auto;right:50%}
+.installation-position{position:absolute;left:50%;top:8px;transform:translateX(-50%);font-size:12px;font-weight:900;letter-spacing:.08em;z-index:9}
+/* v70: two alternating architectural templates. Geometry is shared; only which wall owns the angled art changes. */
+.installation-front-art{position:absolute;box-sizing:border-box;width:180px;height:180px;top:60px;margin:0;padding:0;border:5px solid #26221d;background:#fff;color:#201d19;font-weight:900;font-size:18px;letter-spacing:.05em;display:none;align-items:center;justify-content:center;overflow:hidden;z-index:4}
+.installation-front-left{left:290px}.installation-front-right{left:506px}
+.installation-corner-line{position:absolute;top:0;width:8px;height:300px;background:#26221d;z-index:6;display:none}
+.installation-corner-left{left:246px}.installation-corner-right{left:730px}
+/* S=180. Projected side span=.8413S=151.434. Far edge=S. Near edge=1.5406S=277.308.
+   Outer quadrilateral is drawn with SVG so all four frame edges are explicit, rather than faked with inset clip-path. */
+.installation-side-art{position:absolute;top:11.346px;width:151.434px;height:277.308px;border:0;margin:0;padding:0;background:transparent;color:#201d19;font-weight:900;font-size:18px;letter-spacing:.05em;display:none;z-index:4}
+.installation-side-left{left:58.566px}.installation-side-right{left:770px}
+.installation-side-art svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.installation-side-art .side-fill{fill:#fff;stroke:#26221d;stroke-width:5;vector-effect:non-scaling-stroke;stroke-linejoin:miter}
+.installation-side-art span{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:2}
+/* Left side is an explicit mirrored quadrilateral, not a transform of the whole room. */
+.installation-side-left svg{transform:scaleX(-1)}
+/* Template A: straight pair, then the next wall enters on the right. */
+.installation-scene[data-template="A"] .installation-front-art,
+.installation-scene[data-template="A"] .installation-corner-right,
+.installation-scene[data-template="A"] .installation-side-right{display:flex}
+/* Template B: previous wall remains on the left, then the new straight pair. */
+.installation-scene[data-template="B"] .installation-front-art,
+.installation-scene[data-template="B"] .installation-corner-left,
+.installation-scene[data-template="B"] .installation-side-left{display:flex}
+/* Entrance states use the same coordinates; blank means the open eleventh side, not padding. */
+.installation-scene[data-template="ENTRY_START"] .installation-front-art,
+.installation-scene[data-template="ENTRY_START"] .installation-corner-left{display:flex}
+.installation-scene[data-template="ENTRY_END"] .installation-front-art,
+.installation-scene[data-template="ENTRY_END"] .installation-corner-right{display:flex}
+.installation-scene[data-template="ENTRY_WRAP"] .installation-front-right,
+.installation-scene[data-template="ENTRY_WRAP"] .installation-corner-left,
+.installation-scene[data-template="ENTRY_WRAP"] .installation-corner-right,
+.installation-scene[data-template="ENTRY_WRAP"] .installation-side-right{display:flex}
+.installation-scene[data-template="ENTRY_WRAP"] .installation-front-right{left:290px}
 .installation-controls{position:absolute;left:0;right:0;bottom:0;height:37px;display:grid;grid-template-columns:1fr 1fr 1fr 1fr;border-top:2px solid #26221d}
 .installation-controls button{border:0;border-right:2px solid #26221d;background:#fff;font-weight:900;font-size:12px;letter-spacing:.05em}.installation-controls button:last-child{border-right:0}
 @media(max-width:1000px){.installation-stage{transform:scale(calc((100vw - 12px)/980));transform-origin:center center}}
@@ -89,12 +105,14 @@ main{width:100vw;height:100dvh;display:flex;align-items:center;justify-content:c
 </div>
 <div id="installationView" class="installation-view" aria-hidden="true">
   <section class="installation-stage" aria-label="Installation player view">
-    <div id="installationScene" class="installation-scene" data-side="right">
+    <div id="installationScene" class="installation-scene" data-template="ENTRY_START">
       <div class="installation-position" id="installationPosition">1–2</div>
+      <button class="installation-side-art installation-side-left" id="installationSideLeft" type="button"><svg viewBox="0 0 151.434 277.308" aria-hidden="true"><polygon class="side-fill" points="0,48.654 151.434,0 151.434,277.308 0,228.654"/></svg><span>2</span></button>
+      <div class="installation-corner-line installation-corner-left" aria-hidden="true"></div>
       <button class="installation-front-art installation-front-left" id="installationFrontLeft" type="button"><span>1</span></button>
       <button class="installation-front-art installation-front-right" id="installationFrontRight" type="button"><span>2</span></button>
-      <div class="installation-corner-line" aria-hidden="true"></div>
-      <button class="installation-side-art" id="installationSideArt" type="button"><span>3</span></button>
+      <div class="installation-corner-line installation-corner-right" aria-hidden="true"></div>
+      <button class="installation-side-art installation-side-right" id="installationSideRight" type="button"><svg viewBox="0 0 151.434 277.308" aria-hidden="true"><polygon class="side-fill" points="0,48.654 151.434,0 151.434,277.308 0,228.654"/></svg><span>3</span></button>
     </div>
     <nav class="installation-controls" aria-label="Installation navigation">
       <button id="installationLeft" type="button">LEFT</button>
@@ -133,22 +151,50 @@ main{width:100vw;height:100dvh;display:flex;align-items:center;justify-content:c
   const closeMap=()=>{overlay.classList.remove('open');overlay.setAttribute('aria-hidden','true');button.focus()};
   button.addEventListener('click',openMap);close.addEventListener('click',closeMap);overlay.addEventListener('click',e=>{if(e.target===overlay)closeMap()});
   const iv=document.getElementById('installationView'),scene=document.getElementById('installationScene');
-  const fl=document.getElementById('installationFrontLeft'),fr=document.getElementById('installationFrontRight'),sa=document.getElementById('installationSideArt'),pos=document.getElementById('installationPosition');
-  let cursor=1,lastDir=1;
-  const wrapArt=v=>((v-1+20)%20)+1;
-  const setLabel=(el,value)=>{const span=el.querySelector('span'); if(span) span.textContent=value; else el.textContent=value;};
+  const fl=document.getElementById('installationFrontLeft'),fr=document.getElementById('installationFrontRight'),sl=document.getElementById('installationSideLeft'),sr=document.getElementById('installationSideRight'),pos=document.getElementById('installationPosition');
+  /* Exact clockwise walk supplied by Billy. There are only two repeating templates:
+     A = straight pair + angled next; B = angled previous + straight pair.
+     The three entrance states represent the open eleventh wall. */
+  const states=[
+    {t:'ENTRY_START',f:[1,2],label:'1–2'},
+    {t:'A',f:[1,2],r:3,label:'1–2 · 3 angled'},
+    {t:'B',l:2,f:[3,4],label:'2 angled · 3–4'},
+    {t:'A',f:[3,4],r:5,label:'3–4 · 5 angled'},
+    {t:'B',l:4,f:[5,6],label:'4 angled · 5–6'},
+    {t:'A',f:[5,6],r:7,label:'5–6 · 7 angled'},
+    {t:'B',l:6,f:[7,8],label:'6 angled · 7–8'},
+    {t:'A',f:[7,8],r:9,label:'7–8 · 9 angled'},
+    {t:'B',l:8,f:[9,10],label:'8 angled · 9–10'},
+    {t:'A',f:[9,10],r:11,label:'9–10 · 11 angled'},
+    {t:'B',l:10,f:[11,12],label:'10 angled · 11–12'},
+    {t:'A',f:[11,12],r:13,label:'11–12 · 13 angled'},
+    {t:'B',l:12,f:[13,14],label:'12 angled · 13–14'},
+    {t:'A',f:[13,14],r:15,label:'13–14 · 15 angled'},
+    {t:'B',l:14,f:[15,16],label:'14 angled · 15–16'},
+    {t:'A',f:[15,16],r:17,label:'15–16 · 17 angled'},
+    {t:'B',l:16,f:[17,18],label:'16 angled · 17–18'},
+    {t:'A',f:[17,18],r:19,label:'17–18 · 19 angled'},
+    {t:'B',l:18,f:[19,20],label:'18 angled · 19–20'},
+    {t:'ENTRY_END',f:[19,20],label:'19–20'},
+    {t:'ENTRY_WRAP',f:[null,20],r:1,label:'20 · entrance · 1 angled'}
+  ];
+  let stateIndex=0;
+  const setLabel=(el,value)=>{const span=el.querySelector('span');if(span)span.textContent=value??'';};
   function renderInstallation(){
-    const a=wrapArt(cursor),b=wrapArt(cursor+1);
-    scene.dataset.side=lastDir>0?'right':'left';
-    setLabel(fl,a); setLabel(fr,b);
-    setLabel(sa,lastDir>0?wrapArt(cursor+2):wrapArt(cursor-1));
-    pos.textContent=`${a}–${b}`;
+    const st=states[stateIndex];
+    scene.dataset.template=st.t;
+    setLabel(fl,st.f?.[0]); setLabel(fr,st.f?.[1]); setLabel(sl,st.l); setLabel(sr,st.r);
+    pos.textContent=st.label;
   }
-  function openInstallation(art=1){cursor=wrapArt(art);lastDir=1;renderInstallation();overlay.classList.remove('open');overlay.setAttribute('aria-hidden','true');iv.classList.add('open');iv.setAttribute('aria-hidden','false');}
+  function stateForArt(art){
+    // Map click enters the first state in which that artwork is straight/front-facing.
+    const i=states.findIndex(st=>st.f&&st.f.includes(art)); return i<0?0:i;
+  }
+  function openInstallation(art=1){stateIndex=stateForArt(art);renderInstallation();overlay.classList.remove('open');overlay.setAttribute('aria-hidden','true');iv.classList.add('open');iv.setAttribute('aria-hidden','false');}
   function closeInstallation(){iv.classList.remove('open');iv.setAttribute('aria-hidden','true');}
   document.getElementById('largeHendecagon').addEventListener('click',e=>{const art=Number(e.target.dataset.art);if(art)openInstallation(art)});
-  document.getElementById('installationLeft').addEventListener('click',()=>{lastDir=-1;cursor=wrapArt(cursor-1);renderInstallation()});
-  document.getElementById('installationRight').addEventListener('click',()=>{lastDir=1;cursor=wrapArt(cursor+1);renderInstallation()});
+  document.getElementById('installationLeft').addEventListener('click',()=>{stateIndex=(stateIndex-1+states.length)%states.length;renderInstallation()});
+  document.getElementById('installationRight').addEventListener('click',()=>{stateIndex=(stateIndex+1)%states.length;renderInstallation()});
   document.getElementById('installationMapBack').addEventListener('click',()=>{closeInstallation();openMap()});
   document.getElementById('installationExit').addEventListener('click',closeInstallation);
   document.addEventListener('keydown',e=>{if(e.key==='Escape'){if(iv.classList.contains('open'))closeInstallation();else if(overlay.classList.contains('open'))closeMap()}if(iv.classList.contains('open')&&e.key==='ArrowLeft')document.getElementById('installationLeft').click();if(iv.classList.contains('open')&&e.key==='ArrowRight')document.getElementById('installationRight').click();});

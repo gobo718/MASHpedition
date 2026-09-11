@@ -488,3 +488,10 @@ v46 (2026-09-10): Entrance emoji-only refinement. Raised emoji pair 8px while pr
 
 
 v68 Installation repair: one-artwork stepping, fixed clockwise/counterclockwise mirrored perception, restored approved Exhibit corner spacing, full four-edge perspective frames, and LEFT/RIGHT grouped at bottom-left.
+
+
+## v69 Installation geometry QA
+- Re-derived Installation perspective from one base size and one gap unit.
+- Complete side frame mathematically fits inside 300px scene.
+- Clockwise/counterclockwise are exact mirrored constructions.
+- Navigation advances one artwork index per click.
