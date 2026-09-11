@@ -36,38 +36,43 @@ main{width:100vw;height:100dvh;display:flex;align-items:center;justify-content:c
 .installation-stage{position:relative;width:980px;height:337px;background:#f4f0e8;overflow:hidden;flex:none}
 .installation-scene{position:absolute;left:0;top:0;width:980px;height:300px;overflow:hidden;background:#f4f0e8}
 .installation-position{position:absolute;left:50%;top:8px;transform:translateX(-50%);font-size:12px;font-weight:900;letter-spacing:.08em;z-index:9}
-/* v70: two alternating architectural templates. Geometry is shared; only which wall owns the angled art changes. */
-.installation-front-art{position:absolute;box-sizing:border-box;width:180px;height:180px;top:60px;margin:0;padding:0;border:5px solid #26221d;background:#fff;color:#201d19;font-weight:900;font-size:18px;letter-spacing:.05em;display:none;align-items:center;justify-content:center;overflow:hidden;z-index:4}
-.installation-front-left{left:290px}.installation-front-right{left:506px}
+/* v71: ratio-solved Installation geometry.
+   Base unit U=65px, front art S=230px. The visible layout is solved as relationships,
+   not independent coordinates: outer=58.501, front gap=2U=130, front->corner=U,
+   corner=8, corner->angled=U. Angled projection is .8413S=193.499px.
+   58.501 + 230 + 130 + 230 + 65 + 8 + 65 + 193.499 = 980 exactly.
+   The opposite template is the exact horizontal mirror. The angled near edge is
+   1.5406S=354.338px and is intentionally clipped vertically by the 300px viewport. */
+.installation-front-art{position:absolute;box-sizing:border-box;width:230px;height:230px;top:35px;margin:0;padding:0;border:5px solid #26221d;background:#fff;color:#201d19;font-weight:900;font-size:18px;letter-spacing:.05em;display:none;align-items:center;justify-content:center;overflow:hidden;z-index:4}
+.installation-front-left{left:58.501px}.installation-front-right{left:418.501px}
 .installation-corner-line{position:absolute;top:0;width:8px;height:300px;background:#26221d;z-index:6;display:none}
-.installation-corner-left{left:246px}.installation-corner-right{left:730px}
-/* S=180. Projected side span=.8413S=151.434. Far edge=S. Near edge=1.5406S=277.308.
-   Outer quadrilateral is drawn with SVG so all four frame edges are explicit, rather than faked with inset clip-path. */
-.installation-side-art{position:absolute;top:11.346px;width:151.434px;height:277.308px;border:0;margin:0;padding:0;background:transparent;color:#201d19;font-weight:900;font-size:18px;letter-spacing:.05em;display:none;z-index:4}
-.installation-side-left{left:58.566px}.installation-side-right{left:770px}
+.installation-corner-left{left:258.499px}.installation-corner-right{left:713.501px}
+.installation-side-art{position:absolute;top:-27.169px;width:193.499px;height:354.338px;border:0;margin:0;padding:0;background:transparent;color:#201d19;font-weight:900;font-size:18px;letter-spacing:.05em;display:none;z-index:4}
+.installation-side-left{left:0}.installation-side-right{left:786.501px}
 .installation-side-art svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
 .installation-side-art .side-fill{fill:#fff;stroke:#26221d;stroke-width:5;vector-effect:non-scaling-stroke;stroke-linejoin:miter}
 .installation-side-art span{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:2}
-/* Left side is an explicit mirrored quadrilateral, not a transform of the whole room. */
 .installation-side-left svg{transform:scaleX(-1)}
-/* Template A: straight pair, then the next wall enters on the right. */
+/* A: straight pair | corner | angled next. */
 .installation-scene[data-template="A"] .installation-front-art,
 .installation-scene[data-template="A"] .installation-corner-right,
 .installation-scene[data-template="A"] .installation-side-right{display:flex}
-/* Template B: previous wall remains on the left, then the new straight pair. */
+/* B: angled previous | corner | straight pair. Exact mirror of A. */
 .installation-scene[data-template="B"] .installation-front-art,
 .installation-scene[data-template="B"] .installation-corner-left,
 .installation-scene[data-template="B"] .installation-side-left{display:flex}
-/* Entrance states use the same coordinates; blank means the open eleventh side, not padding. */
+/* Entrance/open-side states reuse the solved templates and simply omit the missing wall. */
 .installation-scene[data-template="ENTRY_START"] .installation-front-art,
 .installation-scene[data-template="ENTRY_START"] .installation-corner-left{display:flex}
+.installation-scene[data-template="ENTRY_START"] .installation-front-left{left:331.499px}
+.installation-scene[data-template="ENTRY_START"] .installation-front-right{left:691.499px}
 .installation-scene[data-template="ENTRY_END"] .installation-front-art,
 .installation-scene[data-template="ENTRY_END"] .installation-corner-right{display:flex}
-.installation-scene[data-template="ENTRY_WRAP"] .installation-front-right,
-.installation-scene[data-template="ENTRY_WRAP"] .installation-corner-left,
+/* 20 | open entrance | angled 1: Art20 uses the last straight-wall slot; Art1 enters on the far wall. */
+.installation-scene[data-template="ENTRY_WRAP"] .installation-front-left,
 .installation-scene[data-template="ENTRY_WRAP"] .installation-corner-right,
 .installation-scene[data-template="ENTRY_WRAP"] .installation-side-right{display:flex}
-.installation-scene[data-template="ENTRY_WRAP"] .installation-front-right{left:290px}
+.installation-scene[data-template="ENTRY_WRAP"] .installation-front-left{left:58.501px}
 .installation-controls{position:absolute;left:0;right:0;bottom:0;height:37px;display:grid;grid-template-columns:1fr 1fr 1fr 1fr;border-top:2px solid #26221d}
 .installation-controls button{border:0;border-right:2px solid #26221d;background:#fff;font-weight:900;font-size:12px;letter-spacing:.05em}.installation-controls button:last-child{border-right:0}
 @media(max-width:1000px){.installation-stage{transform:scale(calc((100vw - 12px)/980));transform-origin:center center}}
@@ -107,12 +112,12 @@ main{width:100vw;height:100dvh;display:flex;align-items:center;justify-content:c
   <section class="installation-stage" aria-label="Installation player view">
     <div id="installationScene" class="installation-scene" data-template="ENTRY_START">
       <div class="installation-position" id="installationPosition">1–2</div>
-      <button class="installation-side-art installation-side-left" id="installationSideLeft" type="button"><svg viewBox="0 0 151.434 277.308" aria-hidden="true"><polygon class="side-fill" points="0,48.654 151.434,0 151.434,277.308 0,228.654"/></svg><span>2</span></button>
+      <button class="installation-side-art installation-side-left" id="installationSideLeft" type="button"><svg viewBox="0 0 193.499 354.338" aria-hidden="true"><polygon class="side-fill" points="0,62.169 193.499,0 193.499,354.338 0,292.169"/></svg><span>2</span></button>
       <div class="installation-corner-line installation-corner-left" aria-hidden="true"></div>
       <button class="installation-front-art installation-front-left" id="installationFrontLeft" type="button"><span>1</span></button>
       <button class="installation-front-art installation-front-right" id="installationFrontRight" type="button"><span>2</span></button>
       <div class="installation-corner-line installation-corner-right" aria-hidden="true"></div>
-      <button class="installation-side-art installation-side-right" id="installationSideRight" type="button"><svg viewBox="0 0 151.434 277.308" aria-hidden="true"><polygon class="side-fill" points="0,48.654 151.434,0 151.434,277.308 0,228.654"/></svg><span>3</span></button>
+      <button class="installation-side-art installation-side-right" id="installationSideRight" type="button"><svg viewBox="0 0 193.499 354.338" aria-hidden="true"><polygon class="side-fill" points="0,62.169 193.499,0 193.499,354.338 0,292.169"/></svg><span>3</span></button>
     </div>
     <nav class="installation-controls" aria-label="Installation navigation">
       <button id="installationLeft" type="button">LEFT</button>
@@ -176,7 +181,7 @@ main{width:100vw;height:100dvh;display:flex;align-items:center;justify-content:c
     {t:'A',f:[17,18],r:19,label:'17–18 · 19 angled'},
     {t:'B',l:18,f:[19,20],label:'18 angled · 19–20'},
     {t:'ENTRY_END',f:[19,20],label:'19–20'},
-    {t:'ENTRY_WRAP',f:[null,20],r:1,label:'20 · entrance · 1 angled'}
+    {t:'ENTRY_WRAP',f:[20,null],r:1,label:'20 · entrance · 1 angled'}
   ];
   let stateIndex=0;
   const setLabel=(el,value)=>{const span=el.querySelector('span');if(span)span.textContent=value??'';};
