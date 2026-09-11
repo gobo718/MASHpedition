@@ -33,6 +33,8 @@
   const pagePrevBtn=document.getElementById('pagePrevBtn');
   const pageNextBtn=document.getElementById('pageNextBtn');
   const pageStatus=document.getElementById('pageStatus');
+  const catSearchHas=document.getElementById('catSearchHas');
+  const catSearchHasRadios=[...document.querySelectorAll('input[name=\"catSearchHas\"]')];
   const endlessSlots=[
     document.getElementById('endlessLeftArt'),
     document.getElementById('endlessCenterArt'),
@@ -100,6 +102,8 @@
   };
 
   const requestedArea=(params.get('area')||'').toLowerCase();
+  const catacombsMode=requestedArea==='cat-theme' || requestedArea==='cat-search';
+  let catSearchHasTheme=requestedArea!=='cat-search';
   const areaPreset=AREA_PRESETS[requestedArea]||null;
   const requestedMix=(params.get('mix') || areaPreset?.mix || 'B').toUpperCase();
   const mix=['A','B','C'].includes(requestedMix)?requestedMix:'B';
@@ -205,15 +209,18 @@
   }
   updatePresentationIdentity();
 
-  const capabilities={
-    A:{exhibit:false,room:false,thumbnail:true,endless:true},
-    B:{exhibit:true, room:true, thumbnail:true,endless:false},
-    C:{exhibit:true, room:true, thumbnail:true,endless:true}
-  }[mix];
+  const capabilities=catacombsMode
+    ? {exhibit:true,room:true,thumbnail:true,endless:true}
+    : ({
+        A:{exhibit:false,room:false,thumbnail:true,endless:true},
+        B:{exhibit:true, room:true, thumbnail:true,endless:false},
+        C:{exhibit:true, room:true, thumbnail:true,endless:true}
+      }[mix]);
 
   shell.dataset.mix=mix;
   shell.dataset.area=requestedArea||'sample';
   shell.classList.toggle('geh-mode',gehMode);
+  shell.classList.toggle('catacombs-mode',catacombsMode);
 
   // 24 fixed physical positions around the approved room:
   // 22 artwork positions + two fixed doors.
@@ -337,8 +344,26 @@
     capabilityButtons.forEach(([button,key])=>{
       button.hidden=!capabilities[key];
     });
+    if(catacombsMode){
+      // THEME search: THUMBNAILS + ENDLESS. NO THEME: AERIAL + EXHIBIT + THUMBNAILS.
+      overheadBtn.disabled=catSearchHasTheme;
+      roomBtn.disabled=catSearchHasTheme;
+      endlessBtn.disabled=!catSearchHasTheme;
+      thumbnailBtn.disabled=false;
+      catSearchHas.hidden=false;
+      catSearchHasRadios.forEach(radio=>{ radio.checked=(radio.value===(catSearchHasTheme?'theme':'no-theme')); });
+    }
     const visible=[...exhibitControls.querySelectorAll('button')].filter(button=>!button.hidden).length;
     exhibitControls.style.setProperty('--control-count',String(visible));
+  }
+
+  function setCatSearchHas(value){
+    if(!catacombsMode) return;
+    catSearchHasTheme=value==='theme';
+    applyCapabilities();
+    const view=shell.dataset.view;
+    if(catSearchHasTheme && ['overhead','left','wall','right'].includes(view)) renderThumbnailPage();
+    else if(!catSearchHasTheme && view==='endless') renderThumbnailPage();
   }
 
   function updateRankButtons(){
@@ -422,6 +447,7 @@
   }
 
   function renderOverhead(){
+    if(catacombsMode && catSearchHasTheme) return;
     if(!capabilities.exhibit){
       renderThumbnailPage();
       return;
@@ -435,6 +461,7 @@
   }
 
   function renderRoom(start=lastRoomStart){
+    if(catacombsMode && catSearchHasTheme) return;
     if(!capabilities.room){
       renderThumbnailPage();
       return;
@@ -596,6 +623,7 @@
   // which logical result batch is considered loaded. Crossing a page boundary
   // swaps the batch; the entire result set is never placed in the DOM.
   function renderEndless(){
+    if(catacombsMode && !catSearchHasTheme) return;
     if(!capabilities.endless){
       renderThumbnailPage();
       return;
@@ -1089,6 +1117,8 @@
   pagePrevBtn?.addEventListener('click',()=>changePage(-1));
   pageNextBtn?.addEventListener('click',()=>changePage(1));
 
+  catSearchHasRadios.forEach(radio=>radio.addEventListener('change',()=>{ if(radio.checked) setCatSearchHas(radio.value); }));
+
   leftBtn.addEventListener('click',handleLeft);
   rightBtn.addEventListener('click',handleRight);
   overheadBtn.addEventListener('click',renderOverhead);
@@ -1127,9 +1157,9 @@
   });
 
   const requestedStart=(params.get('start')||defaultStart).toLowerCase();
-  if(requestedStart==='exhibit' && capabilities.exhibit) renderOverhead();
-  else if(requestedStart==='room' && capabilities.room) renderRoom(1);
+  if(requestedStart==='exhibit' && capabilities.exhibit && !(catacombsMode && catSearchHasTheme)) renderOverhead();
+  else if(requestedStart==='room' && capabilities.room && !(catacombsMode && catSearchHasTheme)) renderRoom(1);
   else if(requestedStart==='thumbnail' && capabilities.thumbnail) renderThumbnailPage();
-  else if(requestedStart==='endless' && capabilities.endless) renderEndless();
+  else if(requestedStart==='endless' && capabilities.endless && !(catacombsMode && !catSearchHasTheme)) renderEndless();
   else setView('door');
 })();

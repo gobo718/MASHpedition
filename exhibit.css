@@ -1607,3 +1607,33 @@ button{border-radius:0}
   top:108.16px;
   height:191.84px;
 }
+
+/* v81 — Catacombs SEARCH HAS placement.
+   Uses the established 980×300 / 37px viewer geometry and the same 1.5% edge
+   anchors as PAGE PREV/NEXT. No room/art geometry is changed. */
+.cat-search-has{display:none;margin:0;padding:0;border:0;color:var(--ink);font-size:clamp(9px,.9vw,13px);font-weight:800;z-index:14;line-height:1.05}
+.cat-search-has legend{padding:0;font:inherit;white-space:nowrap}
+.cat-search-has label{display:flex;align-items:center;gap:4px;white-space:nowrap;font:inherit}
+.cat-search-has input{margin:0;width:14px;height:14px;accent-color:var(--ink)}
+.exhibit-shell.catacombs-mode[data-view="thumbnail"] .cat-search-has,
+.exhibit-shell.catacombs-mode[data-view="endless"] .cat-search-has,
+.exhibit-shell.catacombs-mode[data-view="left"] .cat-search-has,
+.exhibit-shell.catacombs-mode[data-view="wall"] .cat-search-has,
+.exhibit-shell.catacombs-mode[data-view="right"] .cat-search-has,
+.exhibit-shell.catacombs-mode[data-view="overhead"] .cat-search-has{display:flex;position:absolute}
+/* THUMBNAILS: mirrored against the PAGE PREV/NEXT lower-left anchor.
+   Three rows live in the otherwise-empty lower-right edge, outside the brick stack. */
+.exhibit-shell.catacombs-mode[data-view="thumbnail"] .cat-search-has{right:1.5%;bottom:12%;flex-direction:column;align-items:flex-start;gap:3px}
+/* ENDLESS: one straight line at the same vertical anchor as PAGE PREV/NEXT. */
+.exhibit-shell.catacombs-mode[data-view="endless"] .cat-search-has{right:1.5%;bottom:12%;flex-direction:row;align-items:center;gap:8px}
+.exhibit-shell.catacombs-mode[data-view="endless"] .cat-search-has legend{margin:0}
+/* EXHIBIT/corner/wall: one row centered beneath the artwork, above the 37px controls. */
+.exhibit-shell.catacombs-mode[data-view="left"] .cat-search-has,
+.exhibit-shell.catacombs-mode[data-view="wall"] .cat-search-has,
+.exhibit-shell.catacombs-mode[data-view="right"] .cat-search-has{left:50%;bottom:12%;transform:translateX(-50%);flex-direction:row;align-items:center;gap:8px}
+/* AERIAL: append visually to the centered identity line. Compact sizing keeps the
+   combined identity + selector inside the map's clear center band. */
+.exhibit-shell.catacombs-mode[data-view="overhead"] .aerial-center-unit{flex-direction:row;gap:10px}
+.exhibit-shell.catacombs-mode[data-view="overhead"] .cat-search-has{left:calc(50% + 128px);top:50%;transform:translateY(-50%);flex-direction:row;align-items:center;gap:4px;font-size:9px}
+.exhibit-shell.catacombs-mode[data-view="overhead"] .cat-search-has input{width:10px;height:10px}
+.exhibit-controls button:disabled{opacity:.35;cursor:default}

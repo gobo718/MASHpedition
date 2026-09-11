@@ -508,3 +508,12 @@ v68 Installation repair: one-artwork stepping, fixed clockwise/counterclockwise 
 - Corrected the Installation entrance wrap state: the entrance is one continuous black architectural side, not a 230px black artwork square.
 - Black now fills the full 300px scene height from x=418.501px through the corner at x=713.501px in the `20 · entrance · 1 angled` state.
 - Preserves v73 swipe navigation.
+
+
+## v81 — Catacombs SEARCH HAS placement repair
+- Explicitly positions SEARCH HAS controls against established viewer anchors.
+- Exhibit selector moved above bottom controls to prevent overlap.
+- Thumbnail selector mirrors PAGE PREV/NEXT in the lower-right blank edge.
+- Endless selector uses the same lower baseline as page navigation.
+- Aerial selector is compact and aligned to the center identity line.
+- No approved room/art geometry changed.
