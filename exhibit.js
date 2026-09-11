@@ -309,6 +309,11 @@
       'Mundane','Poignant','Satisfying','Romance','Festive','Halloween','Eerie','Magical',
       'Spirituality','Ethereal','Strange','Hilarious','Grossout','Chaotic','Overstimulated',
       'Cringe','Bougie','Camp','Sassy','Badass','Glory','Bittersweet'
+    ],
+    [
+      'Excess','PartyTime','Freakshow','Medicated','Scandalarious','Schadenfreude','Mockery',
+      'Grotesque','Collapse','Corrupted','Cursed','Aggressive','Outrage','Monstrous','Horror',
+      'Nightmarish','Phantasmagoric','Foreboding','Vulnerable','Paranoia','Despair','Shame'
     ]
   ];
 
