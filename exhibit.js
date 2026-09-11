@@ -338,8 +338,8 @@
       'Nightmarish','Phantasmagoric','Foreboding','Vulnerable','Paranoia','Despair','Shame'
     ],
     [
-      'Zazzly','Cheeky','Fleshy','Humiliation','Raunchy','Exposure',
-      'FreakyDeaky','Sadomasochism','Seduction','Lewd','Zazzploitation','ZazzlyParty'
+      'Zazzly','ZazzlyParty','Cheeky','Fleshy','Raunchy','Lewd',
+      'Exposure','Zazzploitation','Humiliation','Sadomasochism','FreakyDeaky','Seduction'
     ]
   ];
 
