@@ -1661,3 +1661,38 @@ button{border-radius:0}
 
 /* v88 — unused legacy 24-slot aerial nodes must stay out of the 12-art Zazzly topology. */
 .exhibit-shell[data-area="zazzly"] .overhead-slot[hidden]{display:none !important;}
+
+/* v89 — rebuild Zazzly aerial around the established 980px scene center (x=490).
+   Exact topology: NORTH 6 | DOOR 5 | 7; WEST 5,4,3,2;
+   EAST 8,9,10,11; SOUTH 12 | DOOR 4 | 1. */
+.exhibit-shell[data-area="zazzly"] .overhead-room-floor{
+  transform:none;
+}
+.exhibit-shell[data-area="zazzly"] .oh-left,
+.exhibit-shell[data-area="zazzly"] .oh-right{
+  width:156px;
+}
+.exhibit-shell[data-area="zazzly"] .oh-left{left:220px}
+.exhibit-shell[data-area="zazzly"] .oh-right{left:604px}
+.exhibit-shell[data-area="zazzly"] .oh-left-1,
+.exhibit-shell[data-area="zazzly"] .oh-right-1{top:42px}
+.exhibit-shell[data-area="zazzly"] .oh-left-2,
+.exhibit-shell[data-area="zazzly"] .oh-right-2{top:104px}
+.exhibit-shell[data-area="zazzly"] .oh-left-3,
+.exhibit-shell[data-area="zazzly"] .oh-right-3{top:166px}
+.exhibit-shell[data-area="zazzly"] .oh-left-4,
+.exhibit-shell[data-area="zazzly"] .oh-right-4{top:228px}
+
+/* Three equal positions centered as a group on x=490. */
+.exhibit-shell[data-area="zazzly"] .oh-top-1,
+.exhibit-shell[data-area="zazzly"] .oh-bottom-1{left:240px}
+.exhibit-shell[data-area="zazzly"] .oh-top-2,
+.exhibit-shell[data-area="zazzly"] .oh-bottom-2{left:412px}
+.exhibit-shell[data-area="zazzly"] .oh-top-3,
+.exhibit-shell[data-area="zazzly"] .oh-bottom-3{left:584px}
+.exhibit-shell[data-area="zazzly"] .oh-top-1,
+.exhibit-shell[data-area="zazzly"] .oh-top-2,
+.exhibit-shell[data-area="zazzly"] .oh-top-3{top:18px}
+.exhibit-shell[data-area="zazzly"] .oh-bottom-1,
+.exhibit-shell[data-area="zazzly"] .oh-bottom-2,
+.exhibit-shell[data-area="zazzly"] .oh-bottom-3{top:242px}

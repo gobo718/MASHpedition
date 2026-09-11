@@ -1131,6 +1131,28 @@
   }
 
   function useAerialDoor(doorNumber){
+    doorNumber=Number(doorNumber);
+
+    // Door 4 connects Room 3 and the Zazzly room. Crossing it from Aerial
+    // must stay in Aerial rather than dropping the player into Room/Exhibit view.
+    if(doorNumber===4){
+      if(zazzlyMode){
+        const next=new URLSearchParams(params);
+        const returnArea=next.get('returnArea') || 'geh';
+        next.delete('returnArea');
+        next.set('area',returnArea);
+        next.set('start','exhibit');
+        window.location.href=`exhibit.html?${next.toString()}`;
+      }else{
+        const next=new URLSearchParams(params);
+        if(requestedArea) next.set('returnArea',requestedArea);
+        next.set('area','zazzly');
+        next.set('start','exhibit');
+        window.location.href=`exhibit.html?${next.toString()}`;
+      }
+      return;
+    }
+
     const before=roomPage;
     roomPageAcrossDoor(doorNumber);
     if(shell.dataset.view==='door' || roomPage===before) return;
