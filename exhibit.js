@@ -77,7 +77,7 @@
   ];
 
   const allRoomSlotButtons=[...leftSlots,...rightSlotsVisual,...wallSlots];
-  const overheadSlots=[...document.querySelectorAll('.overhead-slot')];
+  let overheadSlots=[...document.querySelectorAll('.overhead-slot')];
   const rankButtons=[...document.querySelectorAll('.rank-selector [data-rank]')];
 
   // ----------------------------------------------------------------
@@ -96,7 +96,6 @@
     collection:{mix:'B',label:'COLLECTION',count:66,start:'exhibit'},
     fyc:{mix:'A',label:'FOR YOUR CONSIDERATION',count:66,start:'thumbnail'},
     se:{mix:'A',label:'SALON ECLECTIQUE',count:12,start:'thumbnail'},
-    zazzly:{mix:'C',label:'ZAZZLY EXHIBIT',count:12,start:'room'},
     geh:{mix:'B',label:'GRAND EXHIBITION HALL',count:66,start:'exhibit',geh:true},
     'cat-theme':{mix:'A',label:'CATACOMBS',count:66,start:'thumbnail'},
     'cat-search':{mix:'C',label:'CATACOMBS · SEARCH',count:66,start:'exhibit'}
@@ -106,7 +105,71 @@
   const catacombsMode=requestedArea==='cat-theme' || requestedArea==='cat-search';
   const zazzlyMode=requestedArea==='zazzly';
   let catSearchHasTheme=requestedArea!=='cat-search';
-  const areaPreset=AREA_PRESETS[requestedArea]||null;
+
+  // Authoritative Theme content. Presentation code resolves identities from
+  // these definitions instead of maintaining view-specific copies.
+  const THEME_SETS={
+    main:{start:1,items:[
+      'Celebration','Playful','Adorable','UglyCute','Disgusting','CreepyCute',
+      'Funny','Goofy','Whimsical','Psychedelic','Weird','Absurd','Dreamy','Nostalgia',
+      'Tragic','Angry','Intense','Scary','Epic','Beautiful','Cozy','Joy'
+    ]},
+    alternate:{start:23,items:[
+      'Mundane','Poignant','Satisfying','Romance','Festive','Halloween','Eerie','Magical',
+      'Spirituality','Ethereal','Strange','Hilarious','Grossout','Chaotic','Overstimulated',
+      'Cringe','Bougie','Camp','Sassy','Badass','Glory','Bittersweet'
+    ]},
+    mature:{start:45,items:[
+      'Excess','PartyTime','Freakshow','Medicated','Scandalarious','Schadenfreude','Mockery',
+      'Grotesque','Collapse','Corrupted','Cursed','Aggressive','Outrage','Monstrous','Horror',
+      'Nightmarish','Phantasmagoric','Foreboding','Vulnerable','Paranoia','Despair','Shame'
+    ]},
+    zazzly:{start:67,items:[
+      'Zazzly','ZazzlyParty','Cheeky','Fleshy','Raunchy','Lewd',
+      'Exposure','Zazzploitation','Humiliation','Sadomasochism','FreakyDeaky','Seduction'
+    ]}
+  };
+
+  const STANDARD_ROOM_MAP={
+    id:'standard-22',
+    slots:[
+      {kind:'door',number:1},
+      ...Array.from({length:8},(_,i)=>({kind:'art',number:i+1})),
+      {kind:'door',number:2},
+      ...Array.from({length:14},(_,i)=>({kind:'art',number:i+9}))
+    ],
+    cornerAfter:[1,7,13,19]
+  };
+
+  // Zazzly owns a genuine compact map: 12 art positions + Doors 4/5.
+  // Its Aerial coordinates are the approved v91 3/4/3/4 perimeter, expressed
+  // directly as this map's geometry rather than as hidden standard-map nodes.
+  const ZAZZLY_ROOM_MAP={
+    id:'zazzly-12',
+    slots:[
+      {kind:'door',number:4},{kind:'art',number:1},{kind:'art',number:2},
+      {kind:'art',number:3},{kind:'art',number:4},{kind:'art',number:5},
+      {kind:'art',number:6},{kind:'door',number:5,locked:true},{kind:'art',number:7},
+      {kind:'art',number:8},{kind:'art',number:9},{kind:'art',number:10},
+      {kind:'art',number:11},{kind:'art',number:12}
+    ],
+    cornerAfter:[1,5,8,12],
+    overhead:[
+      {roomIndex:5,x:26,y:42},{roomIndex:4,x:26,y:104},{roomIndex:3,x:26,y:166},{roomIndex:2,x:26,y:228},
+      {roomIndex:6,x:198,y:18},{roomIndex:7,x:412,y:18},{roomIndex:8,x:626,y:18},
+      {roomIndex:9,x:798,y:42},{roomIndex:10,x:798,y:104},{roomIndex:11,x:798,y:166},{roomIndex:12,x:798,y:228},
+      {roomIndex:13,x:198,y:242},{roomIndex:0,x:412,y:242},{roomIndex:1,x:626,y:242}
+    ]
+  };
+
+  const ZAZZLY_DEFINITION={
+    key:'zazzly',label:'ZAZZLY EXHIBIT',count:12,start:'room',mix:'C',
+    themeSet:'zazzly',map:ZAZZLY_ROOM_MAP,
+    capabilities:{exhibit:true,room:true,thumbnail:true,endless:true},
+    connections:{4:{area:'standard',room:3},5:{locked:true,label:'LOCKED'}}
+  };
+
+  const areaPreset=zazzlyMode?ZAZZLY_DEFINITION:(AREA_PRESETS[requestedArea]||null);
   const requestedMix=(params.get('mix') || areaPreset?.mix || 'B').toUpperCase();
   const mix=['A','B','C'].includes(requestedMix)?requestedMix:'B';
   const maxUnlockedRank=Math.max(1,Math.min(10,Number(params.get('ranks'))||1));
@@ -212,7 +275,7 @@
   updatePresentationIdentity();
 
   const capabilities=zazzlyMode
-    ? {exhibit:true,room:true,thumbnail:true,endless:true}
+    ? ZAZZLY_DEFINITION.capabilities
     : catacombsMode
     ? {exhibit:true,room:true,thumbnail:true,endless:true}
     : ({
@@ -226,55 +289,42 @@
   shell.classList.toggle('geh-mode',gehMode);
   shell.classList.toggle('catacombs-mode',catacombsMode);
 
-  // Physical room circuit. The Zazzly DLC room deliberately reuses the
-  // approved Exhibit 1 90-degree wall/corner geometry, but with a compact
-  // 12-art / 2-door circuit:
-  // SOUTH 12 | DOOR 4 | 1; WEST 2-5; NORTH 6 | DOOR 5 | 7; EAST 8-11.
-  const roomSlots=zazzlyMode ? [
-    {kind:'door',number:4},
-    {kind:'art',number:1},
-    {kind:'art',number:2},
-    {kind:'art',number:3},
-    {kind:'art',number:4},
-    {kind:'art',number:5},
-    {kind:'art',number:6},
-    {kind:'door',number:5},
-    {kind:'art',number:7},
-    {kind:'art',number:8},
-    {kind:'art',number:9},
-    {kind:'art',number:10},
-    {kind:'art',number:11},
-    {kind:'art',number:12}
-  ] : [
-    {kind:'door',number:1},
-    {kind:'art',number:1},
-    {kind:'art',number:2},
-    {kind:'art',number:3},
-    {kind:'art',number:4},
-    {kind:'art',number:5},
-    {kind:'art',number:6},
-    {kind:'art',number:7},
-    {kind:'art',number:8},
-    {kind:'door',number:2},
-    {kind:'art',number:9},
-    {kind:'art',number:10},
-    {kind:'art',number:11},
-    {kind:'art',number:12},
-    {kind:'art',number:13},
-    {kind:'art',number:14},
-    {kind:'art',number:15},
-    {kind:'art',number:16},
-    {kind:'art',number:17},
-    {kind:'art',number:18},
-    {kind:'art',number:19},
-    {kind:'art',number:20},
-    {kind:'art',number:21},
-    {kind:'art',number:22}
-  ];
+  // Map geometry is selected independently from the content/presentation layer.
+  const activeRoomMap=zazzlyMode?ZAZZLY_DEFINITION.map:STANDARD_ROOM_MAP;
+  const roomSlots=activeRoomMap.slots;
+  const cornerAfter=new Set(activeRoomMap.cornerAfter);
 
-  // Zazzly corners are copied directly from the user's Exhibit-1 geometry
-  // recipe: 1/2, 5/6, 7/8, 11/12 are the four 90-degree transitions.
-  const cornerAfter=new Set(zazzlyMode ? [1,5,8,12] : [1,7,13,19]);
+  // For Zazzly, replace the legacy 24-node standard Aerial DOM with exactly
+  // the 14 physical positions defined by the Zazzly map (12 art + 2 doors).
+  if(zazzlyMode){
+    const canvas=overheadView.querySelector('.overhead-canvas');
+    canvas.querySelectorAll('.overhead-slot').forEach(node=>node.remove());
+    const standardLines=canvas.querySelector('.overhead-room-lines');
+    if(standardLines) standardLines.remove();
+
+    const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');
+    svg.setAttribute('class','overhead-room-lines zazzly-room-lines');
+    svg.setAttribute('viewBox','0 0 980 300');
+    svg.setAttribute('aria-hidden','true');
+    const floor=document.createElementNS('http://www.w3.org/2000/svg','polygon');
+    floor.setAttribute('class','overhead-room-floor');
+    floor.setAttribute('points','240,18 740,18 760,282 220,282');
+    svg.appendChild(floor);
+    canvas.prepend(svg);
+
+    ZAZZLY_DEFINITION.map.overhead.forEach(position=>{
+      const button=document.createElement('button');
+      button.type='button';
+      button.className='overhead-slot zazzly-overhead-slot';
+      button.dataset.roomIndex=String(position.roomIndex);
+      button.style.left=`${position.x}px`;
+      button.style.top=`${position.y}px`;
+      const span=document.createElement('span');
+      button.appendChild(span);
+      canvas.appendChild(button);
+    });
+    overheadSlots=[...canvas.querySelectorAll('.zazzly-overhead-slot')];
+  }
 
   let roomStart=1;
   let lastRoomStart=1;
@@ -321,38 +371,18 @@
     return 'wall';
   }
 
-  const exhibitRoomThemes=[
-    [
-      'Celebration','Playful','Adorable','UglyCute','Disgusting','CreepyCute',
-      'Funny','Goofy','Whimsical','Psychedelic','Weird','Absurd','Dreamy','Nostalgia',
-      'Tragic','Angry','Intense','Scary','Epic','Beautiful','Cozy','Joy'
-    ],
-    [
-      'Mundane','Poignant','Satisfying','Romance','Festive','Halloween','Eerie','Magical',
-      'Spirituality','Ethereal','Strange','Hilarious','Grossout','Chaotic','Overstimulated',
-      'Cringe','Bougie','Camp','Sassy','Badass','Glory','Bittersweet'
-    ],
-    [
-      'Excess','PartyTime','Freakshow','Medicated','Scandalarious','Schadenfreude','Mockery',
-      'Grotesque','Collapse','Corrupted','Cursed','Aggressive','Outrage','Monstrous','Horror',
-      'Nightmarish','Phantasmagoric','Foreboding','Vulnerable','Paranoia','Despair','Shame'
-    ],
-    [
-      'Zazzly','ZazzlyParty','Cheeky','Fleshy','Raunchy','Lewd',
-      'Exposure','Zazzploitation','Humiliation','Sadomasochism','FreakyDeaky','Seduction'
-    ]
-  ];
+  const orderedThemeSets=[THEME_SETS.main,THEME_SETS.alternate,THEME_SETS.mature,THEME_SETS.zazzly];
 
   function exhibitArtLabel(artNumber){
     const number=Number(artNumber);
-    const page=Math.floor((number-1)/PAGE_SIZE);
-    const localNumber=((number-1)%PAGE_SIZE)+1;
-    const theme=exhibitRoomThemes[page]?.[localNumber-1];
+    const set=orderedThemeSets.find(candidate=>number>=candidate.start && number<candidate.start+candidate.items.length);
+    const theme=set?.items[number-set.start];
     return theme ? `${String(number).padStart(2,'0')} - ${theme}` : `Art ${number}`;
   }
 
   function roomArtNumber(slot){
-    return zazzlyMode ? 66+slot.number : roomPage*PAGE_SIZE+slot.number;
+    const start=zazzlyMode?THEME_SETS.zazzly.start:roomPage*PAGE_SIZE+1;
+    return start+slot.number-1;
   }
 
   function roomDoorNumber(slot){
@@ -415,7 +445,7 @@
   }
 
   function resetSlotButton(button){
-    button.classList.remove('is-door-slot','is-art-slot');
+    button.classList.remove('is-door-slot','is-art-slot','is-locked-door');
     button.disabled=false;
     button.removeAttribute('data-art');
     button.removeAttribute('data-door');
@@ -435,12 +465,14 @@
       const displayedDoorNumber=roomDoorNumber(slot);
       button.classList.add('is-door-slot');
       button.dataset.door=String(displayedDoorNumber);
-      button.disabled=false;
+      const locked=slot.locked===true;
+      button.disabled=locked;
+      button.classList.toggle('is-locked-door',locked);
       button.setAttribute(
         'aria-label',
-        displayedDoorNumber===1 ? 'Door 1 — entrance' : `Door ${displayedDoorNumber}`
+        locked ? `Door ${displayedDoorNumber} — locked` : (displayedDoorNumber===1 ? 'Door 1 — entrance' : `Door ${displayedDoorNumber}`)
       );
-      if(span) span.textContent='';
+      if(span) span.textContent=locked?'LOCKED':'';
       return;
     }
 
@@ -453,7 +485,7 @@
   }
 
   function paintOverheadSlot(button,slot){
-    button.classList.remove('is-overhead-art','is-overhead-door');
+    button.classList.remove('is-overhead-art','is-overhead-door','is-locked-door');
     button.disabled=false;
     button.removeAttribute('data-art');
     button.removeAttribute('data-door');
@@ -465,14 +497,14 @@
       const displayedDoorNumber=roomDoorNumber(slot);
       button.classList.add('is-overhead-door');
       button.dataset.door=String(displayedDoorNumber);
-      button.disabled=false;
+      const locked=slot.locked===true;
+      button.disabled=locked;
+      button.classList.toggle('is-locked-door',locked);
       button.setAttribute(
         'aria-label',
-        displayedDoorNumber===1
-          ? 'Door 1 — entrance'
-          : `Door ${displayedDoorNumber}`
+        locked ? `Door ${displayedDoorNumber} — locked` : (displayedDoorNumber===1 ? 'Door 1 — entrance' : `Door ${displayedDoorNumber}`)
       );
-      if(span) span.textContent=`DOOR ${displayedDoorNumber}`;
+      if(span) span.textContent=locked?'LOCKED':`DOOR ${displayedDoorNumber}`;
       return;
     }
 
@@ -485,35 +517,17 @@
     if(span) span.textContent=`${exhibitArtLabel(artNumber)}${suffix}`;
   }
 
-  // Aerial layout for the compact Zazzly room. Values are roomSlots indices
-  // in the existing overhead DOM order: left 6, top 6, right 6, bottom 6.
-  // SOUTH: 12 | DOOR 4 | 1; WEST: 2-5; NORTH: 6 | DOOR 5 | 7; EAST: 8-11.
-  const zazzlyOverheadMap=[
-    5,4,3,2,null,null,
-    6,7,8,null,null,null,
-    9,10,11,12,null,null,
-    13,0,1,null,null,null
-  ];
-
   function renderOverhead(){
     if(catacombsMode && catSearchHasTheme) return;
     if(!capabilities.exhibit){
       renderThumbnailPage();
       return;
     }
-    overheadSlots.forEach((button,i)=>{
-      if(zazzlyMode){
-        const index=zazzlyOverheadMap[i];
-        const unused=index==null;
-        button.hidden=unused;
-        button.style.display=unused?'none':'';
-        if(!unused) paintOverheadSlot(button,roomSlots[index]);
-      }else{
-        button.hidden=false;
-        button.style.display='';
-        const index=Number(button.dataset.roomIndex);
-        paintOverheadSlot(button,roomSlots[wrap(index)]);
-      }
+    overheadSlots.forEach(button=>{
+      button.hidden=false;
+      button.style.display='';
+      const index=Number(button.dataset.roomIndex);
+      paintOverheadSlot(button,roomSlots[wrap(index)]);
     });
     updateRankButtons();
     setView('overhead');
@@ -1103,19 +1117,34 @@
   installHorizontalSwipe(endlessView,'endless');
   installHorizontalSwipe(artworkScroll,'zoom');
 
+  function standardAreaForReturn(){
+    return params.get('returnArea') || 'geh';
+  }
+
+  function navigateDoor4(presentation){
+    const next=new URLSearchParams(params);
+    if(zazzlyMode){
+      const returnArea=standardAreaForReturn();
+      next.delete('returnArea');
+      next.set('area',returnArea);
+    }else{
+      if(requestedArea) next.set('returnArea',requestedArea);
+      next.set('area','zazzly');
+    }
+    next.set('start',presentation==='overhead'?'exhibit':'room');
+    window.location.href=`exhibit.html?${next.toString()}`;
+  }
+
   function roomPageAcrossDoor(doorNumber){
     doorNumber=Number(doorNumber);
-    if(zazzlyMode){
-      if(doorNumber===4) setView('door');
-      return;
-    }
+    if(doorNumber===5) return {kind:'locked'};
     if(doorNumber===1){
       setView('door');
-      return;
+      return {kind:'entrance'};
     }
     if(doorNumber===4){
-      window.location.href='exhibit.html?area=zazzly&start=room';
-      return;
+      navigateDoor4('room');
+      return {kind:'navigation'};
     }
 
     // Door 2 connects Exhibit Rooms 1 and 2; Door 3 connects Rooms 2 and 3.
@@ -1124,38 +1153,24 @@
     let nextPage=null;
     if(roomPage===lowerPage) nextPage=upperPage;
     else if(roomPage===upperPage) nextPage=lowerPage;
-    if(nextPage===null || nextPage<0 || nextPage>=pageCount()) return;
+    if(nextPage===null || nextPage<0 || nextPage>=pageCount()) return {kind:'none'};
 
     roomPage=nextPage;
     thumbnailPage=nextPage;
+    return {kind:'room',page:nextPage};
   }
 
   function useAerialDoor(doorNumber){
     doorNumber=Number(doorNumber);
-
-    // Door 4 connects Room 3 and the Zazzly room. Crossing it from Aerial
-    // must stay in Aerial rather than dropping the player into Room/Exhibit view.
+    if(doorNumber===5) return;
     if(doorNumber===4){
-      if(zazzlyMode){
-        const next=new URLSearchParams(params);
-        const returnArea=next.get('returnArea') || 'geh';
-        next.delete('returnArea');
-        next.set('area',returnArea);
-        next.set('start','exhibit');
-        window.location.href=`exhibit.html?${next.toString()}`;
-      }else{
-        const next=new URLSearchParams(params);
-        if(requestedArea) next.set('returnArea',requestedArea);
-        next.set('area','zazzly');
-        next.set('start','exhibit');
-        window.location.href=`exhibit.html?${next.toString()}`;
-      }
+      navigateDoor4('overhead');
       return;
     }
 
     const before=roomPage;
-    roomPageAcrossDoor(doorNumber);
-    if(shell.dataset.view==='door' || roomPage===before) return;
+    const result=roomPageAcrossDoor(doorNumber);
+    if(result?.kind==='entrance' || roomPage===before) return;
     renderOverhead();
   }
 

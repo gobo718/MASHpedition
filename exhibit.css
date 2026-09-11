@@ -1638,73 +1638,23 @@ button{border-radius:0}
 .exhibit-shell.catacombs-mode[data-view="overhead"] .cat-search-has input{width:10px;height:10px}
 .exhibit-controls button:disabled{opacity:.35;cursor:default}
 
+/* Dedicated Zazzly 12-art Aerial map. Its 14 physical buttons are created
+   from ZAZZLY_ROOM_MAP; no standard 24-position Aerial nodes are reused. */
+.zazzly-overhead-slot{width:156px;height:40px}
+.zazzly-room-lines line{display:none}
 
-/* v88 — compact Zazzly aerial: exact 12-art / 2-door room topology. */
-.exhibit-shell[data-area="zazzly"] .overhead-room-lines line{display:none}
-.exhibit-shell[data-area="zazzly"] .overhead-room-floor{points:"240,18 740,18 760,282 220,282"}
-.exhibit-shell[data-area="zazzly"] .oh-left{left:26px}
-.exhibit-shell[data-area="zazzly"] .oh-right{left:798px}
-.exhibit-shell[data-area="zazzly"] .oh-left-1,
-.exhibit-shell[data-area="zazzly"] .oh-right-1{top:42px}
-.exhibit-shell[data-area="zazzly"] .oh-left-2,
-.exhibit-shell[data-area="zazzly"] .oh-right-2{top:104px}
-.exhibit-shell[data-area="zazzly"] .oh-left-3,
-.exhibit-shell[data-area="zazzly"] .oh-right-3{top:166px}
-.exhibit-shell[data-area="zazzly"] .oh-left-4,
-.exhibit-shell[data-area="zazzly"] .oh-right-4{top:228px}
-.exhibit-shell[data-area="zazzly"] .oh-top-1{left:287px;top:32px}
-.exhibit-shell[data-area="zazzly"] .oh-top-2{left:453.6667px;top:78px}
-.exhibit-shell[data-area="zazzly"] .oh-top-3{left:620.3333px;top:32px}
-.exhibit-shell[data-area="zazzly"] .oh-bottom-1{left:277px;top:228px}
-.exhibit-shell[data-area="zazzly"] .oh-bottom-2{left:457px;top:182px}
-.exhibit-shell[data-area="zazzly"] .oh-bottom-3{left:637px;top:228px}
-
-/* v88 — unused legacy 24-slot aerial nodes must stay out of the 12-art Zazzly topology. */
-.exhibit-shell[data-area="zazzly"] .overhead-slot[hidden]{display:none !important;}
-
-/* v89 — rebuild Zazzly aerial around the established 980px scene center (x=490).
-   Exact topology: NORTH 6 | DOOR 5 | 7; WEST 5,4,3,2;
-   EAST 8,9,10,11; SOUTH 12 | DOOR 4 | 1. */
-.exhibit-shell[data-area="zazzly"] .overhead-room-floor{
-  transform:none;
+/* Door 5 is a deliberate future connection and is visibly locked. */
+.corner-art.is-door-slot.is-locked-door,
+.right-normal-art.is-door-slot.is-locked-door,
+.right-perspective-art.is-door-slot.is-locked-door,
+.wall-triplet-art.is-door-slot.is-locked-door{
+  color:#fff;
+  cursor:default;
+  font-size:20px;
+  font-weight:900;
+  letter-spacing:.08em;
 }
-.exhibit-shell[data-area="zazzly"] .oh-left,
-.exhibit-shell[data-area="zazzly"] .oh-right{
-  width:156px;
-}
-.exhibit-shell[data-area="zazzly"] .oh-left{left:220px}
-.exhibit-shell[data-area="zazzly"] .oh-right{left:604px}
-.exhibit-shell[data-area="zazzly"] .oh-left-1,
-.exhibit-shell[data-area="zazzly"] .oh-right-1{top:42px}
-.exhibit-shell[data-area="zazzly"] .oh-left-2,
-.exhibit-shell[data-area="zazzly"] .oh-right-2{top:104px}
-.exhibit-shell[data-area="zazzly"] .oh-left-3,
-.exhibit-shell[data-area="zazzly"] .oh-right-3{top:166px}
-.exhibit-shell[data-area="zazzly"] .oh-left-4,
-.exhibit-shell[data-area="zazzly"] .oh-right-4{top:228px}
-
-/* Three equal positions centered as a group on x=490. */
-.exhibit-shell[data-area="zazzly"] .oh-top-1,
-.exhibit-shell[data-area="zazzly"] .oh-bottom-1{left:240px}
-.exhibit-shell[data-area="zazzly"] .oh-top-2,
-.exhibit-shell[data-area="zazzly"] .oh-bottom-2{left:412px}
-.exhibit-shell[data-area="zazzly"] .oh-top-3,
-.exhibit-shell[data-area="zazzly"] .oh-bottom-3{left:584px}
-.exhibit-shell[data-area="zazzly"] .oh-top-1,
-.exhibit-shell[data-area="zazzly"] .oh-top-2,
-.exhibit-shell[data-area="zazzly"] .oh-top-3{top:18px}
-.exhibit-shell[data-area="zazzly"] .oh-bottom-1,
-.exhibit-shell[data-area="zazzly"] .oh-bottom-2,
-.exhibit-shell[data-area="zazzly"] .oh-bottom-3{top:242px}
-
-/* v91 — Zazzly aerial corrected as a centered, non-overlapping 3/4/3/4 perimeter.
-   Scene center is x=490. Side columns return outside the room footprint;
-   north/south three-button groups are centered exactly on x=490. */
-.exhibit-shell[data-area="zazzly"] .oh-left{left:26px}
-.exhibit-shell[data-area="zazzly"] .oh-right{left:798px}
-.exhibit-shell[data-area="zazzly"] .oh-top-1,
-.exhibit-shell[data-area="zazzly"] .oh-bottom-1{left:198px}
-.exhibit-shell[data-area="zazzly"] .oh-top-2,
-.exhibit-shell[data-area="zazzly"] .oh-bottom-2{left:412px}
-.exhibit-shell[data-area="zazzly"] .oh-top-3,
-.exhibit-shell[data-area="zazzly"] .oh-bottom-3{left:626px}
+.corner-art.is-door-slot.is-locked-door span,
+.wall-triplet-art.is-door-slot.is-locked-door span{display:block;color:#fff}
+.right-normal-art.is-door-slot.is-locked-door span,
+.right-perspective-art.is-door-slot.is-locked-door span{display:block;color:#fff}
