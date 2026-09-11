@@ -485,3 +485,6 @@ v46 (2026-09-10): Entrance emoji-only refinement. Raised emoji pair 8px while pr
 - Preserved the regular 11-sided geometry, open entrance side, and 20 artwork positions.
 
 - v65: Installation artwork numbering now starts at the entrance and proceeds clockwise from 1 through 20.
+
+
+v68 Installation repair: one-artwork stepping, fixed clockwise/counterclockwise mirrored perception, restored approved Exhibit corner spacing, full four-edge perspective frames, and LEFT/RIGHT grouped at bottom-left.
