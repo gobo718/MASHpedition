@@ -483,3 +483,5 @@ v46 (2026-09-10): Entrance emoji-only refinement. Raised emoji pair 8px while pr
 - Moved the INSTALLATION title to the top-left of the expanded map.
 - Expanded the Installation hendecagon vertically to use the previously wasted top space.
 - Preserved the regular 11-sided geometry, open entrance side, and 20 artwork positions.
+
+- v65: Installation artwork numbering now starts at the entrance and proceeds clockwise from 1 through 20.

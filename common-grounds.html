@@ -76,7 +76,9 @@ main{width:100vw;height:100dvh;display:flex;align-items:center;justify-content:c
   }
   function drawLarge(){
     const g=document.getElementById('largeHendecagon'), pts=points(490,310,292); let artNo=1;
-    for(let i=0;i<n;i++){ if(i===entranceSide) continue; const a=pts[i],b=pts[(i+1)%n]; const line=document.createElementNS(svgNS,'line');
+    // Number from the entrance and continue clockwise: 1 -> 20.
+    const clockwiseSides=Array.from({length:n-1},(_,step)=>(entranceSide+1+step)%n);
+    for(const i of clockwiseSides){ const a=pts[i],b=pts[(i+1)%n]; const line=document.createElementNS(svgNS,'line');
       line.setAttribute('x1',a.x);line.setAttribute('y1',a.y);line.setAttribute('x2',b.x);line.setAttribute('y2',b.y);line.setAttribute('class','large-side');g.appendChild(line);
       const dx=b.x-a.x,dy=b.y-a.y,len=Math.hypot(dx,dy),nx=-dy/len,ny=dx/len,angle=Math.atan2(dy,dx)*180/Math.PI;
       for(const t of [.34,.66]){const mx=a.x+dx*t+nx*24,my=a.y+dy*t+ny*24;const box=document.createElementNS(svgNS,'rect');box.setAttribute('x',-30);box.setAttribute('y',-18);box.setAttribute('width',60);box.setAttribute('height',36);box.setAttribute('class','large-art');box.setAttribute('transform',`translate(${mx} ${my}) rotate(${angle})`);g.appendChild(box);const text=document.createElementNS(svgNS,'text');text.setAttribute('x',mx);text.setAttribute('y',my);text.setAttribute('class','large-num');text.textContent=artNo++;g.appendChild(text);}
