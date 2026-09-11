@@ -24,8 +24,8 @@ main{width:100vw;height:100dvh;display:flex;align-items:center;justify-content:c
 .map-overlay.open{display:flex}
 .map-card{position:relative;width:min(94vw,980px);height:min(88vh,720px);background:#e8e3da;border:3px solid #26221d}
 .map-close{position:absolute;right:10px;top:8px;z-index:3;border:2px solid #26221d;background:#fff;font-size:24px;font-weight:900;width:42px;height:42px;cursor:pointer}
-.map-title{position:absolute;left:50%;top:12px;transform:translateX(-50%);font-size:18px;font-weight:900;letter-spacing:.06em;white-space:nowrap}
-.large-map-svg{position:absolute;left:0;top:48px;width:100%;height:calc(100% - 48px)}
+.map-title{position:absolute;left:18px;top:12px;font-size:18px;font-weight:900;letter-spacing:.06em;white-space:nowrap;z-index:3}
+.large-map-svg{position:absolute;left:0;top:0;width:100%;height:100%}
 .large-side{stroke:#26221d;stroke-width:5;stroke-linecap:square}
 .large-art{fill:#fff;stroke:#26221d;stroke-width:2}
 .large-num{font-size:13px;font-weight:900;text-anchor:middle;dominant-baseline:middle}
@@ -75,7 +75,7 @@ main{width:100vw;height:100dvh;display:flex;align-items:center;justify-content:c
       line.setAttribute('x1',a.x);line.setAttribute('y1',a.y);line.setAttribute('x2',b.x);line.setAttribute('y2',b.y);line.setAttribute('class','hendec-side');g.appendChild(line); }
   }
   function drawLarge(){
-    const g=document.getElementById('largeHendecagon'), pts=points(490,320,255); let artNo=1;
+    const g=document.getElementById('largeHendecagon'), pts=points(490,310,292); let artNo=1;
     for(let i=0;i<n;i++){ if(i===entranceSide) continue; const a=pts[i],b=pts[(i+1)%n]; const line=document.createElementNS(svgNS,'line');
       line.setAttribute('x1',a.x);line.setAttribute('y1',a.y);line.setAttribute('x2',b.x);line.setAttribute('y2',b.y);line.setAttribute('class','large-side');g.appendChild(line);
       const dx=b.x-a.x,dy=b.y-a.y,len=Math.hypot(dx,dy),nx=-dy/len,ny=dx/len,angle=Math.atan2(dy,dx)*180/Math.PI;

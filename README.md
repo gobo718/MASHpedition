@@ -477,3 +477,9 @@ v46 (2026-09-10): Entrance emoji-only refinement. Raised emoji pair 8px while pr
 - Search/non-pair spaces remain result-labeled. Catacombs remains excluded from shared-pair naming.
 - Existing rank suffixes remain and use `1st`, `2nd`, `3rd`, etc. casing.
 - No geometry changed.
+
+
+## v64 Common Grounds Installation map
+- Moved the INSTALLATION title to the top-left of the expanded map.
+- Expanded the Installation hendecagon vertically to use the previously wasted top space.
+- Preserved the regular 11-sided geometry, open entrance side, and 20 artwork positions.
