@@ -30,6 +30,25 @@ main{width:100vw;height:100dvh;display:flex;align-items:center;justify-content:c
 .large-art{fill:#fff;stroke:#26221d;stroke-width:2}
 .large-num{font-size:13px;font-weight:900;text-anchor:middle;dominant-baseline:middle}
 
+
+.installation-view{position:fixed;inset:0;background:#f4f0e8;z-index:30;display:none;align-items:center;justify-content:center}
+.installation-view.open{display:flex}
+.installation-stage{position:relative;width:980px;height:337px;background:#f4f0e8;overflow:hidden;flex:none}
+.installation-scene{position:absolute;left:0;top:0;width:980px;height:300px;overflow:hidden}
+.installation-front-art,.installation-side-art{position:absolute;margin:0;padding:0;border:5px solid #26221d;background:#fff;color:#201d19;font-weight:900;font-size:18px;letter-spacing:.05em;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.installation-front-art{width:230px;height:230px;top:35px}
+.installation-front-left{left:243px}.installation-front-right{left:507px}
+/* Hendecagon adjacent-wall recipe: apparent span .8413x; far edge 1x; near edge 1.5406x. */
+.installation-side-art{left:0;top:0;width:230px;height:230px;transform-origin:0 0;clip-path:polygon(0 0,100% 17.55%,100% 82.45%,0 100%)}
+.installation-scene[data-side="left"] .installation-side-art{width:193.499px;height:354.338px;left:18px;top:-27.169px;clip-path:polygon(0 0,100% 17.55%,100% 82.45%,0 100%)}
+.installation-scene[data-side="right"] .installation-side-art{width:193.499px;height:354.338px;left:768.501px;top:-27.169px;clip-path:polygon(0 17.55%,100% 0,100% 100%,0 82.45%)}
+.installation-corner-line{position:absolute;top:0;width:6px;height:300px;background:#26221d}
+.installation-scene[data-side="left"] .installation-corner-line{left:224px}.installation-scene[data-side="right"] .installation-corner-line{right:224px}
+.installation-position{position:absolute;left:50%;top:8px;transform:translateX(-50%);font-size:12px;font-weight:900;letter-spacing:.08em}
+.installation-controls{position:absolute;left:0;right:0;bottom:0;height:37px;display:grid;grid-template-columns:1fr 1fr 1fr 1fr;border-top:2px solid #26221d}
+.installation-controls button{border:0;border-right:2px solid #26221d;background:#fff;font-weight:900;font-size:12px;letter-spacing:.05em}.installation-controls button:last-child{border-right:0}
+@media(max-width:1000px){.installation-stage{transform:scale(calc((100vw - 12px)/980));transform-origin:center center}}
+
 .front-door{position:absolute;left:330px;bottom:0;width:60px;height:31px;border:3px solid #26221d;border-bottom:0;background:#111;z-index:4}
 .front-door-label{position:absolute;left:360px;bottom:34px;transform:translateX(-50%);font-size:8px;font-weight:900;letter-spacing:.06em;z-index:4;white-space:nowrap}
 .museum{position:fixed;left:12px;bottom:12px;border:1px solid #555;background:#fff;color:#111;text-decoration:none;font-weight:700;padding:10px 14px}
@@ -61,6 +80,23 @@ main{width:100vw;height:100dvh;display:flex;align-items:center;justify-content:c
     <svg class="large-map-svg" viewBox="0 0 980 620" aria-label="20 artwork Installation map"><g id="largeHendecagon"></g></svg>
   </div>
 </div>
+<div id="installationView" class="installation-view" aria-hidden="true">
+  <section class="installation-stage" aria-label="Installation player view">
+    <div id="installationScene" class="installation-scene" data-side="right">
+      <div class="installation-position" id="installationPosition">1–2</div>
+      <button class="installation-front-art installation-front-left" id="installationFrontLeft" type="button">1</button>
+      <button class="installation-front-art installation-front-right" id="installationFrontRight" type="button">2</button>
+      <div class="installation-corner-line" aria-hidden="true"></div>
+      <button class="installation-side-art" id="installationSideArt" type="button">3</button>
+    </div>
+    <nav class="installation-controls" aria-label="Installation navigation">
+      <button id="installationLeft" type="button">LEFT</button>
+      <button id="installationMapBack" type="button">MAP</button>
+      <button id="installationExit" type="button">COMMON GROUNDS</button>
+      <button id="installationRight" type="button">RIGHT</button>
+    </nav>
+  </section>
+</div>
 
 <script>
 (()=>{
@@ -81,14 +117,27 @@ main{width:100vw;height:100dvh;display:flex;align-items:center;justify-content:c
     for(const i of clockwiseSides){ const a=pts[i],b=pts[(i+1)%n]; const line=document.createElementNS(svgNS,'line');
       line.setAttribute('x1',a.x);line.setAttribute('y1',a.y);line.setAttribute('x2',b.x);line.setAttribute('y2',b.y);line.setAttribute('class','large-side');g.appendChild(line);
       const dx=b.x-a.x,dy=b.y-a.y,len=Math.hypot(dx,dy),nx=-dy/len,ny=dx/len,angle=Math.atan2(dy,dx)*180/Math.PI;
-      for(const t of [.34,.66]){const mx=a.x+dx*t+nx*24,my=a.y+dy*t+ny*24;const box=document.createElementNS(svgNS,'rect');box.setAttribute('x',-30);box.setAttribute('y',-18);box.setAttribute('width',60);box.setAttribute('height',36);box.setAttribute('class','large-art');box.setAttribute('transform',`translate(${mx} ${my}) rotate(${angle})`);g.appendChild(box);const text=document.createElementNS(svgNS,'text');text.setAttribute('x',mx);text.setAttribute('y',my);text.setAttribute('class','large-num');text.textContent=artNo++;g.appendChild(text);}
+      for(const t of [.34,.66]){const mx=a.x+dx*t+nx*24,my=a.y+dy*t+ny*24;const box=document.createElementNS(svgNS,'rect');box.setAttribute('x',-30);box.setAttribute('y',-18);box.setAttribute('width',60);box.setAttribute('height',36);box.setAttribute('class','large-art');box.setAttribute('data-art',artNo);box.style.cursor='pointer';box.setAttribute('transform',`translate(${mx} ${my}) rotate(${angle})`);g.appendChild(box);const text=document.createElementNS(svgNS,'text');text.setAttribute('x',mx);text.setAttribute('y',my);text.setAttribute('class','large-num');text.setAttribute('data-art',artNo);text.style.cursor='pointer';text.textContent=artNo++;g.appendChild(text);}
     }
   }
   drawRoom(); drawLarge();
   const overlay=document.getElementById('installationMap'),button=document.getElementById('hendecMapButton'),close=document.getElementById('mapClose');
   const openMap=()=>{overlay.classList.add('open');overlay.setAttribute('aria-hidden','false');close.focus()};
   const closeMap=()=>{overlay.classList.remove('open');overlay.setAttribute('aria-hidden','true');button.focus()};
-  button.addEventListener('click',openMap);close.addEventListener('click',closeMap);overlay.addEventListener('click',e=>{if(e.target===overlay)closeMap()});document.addEventListener('keydown',e=>{if(e.key==='Escape'&&overlay.classList.contains('open'))closeMap()});
+  button.addEventListener('click',openMap);close.addEventListener('click',closeMap);overlay.addEventListener('click',e=>{if(e.target===overlay)closeMap()});
+  const iv=document.getElementById('installationView'),scene=document.getElementById('installationScene');
+  const fl=document.getElementById('installationFrontLeft'),fr=document.getElementById('installationFrontRight'),sa=document.getElementById('installationSideArt'),pos=document.getElementById('installationPosition');
+  let wall=0,lastDir=1;
+  const wrap=v=>(v+20)%20;
+  function renderInstallation(){const a=wall*2+1,b=a+1;scene.dataset.side=lastDir>0?'right':'left';fl.textContent=a;fr.textContent=b;const adjacent=lastDir>0?wrap(b)+1:wrap(a-2)+1;sa.textContent=adjacent;pos.textContent=`${a}–${b}`;}
+  function openInstallation(art=1){wall=Math.floor((art-1)/2);lastDir=1;renderInstallation();overlay.classList.remove('open');overlay.setAttribute('aria-hidden','true');iv.classList.add('open');iv.setAttribute('aria-hidden','false');}
+  function closeInstallation(){iv.classList.remove('open');iv.setAttribute('aria-hidden','true');}
+  document.getElementById('largeHendecagon').addEventListener('click',e=>{const art=Number(e.target.dataset.art);if(art)openInstallation(art)});
+  document.getElementById('installationLeft').addEventListener('click',()=>{lastDir=-1;wall=(wall+9)%10;renderInstallation()});
+  document.getElementById('installationRight').addEventListener('click',()=>{lastDir=1;wall=(wall+1)%10;renderInstallation()});
+  document.getElementById('installationMapBack').addEventListener('click',()=>{closeInstallation();openMap()});
+  document.getElementById('installationExit').addEventListener('click',closeInstallation);
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'){if(iv.classList.contains('open'))closeInstallation();else if(overlay.classList.contains('open'))closeMap()}if(iv.classList.contains('open')&&e.key==='ArrowLeft')document.getElementById('installationLeft').click();if(iv.classList.contains('open')&&e.key==='ArrowRight')document.getElementById('installationRight').click();});
 })();
 </script>
 </body>
