@@ -123,7 +123,6 @@ main{width:100vw;height:100dvh;display:flex;align-items:center;justify-content:c
 <div id="installationView" class="installation-view" aria-hidden="true">
   <section class="installation-stage" aria-label="Installation player view">
     <div id="installationScene" class="installation-scene" data-template="ENTRY_START">
-      <div class="installation-position" id="installationPosition">1–2</div>
       <div class="installation-empty installation-empty-left" aria-hidden="true"></div>
       <button class="installation-side-art installation-side-left" id="installationSideLeft" type="button"><svg viewBox="0 0 193.499 354.338" aria-hidden="true"><polygon class="side-fill" points="0,62.169 193.499,0 193.499,354.338 0,292.169"/></svg><span>2</span></button>
       <div class="installation-corner-line installation-corner-left" aria-hidden="true"></div>
@@ -173,7 +172,7 @@ main{width:100vw;height:100dvh;display:flex;align-items:center;justify-content:c
   const closeMap=()=>{overlay.classList.remove('open');overlay.setAttribute('aria-hidden','true');button.focus()};
   button.addEventListener('click',openMap);close.addEventListener('click',closeMap);overlay.addEventListener('click',e=>{if(e.target===overlay)closeMap()});
   const iv=document.getElementById('installationView'),scene=document.getElementById('installationScene');
-  const fl=document.getElementById('installationFrontLeft'),fr=document.getElementById('installationFrontRight'),sl=document.getElementById('installationSideLeft'),sr=document.getElementById('installationSideRight'),pos=document.getElementById('installationPosition');
+  const fl=document.getElementById('installationFrontLeft'),fr=document.getElementById('installationFrontRight'),sl=document.getElementById('installationSideLeft'),sr=document.getElementById('installationSideRight');
   /* Exact clockwise walk supplied by Billy. There are only two repeating templates:
      A = straight pair + angled next; B = angled previous + straight pair.
      The three entrance states are: angled 20 | BLACK BLACK; BLACK BLACK | angled 1; BLACK | 1–2. */
@@ -207,7 +206,6 @@ main{width:100vw;height:100dvh;display:flex;align-items:center;justify-content:c
     const st=states[stateIndex];
     scene.dataset.template=st.t;
     setLabel(fl,st.f?.[0]); setLabel(fr,st.f?.[1]); setLabel(sl,st.l); setLabel(sr,st.r);
-    pos.textContent=st.label;
   }
   function stateForArt(art){
     // Map click enters the first state in which that artwork is straight/front-facing.
