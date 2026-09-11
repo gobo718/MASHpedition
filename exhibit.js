@@ -504,10 +504,13 @@
     overheadSlots.forEach((button,i)=>{
       if(zazzlyMode){
         const index=zazzlyOverheadMap[i];
-        button.hidden=index==null;
-        if(index!=null) paintOverheadSlot(button,roomSlots[index]);
+        const unused=index==null;
+        button.hidden=unused;
+        button.style.display=unused?'none':'';
+        if(!unused) paintOverheadSlot(button,roomSlots[index]);
       }else{
         button.hidden=false;
+        button.style.display='';
         const index=Number(button.dataset.roomIndex);
         paintOverheadSlot(button,roomSlots[wrap(index)]);
       }
