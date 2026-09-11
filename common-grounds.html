@@ -67,7 +67,7 @@ main{width:100vw;height:100dvh;display:flex;align-items:center;justify-content:c
 .installation-empty{position:absolute;top:0;height:300px;background:#000;display:none;z-index:2}
 .installation-empty-left{left:0;width:258.499px}
 .installation-empty-right{left:721.501px;width:258.499px}
-.installation-empty-slot{left:418.501px;top:35px;width:230px;height:230px}
+.installation-empty-slot{left:418.501px;top:0;width:295px;height:300px}
 /* Entrance/open-side states reuse the solved templates and simply omit the missing wall. */
 .installation-scene[data-template="ENTRY_START"] .installation-front-art,
 .installation-scene[data-template="ENTRY_START"] .installation-corner-left,
@@ -77,7 +77,7 @@ main{width:100vw;height:100dvh;display:flex;align-items:center;justify-content:c
 .installation-scene[data-template="ENTRY_END"] .installation-front-art,
 .installation-scene[data-template="ENTRY_END"] .installation-corner-right,
 .installation-scene[data-template="ENTRY_END"] .installation-empty-right{display:flex}
-/* 20 | open entrance | angled 1: Art20 uses the last straight-wall slot; Art1 enters on the far wall. */
+/* 20 | open entrance wall | angled 1: the entrance is one continuous architectural side, not a black artwork slot. The black field fills from the second wall position through the corner boundary. */
 .installation-scene[data-template="ENTRY_WRAP"] .installation-front-left,
 .installation-scene[data-template="ENTRY_WRAP"] .installation-corner-right,
 .installation-scene[data-template="ENTRY_WRAP"] .installation-side-right,
@@ -211,8 +211,29 @@ main{width:100vw;height:100dvh;display:flex;align-items:center;justify-content:c
   function openInstallation(art=1){stateIndex=stateForArt(art);renderInstallation();overlay.classList.remove('open');overlay.setAttribute('aria-hidden','true');iv.classList.add('open');iv.setAttribute('aria-hidden','false');}
   function closeInstallation(){iv.classList.remove('open');iv.setAttribute('aria-hidden','true');}
   document.getElementById('largeHendecagon').addEventListener('click',e=>{const art=Number(e.target.dataset.art);if(art)openInstallation(art)});
-  document.getElementById('installationLeft').addEventListener('click',()=>{stateIndex=(stateIndex-1+states.length)%states.length;renderInstallation()});
-  document.getElementById('installationRight').addEventListener('click',()=>{stateIndex=(stateIndex+1)%states.length;renderInstallation()});
+  const stepInstallation=delta=>{stateIndex=(stateIndex+delta+states.length)%states.length;renderInstallation()};
+  document.getElementById('installationLeft').addEventListener('click',()=>stepInstallation(-1));
+  document.getElementById('installationRight').addEventListener('click',()=>stepInstallation(1));
+
+  /* Swipe navigation uses the same one-state movement as LEFT/RIGHT.
+     Horizontal intent must dominate vertical motion so normal page gestures are not hijacked. */
+  let swipeStartX=null,swipeStartY=null,swipeTracking=false;
+  const SWIPE_MIN=42, SWIPE_RATIO=1.25;
+  iv.addEventListener('touchstart',e=>{
+    if(!iv.classList.contains('open')||e.touches.length!==1)return;
+    const t=e.touches[0]; swipeStartX=t.clientX; swipeStartY=t.clientY; swipeTracking=true;
+  },{passive:true});
+  iv.addEventListener('touchend',e=>{
+    if(!swipeTracking||swipeStartX===null||swipeStartY===null){swipeTracking=false;return;}
+    const t=e.changedTouches[0],dx=t.clientX-swipeStartX,dy=t.clientY-swipeStartY;
+    swipeTracking=false; swipeStartX=swipeStartY=null;
+    if(Math.abs(dx)>=SWIPE_MIN && Math.abs(dx)>Math.abs(dy)*SWIPE_RATIO){
+      // Finger left reveals the next/rightward state; finger right reveals the previous/leftward state.
+      stepInstallation(dx<0?1:-1);
+    }
+  },{passive:true});
+  iv.addEventListener('touchcancel',()=>{swipeTracking=false;swipeStartX=swipeStartY=null},{passive:true});
+
   document.getElementById('installationMapBack').addEventListener('click',()=>{closeInstallation();openMap()});
   document.getElementById('installationExit').addEventListener('click',closeInstallation);
   document.addEventListener('keydown',e=>{if(e.key==='Escape'){if(iv.classList.contains('open'))closeInstallation();else if(overlay.classList.contains('open'))closeMap()}if(iv.classList.contains('open')&&e.key==='ArrowLeft')document.getElementById('installationLeft').click();if(iv.classList.contains('open')&&e.key==='ArrowRight')document.getElementById('installationRight').click();});

@@ -495,3 +495,16 @@ v68 Installation repair: one-artwork stepping, fixed clockwise/counterclockwise 
 - Complete side frame mathematically fits inside 300px scene.
 - Clockwise/counterclockwise are exact mirrored constructions.
 - Navigation advances one artwork index per click.
+
+
+## v73
+- Enabled horizontal swipe navigation in the Installation player view.
+- Swipe left advances exactly one Installation state; swipe right moves back exactly one state.
+- Uses a 42px minimum horizontal gesture and horizontal-dominance check to avoid accidental vertical swipes.
+- Preserves v72 entrance/geometry unchanged.
+
+
+## v74
+- Corrected the Installation entrance wrap state: the entrance is one continuous black architectural side, not a 230px black artwork square.
+- Black now fills the full 300px scene height from x=418.501px through the corner at x=713.501px in the `20 · entrance · 1 angled` state.
+- Preserves v73 swipe navigation.
