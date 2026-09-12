@@ -878,8 +878,8 @@
     const page=Math.max(0,Math.min(pageCount()-1,currentPageForView()));
     const start=page*PAGE_SIZE+1;
     const end=Math.min(genericResultCount,start+PAGE_SIZE-1);
-    pagePrevBtn.disabled=page<=0;
-    pageNextBtn.disabled=page>=pageCount()-1;
+    pagePrevBtn.disabled=page<=0 && !(gehMode && zazzlyMode);
+    pageNextBtn.disabled=page>=pageCount()-1 && !(gehMode && !zazzlyMode);
     pageStatus.textContent=view==='thumbnail'
       ? `PAGE ${page+1} / ${pageCount()}`
       : `${start}–${end}`;
@@ -892,10 +892,52 @@
     else if(['left','wall','right'].includes(view)) renderRoom(lastRoomStart);
   }
 
+  function navigateGehRoomBoundary(direction,view){
+    if(!gehMode) return false;
+
+    // GEH has a fourth physical Theme room: Zazzly. Main/Alternate/Mature
+    // live in the standard 22-item area; Zazzly has its own map/area, so
+    // crossing the Room 3 <-> Room 4 boundary is navigation rather than
+    // an in-page page increment. Preserve the selected GEH rank.
+    if(direction>0 && !zazzlyMode){
+      const lastStandardPage=currentGenericPageCount()-1;
+      const current=view==='thumbnail' ? thumbnailPage : roomPage;
+      if(current!==lastStandardPage) return false;
+      const next=new URLSearchParams(params);
+      next.set('area','zazzly');
+      next.set('geh','1');
+      next.set('returnArea',requestedArea || 'geh');
+      next.set('returnRoomPage',String(lastStandardPage));
+      next.delete('roomPage');
+      next.delete('entryDoor');
+      next.set('start',view==='overhead'?'exhibit':view==='thumbnail'?'thumbnail':'room');
+      window.location.href=`exhibit.html?${next.toString()}`;
+      return true;
+    }
+
+    if(direction<0 && zazzlyMode){
+      const next=new URLSearchParams(params);
+      const returnArea=standardAreaForReturn();
+      const returnRoomPage=standardRoomForReturn();
+      next.set('area',returnArea);
+      next.delete('geh');
+      next.delete('returnArea');
+      next.delete('returnRoomPage');
+      next.set('roomPage',String(returnRoomPage));
+      next.delete('entryDoor');
+      next.set('start',view==='overhead'?'exhibit':view==='thumbnail'?'thumbnail':'room');
+      window.location.href=`exhibit.html?${next.toString()}`;
+      return true;
+    }
+    return false;
+  }
+
   function changePage(delta){
     const view=shell.dataset.view;
     const current=currentPageForView();
-    const next=Math.max(0,Math.min(pageCount()-1,current+delta));
+    const rawNext=current+delta;
+    if((rawNext<0 || rawNext>=pageCount()) && navigateGehRoomBoundary(delta,view)) return;
+    const next=Math.max(0,Math.min(pageCount()-1,rawNext));
     if(next===current) return;
     roomPage=next;
     thumbnailPage=next;
@@ -913,8 +955,8 @@
 
     if(view==='thumbnail'){
       const pages=currentGenericPageCount();
-      leftBtn.disabled=thumbnailPage<=0;
-      rightBtn.disabled=thumbnailPage>=pages-1;
+      leftBtn.disabled=thumbnailPage<=0 && !(gehMode && zazzlyMode);
+      rightBtn.disabled=thumbnailPage>=pages-1 && !(gehMode && !zazzlyMode);
     }else if(view==='endless'){
       leftBtn.disabled=endlessIndex<=0;
       rightBtn.disabled=endlessIndex>=genericResultCount-1;
@@ -990,13 +1032,7 @@
   function handleLeft(){
     const view=shell.dataset.view;
 
-    if(view==='thumbnail'){
-      if(thumbnailPage>0){
-        thumbnailPage-=1; roomPage=thumbnailPage;
-        renderThumbnailPage();
-      }
-      return;
-    }
+    if(view==='thumbnail'){ changePage(-1); return; }
 
     if(view==='overhead'){ changePage(-1); return; }
 
@@ -1025,13 +1061,7 @@
   function handleRight(){
     const view=shell.dataset.view;
 
-    if(view==='thumbnail'){
-      if(thumbnailPage<currentGenericPageCount()-1){
-        thumbnailPage+=1; roomPage=thumbnailPage;
-        renderThumbnailPage();
-      }
-      return;
-    }
+    if(view==='thumbnail'){ changePage(1); return; }
 
     if(view==='overhead'){ changePage(1); return; }
 
