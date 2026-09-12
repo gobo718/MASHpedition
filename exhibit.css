@@ -1963,3 +1963,44 @@ button{border-radius:0}
 .exhibit-shell:not([data-area="zazzly"])[data-view="thumbnail"] .thumbnail-grid:not(.adaptive-brick) > button:nth-child(5){grid-column:4 / span 6}
 .exhibit-shell:not([data-area="zazzly"])[data-view="thumbnail"] .thumbnail-grid:not(.adaptive-brick) > button:nth-child(6){grid-column:10 / span 6}
 .exhibit-shell:not([data-area="zazzly"])[data-view="thumbnail"] .thumbnail-grid:not(.adaptive-brick) > button:nth-child(7){grid-column:16 / span 6}
+
+/* v120 — Billy's exact thumbnail navigation construction.
+   MUSEUM is the locked anchor at slot 1 (top 6px, 28px high).
+   Slot 2 is deleted/not rendered. PAGE PREV remains locked at slot 3 and
+   PAGE NEXT remains locked at slot 4, using the screen's established 6px gap.
+   Existing page button functions are unchanged. */
+.exhibit-shell[data-view="thumbnail"] .page-nav{
+  left:auto;
+  right:6px;
+  top:74px;
+  bottom:auto;
+  display:flex;
+  flex-direction:column;
+  align-items:stretch;
+  gap:6px;
+}
+.exhibit-shell[data-view="thumbnail"] .page-nav #pageStatus{display:none}
+.exhibit-shell[data-view="thumbnail"] .page-nav button{
+  box-sizing:border-box;
+  width:81px;
+  min-width:81px;
+  height:28px;
+  min-height:28px;
+  padding:0;
+}
+.museum-return{
+  box-sizing:border-box;
+  width:81px;
+  height:28px;
+  padding:0;
+}
+
+/* v120 — Zazzly spacing only. Row 3 is unchanged and is the authority.
+   Copy row 3's 12-column interval to rows 1 and 2; center each row. */
+.exhibit-shell.geh-mode[data-area="zazzly"][data-view="thumbnail"] .thumbnail-grid button:nth-child(1){grid-row:1;grid-column:13 / span 12}
+.exhibit-shell.geh-mode[data-area="zazzly"][data-view="thumbnail"] .thumbnail-grid button:nth-child(2){grid-row:1;grid-column:25 / span 12}
+.exhibit-shell.geh-mode[data-area="zazzly"][data-view="thumbnail"] .thumbnail-grid button:nth-child(3){grid-row:1;grid-column:37 / span 12}
+.exhibit-shell.geh-mode[data-area="zazzly"][data-view="thumbnail"] .thumbnail-grid button:nth-child(4){grid-row:2;grid-column:7 / span 12 !important}
+.exhibit-shell.geh-mode[data-area="zazzly"][data-view="thumbnail"] .thumbnail-grid button:nth-child(5){grid-row:2;grid-column:19 / span 12 !important}
+.exhibit-shell.geh-mode[data-area="zazzly"][data-view="thumbnail"] .thumbnail-grid button:nth-child(6){grid-row:2;grid-column:31 / span 12 !important}
+.exhibit-shell.geh-mode[data-area="zazzly"][data-view="thumbnail"] .thumbnail-grid button:nth-child(7){grid-row:2;grid-column:43 / span 12 !important}
