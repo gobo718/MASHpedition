@@ -1872,3 +1872,67 @@ button{border-radius:0}
 .exhibit-shell.geh-mode[data-area="zazzly"][data-view="thumbnail"] .thumbnail-grid button:nth-child(-n+4){grid-row:1}
 .exhibit-shell.geh-mode[data-area="zazzly"][data-view="thumbnail"] .thumbnail-grid button:nth-child(n+5):nth-child(-n+8){grid-row:2}
 .exhibit-shell.geh-mode[data-area="zazzly"][data-view="thumbnail"] .thumbnail-grid button:nth-child(n+9){grid-row:3}
+
+/* v113 — Zazzly GEH thumbnail map: 3 / 4 / 5 top-to-bottom.
+   Zazzly's 12-item page has its own geometry. Fewer items in the upper rows
+   let every artwork viewport grow while keeping three rows, the internal
+   identity text, and the tight Theme-only caption beneath each thumbnail. */
+.exhibit-shell.geh-mode[data-area="zazzly"][data-view="thumbnail"] .thumbnail-grid{
+  grid-template-columns:repeat(60,minmax(0,1fr));
+  grid-template-rows:repeat(3,minmax(0,1fr));
+}
+.exhibit-shell.geh-mode[data-area="zazzly"][data-view="thumbnail"] .thumbnail-grid button{
+  --geh-thumb-size:min(calc((100vw - 116px) / 5 - 10px),calc((100dvh - 79px) / 3 - 14px));
+  width:var(--geh-thumb-size);
+  height:var(--geh-thumb-size);
+  aspect-ratio:1 / 1;
+  justify-self:center;
+  align-self:start;
+}
+/* Row 1: three equal cells. */
+.exhibit-shell.geh-mode[data-area="zazzly"][data-view="thumbnail"] .thumbnail-grid button:nth-child(-n+3){
+  grid-row:1;
+  grid-column:span 20;
+}
+/* Row 2: four equal cells. */
+.exhibit-shell.geh-mode[data-area="zazzly"][data-view="thumbnail"] .thumbnail-grid button:nth-child(n+4):nth-child(-n+7){
+  grid-row:2;
+  grid-column:span 15;
+}
+/* Row 3: five equal cells. */
+.exhibit-shell.geh-mode[data-area="zazzly"][data-view="thumbnail"] .thumbnail-grid button:nth-child(n+8):nth-child(-n+12){
+  grid-row:3;
+  grid-column:span 12;
+}
+
+/* v114 — Thumbnail rooms use an 11-item 4 / 3 / 4 map.
+   This is a thumbnail-only map: Exhibit/Room/Aerial keep their established
+   22-item geometry. The larger square viewport leaves a tight caption lane
+   beneath GEH Theme thumbnails. */
+.exhibit-shell[data-view="thumbnail"] .thumbnail-grid:not(.adaptive-brick){
+  grid-template-columns:repeat(12,minmax(0,1fr));
+  grid-template-rows:repeat(3,minmax(0,1fr));
+  top:2px;
+  bottom:40px;
+  row-gap:0;
+  padding:0;
+  align-items:start;
+}
+.exhibit-shell[data-view="thumbnail"] .thumbnail-grid:not(.adaptive-brick) > button{
+  --thumb-11-size:min(calc((100vw - 116px) / 4 - 18px),calc((100dvh - 79px) / 3 - 16px));
+  width:var(--thumb-11-size);
+  height:var(--thumb-11-size);
+  aspect-ratio:1 / 1;
+  justify-self:center;
+  align-self:start;
+}
+.exhibit-shell[data-view="thumbnail"] .thumbnail-grid:not(.adaptive-brick) > button:nth-child(-n+4){grid-row:1;grid-column:span 3}
+.exhibit-shell[data-view="thumbnail"] .thumbnail-grid:not(.adaptive-brick) > button:nth-child(n+5):nth-child(-n+7){grid-row:2;grid-column:span 4}
+.exhibit-shell[data-view="thumbnail"] .thumbnail-grid:not(.adaptive-brick) > button:nth-child(n+8):nth-child(-n+11){grid-row:3;grid-column:span 3}
+
+/* GEH standard pages use the same authoritative 4 / 3 / 4 eleven-item map. */
+.exhibit-shell.geh-mode:not([data-area="zazzly"])[data-view="thumbnail"] .thumbnail-grid > button{
+  --geh-thumb-size:var(--thumb-11-size);
+  width:var(--thumb-11-size);
+  height:var(--thumb-11-size);
+}

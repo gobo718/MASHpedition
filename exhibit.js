@@ -96,6 +96,7 @@
   // ----------------------------------------------------------------
   const params=new URLSearchParams(window.location.search);
   const PAGE_SIZE=22;
+  const THUMBNAIL_PAGE_SIZE=11;
 
   const AREA_PRESETS={
     gallery:{mix:'A',label:'PRIVATE GALLERY',count:66,start:'thumbnail'},
@@ -582,6 +583,10 @@
     return Math.ceil(genericResultCount/PAGE_SIZE);
   }
 
+  function currentThumbnailPageCount(){
+    return Math.ceil(genericResultCount/THUMBNAIL_PAGE_SIZE);
+  }
+
 
   function thumbnailBrickCompositions(count){
     const candidates=[];
@@ -630,7 +635,7 @@
     // GEH rooms own explicit thumbnail maps. In particular, Zazzly's 12-item
     // room is intentionally 4 / 4 / 4 and must not be repacked by the generic
     // partial-page optimizer (which previously rewrote it into 5 / 7).
-    if(gehMode) return;
+    if(gehMode || buttons.length===THUMBNAIL_PAGE_SIZE) return;
     if(!buttons.length || buttons.length>=PAGE_SIZE) return;
     const best=chooseThumbnailBrick(buttons.length);
     if(!best) return;
@@ -653,14 +658,12 @@
     thumbnailGrid.replaceChildren();
 
     if(gehMode){
-      // GEH has four Theme rooms. The first three are the standard 22-item
-      // pages; Zazzly is the fourth, compact 12-item room. Keep its own
-      // content identity while presenting it as PAGE 4 / 4 of GEH.
-      const standardPageCount=3;
-      const gehPageCount=4;
+      // Standard GEH Themes are six 11-item thumbnail pages: 1A, 1B, 2A,
+      // 2B, 3A, 3B. Zazzly remains the seventh/final 12-item page (4).
+      const standardThumbnailPageCount=6;
+      const gehThumbnailPageCount=7;
       if(zazzlyMode){
         thumbnailPage=0;
-        roomPage=0;
         const set=THEME_SETS.zazzly;
         for(let i=0;i<set.items.length;i++){
           const art=set.start+i;
@@ -672,12 +675,11 @@
           button.addEventListener('click',()=>openArtwork(art,gehRank,'thumbnail'));
           thumbnailGrid.appendChild(button);
         }
-        thumbnailStatus.textContent=`GRAND EXHIBITION HALLS\n${rankWord(gehRank).toUpperCase()} · PAGE 4 / ${gehPageCount} · 67–78`;
+        thumbnailStatus.textContent=`GRAND EXHIBITION HALLS\n${rankWord(gehRank).toUpperCase()} · PAGE 4 · 67–78`;
       }else{
-        thumbnailPage=Math.max(0,Math.min(standardPageCount-1,thumbnailPage));
-        roomPage=thumbnailPage;
-        const start=thumbnailPage*PAGE_SIZE;
-        const end=Math.min(genericResultCount,start+PAGE_SIZE);
+        thumbnailPage=Math.max(0,Math.min(standardThumbnailPageCount-1,thumbnailPage));
+        const start=thumbnailPage*THUMBNAIL_PAGE_SIZE;
+        const end=Math.min(genericResultCount,start+THUMBNAIL_PAGE_SIZE);
         for(let i=start;i<end;i++){
           const art=i+1;
           const button=document.createElement('button');
@@ -688,15 +690,16 @@
           button.addEventListener('click',()=>openArtwork(art,gehRank,'thumbnail'));
           thumbnailGrid.appendChild(button);
         }
-        thumbnailStatus.textContent=`GRAND EXHIBITION HALLS\n${rankWord(gehRank).toUpperCase()} · PAGE ${thumbnailPage+1} / ${gehPageCount} · ${start+1}–${end}`;
+        const room=Math.floor(thumbnailPage/2)+1;
+        const half=thumbnailPage%2===0?'A':'B';
+        thumbnailStatus.textContent=`GRAND EXHIBITION HALLS\n${rankWord(gehRank).toUpperCase()} · PAGE ${room}${half} · ${start+1}–${end}`;
       }
       updateRankButtons();
     }else{
-      const pageCount=currentGenericPageCount();
+      const pageCount=currentThumbnailPageCount();
       thumbnailPage=Math.max(0,Math.min(pageCount-1,thumbnailPage));
-      roomPage=thumbnailPage;
-      const start=thumbnailPage*PAGE_SIZE;
-      const end=Math.min(genericResultCount,start+PAGE_SIZE);
+      const start=thumbnailPage*THUMBNAIL_PAGE_SIZE;
+      const end=Math.min(genericResultCount,start+THUMBNAIL_PAGE_SIZE);
       for(let i=start;i<end;i++){
         const button=document.createElement('button');
         button.type='button';
@@ -714,36 +717,12 @@
         : `${areaLabel} · PAGE ${thumbnailPage+1} / ${pageCount} · ${start+1}–${end} OF ${genericResultCount}`;
     }
 
-    // Make the thumbnail surface measurable before adaptive packing. When this
-    // ran while the view was still display:none, clientWidth/clientHeight were 0
-    // and the optimizer correctly found no usable composition.
     setView('thumbnail');
-    applyAdaptiveThumbnailBrick();
+    applyThumbnailBrickLayout();
+    updatePageNav();
+    updateNavigationState();
   }
 
-  function paintEndlessSlot(button,index){
-    button.classList.remove('is-empty');
-    button.disabled=false;
-    button.removeAttribute('data-result');
-    const span=button.querySelector('span');
-
-    if(index<0 || index>=genericResultCount){
-      button.classList.add('is-empty');
-      button.disabled=true;
-      if(span) span.textContent='';
-      return;
-    }
-
-    button.dataset.result=String(index);
-    const displayedArtNumber=zazzlyMode?67+index:index+1;
-    const displayedLabel=zazzlyMode?exhibitArtLabel(displayedArtNumber):`RESULT ${index+1}`;
-    button.setAttribute('aria-label',displayedLabel);
-    if(span) span.textContent=displayedLabel;
-  }
-
-  // Endless Wall displays only three DOM image positions. PAGE_SIZE controls
-  // which logical result batch is considered loaded. Crossing a page boundary
-  // swaps the batch; the entire result set is never placed in the DOM.
   function renderEndless(){
     if(catacombsMode && !catSearchHasTheme) return;
     if(!capabilities.endless){
@@ -907,28 +886,29 @@
   }
 
   function pageCount(){
-    return Math.max(1,currentGenericPageCount());
+    return Math.max(1,shell.dataset.view==='thumbnail' ? currentThumbnailPageCount() : currentGenericPageCount());
   }
 
   function updatePageNav(){
     if(!pageNav) return;
     const view=shell.dataset.view;
     const gehThumbnail=view==='thumbnail' && gehMode;
-    const show=(view==='thumbnail' || view==='endless') && (pageCount()>1 || gehThumbnail);
+    const count=gehThumbnail ? (zazzlyMode?1:6) : pageCount();
+    const show=(view==='thumbnail' || view==='endless') && (count>1 || gehThumbnail);
     pageNav.hidden=!show;
     if(!show) return;
-    const page=Math.max(0,Math.min(pageCount()-1,currentPageForView()));
-    const start=page*PAGE_SIZE+1;
-    const end=Math.min(genericResultCount,start+PAGE_SIZE-1);
-    pagePrevBtn.disabled=gehThumbnail
-      ? (!zazzlyMode && page<=0)
-      : page<=0 && !(gehMode && zazzlyMode);
-    pageNextBtn.disabled=gehThumbnail
-      ? zazzlyMode
-      : page>=pageCount()-1 && !(gehMode && !zazzlyMode);
-    pageStatus.textContent=view==='thumbnail'
-      ? (gehMode ? `PAGE ${zazzlyMode?4:page+1} / 4` : `PAGE ${page+1} / ${pageCount()}`)
-      : `${start}–${end}`;
+    const page=Math.max(0,Math.min(count-1,currentPageForView()));
+    const unit=view==='thumbnail'?THUMBNAIL_PAGE_SIZE:PAGE_SIZE;
+    const start=page*unit+1;
+    const end=Math.min(genericResultCount,start+unit-1);
+    pagePrevBtn.disabled=gehThumbnail ? (!zazzlyMode && page<=0) : page<=0;
+    pageNextBtn.disabled=gehThumbnail ? zazzlyMode : page>=count-1;
+    if(view==='thumbnail' && gehMode){
+      if(zazzlyMode) pageStatus.textContent='PAGE 4';
+      else pageStatus.textContent=`PAGE ${Math.floor(page/2)+1}${page%2===0?'A':'B'}`;
+    }else{
+      pageStatus.textContent=view==='thumbnail' ? `PAGE ${page+1} / ${count}` : `${start}–${end}`;
+    }
   }
 
   function renderCurrentViewAfterPageChange(view){
@@ -946,7 +926,7 @@
     // crossing the Room 3 <-> Room 4 boundary is navigation rather than
     // an in-page page increment. Preserve the selected GEH rank.
     if(direction>0 && !zazzlyMode){
-      const lastStandardPage=currentGenericPageCount()-1;
+      const lastStandardPage=view==='thumbnail' ? 5 : currentGenericPageCount()-1;
       const current=view==='thumbnail' ? thumbnailPage : roomPage;
       if(current!==lastStandardPage) return false;
       const next=new URLSearchParams(params);
@@ -969,7 +949,7 @@
       next.delete('geh');
       next.delete('returnArea');
       next.delete('returnRoomPage');
-      next.set('roomPage',String(returnRoomPage));
+      next.set('roomPage',String(view==='thumbnail'?5:returnRoomPage));
       next.delete('entryDoor');
       next.set('start',view==='overhead'?'exhibit':view==='thumbnail'?'thumbnail':'room');
       window.location.href=`exhibit.html?${next.toString()}`;
@@ -985,7 +965,7 @@
     if((rawNext<0 || rawNext>=pageCount()) && navigateGehRoomBoundary(delta,view)) return;
     const next=Math.max(0,Math.min(pageCount()-1,rawNext));
     if(next===current) return;
-    roomPage=next;
+    if(view!=='thumbnail') roomPage=next;
     thumbnailPage=next;
     if(view==='endless') endlessIndex=next*PAGE_SIZE;
     renderCurrentViewAfterPageChange(view);
@@ -1000,7 +980,7 @@
     rightBtn.disabled=false;
 
     if(view==='thumbnail'){
-      const pages=currentGenericPageCount();
+      const pages=gehMode ? (zazzlyMode?1:6) : currentThumbnailPageCount();
       leftBtn.disabled=thumbnailPage<=0 && !(gehMode && zazzlyMode);
       rightBtn.disabled=thumbnailPage>=pages-1 && !(gehMode && !zazzlyMode);
     }else if(view==='endless'){
@@ -1056,7 +1036,7 @@
     }
 
     updateArtworkCopy(nextArt,selectedRank);
-    const nextPage=Math.floor((nextArt-1)/PAGE_SIZE);
+    const nextPage=Math.floor((nextArt-1)/(sourceView==='thumbnail'?THUMBNAIL_PAGE_SIZE:PAGE_SIZE));
 
     if(!fromExhibit){
       roomPage=nextPage;
