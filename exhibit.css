@@ -2002,8 +2002,9 @@ button{border-radius:0}
 .exhibit-shell.geh-mode[data-area="zazzly"][data-view="thumbnail"] .thumbnail-grid button:nth-child(6){grid-row:2;grid-column:31 / span 12 !important}
 .exhibit-shell.geh-mode[data-area="zazzly"][data-view="thumbnail"] .thumbnail-grid button:nth-child(7){grid-row:2;grid-column:43 / span 12 !important}
 
-/* v123 — Thumbnail PAGE PREV/NEXT text only: smaller so labels stay inside the existing buttons. */
+/* v124 — Thumbnail PAGE PREV/NEXT text only. 7px is intentionally below
+   the existing 9px minimum so these two labels actually render smaller. */
 .exhibit-shell[data-view="thumbnail"] .page-nav #pagePrevBtn,
 .exhibit-shell[data-view="thumbnail"] .page-nav #pageNextBtn{
-  font-size:9px;
+  font-size:7px;
 }
