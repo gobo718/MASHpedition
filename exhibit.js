@@ -632,23 +632,45 @@
     thumbnailGrid.replaceChildren();
 
     if(gehMode){
-      const pageCount=currentGenericPageCount();
-      thumbnailPage=Math.max(0,Math.min(pageCount-1,thumbnailPage));
-      roomPage=thumbnailPage;
-      const start=thumbnailPage*PAGE_SIZE;
-      const end=Math.min(genericResultCount,start+PAGE_SIZE);
-      for(let i=start;i<end;i++){
-        const art=i+1;
-        const button=document.createElement('button');
-        button.type='button';
-        button.dataset.art=String(art);
-        button.dataset.rank=String(gehRank);
-        button.textContent=`${exhibitArtLabel(art)} · ${rankWord(gehRank)}`;
-        button.setAttribute('aria-label',`${exhibitArtLabel(art)}, ${rankWord(gehRank)} place`);
-        button.addEventListener('click',()=>openArtwork(art,gehRank,'thumbnail'));
-        thumbnailGrid.appendChild(button);
+      // GEH has four Theme rooms. The first three are the standard 22-item
+      // pages; Zazzly is the fourth, compact 12-item room. Keep its own
+      // content identity while presenting it as PAGE 4 / 4 of GEH.
+      const standardPageCount=3;
+      const gehPageCount=4;
+      if(zazzlyMode){
+        thumbnailPage=0;
+        roomPage=0;
+        const set=THEME_SETS.zazzly;
+        for(let i=0;i<set.items.length;i++){
+          const art=set.start+i;
+          const button=document.createElement('button');
+          button.type='button';
+          button.dataset.art=String(art);
+          button.dataset.rank=String(gehRank);
+          button.textContent=`${exhibitArtLabel(art)} · ${rankWord(gehRank)}`;
+          button.setAttribute('aria-label',`${exhibitArtLabel(art)}, ${rankWord(gehRank)} place`);
+          button.addEventListener('click',()=>openArtwork(art,gehRank,'thumbnail'));
+          thumbnailGrid.appendChild(button);
+        }
+        thumbnailStatus.textContent=`${areaLabel} · ${rankWord(gehRank)} · PAGE 4 / ${gehPageCount} · 67–78`;
+      }else{
+        thumbnailPage=Math.max(0,Math.min(standardPageCount-1,thumbnailPage));
+        roomPage=thumbnailPage;
+        const start=thumbnailPage*PAGE_SIZE;
+        const end=Math.min(genericResultCount,start+PAGE_SIZE);
+        for(let i=start;i<end;i++){
+          const art=i+1;
+          const button=document.createElement('button');
+          button.type='button';
+          button.dataset.art=String(art);
+          button.dataset.rank=String(gehRank);
+          button.textContent=`${exhibitArtLabel(art)} · ${rankWord(gehRank)}`;
+          button.setAttribute('aria-label',`${exhibitArtLabel(art)}, ${rankWord(gehRank)} place`);
+          button.addEventListener('click',()=>openArtwork(art,gehRank,'thumbnail'));
+          thumbnailGrid.appendChild(button);
+        }
+        thumbnailStatus.textContent=`${areaLabel} · ${rankWord(gehRank)} · PAGE ${thumbnailPage+1} / ${gehPageCount} · ${start+1}–${end}`;
       }
-      thumbnailStatus.textContent=`${areaLabel} · ${rankWord(gehRank)} · PAGE ${thumbnailPage+1} / ${pageCount} · ${start+1}–${end}`;
       updateRankButtons();
     }else{
       const pageCount=currentGenericPageCount();
@@ -872,16 +894,21 @@
   function updatePageNav(){
     if(!pageNav) return;
     const view=shell.dataset.view;
-    const show=(view==='thumbnail' || view==='endless') && pageCount()>1;
+    const gehThumbnail=view==='thumbnail' && gehMode;
+    const show=(view==='thumbnail' || view==='endless') && (pageCount()>1 || gehThumbnail);
     pageNav.hidden=!show;
     if(!show) return;
     const page=Math.max(0,Math.min(pageCount()-1,currentPageForView()));
     const start=page*PAGE_SIZE+1;
     const end=Math.min(genericResultCount,start+PAGE_SIZE-1);
-    pagePrevBtn.disabled=page<=0 && !(gehMode && zazzlyMode);
-    pageNextBtn.disabled=page>=pageCount()-1 && !(gehMode && !zazzlyMode);
+    pagePrevBtn.disabled=gehThumbnail
+      ? (!zazzlyMode && page<=0)
+      : page<=0 && !(gehMode && zazzlyMode);
+    pageNextBtn.disabled=gehThumbnail
+      ? zazzlyMode
+      : page>=pageCount()-1 && !(gehMode && !zazzlyMode);
     pageStatus.textContent=view==='thumbnail'
-      ? `PAGE ${page+1} / ${pageCount()}`
+      ? (gehMode ? `PAGE ${zazzlyMode?4:page+1} / 4` : `PAGE ${page+1} / ${pageCount()}`)
       : `${start}–${end}`;
   }
 
@@ -1288,6 +1315,21 @@
   // Exterior Door 1 enters at its exact interior physical position:
   // ART 22 | DOOR 1 | ART 1, with Door 1 centered.
   frontDoor.addEventListener('click',()=>{
+    // The GEH entrance always enters GEH Room 1 at Door 1. If the entrance
+    // was opened while viewing GEH's Zazzly Room 4, return to the standard
+    // GEH area rather than treating the facade as Zazzly's private entrance.
+    if(gehMode && zazzlyMode){
+      const next=new URLSearchParams(params);
+      next.set('area',standardAreaForReturn());
+      next.delete('geh');
+      next.delete('returnArea');
+      next.delete('returnRoomPage');
+      next.set('roomPage','0');
+      next.set('entryDoor','1');
+      next.set('start','room');
+      window.location.href=`exhibit.html?${next.toString()}`;
+      return;
+    }
     if(capabilities.room) renderRoom(zazzlyMode?13:23);
     else if(capabilities.thumbnail) renderThumbnailPage();
   });
