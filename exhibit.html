@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>MASHpedition Shared Artwork Viewer</title>
 <!-- v18: area samples + swipe navigation on Exhibit/Endless + v17 shared viewer -->
-<link rel="stylesheet" href="exhibit.css?v=86">
+<link rel="stylesheet" href="exhibit.css?v=94">
 </head>
 <body>
 <main class="exhibit-shell" id="exhibitShell" data-view="door" aria-label="Exhibit view">
@@ -171,13 +171,37 @@
         </div>
 
         <section class="blurblet-section" aria-label="Blurblets">
-          <header>
+          <header class="blurblet-header">
             <strong>BLURBLETS</strong>
-            <span>TOP · TIME</span>
+            <div class="blurblet-actions">
+              <button type="button" id="blurbletFiltersBtn" aria-expanded="false">FILTERS</button>
+              <button type="button" id="blurbletSortBtn" aria-expanded="false">SORT: TOP</button>
+            </div>
           </header>
-          <article><strong>Blurblet 1</strong><p>Placeholder comment layer for the selected artwork.</p></article>
-          <article><strong>Blurblet 2</strong><p>Normal lighting shows ordinary Blurblets. Spotlight behavior stays separate.</p></article>
-          <article><strong>Blurblet 3</strong><p>This section can continue vertically without changing the first-screen geometry.</p></article>
+
+          <div class="blurblet-panel blurblet-filter-panel" id="blurbletFilterPanel" hidden>
+            <fieldset>
+              <legend>LIGHTS</legend>
+              <label><input type="radio" name="blurbletLights" value="normal" checked> NORMAL</label>
+              <label><input type="radio" name="blurbletLights" value="spotlight"> SPOTLIGHT</label>
+            </fieldset>
+            <div class="blurblet-audience-filters">
+              <label><input type="checkbox" id="blurbletFriends"> FRIENDS</label>
+              <label><input type="checkbox" id="blurbletFollowing"> FOLLOWING</label>
+              <label><input type="checkbox" id="blurbletOwn"> SEE YOUR OWN BLURBLETS</label>
+            </div>
+          </div>
+
+          <div class="blurblet-panel blurblet-sort-panel" id="blurbletSortPanel" hidden>
+            <button type="button" data-blurblet-sort="top" class="is-selected">TOP</button>
+            <button type="button" data-blurblet-sort="time">TIME</button>
+          </div>
+
+          <div id="blurbletList">
+            <article data-top="1" data-time="2"><strong>Blurblet 1</strong><p>Placeholder comment layer for the selected artwork.</p></article>
+            <article data-top="3" data-time="1"><strong>Blurblet 2</strong><p>Normal lighting shows ordinary Blurblets. Spotlight behavior stays separate.</p></article>
+            <article data-top="2" data-time="3"><strong>Blurblet 3</strong><p>This section can continue vertically without changing the first-screen geometry.</p></article>
+          </div>
         </section>
       </div>
     </section>
@@ -269,6 +293,6 @@
 
   <a class="museum-return" href="index.html">MUSEUM</a>
 </main>
-<script src="exhibit.js?v=86"></script>
+<script src="exhibit.js?v=94"></script>
 </body>
 </html>

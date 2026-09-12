@@ -55,6 +55,12 @@
   const artworkExpand=document.getElementById('artworkExpand');
   const expandBack=document.getElementById('expandBack');
   const expandContent=document.getElementById('expandContent');
+  const blurbletFiltersBtn=document.getElementById('blurbletFiltersBtn');
+  const blurbletSortBtn=document.getElementById('blurbletSortBtn');
+  const blurbletFilterPanel=document.getElementById('blurbletFilterPanel');
+  const blurbletSortPanel=document.getElementById('blurbletSortPanel');
+  const blurbletList=document.getElementById('blurbletList');
+  const blurbletSortChoices=[...document.querySelectorAll('[data-blurblet-sort]')];
 
   const leftSlots=[
     document.getElementById('leftPerspectiveSlot'),
@@ -1263,6 +1269,30 @@
   artworkCenter.addEventListener('click',()=>openExpanded('art'));
   artworkPlaque.addEventListener('click',()=>openExpanded('plaque'));
   expandBack.addEventListener('click',closeExpanded);
+
+  function toggleBlurbletPanel(panel,button,otherPanel,otherButton){
+    const opening=panel.hidden;
+    panel.hidden=!opening;
+    button.setAttribute('aria-expanded',String(opening));
+    if(opening && otherPanel){
+      otherPanel.hidden=true;
+      otherButton?.setAttribute('aria-expanded','false');
+    }
+  }
+
+  function sortBlurblets(mode){
+    const articles=[...blurbletList.querySelectorAll('article')];
+    articles.sort((a,b)=>Number(a.dataset[mode])-Number(b.dataset[mode]));
+    articles.forEach(article=>blurbletList.appendChild(article));
+    blurbletSortChoices.forEach(button=>button.classList.toggle('is-selected',button.dataset.blurbletSort===mode));
+    blurbletSortBtn.textContent=`SORT: ${mode.toUpperCase()}`;
+    blurbletSortPanel.hidden=true;
+    blurbletSortBtn.setAttribute('aria-expanded','false');
+  }
+
+  blurbletFiltersBtn?.addEventListener('click',()=>toggleBlurbletPanel(blurbletFilterPanel,blurbletFiltersBtn,blurbletSortPanel,blurbletSortBtn));
+  blurbletSortBtn?.addEventListener('click',()=>toggleBlurbletPanel(blurbletSortPanel,blurbletSortBtn,blurbletFilterPanel,blurbletFiltersBtn));
+  blurbletSortChoices.forEach(button=>button.addEventListener('click',()=>sortBlurblets(button.dataset.blurbletSort)));
 
   // Creator interaction is intentionally not invented in this engine pass.
   creatorLink.addEventListener('click',event=>event.preventDefault());

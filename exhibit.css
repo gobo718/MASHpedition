@@ -1658,3 +1658,34 @@ button{border-radius:0}
 .wall-triplet-art.is-door-slot.is-locked-door span{display:block;color:#fff}
 .right-normal-art.is-door-slot.is-locked-door span,
 .right-perspective-art.is-door-slot.is-locked-door span{display:block;color:#fff}
+
+/* v94 — Artwork Detail Blurblet controls. These live below the locked
+   artwork/plaque first screen, so they appear naturally after scrolling. */
+.blurblet-actions{display:flex;align-items:center;gap:8px}
+.blurblet-actions button,
+.blurblet-sort-panel button{
+  min-height:30px;
+  padding:0 12px;
+  border:1px solid var(--line);
+  border-radius:0;
+  background:var(--control);
+  color:var(--ink);
+  font-size:10px;
+  font-weight:900;
+  letter-spacing:.05em;
+}
+.blurblet-panel{
+  margin:12px 10px 0;
+  padding:12px 14px;
+  border:1px solid var(--line);
+  background:#f5f1e9;
+}
+.blurblet-filter-panel{display:flex;align-items:flex-start;gap:28px}
+.blurblet-filter-panel[hidden],.blurblet-sort-panel[hidden]{display:none}
+.blurblet-filter-panel fieldset{margin:0;padding:0;border:0}
+.blurblet-filter-panel legend{margin:0 0 8px;font-size:10px;font-weight:900;letter-spacing:.06em}
+.blurblet-filter-panel label{display:block;margin:6px 0;font-size:11px;font-weight:800}
+.blurblet-audience-filters{display:grid;gap:6px}
+.blurblet-sort-panel{gap:8px}
+.blurblet-sort-panel:not([hidden]){display:flex}
+.blurblet-sort-panel button.is-selected{outline:2px solid var(--ink);outline-offset:-3px}
