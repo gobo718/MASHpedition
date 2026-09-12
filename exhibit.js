@@ -889,6 +889,29 @@
     return Math.max(1,shell.dataset.view==='thumbnail' ? currentThumbnailPageCount() : currentGenericPageCount());
   }
 
+  function syncThumbnailPageControls(){
+    if(!pageNav || shell.dataset.view!=='thumbnail' || pageNav.hidden) return;
+    const museum=document.querySelector('.museum-return');
+    if(!museum) return;
+    const museumRect=museum.getBoundingClientRect();
+    const shellRect=shell.getBoundingClientRect();
+    const gap=6;
+    const width=museumRect.width;
+    const height=museumRect.height;
+    pageNav.style.left='auto';
+    pageNav.style.right=`${Math.max(0,shellRect.right-museumRect.right)}px`;
+    pageNav.style.top=`${Math.max(0,museumRect.top-shellRect.top)}px`;
+    pageNav.style.bottom='auto';
+    pageNav.style.width=`${width}px`;
+    pageNav.style.height=`${(height+gap)*4-gap}px`;
+    [pagePrevBtn,pageNextBtn].forEach(button=>{
+      button.style.width=`${width}px`;
+      button.style.height=`${height}px`;
+    });
+    pagePrevBtn.style.top=`${2*(height+gap)}px`;
+    pageNextBtn.style.top=`${3*(height+gap)}px`;
+  }
+
   function updatePageNav(){
     if(!pageNav) return;
     const view=shell.dataset.view;
@@ -903,6 +926,7 @@
     const end=Math.min(genericResultCount,start+unit-1);
     pagePrevBtn.disabled=gehThumbnail ? (!zazzlyMode && page<=0) : page<=0;
     pageNextBtn.disabled=gehThumbnail ? zazzlyMode : page>=count-1;
+    syncThumbnailPageControls();
     if(view==='thumbnail' && gehMode){
       if(zazzlyMode) pageStatus.textContent='PAGE 4';
       else pageStatus.textContent=`PAGE ${Math.floor(page/2)+1}${page%2===0?'A':'B'}`;
@@ -1379,6 +1403,8 @@
     const index=Number(button.dataset.roomIndex);
     paintOverheadSlot(button,roomSlots[wrap(index)]);
   });
+
+  window.addEventListener('resize',()=>{ if(shell.dataset.view==='thumbnail') syncThumbnailPageControls(); });
 
   const requestedStart=(params.get('start')||defaultStart).toLowerCase();
   if(requestedStart==='exhibit' && capabilities.exhibit && !(catacombsMode && catSearchHasTheme)) renderOverhead();
