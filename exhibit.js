@@ -740,9 +740,9 @@
         const displayedArtNumber=zazzlyMode?66+artNumber:artNumber;
         const useRoomLabel=zazzlyMode || (emojiPairDefinedLocation && artNumber<=PAGE_SIZE);
         button.textContent=useRoomLabel?exhibitArtLabel(displayedArtNumber):`RESULT ${artNumber}`;
-        if(catacombsMode){
+        if(catacombsMode || requestedArea==='collection'){
           const label=document.createElement('span');
-          label.className='catacombs-thumbnail-theme-label museum-thumbnail-plate';
+          label.className=`${catacombsMode?'catacombs':'collection'}-thumbnail-theme-label museum-thumbnail-plate`;
           paintMuseumPlateText(label,exhibitThemeWord(displayedArtNumber));
           button.appendChild(label);
         }

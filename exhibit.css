@@ -2078,11 +2078,13 @@ button{border-radius:0}
 /* v133 — Catacombs thumbnails adopt the established Museum Foundry Theme
    plates from GEH. This is intentionally Catacombs-only; no room, search,
    pagination, or other area behavior is changed. */
-.exhibit-shell.catacombs-mode[data-view="thumbnail"] .thumbnail-grid button{
+.exhibit-shell.catacombs-mode[data-view="thumbnail"] .thumbnail-grid button,
+.exhibit-shell[data-area="collection"][data-view="thumbnail"] .thumbnail-grid button{
   position:relative;
   overflow:visible;
 }
-.exhibit-shell.catacombs-mode[data-view="thumbnail"] .catacombs-thumbnail-theme-label.museum-thumbnail-plate{
+.exhibit-shell.catacombs-mode[data-view="thumbnail"] .catacombs-thumbnail-theme-label.museum-thumbnail-plate,
+.exhibit-shell[data-area="collection"][data-view="thumbnail"] .collection-thumbnail-theme-label.museum-thumbnail-plate{
   position:absolute;
   left:50%;
   top:calc(100% + 5px);
@@ -2104,31 +2106,38 @@ button{border-radius:0}
   white-space:nowrap;
   pointer-events:none;
 }
-.exhibit-shell.catacombs-mode[data-view="thumbnail"] .museum-thumbnail-plate .museum-plate-text{
+.exhibit-shell.catacombs-mode[data-view="thumbnail"] .museum-thumbnail-plate .museum-plate-text,
+.exhibit-shell[data-area="collection"][data-view="thumbnail"] .museum-thumbnail-plate .museum-plate-text{
   display:inline-block;
   position:relative;
   top:2px;
   transform:scaleX(.78);
   transform-origin:center center;
 }
-.exhibit-shell.catacombs-mode[data-view="thumbnail"] .museum-thumbnail-plate .museum-plate-glyph{
+.exhibit-shell.catacombs-mode[data-view="thumbnail"] .museum-thumbnail-plate .museum-plate-glyph,
+.exhibit-shell[data-area="collection"][data-view="thumbnail"] .museum-thumbnail-plate .museum-plate-glyph{
   display:inline-block;
 }
-.exhibit-shell.catacombs-mode[data-view="thumbnail"] .museum-thumbnail-plate .museum-cap{
+.exhibit-shell.catacombs-mode[data-view="thumbnail"] .museum-thumbnail-plate .museum-cap,
+.exhibit-shell[data-area="collection"][data-view="thumbnail"] .museum-thumbnail-plate .museum-cap{
   font-size:1em;
 }
-.exhibit-shell.catacombs-mode[data-view="thumbnail"] .museum-thumbnail-plate .museum-smallcap{
+.exhibit-shell.catacombs-mode[data-view="thumbnail"] .museum-thumbnail-plate .museum-smallcap,
+.exhibit-shell[data-area="collection"][data-view="thumbnail"] .museum-thumbnail-plate .museum-smallcap{
   font-size:.70em;
 }
-.exhibit-shell.catacombs-mode[data-view="thumbnail"] .museum-thumbnail-plate .museum-tier-high{
+.exhibit-shell.catacombs-mode[data-view="thumbnail"] .museum-thumbnail-plate .museum-tier-high,
+.exhibit-shell[data-area="collection"][data-view="thumbnail"] .museum-thumbnail-plate .museum-tier-high{
   position:relative;
   top:-0.2px;
 }
-.exhibit-shell.catacombs-mode[data-view="thumbnail"] .museum-thumbnail-plate .museum-tier-mid{
+.exhibit-shell.catacombs-mode[data-view="thumbnail"] .museum-thumbnail-plate .museum-tier-mid,
+.exhibit-shell[data-area="collection"][data-view="thumbnail"] .museum-thumbnail-plate .museum-tier-mid{
   position:relative;
   top:0;
 }
-.exhibit-shell.catacombs-mode[data-view="thumbnail"] .museum-thumbnail-plate .museum-tier-low{
+.exhibit-shell.catacombs-mode[data-view="thumbnail"] .museum-thumbnail-plate .museum-tier-low,
+.exhibit-shell[data-area="collection"][data-view="thumbnail"] .museum-thumbnail-plate .museum-tier-low{
   position:relative;
   top:0.2px;
 }
@@ -2166,3 +2175,5 @@ button,
   font-family:inherit;
   font-variant:normal;
 }
+
+/* v135 — Collection thumbnails use the established Museum Foundry Theme plates. */
