@@ -111,6 +111,7 @@
   const requestedArea=(params.get('area')||'').toLowerCase();
   const catacombsMode=requestedArea==='cat-theme' || requestedArea==='cat-search';
   const zazzlyMode=requestedArea==='zazzly';
+  const collectionContext=requestedArea==='collection' || (zazzlyMode && params.get('returnArea')==='collection');
   let catSearchHasTheme=requestedArea!=='cat-search';
 
   // Authoritative Theme content. Presentation code resolves identities from
@@ -182,7 +183,7 @@
   const maxUnlockedRank=Math.max(1,Math.min(10,Number(params.get('ranks'))||1));
   const gehMode=areaPreset?.geh===true || params.get('geh')==='1' ||
     (!areaPreset && params.get('geh')!=='0' && mix==='B');
-  const areaLabel=(zazzlyMode && gehMode) ? 'GRAND EXHIBITION HALL' : (areaPreset?.label || (gehMode?'GRAND EXHIBITION HALL':'VIEWER SAMPLE'));
+  const areaLabel=(zazzlyMode && gehMode) ? 'GRAND EXHIBITION HALL' : (collectionContext ? 'COLLECTION' : (areaPreset?.label || (gehMode?'GRAND EXHIBITION HALL':'VIEWER SAMPLE')));
   const centerIdentityText=`${areaLabel} - ${params.get('emojis') || '😀 😎'}`;
   overheadCenterIdentity.textContent=centerIdentityText;
   roomCenterIdentity.textContent=centerIdentityText;
@@ -200,7 +201,7 @@
   const searchDetails=params.get('search') || 'DETAILS OF SEARCH';
   const requestedRank=Math.max(1,Math.min(10,Number(params.get('rank'))||1));
   const entranceKind=gehMode?'geh':(
-    requestedArea==='collection'?'collection':
+    collectionContext?'collection':
     requestedArea==='gallery'?'gallery':
     requestedArea==='fyc'?'fyc':
     requestedArea==='se'?'salon':
@@ -211,7 +212,7 @@
   // locations anywhere the art space is defined by one shared emoji pair.
   // Catacombs is intentionally excluded: its search presentations do not
   // carry a shared pair.
-  const emojiPairDefinedLocation=gehMode || requestedArea==='collection';
+  const emojiPairDefinedLocation=gehMode || collectionContext;
 
   entranceLocation.textContent=entranceKind==='catacombs'?'CATACOMBS':areaLabel;
   entranceEmojis.textContent=entranceEmojiText;
@@ -294,6 +295,7 @@
   shell.dataset.mix=mix;
   shell.dataset.area=requestedArea||'sample';
   shell.classList.toggle('geh-mode',gehMode);
+  shell.classList.toggle('collection-context',collectionContext);
   shell.classList.toggle('catacombs-mode',catacombsMode);
 
   // Map geometry is selected independently from the content/presentation layer.
@@ -616,6 +618,7 @@
   }
 
   function currentThumbnailPageCount(){
+    if(zazzlyMode && collectionContext) return 1;
     return Math.ceil(genericResultCount/THUMBNAIL_PAGE_SIZE);
   }
 
@@ -667,7 +670,7 @@
     // GEH rooms own explicit thumbnail maps. In particular, Zazzly's 12-item
     // room is intentionally 4 / 4 / 4 and must not be repacked by the generic
     // partial-page optimizer (which previously rewrote it into 5 / 7).
-    if(gehMode || buttons.length===THUMBNAIL_PAGE_SIZE) return;
+    if(gehMode || (zazzlyMode && collectionContext) || buttons.length===THUMBNAIL_PAGE_SIZE) return;
     if(!buttons.length || buttons.length>=PAGE_SIZE) return;
     const best=chooseThumbnailBrick(buttons.length);
     if(!best) return;
@@ -728,6 +731,25 @@
       }
       updateRankButtons();
     }else{
+      if(zazzlyMode && collectionContext){
+        thumbnailPage=0;
+        const set=THEME_SETS.zazzly;
+        for(let i=0;i<set.items.length;i++){
+          const art=set.start+i;
+          const button=document.createElement('button');
+          button.type='button';
+          button.dataset.art=String(art);
+          button.textContent=exhibitArtLabel(art);
+          const label=document.createElement('span');
+          label.className='collection-thumbnail-theme-label museum-thumbnail-plate';
+          paintMuseumPlateText(label,exhibitThemeWord(art));
+          button.appendChild(label);
+          button.setAttribute('aria-label',exhibitThemeWord(art));
+          button.addEventListener('click',()=>openArtwork(art,1,'thumbnail'));
+          thumbnailGrid.appendChild(button);
+        }
+        thumbnailStatus.textContent='COLLECTION · PAGE 4 · 67–78';
+      }else{
       const pageCount=currentThumbnailPageCount();
       thumbnailPage=Math.max(0,Math.min(pageCount-1,thumbnailPage));
       const start=thumbnailPage*THUMBNAIL_PAGE_SIZE;
@@ -753,6 +775,7 @@
       thumbnailStatus.textContent=requestedArea==='se'
         ? `${areaLabel} · CURRENT SELECTIONS`
         : `${areaLabel} · PAGE ${thumbnailPage+1} / ${pageCount} · ${start+1}–${end} OF ${genericResultCount}`;
+      }
     }
 
     setView('thumbnail');
@@ -958,16 +981,17 @@
     if(!pageNav) return;
     const view=shell.dataset.view;
     const gehThumbnail=view==='thumbnail' && gehMode;
+    const connectedZazzlyThumbnail=view==='thumbnail' && zazzlyMode && collectionContext;
     const count=gehThumbnail ? (zazzlyMode?1:6) : pageCount();
-    const show=(view==='thumbnail' || view==='endless') && (count>1 || gehThumbnail);
+    const show=(view==='thumbnail' || view==='endless') && (count>1 || gehThumbnail || connectedZazzlyThumbnail);
     pageNav.hidden=!show;
     if(!show) return;
     const page=Math.max(0,Math.min(count-1,currentPageForView()));
     const unit=view==='thumbnail'?THUMBNAIL_PAGE_SIZE:PAGE_SIZE;
     const start=page*unit+1;
     const end=Math.min(genericResultCount,start+unit-1);
-    pagePrevBtn.disabled=gehThumbnail ? (!zazzlyMode && page<=0) : page<=0;
-    pageNextBtn.disabled=gehThumbnail ? zazzlyMode : page>=count-1;
+    pagePrevBtn.disabled=gehThumbnail ? (!zazzlyMode && page<=0) : (connectedZazzlyThumbnail ? false : page<=0);
+    pageNextBtn.disabled=gehThumbnail ? zazzlyMode : (connectedZazzlyThumbnail ? true : page>=count-1);
     syncThumbnailPageControls();
     if(view==='thumbnail' && gehMode){
       if(zazzlyMode) pageStatus.textContent='PAGE 4';
@@ -984,8 +1008,8 @@
     else if(['left','wall','right'].includes(view)) renderRoom(lastRoomStart);
   }
 
-  function navigateGehRoomBoundary(direction,view){
-    if(!gehMode) return false;
+  function navigateConnectedZazzlyBoundary(direction,view){
+    if(!(gehMode || collectionContext)) return false;
 
     // GEH has a fourth physical Theme room: Zazzly. Main/Alternate/Mature
     // live in the standard 22-item area; Zazzly has its own map/area, so
@@ -997,8 +1021,9 @@
       if(current!==lastStandardPage) return false;
       const next=new URLSearchParams(params);
       next.set('area','zazzly');
-      next.set('geh','1');
-      next.set('returnArea',requestedArea || 'geh');
+      if(gehMode) next.set('geh','1');
+      else next.delete('geh');
+      next.set('returnArea',requestedArea || (gehMode?'geh':'collection'));
       next.set('returnRoomPage',String(lastStandardPage));
       next.delete('roomPage');
       next.delete('entryDoor');
@@ -1028,7 +1053,7 @@
     const view=shell.dataset.view;
     const current=currentPageForView();
     const rawNext=current+delta;
-    if((rawNext<0 || rawNext>=pageCount()) && navigateGehRoomBoundary(delta,view)) return;
+    if((rawNext<0 || rawNext>=pageCount()) && navigateConnectedZazzlyBoundary(delta,view)) return;
     const next=Math.max(0,Math.min(pageCount()-1,rawNext));
     if(next===current) return;
     if(view!=='thumbnail') roomPage=next;
@@ -1046,9 +1071,10 @@
     rightBtn.disabled=false;
 
     if(view==='thumbnail'){
+      const connectedCollectionThumb=collectionContext && (requestedArea==='collection' || zazzlyMode);
       const pages=gehMode ? (zazzlyMode?1:6) : currentThumbnailPageCount();
-      leftBtn.disabled=thumbnailPage<=0 && !(gehMode && zazzlyMode);
-      rightBtn.disabled=thumbnailPage>=pages-1 && !(gehMode && !zazzlyMode);
+      leftBtn.disabled=thumbnailPage<=0 && !((gehMode || connectedCollectionThumb) && zazzlyMode);
+      rightBtn.disabled=thumbnailPage>=pages-1 && !((gehMode || connectedCollectionThumb) && !zazzlyMode);
     }else if(view==='endless'){
       leftBtn.disabled=endlessIndex<=0;
       rightBtn.disabled=endlessIndex>=genericResultCount-1;
