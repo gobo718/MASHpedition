@@ -1288,11 +1288,16 @@ button{border-radius:0}
    Reuses the established v19 page-nav edge offsets, gap, and text sizing.
    Aerial/Endless page controls retain their v19 layout unchanged. */
 .exhibit-shell[data-view="thumbnail"] .page-nav{
+  left:auto;
+  right:1.5%;
+  bottom:12%;
   flex-direction:column;
   align-items:stretch;
 }
 .exhibit-shell[data-view="thumbnail"] .page-nav #pageStatus{
-  display:none;
+  display:flex;
+  justify-content:center;
+  white-space:nowrap;
 }
 
 .thumbnail-theme-placeholder{

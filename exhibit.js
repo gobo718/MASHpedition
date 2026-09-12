@@ -874,7 +874,7 @@
   function updatePageNav(){
     if(!pageNav) return;
     const view=shell.dataset.view;
-    const show=view==='endless' && pageCount()>1;
+    const show=(view==='thumbnail' || view==='endless') && pageCount()>1;
     pageNav.hidden=!show;
     if(!show) return;
     const page=Math.max(0,Math.min(pageCount()-1,currentPageForView()));
@@ -882,7 +882,9 @@
     const end=Math.min(genericResultCount,start+PAGE_SIZE-1);
     pagePrevBtn.disabled=page<=0;
     pageNextBtn.disabled=page>=pageCount()-1;
-    pageStatus.textContent=`${start}–${end}`;
+    pageStatus.textContent=view==='thumbnail'
+      ? `PAGE ${page+1} / ${pageCount()}`
+      : `${start}–${end}`;
   }
 
   function renderCurrentViewAfterPageChange(view){
