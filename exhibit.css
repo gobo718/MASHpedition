@@ -1802,3 +1802,9 @@ button{border-radius:0}
 .exhibit-shell.geh-mode[data-view="thumbnail"] .thumbnail-grid button:nth-child(-n+7){grid-row:1}
 .exhibit-shell.geh-mode[data-view="thumbnail"] .thumbnail-grid button:nth-child(n+8):nth-child(-n+15){grid-row:2}
 .exhibit-shell.geh-mode[data-view="thumbnail"] .thumbnail-grid button:nth-child(n+16){grid-row:3}
+
+/* v107 — GEH Thumbnails: keep the emoji pair above the persistent 37px
+   navigation bar instead of anchoring it to the viewport bottom. */
+.exhibit-shell.geh-mode[data-view="thumbnail"] .thumbnail-theme-placeholder{
+  bottom:40px;
+}
