@@ -1750,3 +1750,18 @@ button{border-radius:0}
   height:var(--geh-thumb-size);
   align-self:start;
 }
+
+/* v104 — GEH Thumbnails: divide the thumbnail field's usable vertical space
+   into three genuinely equal trailing spaces while reserving the bottom-left
+   identity/emoji footprint above the persistent navigation bar. The top row
+   retains the approved 2px hairline offset. */
+.exhibit-shell.geh-mode[data-view="thumbnail"] .thumbnail-grid{
+  top:2px;
+  bottom:72px;
+  padding-bottom:0;
+  grid-template-rows:var(--geh-thumb-size) 1fr var(--geh-thumb-size) 1fr var(--geh-thumb-size) 1fr;
+  row-gap:0;
+}
+.exhibit-shell.geh-mode[data-view="thumbnail"] .thumbnail-grid button:nth-child(-n+7){grid-row:1}
+.exhibit-shell.geh-mode[data-view="thumbnail"] .thumbnail-grid button:nth-child(n+8):nth-child(-n+15){grid-row:3}
+.exhibit-shell.geh-mode[data-view="thumbnail"] .thumbnail-grid button:nth-child(n+16){grid-row:5}
