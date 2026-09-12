@@ -908,8 +908,12 @@
       button.style.width=`${width}px`;
       button.style.height=`${height}px`;
     });
-    pagePrevBtn.style.top=`${2*(height+gap)}px`;
-    pageNextBtn.style.top=`${3*(height+gap)}px`;
+    // v125 — halve only the blank space between MUSEUM and the PAGE control cluster.
+    // Keep the PAGE PREV/PAGE NEXT gap unchanged.
+    const museumToPageGap=(height+(2*gap))/2;
+    const pagePrevTop=height+museumToPageGap;
+    pagePrevBtn.style.top=`${pagePrevTop}px`;
+    pageNextBtn.style.top=`${pagePrevTop+height+gap}px`;
   }
 
   function updatePageNav(){
