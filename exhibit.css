@@ -1765,3 +1765,13 @@ button{border-radius:0}
 .exhibit-shell.geh-mode[data-view="thumbnail"] .thumbnail-grid button:nth-child(-n+7){grid-row:1}
 .exhibit-shell.geh-mode[data-view="thumbnail"] .thumbnail-grid button:nth-child(n+8):nth-child(-n+15){grid-row:3}
 .exhibit-shell.geh-mode[data-view="thumbnail"] .thumbnail-grid button:nth-child(n+16){grid-row:5}
+
+/* v105 — GEH Thumbnails: use the rows' actual rendered height for spacing.
+   v104 used the viewport-derived target thumbnail size as the row-track height;
+   the real thumbnails are narrower because the 16-column grid constrains them,
+   so those oversized tracks consumed the free space and collapsed the 1fr gaps.
+   Auto-sized art rows + three 1fr spacer tracks divide the *actual* remainder
+   equally after rows 1, 2, and 3 while retaining the reserved emoji/nav area. */
+.exhibit-shell.geh-mode[data-view="thumbnail"] .thumbnail-grid{
+  grid-template-rows:auto 1fr auto 1fr auto 1fr;
+}
