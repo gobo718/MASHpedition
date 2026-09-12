@@ -181,7 +181,7 @@
   const maxUnlockedRank=Math.max(1,Math.min(10,Number(params.get('ranks'))||1));
   const gehMode=areaPreset?.geh===true || params.get('geh')==='1' ||
     (!areaPreset && params.get('geh')!=='0' && mix==='B');
-  const areaLabel=areaPreset?.label || (gehMode?'GRAND EXHIBITION HALL':'VIEWER SAMPLE');
+  const areaLabel=(zazzlyMode && gehMode) ? 'GRAND EXHIBITION HALL' : (areaPreset?.label || (gehMode?'GRAND EXHIBITION HALL':'VIEWER SAMPLE'));
   const centerIdentityText=`${areaLabel} - ${params.get('emojis') || '😀 😎'}`;
   overheadCenterIdentity.textContent=centerIdentityText;
   roomCenterIdentity.textContent=centerIdentityText;
@@ -462,8 +462,6 @@
     if(span) span.textContent='';
   }
 
-  // Room View is always the primary (#1) room. It does not participate in
-  // GEH 2nd/3rd rank switching.
   function paintRoomSlot(button,slot){
     resetSlotButton(button);
     const span=button.querySelector('span');
@@ -488,7 +486,7 @@
     button.dataset.art=String(artNumber);
     button.dataset.rank=String(gehMode?gehRank:1);
     button.setAttribute('aria-label',`${exhibitArtLabel(artNumber)}${gehMode?`, ${rankWord(gehRank)} place`:''}`);
-    if(span) span.textContent=exhibitArtLabel(artNumber);
+    if(span) span.textContent=`${exhibitArtLabel(artNumber)}${gehMode?` · ${rankWord(gehRank)}`:''}`;
   }
 
   function paintOverheadSlot(button,slot){
@@ -1151,6 +1149,9 @@
       next.set('returnRoomPage',String(roomPage));
       next.delete('roomPage');
       next.delete('entryDoor');
+      // Zazzly is Room 4 of GEH when entered from GEH. Preserve that art-space
+      // identity so the selected 1st–10th rank and rank controls remain active.
+      if(gehMode) next.set('geh','1');
       next.set('area','zazzly');
     }
     next.set('start',presentation==='overhead'?'exhibit':'room');
