@@ -342,7 +342,9 @@
   let gehRank=requestedRank;
   const requestedRoomPage=Number(params.get('roomPage'));
   let roomPage=Number.isInteger(requestedRoomPage) && requestedRoomPage>=0 ? requestedRoomPage : 0;
-  let thumbnailPage=0;
+  // A connected-area return can target a specific thumbnail page through
+  // roomPage. Preserve that page when the requested start view is thumbnails.
+  let thumbnailPage=params.get('start')==='thumbnail' ? roomPage : 0;
   let endlessIndex=0;
   let artworkReturn=null;
   let expandedScrollTop=0;
