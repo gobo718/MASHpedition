@@ -1284,9 +1284,9 @@ button{border-radius:0}
   display:none;
 }
 
-/* v21 THUMBNAILS ONLY — corner page stack + mirrored Theme placeholder.
-   Reuses the established v19 page-nav edge offsets, gap, and text sizing.
-   Aerial/Endless page controls retain their v19 layout unchanged. */
+/* v96 THUMBNAILS — two-button corner page stack.
+   The page count already appears in the thumbnail title, so the duplicate
+   middle PAGE x / x box is intentionally hidden. */
 .exhibit-shell[data-view="thumbnail"] .page-nav{
   left:auto;
   right:1.5%;
@@ -1295,9 +1295,7 @@ button{border-radius:0}
   align-items:stretch;
 }
 .exhibit-shell[data-view="thumbnail"] .page-nav #pageStatus{
-  display:flex;
-  justify-content:center;
-  white-space:nowrap;
+  display:none;
 }
 
 .thumbnail-theme-placeholder{
@@ -1628,7 +1626,7 @@ button{border-radius:0}
 .exhibit-shell.catacombs-mode[data-view="overhead"] .cat-search-has{display:flex;position:absolute}
 /* THUMBNAILS: mirrored against the PAGE PREV/NEXT lower-left anchor.
    Three rows live in the otherwise-empty lower-right edge, outside the brick stack. */
-.exhibit-shell.catacombs-mode[data-view="thumbnail"] .cat-search-has{right:1.5%;bottom:12%;flex-direction:column;align-items:flex-start;gap:3px}
+.exhibit-shell.catacombs-mode[data-view="thumbnail"] .cat-search-has{left:1.5%;right:auto;bottom:12%;flex-direction:column;align-items:flex-start;gap:3px}
 /* ENDLESS: one straight line at the same vertical anchor as PAGE PREV/NEXT. */
 .exhibit-shell.catacombs-mode[data-view="endless"] .cat-search-has{right:1.5%;bottom:12%;flex-direction:row;align-items:center;gap:8px}
 .exhibit-shell.catacombs-mode[data-view="endless"] .cat-search-has legend{margin:0}
