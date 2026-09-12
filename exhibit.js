@@ -652,7 +652,7 @@
           button.addEventListener('click',()=>openArtwork(art,gehRank,'thumbnail'));
           thumbnailGrid.appendChild(button);
         }
-        thumbnailStatus.textContent=`${areaLabel} · ${rankWord(gehRank)} · PAGE 4 / ${gehPageCount} · 67–78`;
+        thumbnailStatus.textContent=`GRAND EXHIBITION HALLS\n${rankWord(gehRank).toUpperCase()} · PAGE 4 / ${gehPageCount} · 67–78`;
       }else{
         thumbnailPage=Math.max(0,Math.min(standardPageCount-1,thumbnailPage));
         roomPage=thumbnailPage;
@@ -669,7 +669,7 @@
           button.addEventListener('click',()=>openArtwork(art,gehRank,'thumbnail'));
           thumbnailGrid.appendChild(button);
         }
-        thumbnailStatus.textContent=`${areaLabel} · ${rankWord(gehRank)} · PAGE ${thumbnailPage+1} / ${gehPageCount} · ${start+1}–${end}`;
+        thumbnailStatus.textContent=`GRAND EXHIBITION HALLS\n${rankWord(gehRank).toUpperCase()} · PAGE ${thumbnailPage+1} / ${gehPageCount} · ${start+1}–${end}`;
       }
       updateRankButtons();
     }else{

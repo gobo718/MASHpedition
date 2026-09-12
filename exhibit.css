@@ -1631,9 +1631,24 @@ button{border-radius:0}
 .exhibit-shell.catacombs-mode[data-view="endless"] .cat-search-has{right:1.5%;bottom:12%;flex-direction:row;align-items:center;gap:8px}
 .exhibit-shell.catacombs-mode[data-view="endless"] .cat-search-has legend{margin:0}
 /* EXHIBIT/corner/wall: one row centered beneath the artwork, above the 37px controls. */
+/* EXHIBIT/corner/wall: SEARCH HAS lives in the header, immediately left of
+   the independently centered Catacombs title. Its absolute positioning means
+   it does not participate in or shift the title centering. */
 .exhibit-shell.catacombs-mode[data-view="left"] .cat-search-has,
 .exhibit-shell.catacombs-mode[data-view="wall"] .cat-search-has,
-.exhibit-shell.catacombs-mode[data-view="right"] .cat-search-has{left:50%;bottom:12%;transform:translateX(-50%);flex-direction:row;align-items:center;gap:8px}
+.exhibit-shell.catacombs-mode[data-view="right"] .cat-search-has{
+  left:auto;
+  right:calc(50% + 118px);
+  top:2.2%;
+  bottom:auto;
+  transform:none;
+  flex-direction:row;
+  align-items:center;
+  gap:8px;
+}
+.exhibit-shell.catacombs-mode[data-view="left"] .cat-search-has legend,
+.exhibit-shell.catacombs-mode[data-view="wall"] .cat-search-has legend,
+.exhibit-shell.catacombs-mode[data-view="right"] .cat-search-has legend{margin:0}
 /* AERIAL: append visually to the centered identity line. Compact sizing keeps the
    combined identity + selector inside the map's clear center band. */
 .exhibit-shell.catacombs-mode[data-view="overhead"] .aerial-center-unit{flex-direction:row;gap:10px}
@@ -1692,3 +1707,46 @@ button{border-radius:0}
 .blurblet-sort-panel{gap:8px}
 .blurblet-sort-panel:not([hidden]){display:flex}
 .blurblet-sort-panel button.is-selected{outline:2px solid var(--ink);outline-offset:-3px}
+
+/* v103 — GEH Thumbnails vertical-space refinement.
+   Keep the approved rank selector fixed. Move presentation identity into the
+   left gutter, free the thumbnail field to begin at the top, and distribute
+   all remaining vertical room equally after row 1, row 2, and row 3. */
+.exhibit-shell.geh-mode[data-view="thumbnail"] .thumbnail-status{
+  top:3px;
+  left:3px;
+  right:auto;
+  width:148px;
+  height:auto;
+  display:block;
+  text-align:left;
+  line-height:1.15;
+  white-space:pre-line;
+  z-index:6;
+}
+.exhibit-shell.geh-mode[data-view="thumbnail"] .thumbnail-theme-placeholder{
+  left:3px;
+  top:auto;
+  bottom:3px;
+  padding:0;
+  align-items:flex-start;
+  justify-content:flex-end;
+}
+.exhibit-shell.geh-mode[data-view="thumbnail"] .thumbnail-theme-emojis{
+  font-size:4em;
+}
+.exhibit-shell.geh-mode[data-view="thumbnail"] .thumbnail-grid{
+  --geh-thumb-size:min(calc(12.5vw - 12.5px),calc(33.333333dvh - 30.333333px));
+  --geh-row-space:calc((100% - 2px - var(--geh-thumb-size) - var(--geh-thumb-size) - var(--geh-thumb-size)) / 3);
+  top:2px;
+  bottom:0;
+  grid-template-rows:repeat(3,var(--geh-thumb-size));
+  row-gap:var(--geh-row-space);
+  padding-bottom:var(--geh-row-space);
+  box-sizing:border-box;
+}
+.exhibit-shell.geh-mode[data-view="thumbnail"] .thumbnail-grid button{
+  width:var(--geh-thumb-size);
+  height:var(--geh-thumb-size);
+  align-self:start;
+}
