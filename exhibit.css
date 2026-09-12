@@ -2177,3 +2177,29 @@ button,
 }
 
 /* v135 — Collection thumbnails use the established Museum Foundry Theme plates. */
+
+/* v138 — COLLECTION thumbnail presentation chrome mirrors the established
+   GEH thumbnail geometry without inheriting GEH ranks or thumbnail layout. */
+.exhibit-shell.collection-context[data-view="thumbnail"] .thumbnail-status{
+  top:3px;
+  left:3px;
+  right:auto;
+  width:148px;
+  height:auto;
+  display:block;
+  text-align:left;
+  line-height:1.15;
+  white-space:pre-line;
+  z-index:6;
+}
+.exhibit-shell.collection-context[data-view="thumbnail"] .thumbnail-theme-placeholder{
+  left:3px;
+  top:auto;
+  bottom:3px;
+  padding:0;
+  align-items:flex-start;
+  justify-content:flex-end;
+}
+.exhibit-shell.collection-context[data-view="thumbnail"] .thumbnail-theme-emojis{
+  font-size:4em;
+}

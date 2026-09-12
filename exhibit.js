@@ -748,7 +748,7 @@
           button.addEventListener('click',()=>openArtwork(art,1,'thumbnail'));
           thumbnailGrid.appendChild(button);
         }
-        thumbnailStatus.textContent='COLLECTION · PAGE 7 / 7 · 67–78';
+        thumbnailStatus.textContent='COLLECTION\nPAGE 7 / 7 · 67–78';
       }else{
       const pageCount=currentThumbnailPageCount();
       thumbnailPage=Math.max(0,Math.min(pageCount-1,thumbnailPage));
@@ -774,7 +774,9 @@
       }
       thumbnailStatus.textContent=requestedArea==='se'
         ? `${areaLabel} · CURRENT SELECTIONS`
-        : `${areaLabel} · PAGE ${thumbnailPage+1} / ${requestedArea==='collection'?7:pageCount} · ${start+1}–${end} OF ${genericResultCount}`;
+        : requestedArea==='collection'
+          ? `COLLECTION\nPAGE ${thumbnailPage+1} / 7 · ${start+1}–${end}`
+          : `${areaLabel} · PAGE ${thumbnailPage+1} / ${pageCount} · ${start+1}–${end} OF ${genericResultCount}`;
       }
     }
 
