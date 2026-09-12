@@ -2068,3 +2068,8 @@ button{border-radius:0}
   position:relative;
   top:2px;
 }
+
+/* v132 — Move the already-centered plate + word together down 2px as one unit. */
+.exhibit-shell.geh-mode[data-view="thumbnail"] .geh-thumbnail-theme-label.museum-thumbnail-plate{
+  top:calc(100% + 5px);
+}
