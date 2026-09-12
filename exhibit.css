@@ -1937,43 +1937,29 @@ button{border-radius:0}
   height:var(--thumb-11-size);
 }
 
-/* v116 — 11-item thumbnail geometry correction.
-   Preserve the exact horizontal breathing room established by v114's four-item
-   rows. Reuse that same gap in the three-item middle row, center the three as
-   one group, and spend only the recovered dead space on larger squares. */
-.exhibit-shell[data-view="thumbnail"] .thumbnail-grid:not(.adaptive-brick){
-  --thumb-11-v114-size:min(calc((100vw - 116px) / 4 - 18px),calc((100dvh - 79px) / 3 - 16px));
-  --thumb-11-gap:calc((100% / 4) - var(--thumb-11-v114-size));
-  --thumb-11-size:min(
-    calc((100% - (3 * var(--thumb-11-gap))) / 4),
-    calc((100dvh - 79px) / 3 - 2px)
-  );
-  grid-template-columns:repeat(4,var(--thumb-11-size));
+/* v117 — Corrected 11-item thumbnail geometry.
+   Preserve v114's established four-across spacing as the authority.
+   Use a 24-column map so the 3-item middle row can keep the exact same
+   center-to-center spacing while the row as a whole is centered.
+   Zazzly remains on its own dedicated 12-item map above. */
+.exhibit-shell:not([data-area="zazzly"])[data-view="thumbnail"] .thumbnail-grid:not(.adaptive-brick){
+  grid-template-columns:repeat(24,minmax(0,1fr));
   grid-template-rows:repeat(3,minmax(0,1fr));
-  column-gap:var(--thumb-11-gap);
-  row-gap:0;
-  justify-content:center;
-  align-items:start;
 }
-.exhibit-shell[data-view="thumbnail"] .thumbnail-grid:not(.adaptive-brick) > button{
-  width:var(--thumb-11-size);
-  height:var(--thumb-11-size);
-  justify-self:stretch;
-  transform:none;
-}
-/* Four-item rows keep the v114 spacing exactly. */
-.exhibit-shell[data-view="thumbnail"] .thumbnail-grid:not(.adaptive-brick) > button:nth-child(-n+4){
-  grid-row:1;
+.exhibit-shell:not([data-area="zazzly"])[data-view="thumbnail"] .thumbnail-grid:not(.adaptive-brick) > button{
   grid-column:auto;
+  --thumb-11-size:min(calc((100vw - 116px) / 4 - 8px),calc((100dvh - 79px) / 3 - 10px));
 }
-.exhibit-shell[data-view="thumbnail"] .thumbnail-grid:not(.adaptive-brick) > button:nth-child(n+8):nth-child(-n+11){
-  grid-row:3;
-  grid-column:auto;
-}
-/* Middle row: same gap as the four-item rows, centered as a three-item unit. */
-.exhibit-shell[data-view="thumbnail"] .thumbnail-grid:not(.adaptive-brick) > button:nth-child(5){grid-row:2;grid-column:1;transform:translateX(calc((var(--thumb-11-size) + var(--thumb-11-gap)) / 2));}
-.exhibit-shell[data-view="thumbnail"] .thumbnail-grid:not(.adaptive-brick) > button:nth-child(6){grid-row:2;grid-column:2;transform:translateX(calc((var(--thumb-11-size) + var(--thumb-11-gap)) / 2));}
-.exhibit-shell[data-view="thumbnail"] .thumbnail-grid:not(.adaptive-brick) > button:nth-child(7){grid-row:2;grid-column:3;transform:translateX(calc((var(--thumb-11-size) + var(--thumb-11-gap)) / 2));}
-.exhibit-shell.geh-mode:not([data-area="zazzly"])[data-view="thumbnail"] .thumbnail-grid > button{
-  --geh-thumb-size:var(--thumb-11-size);
-}
+/* Four-across rows: same four equal positions as v114, expressed at 2x grid resolution. */
+.exhibit-shell:not([data-area="zazzly"])[data-view="thumbnail"] .thumbnail-grid:not(.adaptive-brick) > button:nth-child(1),
+.exhibit-shell:not([data-area="zazzly"])[data-view="thumbnail"] .thumbnail-grid:not(.adaptive-brick) > button:nth-child(8){grid-column:1 / span 6}
+.exhibit-shell:not([data-area="zazzly"])[data-view="thumbnail"] .thumbnail-grid:not(.adaptive-brick) > button:nth-child(2),
+.exhibit-shell:not([data-area="zazzly"])[data-view="thumbnail"] .thumbnail-grid:not(.adaptive-brick) > button:nth-child(9){grid-column:7 / span 6}
+.exhibit-shell:not([data-area="zazzly"])[data-view="thumbnail"] .thumbnail-grid:not(.adaptive-brick) > button:nth-child(3),
+.exhibit-shell:not([data-area="zazzly"])[data-view="thumbnail"] .thumbnail-grid:not(.adaptive-brick) > button:nth-child(10){grid-column:13 / span 6}
+.exhibit-shell:not([data-area="zazzly"])[data-view="thumbnail"] .thumbnail-grid:not(.adaptive-brick) > button:nth-child(4),
+.exhibit-shell:not([data-area="zazzly"])[data-view="thumbnail"] .thumbnail-grid:not(.adaptive-brick) > button:nth-child(11){grid-column:19 / span 6}
+/* Middle row: same 6-column step/gap, centered with equal 3-column side margins. */
+.exhibit-shell:not([data-area="zazzly"])[data-view="thumbnail"] .thumbnail-grid:not(.adaptive-brick) > button:nth-child(5){grid-column:4 / span 6}
+.exhibit-shell:not([data-area="zazzly"])[data-view="thumbnail"] .thumbnail-grid:not(.adaptive-brick) > button:nth-child(6){grid-column:10 / span 6}
+.exhibit-shell:not([data-area="zazzly"])[data-view="thumbnail"] .thumbnail-grid:not(.adaptive-brick) > button:nth-child(7){grid-column:16 / span 6}
