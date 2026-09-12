@@ -2014,7 +2014,7 @@ button{border-radius:0}
    Plate lettering uses the approved deterministic ±2px display tiers. */
 @font-face{
   font-family:'Museum Foundry';
-  src:url('MuseumFoundry.otf?v=126') format('opentype');
+  src:url('MuseumFoundry.otf?v=128') format('opentype');
   font-style:normal;
   font-weight:400;
   font-display:swap;

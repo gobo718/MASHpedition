@@ -399,22 +399,24 @@
 
   function paintMuseumPlateText(label,text){
     label.replaceChildren();
-    let wordStart=true;
     for(const sourceChar of String(text)){
-      if(/\s/.test(sourceChar)){
+      if(!/[A-Za-z]/.test(sourceChar)){
         label.appendChild(document.createTextNode(sourceChar));
-        wordStart=true;
         continue;
       }
       const char=sourceChar.toUpperCase();
       const glyph=document.createElement('span');
       glyph.className='museum-plate-glyph';
-      if(/[A-Z]/.test(char)){
-        glyph.classList.add(wordStart?'museum-cap':'museum-smallcap');
+      if(/[A-Z]/.test(sourceChar)){
+        // Preserve every capital in the authoritative Theme name as a full-size cap.
+        // Full-size caps stay on the baseline and receive no tier shift.
+        glyph.classList.add('museum-cap');
+      }else{
+        // Lowercase source letters become small caps; only these receive ±2px tiers.
+        glyph.classList.add('museum-smallcap');
         if(MUSEUM_HIGH_LETTERS.has(char)) glyph.classList.add('museum-tier-high');
         else if(MUSEUM_LOW_LETTERS.has(char)) glyph.classList.add('museum-tier-low');
         else glyph.classList.add('museum-tier-mid');
-        wordStart=false;
       }
       glyph.textContent=char;
       label.appendChild(glyph);
