@@ -1808,3 +1808,26 @@ button{border-radius:0}
 .exhibit-shell.geh-mode[data-view="thumbnail"] .thumbnail-theme-placeholder{
   bottom:40px;
 }
+
+
+/* v108 — GEH thumbnail captions. The square remains the future image viewport;
+   only the Theme word is shown as a tight centered caption beneath it. */
+.exhibit-shell.geh-mode[data-view="thumbnail"] .thumbnail-grid button{
+  position:relative;
+  overflow:visible;
+  font-size:0;
+}
+.exhibit-shell.geh-mode[data-view="thumbnail"] .geh-thumbnail-theme-label{
+  position:absolute;
+  left:50%;
+  top:calc(100% + 2px);
+  transform:translateX(-50%);
+  width:max-content;
+  max-width:140%;
+  font-size:10px;
+  line-height:1;
+  font-weight:800;
+  text-align:center;
+  white-space:nowrap;
+  pointer-events:none;
+}

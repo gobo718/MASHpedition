@@ -387,6 +387,21 @@
     return theme ? `${String(number).padStart(2,'0')} - ${theme}` : `Art ${number}`;
   }
 
+  function exhibitThemeWord(artNumber){
+    const number=Number(artNumber);
+    const set=orderedThemeSets.find(candidate=>number>=candidate.start && number<candidate.start+candidate.items.length);
+    return set?.items[number-set.start] || `Art ${number}`;
+  }
+
+  function paintGehThumbnail(button,art,rank){
+    button.textContent='';
+    const label=document.createElement('span');
+    label.className='geh-thumbnail-theme-label';
+    label.textContent=exhibitThemeWord(art);
+    button.appendChild(label);
+    button.setAttribute('aria-label',`${exhibitThemeWord(art)}, ${rankWord(rank)} place`);
+  }
+
   function roomArtNumber(slot){
     const start=zazzlyMode?THEME_SETS.zazzly.start:roomPage*PAGE_SIZE+1;
     return start+slot.number-1;
@@ -647,8 +662,7 @@
           button.type='button';
           button.dataset.art=String(art);
           button.dataset.rank=String(gehRank);
-          button.textContent=`${exhibitArtLabel(art)} · ${rankWord(gehRank)}`;
-          button.setAttribute('aria-label',`${exhibitArtLabel(art)}, ${rankWord(gehRank)} place`);
+          paintGehThumbnail(button,art,gehRank);
           button.addEventListener('click',()=>openArtwork(art,gehRank,'thumbnail'));
           thumbnailGrid.appendChild(button);
         }
@@ -664,8 +678,7 @@
           button.type='button';
           button.dataset.art=String(art);
           button.dataset.rank=String(gehRank);
-          button.textContent=`${exhibitArtLabel(art)} · ${rankWord(gehRank)}`;
-          button.setAttribute('aria-label',`${exhibitArtLabel(art)}, ${rankWord(gehRank)} place`);
+          paintGehThumbnail(button,art,gehRank);
           button.addEventListener('click',()=>openArtwork(art,gehRank,'thumbnail'));
           thumbnailGrid.appendChild(button);
         }
