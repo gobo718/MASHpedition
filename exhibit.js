@@ -394,7 +394,9 @@
   }
 
   function paintGehThumbnail(button,art,rank){
-    button.textContent='';
+    // Keep the established in-thumbnail identity visible while also providing
+    // the compact Theme-only caption beneath the future image viewport.
+    button.textContent=`${exhibitArtLabel(art)} · ${rankWord(rank)}`;
     const label=document.createElement('span');
     label.className='geh-thumbnail-theme-label';
     label.textContent=exhibitThemeWord(art);

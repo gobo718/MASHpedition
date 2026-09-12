@@ -1831,3 +1831,22 @@ button{border-radius:0}
   white-space:nowrap;
   pointer-events:none;
 }
+
+
+/* v110 — GEH thumbnail final-space pass.
+   The emoji pair owns only the left gutter, so the artwork field can extend to
+   just above the persistent 37px navigation bar. Use that recovered height to
+   enlarge all 22 standard GEH thumbnails while reserving a compact 14px tail
+   in each equal row band for the Theme-only caption below the square. */
+.exhibit-shell.geh-mode[data-view="thumbnail"] .thumbnail-grid{
+  bottom:40px;
+}
+.exhibit-shell.geh-mode[data-view="thumbnail"] .thumbnail-grid button{
+  --geh-thumb-size:min(calc(12.5vw - 12.5px),calc((100dvh - 79px) / 3 - 14px));
+  font-size:clamp(9px,1.05vw,16px);
+  line-height:1.05;
+}
+.exhibit-shell.geh-mode[data-view="thumbnail"] .geh-thumbnail-theme-label{
+  font-size:10px;
+  line-height:1;
+}
