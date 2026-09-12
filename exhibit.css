@@ -2058,3 +2058,13 @@ button{border-radius:0}
   position:relative;
   top:0.2px;
 }
+
+/* v131 — Thumbnail plate centering only: lower the rectangle 1px and its
+   complete word 2px inside the plate. Letter-tier offsets remain unchanged. */
+.exhibit-shell.geh-mode[data-view="thumbnail"] .geh-thumbnail-theme-label.museum-thumbnail-plate{
+  top:calc(100% + 3px);
+}
+.exhibit-shell.geh-mode[data-view="thumbnail"] .museum-thumbnail-plate .museum-plate-text{
+  position:relative;
+  top:2px;
+}
