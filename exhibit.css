@@ -1937,16 +1937,16 @@ button{border-radius:0}
   height:var(--thumb-11-size);
 }
 
-/* v115 — authoritative 11-item thumbnail geometry.
-   Four-item rows establish the horizontal pitch. The three-item middle row
-   uses that exact same thumbnail-to-thumbnail gap and is centered as a unit.
-   Thumbnails are maximized inside the available 4-across width; Theme captions
-   may occupy staggered dead space rather than forcing a full caption band. */
+/* v116 — 11-item thumbnail geometry correction.
+   Preserve the exact horizontal breathing room established by v114's four-item
+   rows. Reuse that same gap in the three-item middle row, center the three as
+   one group, and spend only the recovered dead space on larger squares. */
 .exhibit-shell[data-view="thumbnail"] .thumbnail-grid:not(.adaptive-brick){
-  --thumb-11-gap:14px;
+  --thumb-11-v114-size:min(calc((100vw - 116px) / 4 - 18px),calc((100dvh - 79px) / 3 - 16px));
+  --thumb-11-gap:calc((100% / 4) - var(--thumb-11-v114-size));
   --thumb-11-size:min(
-    calc((100vw - 116px - (3 * var(--thumb-11-gap))) / 4),
-    calc((100dvh - 79px) / 3 - 4px)
+    calc((100% - (3 * var(--thumb-11-gap))) / 4),
+    calc((100dvh - 79px) / 3 - 2px)
   );
   grid-template-columns:repeat(4,var(--thumb-11-size));
   grid-template-rows:repeat(3,minmax(0,1fr));
@@ -1956,21 +1956,24 @@ button{border-radius:0}
   align-items:start;
 }
 .exhibit-shell[data-view="thumbnail"] .thumbnail-grid:not(.adaptive-brick) > button{
-  --thumb-11-size:inherit;
   width:var(--thumb-11-size);
   height:var(--thumb-11-size);
-  grid-column:auto !important;
-  justify-self:center;
+  justify-self:stretch;
+  transform:none;
 }
-.exhibit-shell[data-view="thumbnail"] .thumbnail-grid:not(.adaptive-brick) > button:nth-child(-n+4){grid-row:1}
-.exhibit-shell[data-view="thumbnail"] .thumbnail-grid:not(.adaptive-brick) > button:nth-child(n+5):nth-child(-n+7){
-  grid-row:2;
-  position:relative;
-  left:calc((var(--thumb-11-size) + var(--thumb-11-gap)) / 2);
+/* Four-item rows keep the v114 spacing exactly. */
+.exhibit-shell[data-view="thumbnail"] .thumbnail-grid:not(.adaptive-brick) > button:nth-child(-n+4){
+  grid-row:1;
+  grid-column:auto;
 }
-.exhibit-shell[data-view="thumbnail"] .thumbnail-grid:not(.adaptive-brick) > button:nth-child(n+8):nth-child(-n+11){grid-row:3}
+.exhibit-shell[data-view="thumbnail"] .thumbnail-grid:not(.adaptive-brick) > button:nth-child(n+8):nth-child(-n+11){
+  grid-row:3;
+  grid-column:auto;
+}
+/* Middle row: same gap as the four-item rows, centered as a three-item unit. */
+.exhibit-shell[data-view="thumbnail"] .thumbnail-grid:not(.adaptive-brick) > button:nth-child(5){grid-row:2;grid-column:1;transform:translateX(calc((var(--thumb-11-size) + var(--thumb-11-gap)) / 2));}
+.exhibit-shell[data-view="thumbnail"] .thumbnail-grid:not(.adaptive-brick) > button:nth-child(6){grid-row:2;grid-column:2;transform:translateX(calc((var(--thumb-11-size) + var(--thumb-11-gap)) / 2));}
+.exhibit-shell[data-view="thumbnail"] .thumbnail-grid:not(.adaptive-brick) > button:nth-child(7){grid-row:2;grid-column:3;transform:translateX(calc((var(--thumb-11-size) + var(--thumb-11-gap)) / 2));}
 .exhibit-shell.geh-mode:not([data-area="zazzly"])[data-view="thumbnail"] .thumbnail-grid > button{
   --geh-thumb-size:var(--thumb-11-size);
-  width:var(--thumb-11-size);
-  height:var(--thumb-11-size);
 }
