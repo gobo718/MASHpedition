@@ -399,9 +399,12 @@
 
   function paintMuseumPlateText(label,text){
     label.replaceChildren();
+    const textWrap=document.createElement('span');
+    textWrap.className='museum-plate-text';
+    label.appendChild(textWrap);
     for(const sourceChar of String(text)){
       if(!/[A-Za-z]/.test(sourceChar)){
-        label.appendChild(document.createTextNode(sourceChar));
+        textWrap.appendChild(document.createTextNode(sourceChar));
         continue;
       }
       const char=sourceChar.toUpperCase();
@@ -419,7 +422,7 @@
         else glyph.classList.add('museum-tier-mid');
       }
       glyph.textContent=char;
-      label.appendChild(glyph);
+      textWrap.appendChild(glyph);
     }
   }
 

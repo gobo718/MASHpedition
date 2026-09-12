@@ -2032,11 +2032,13 @@ button{border-radius:0}
   line-height:1.15;
   letter-spacing:0;
 }
+.exhibit-shell.geh-mode[data-view="thumbnail"] .museum-thumbnail-plate .museum-plate-text{
+  display:inline-block;
+  transform:scaleX(.78);
+  transform-origin:center center;
+}
 .exhibit-shell.geh-mode[data-view="thumbnail"] .museum-thumbnail-plate .museum-plate-glyph{
   display:inline-block;
-  transform-origin:center bottom;
-  transform:scaleX(.78);
-  margin-inline:-.11em;
 }
 .exhibit-shell.geh-mode[data-view="thumbnail"] .museum-thumbnail-plate .museum-cap{
   font-size:1em;
@@ -2046,7 +2048,7 @@ button{border-radius:0}
 }
 .exhibit-shell.geh-mode[data-view="thumbnail"] .museum-thumbnail-plate .museum-tier-high{
   position:relative;
-  top:-2px;
+  top:-0.2px;
 }
 .exhibit-shell.geh-mode[data-view="thumbnail"] .museum-thumbnail-plate .museum-tier-mid{
   position:relative;
@@ -2054,5 +2056,5 @@ button{border-radius:0}
 }
 .exhibit-shell.geh-mode[data-view="thumbnail"] .museum-thumbnail-plate .museum-tier-low{
   position:relative;
-  top:2px;
+  top:0.2px;
 }
