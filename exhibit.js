@@ -748,7 +748,7 @@
           button.addEventListener('click',()=>openArtwork(art,1,'thumbnail'));
           thumbnailGrid.appendChild(button);
         }
-        thumbnailStatus.textContent='COLLECTION · PAGE 4 · 67–78';
+        thumbnailStatus.textContent='COLLECTION · PAGE 7 / 7 · 67–78';
       }else{
       const pageCount=currentThumbnailPageCount();
       thumbnailPage=Math.max(0,Math.min(pageCount-1,thumbnailPage));
@@ -774,7 +774,7 @@
       }
       thumbnailStatus.textContent=requestedArea==='se'
         ? `${areaLabel} · CURRENT SELECTIONS`
-        : `${areaLabel} · PAGE ${thumbnailPage+1} / ${pageCount} · ${start+1}–${end} OF ${genericResultCount}`;
+        : `${areaLabel} · PAGE ${thumbnailPage+1} / ${requestedArea==='collection'?7:pageCount} · ${start+1}–${end} OF ${genericResultCount}`;
       }
     }
 
@@ -997,7 +997,11 @@
       if(zazzlyMode) pageStatus.textContent='PAGE 4';
       else pageStatus.textContent=`PAGE ${Math.floor(page/2)+1}${page%2===0?'A':'B'}`;
     }else{
-      pageStatus.textContent=view==='thumbnail' ? `PAGE ${page+1} / ${count}` : `${start}–${end}`;
+      if(view==='thumbnail' && collectionContext){
+        pageStatus.textContent=zazzlyMode ? 'PAGE 7 / 7' : `PAGE ${page+1} / 7`;
+      }else{
+        pageStatus.textContent=view==='thumbnail' ? `PAGE ${page+1} / ${count}` : `${start}–${end}`;
+      }
     }
   }
 
