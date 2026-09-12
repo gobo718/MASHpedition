@@ -2008,3 +2008,51 @@ button{border-radius:0}
 .exhibit-shell[data-view="thumbnail"] .page-nav #pageNextBtn{
   font-size:7px;
 }
+
+
+/* v126 — Thumbnail Theme names are Museum Foundry Narrow small-cap plates.
+   Plate lettering uses the approved deterministic ±2px display tiers. */
+@font-face{
+  font-family:'Museum Foundry';
+  src:url('MuseumFoundry.otf?v=126') format('opentype');
+  font-style:normal;
+  font-weight:400;
+  font-display:swap;
+}
+.exhibit-shell.geh-mode[data-view="thumbnail"] .geh-thumbnail-theme-label.museum-thumbnail-plate{
+  box-sizing:border-box;
+  padding:3px 7px 4px;
+  border:1px solid var(--line);
+  border-radius:0;
+  background:var(--control);
+  color:var(--ink);
+  font-family:'Museum Foundry',serif;
+  font-size:11px;
+  font-weight:400;
+  line-height:1.15;
+  letter-spacing:0;
+}
+.exhibit-shell.geh-mode[data-view="thumbnail"] .museum-thumbnail-plate .museum-plate-glyph{
+  display:inline-block;
+  transform-origin:center bottom;
+  transform:scaleX(.78);
+  margin-inline:-.11em;
+}
+.exhibit-shell.geh-mode[data-view="thumbnail"] .museum-thumbnail-plate .museum-cap{
+  font-size:1em;
+}
+.exhibit-shell.geh-mode[data-view="thumbnail"] .museum-thumbnail-plate .museum-smallcap{
+  font-size:.70em;
+}
+.exhibit-shell.geh-mode[data-view="thumbnail"] .museum-thumbnail-plate .museum-tier-high{
+  position:relative;
+  top:-2px;
+}
+.exhibit-shell.geh-mode[data-view="thumbnail"] .museum-thumbnail-plate .museum-tier-mid{
+  position:relative;
+  top:0;
+}
+.exhibit-shell.geh-mode[data-view="thumbnail"] .museum-thumbnail-plate .museum-tier-low{
+  position:relative;
+  top:2px;
+}

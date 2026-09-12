@@ -394,13 +394,40 @@
     return set?.items[number-set.start] || `Art ${number}`;
   }
 
+  const MUSEUM_HIGH_LETTERS=new Set('AKMNVWXY');
+  const MUSEUM_LOW_LETTERS=new Set('BCDGJOQSU');
+
+  function paintMuseumPlateText(label,text){
+    label.replaceChildren();
+    let wordStart=true;
+    for(const sourceChar of String(text)){
+      if(/\s/.test(sourceChar)){
+        label.appendChild(document.createTextNode(sourceChar));
+        wordStart=true;
+        continue;
+      }
+      const char=sourceChar.toUpperCase();
+      const glyph=document.createElement('span');
+      glyph.className='museum-plate-glyph';
+      if(/[A-Z]/.test(char)){
+        glyph.classList.add(wordStart?'museum-cap':'museum-smallcap');
+        if(MUSEUM_HIGH_LETTERS.has(char)) glyph.classList.add('museum-tier-high');
+        else if(MUSEUM_LOW_LETTERS.has(char)) glyph.classList.add('museum-tier-low');
+        else glyph.classList.add('museum-tier-mid');
+        wordStart=false;
+      }
+      glyph.textContent=char;
+      label.appendChild(glyph);
+    }
+  }
+
   function paintGehThumbnail(button,art,rank){
     // Keep the established in-thumbnail identity visible while also providing
-    // the compact Theme-only caption beneath the future image viewport.
+    // the compact Theme-only plate beneath the future image viewport.
     button.textContent=`${exhibitArtLabel(art)} · ${rankWord(rank)}`;
     const label=document.createElement('span');
-    label.className='geh-thumbnail-theme-label';
-    label.textContent=exhibitThemeWord(art);
+    label.className='geh-thumbnail-theme-label museum-thumbnail-plate';
+    paintMuseumPlateText(label,exhibitThemeWord(art));
     button.appendChild(label);
     button.setAttribute('aria-label',`${exhibitThemeWord(art)}, ${rankWord(rank)} place`);
   }
