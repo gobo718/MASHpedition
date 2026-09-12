@@ -627,6 +627,10 @@
     const buttons=[...thumbnailGrid.querySelectorAll(':scope > button')];
     thumbnailGrid.classList.remove('adaptive-brick');
     thumbnailGrid.style.removeProperty('--adaptive-thumb-size');
+    // GEH rooms own explicit thumbnail maps. In particular, Zazzly's 12-item
+    // room is intentionally 4 / 4 / 4 and must not be repacked by the generic
+    // partial-page optimizer (which previously rewrote it into 5 / 7).
+    if(gehMode) return;
     if(!buttons.length || buttons.length>=PAGE_SIZE) return;
     const best=chooseThumbnailBrick(buttons.length);
     if(!best) return;
