@@ -2292,3 +2292,21 @@ button,
   left:3px;
   width:148px;
 }
+
+
+/* v146 Artwork Detail museum plaque typography; interaction controls unchanged */
+.artwork-meta,.artwork-meta strong,.artwork-meta span,
+.artwork-plaque,.artwork-plaque strong,.plaque-text,
+.blurblet-card strong,.blurblet-card p{
+  font-family:'Museum Foundry',serif;font-variant:small-caps;letter-spacing:0;
+}
+
+
+
+/* v147 regression repair: Museum plate styling must never unhide entrance
+   fields that the established entrance logic intentionally hides. */
+.entrance-rank[hidden],
+.entrance-search[hidden],
+.entrance-emojis[hidden]{
+  display:none !important;
+}

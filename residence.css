@@ -106,3 +106,12 @@ button{font:inherit;color:inherit;background:var(--panel);border:1px solid var(-
   line-height:1;
   text-decoration:none
 }
+
+
+/* v146 museum-authored display typography; geometry unchanged */
+@font-face{font-family:'Museum Foundry';src:url('MuseumFoundry.otf?v=146') format('opentype');font-style:normal;font-weight:400;font-display:swap;}
+.player-name,.player-title,.player-words,.board-title{
+  font-family:'Museum Foundry',serif;font-variant:small-caps;letter-spacing:0;
+  border:1px solid #26221d;background:#f7f3eb;padding-left:6px;padding-right:6px;
+}
+

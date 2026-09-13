@@ -242,8 +242,9 @@
     entranceSelections.textContent='Selections Curated by Community Vote';
   }
   paintMuseumPlateText(entranceLocation,entranceLocation.textContent);
-  if(entranceSelections.children.length){
-    [...entranceSelections.children].forEach(part=>paintMuseumPlateText(part,part.textContent));
+  const entranceSelectionParts=[...entranceSelections.children];
+  if(entranceSelectionParts.length){
+    entranceSelectionParts.forEach(part=>paintMuseumPlateText(part,part.textContent));
   }else{
     paintMuseumPlateText(entranceSelections,entranceSelections.textContent);
   }

@@ -93,6 +93,15 @@ main{width:100vw;height:100dvh;display:flex;align-items:center;justify-content:c
 .front-door-label{position:absolute;left:360px;bottom:34px;transform:translateX(-50%);font-size:8px;font-weight:900;letter-spacing:.06em;z-index:4;white-space:nowrap}
 .museum{position:fixed;left:12px;bottom:12px;border:1px solid #555;background:#fff;color:#111;text-decoration:none;font-weight:700;padding:10px 14px}
 @media(max-width:1000px){.cg-canvas{transform:scale(calc((100vw - 12px)/980));transform-origin:center center}}
+
+@font-face{font-family:'Museum Foundry';src:url('MuseumFoundry.otf?v=146') format('opentype');font-style:normal;font-weight:400;font-display:swap;}
+.zone,.vertical-title,.front-door-label,.map-title{
+  font-family:'Museum Foundry',serif;font-variant:small-caps;letter-spacing:0;
+}
+.zone,.front-door-label,.map-title{
+  box-shadow:inset 0 0 0 2px #f7f3eb,inset 0 0 0 3px #26221d;
+}
+
 </style>
 </head>
 <body>

@@ -354,3 +354,12 @@ a:active {
     min-width: 1000px;
   }
 }
+
+
+/* v146 Laboratory machine plaques; controls unchanged */
+@font-face{font-family:'Museum Foundry';src:url('MuseumFoundry.otf?v=146') format('opentype');font-style:normal;font-weight:400;font-display:swap;}
+.machine-title,.agglomerator-title,.output-label{
+  font-family:'Museum Foundry',serif;font-variant:small-caps;letter-spacing:0;
+  border:1px solid #26221d;background:#f7f3eb;padding-left:5px;padding-right:5px;
+}
+
