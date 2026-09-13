@@ -220,6 +220,7 @@
   entranceEmojis.hidden=['gallery','fyc','salon','catacombs'].includes(entranceKind);
   entranceRank.hidden=entranceKind!=='geh';
   entranceSearch.hidden=entranceKind!=='catacombs';
+  entranceSelections.hidden=false;
   if(entranceKind==='geh') entranceRank.textContent=`${rankWord(requestedRank)} PLACE`;
   if(entranceKind==='catacombs') entranceSearch.textContent=searchDetails;
   if(entranceKind==='collection') {

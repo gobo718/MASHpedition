@@ -2322,3 +2322,45 @@ button,
   flex:1 1 0;
   min-width:0;
 }
+
+
+/* v149 — museum entrance plate lettering is centered inside its plate.
+   External plate geometry/positions are unchanged. */
+.entrance-location-banner,
+.entrance-rank,
+.entrance-search,
+.entrance-selections{
+  box-sizing:border-box;
+  text-align:center;
+  align-items:center;
+  justify-content:center;
+}
+.entrance-rank,
+.entrance-search,
+.entrance-selections{
+  display:flex;
+}
+.entrance-rank[hidden],
+.entrance-search[hidden],
+.entrance-selections[hidden]{
+  display:none !important;
+}
+
+
+/* v150 — GEH entrance keeps its community-vote curation plaque.
+   All entrance plaques center their contents horizontally and vertically. */
+.entrance-location-banner,
+.entrance-rank,
+.entrance-search,
+.entrance-selections{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+}
+.entrance-rank[hidden],
+.entrance-search[hidden],
+.entrance-selections[hidden],
+.entrance-emojis[hidden]{
+  display:none !important;
+}
