@@ -895,7 +895,7 @@
         : requestedArea==='collection'
           ? `COLLECTION\nPAGE ${Math.floor(thumbnailPage/2)+1}${thumbnailPage%2===0?'A':'B'} • ${start+1}–${end}`
           : catacombsMode
-            ? `CATACOMBS\nPAGE ${start+1}–${end}`
+            ? `CATACOMBS\nPAGE ${Math.floor(thumbnailPage/2)+1}${thumbnailPage%2===0?'A':'B'} • ${start+1}–${end}`
             : `${requestedArea==='fyc'?'FOR YOUR\nCONSIDERATION':areaLabel}\nPAGE ${thumbnailPage+1} / ${pageCount} • ${start+1}–${end}`;
       }
     }
