@@ -486,6 +486,8 @@
     });
     // GEH never exposes Endless, including its connected Zazzly thumbnail room.
     if(gehMode) endlessBtn.hidden=true;
+    // Collection never exposes Endless.
+    if(collectionContext) endlessBtn.hidden=true;
     if(catacombsContext){
       // THEME search: THUMBNAILS + ENDLESS. NO THEME: AERIAL + EXHIBIT + THUMBNAILS.
       overheadBtn.disabled=catSearchHasTheme;

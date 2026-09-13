@@ -2310,3 +2310,15 @@ button,
 .entrance-emojis[hidden]{
   display:none !important;
 }
+
+
+/* v148 — bottom viewing menu is always exactly one horizontal row.
+   Collection also removes ENDLESS via applyCapabilities(). */
+.exhibit-controls{
+  display:flex;
+  flex-wrap:nowrap;
+}
+.exhibit-controls > button:not([hidden]){
+  flex:1 1 0;
+  min-width:0;
+}
