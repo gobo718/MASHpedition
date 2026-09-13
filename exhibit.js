@@ -686,8 +686,11 @@
       renderedButtons=wallSlots;
     }
 
-    renderCollectionExhibitPlates(renderedButtons);
+    // Make the target room canvas visible before measuring Theme lettering.
+    // getBoundingClientRect() on a hidden room returns zero-size text, which made
+    // the first room after a corner transition produce tiny/misplaced plates.
     setView(type);
+    renderCollectionExhibitPlates(renderedButtons);
   }
 
   function currentGenericPageCount(){
