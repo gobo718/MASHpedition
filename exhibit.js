@@ -476,6 +476,8 @@
     capabilityButtons.forEach(([button,key])=>{
       button.hidden=!capabilities[key];
     });
+    // GEH never exposes Endless, including its connected Zazzly thumbnail room.
+    if(gehMode) endlessBtn.hidden=true;
     if(catacombsContext){
       // THEME search: THUMBNAILS + ENDLESS. NO THEME: AERIAL + EXHIBIT + THUMBNAILS.
       overheadBtn.disabled=catSearchHasTheme;
@@ -1017,7 +1019,13 @@
     const start=page*unit+1;
     const end=Math.min(genericResultCount,start+unit-1);
     pagePrevBtn.disabled=gehThumbnail ? (!zazzlyMode && page<=0) : (connectedZazzlyThumbnail ? false : page<=0);
-    pageNextBtn.disabled=gehThumbnail ? zazzlyMode : (connectedZazzlyThumbnail ? true : page>=count-1);
+    pageNextBtn.disabled=gehThumbnail
+      ? zazzlyMode
+      : (connectedZazzlyThumbnail
+        ? true
+        : (((collectionContext || catacombsContext) && view==='thumbnail' && !zazzlyMode)
+          ? false
+          : page>=count-1));
     syncThumbnailPageControls();
     if(view==='thumbnail' && gehMode){
       if(zazzlyMode) pageStatus.textContent='PAGE 4';
