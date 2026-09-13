@@ -50,3 +50,28 @@ button,.hub-link{
 
 /* v48 — center Common Grounds Cafe label inside its existing Museum Hub box. */
 .top-band .hub-link[href="common-grounds.html"]{text-align:center;}
+
+
+/* v144 — Museum Hub architectural labels.
+   Existing boxes, words, links, and grid geometry are unchanged; this only
+   gives the already-positioned museum-authored labels the established
+   Museum Foundry Narrow plaque treatment. */
+@font-face{
+  font-family:'Museum Foundry';
+  src:url('MuseumFoundry.otf?v=144') format('opentype');
+  font-style:normal;
+  font-weight:400;
+  font-display:swap;
+}
+.museum-hub .hub-link,
+.museum-hub button{
+  font-family:'Museum Foundry',serif;
+  font-variant:small-caps;
+  font-weight:400;
+  letter-spacing:0;
+  position:relative;
+  box-shadow:inset 0 0 0 3px #fff, inset 0 0 0 4px #555;
+}
+.museum-hub .hub-link{
+  transform:none;
+}
