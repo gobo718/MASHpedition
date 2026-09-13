@@ -2489,13 +2489,17 @@ button,
 .exhibit-shell.collection-context:not([data-view="thumbnail"]) .collection-exhibit-theme-plate .museum-tier-mid{position:relative;top:0}
 .exhibit-shell.collection-context:not([data-view="thumbnail"]) .collection-exhibit-theme-plate .museum-tier-low{position:relative;top:0.2px}
 
-/* Same source-plane perspective as the angled artwork. */
-.collection-exhibit-theme-plate.is-perspective-plate{
-  transform-origin:0 0;
-  transform:matrix3d(
-    1,.25,0,.002173913043,
-    0,1.5,0,0,
-    0,0,1,0,
-    115,-57.5,0,1
-  );
+/* v165 — angled Collection plates ride an overlay plane that copies the
+   angled artwork's exact transform. The plate itself stays centered under the
+   230px source image before that shared perspective is applied. */
+.collection-exhibit-perspective-plane{
+  position:absolute;
+  margin:0;
+  padding:0;
+  overflow:visible;
+  pointer-events:none;
+  z-index:6;
+}
+.collection-exhibit-perspective-plane .collection-exhibit-theme-plate{
+  z-index:1;
 }

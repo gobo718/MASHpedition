@@ -605,7 +605,7 @@
   }
 
   function clearCollectionExhibitPlates(){
-    document.querySelectorAll('.collection-exhibit-theme-plate').forEach(node=>node.remove());
+    document.querySelectorAll('.collection-exhibit-theme-plate, .collection-exhibit-perspective-plane').forEach(node=>node.remove());
   }
 
   function addCollectionExhibitPlate(button){
@@ -622,8 +622,7 @@
     plate.appendChild(text);
     canvas.appendChild(plate);
 
-    // STEP 1: measure the rendered Theme lettering, then build the plate around
-    // that measurement with a fixed comfortable margin. No centering yet.
+    // STEP 1: size the plate from the actual rendered lettering only.
     const textRect=text.getBoundingClientRect();
     const horizontalMargin=12;
     const verticalMargin=6;
@@ -632,24 +631,39 @@
     plate.style.width=`${plateWidth}px`;
     plate.style.height=`${plateHeight}px`;
 
-    // Front-facing reference location: center the completed plate in the actual
-    // 35px gap between the 230px image bottom (y=265) and menu boundary (y=300).
-    const imageLeft=parseFloat(getComputedStyle(button).left)||0;
+    const isPerspective=button.classList.contains('corner-art-22') || button.classList.contains('right-perspective-art');
     const frontGapTop=265;
     const frontGapHeight=35;
-    plate.style.left=`${imageLeft+(230-plateWidth)/2}px`;
-    plate.style.top=`${frontGapTop+(frontGapHeight-plateHeight)/2}px`;
 
-    // Angled plates use the exact same source-space relationship as the front
-    // plate, then receive the artwork's established perspective transform.
-    if(button.classList.contains('corner-art-22') || button.classList.contains('right-perspective-art')){
+    if(isPerspective){
+      // The plate lives on an overlay plane with the EXACT same untransformed
+      // origin and transform as the angled artwork. This keeps it centered
+      // beneath that artwork in source coordinates before perspective is applied.
+      const plane=document.createElement('div');
+      plane.className='collection-exhibit-perspective-plane';
+      const buttonStyle=getComputedStyle(button);
+      plane.style.left=buttonStyle.left;
+      plane.style.top=buttonStyle.top;
+      plane.style.width='230px';
+      plane.style.height='300px';
+      plane.style.transformOrigin=buttonStyle.transformOrigin;
+      plane.style.transform=buttonStyle.transform;
+      canvas.appendChild(plane);
+      plane.appendChild(plate);
+
       plate.classList.add('is-perspective-plate');
-      plate.style.transformOrigin='0 0';
+      plate.style.left=`${(230-plateWidth)/2}px`;
+      plate.style.top=`${frontGapTop+(frontGapHeight-plateHeight)/2}px`;
+    }else{
+      // Front-facing reference: center in the 35px image-to-menu gap.
+      const imageLeft=parseFloat(getComputedStyle(button).left)||0;
+      plate.style.left=`${imageLeft+(230-plateWidth)/2}px`;
+      plate.style.top=`${frontGapTop+(frontGapHeight-plateHeight)/2}px`;
     }
+
     if(canvas.classList.contains('right-corner-canvas')) plate.classList.add('is-right-mirrored');
 
-    // STEP 2: only after plate dimensions/location are frozen, independently
-    // center the lettering horizontally and vertically inside that plate.
+    // STEP 2: center the rendered lettering inside the already-fixed plate.
     text.style.position='absolute';
     text.style.left='50%';
     text.style.top='50%';
