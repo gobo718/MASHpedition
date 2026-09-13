@@ -2364,3 +2364,24 @@ button,
 .entrance-emojis[hidden]{
   display:none !important;
 }
+
+/* v151 — entrance writing repair only.
+   v148/v149 plate flex styling exposed an older descendant-span rule in
+   Collection/Gallery, causing Museum Foundry glyph spans to become blocks.
+   Restrict those historical line rules to the two authored text lines only. */
+.exhibit-shell[data-area="collection"] .entrance-selections,
+.exhibit-shell[data-area="gallery"] .entrance-selections{
+  flex-direction:column;
+}
+.exhibit-shell[data-area="collection"] .entrance-selections > span,
+.exhibit-shell[data-area="gallery"] .entrance-selections > span{
+  display:block;
+}
+.exhibit-shell[data-area="collection"] .entrance-selections .museum-plate-text,
+.exhibit-shell[data-area="gallery"] .entrance-selections .museum-plate-text{
+  display:inline-block;
+}
+.exhibit-shell[data-area="collection"] .entrance-selections .museum-plate-glyph,
+.exhibit-shell[data-area="gallery"] .entrance-selections .museum-plate-glyph{
+  display:inline-block;
+}
