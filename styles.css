@@ -77,9 +77,10 @@ button,.hub-link{
 }
 
 
-/* v158 — case-specific correction for the unusually heavy INFORMATION DESK K only.
-   Keep it a full capital; make only a subtle optical correction. */
+/* v160 — INFORMATION DESK K: preserve v158 optical treatment and reduce that rendered K by exactly 0.2px. */
 .information-desk-k{
   display:inline-block;
-  font-size:calc(1em - 0.2px);
+  font-size:calc(.96em - 0.2px);
+  transform:scaleX(.94);
+  transform-origin:center bottom;
 }
