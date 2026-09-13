@@ -185,7 +185,7 @@
   const gehMode=areaPreset?.geh===true || params.get('geh')==='1' ||
     (!areaPreset && params.get('geh')!=='0' && mix==='B');
   const areaLabel=(zazzlyMode && gehMode) ? 'GRAND EXHIBITION HALL' : (collectionContext ? 'COLLECTION' : (areaPreset?.label || (gehMode?'GRAND EXHIBITION HALL':'VIEWER SAMPLE')));
-  const centerIdentityText=`${areaLabel} - ${params.get('emojis') || '😀 😎'}`;
+  const centerIdentityText=`${areaLabel} • ${params.get('emojis') || '😀 😎'}`;
   paintMuseumPlateText(overheadCenterIdentity,centerIdentityText);
   roomCenterIdentity.textContent=centerIdentityText;
   const defaultResultCount=areaPreset?.count ?? (mix==='A'?120:22);
@@ -810,7 +810,7 @@
           ? `COLLECTION\nPAGE ${Math.floor(thumbnailPage/2)+1}${thumbnailPage%2===0?'A':'B'} • ${start+1}-${end}`
           : catacombsMode
             ? `CATACOMBS\nPAGE ${Math.floor(thumbnailPage/2)+1}${thumbnailPage%2===0?'A':'B'} • ${start+1}-${end}`
-            : `${areaLabel}\nPAGE ${thumbnailPage+1} / ${pageCount} • ${start+1}-${end}`;
+            : `${requestedArea==='fyc'?'FOR YOUR\nCONSIDERATION':areaLabel}\nPAGE ${thumbnailPage+1} / ${pageCount} • ${start+1}-${end}`;
       }
     }
 

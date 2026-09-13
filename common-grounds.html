@@ -18,13 +18,13 @@ main{width:100vw;height:100dvh;display:flex;align-items:center;justify-content:c
 .hendec-svg{position:absolute;inset:0;width:980px;height:300px;z-index:2;overflow:visible;pointer-events:none}
 .hendec-fill{fill:#eee9df;stroke:none}
 .hendec-side{stroke:#26221d;stroke-width:4;stroke-linecap:square}
-.installation-button{position:absolute;left:666px;top:150px;transform:translate(-50%,-50%);width:154px;height:58px;border:3px solid #26221d;background:#fff;color:#111;font-size:18px;font-weight:900;letter-spacing:.06em;z-index:4;cursor:pointer}
+.installation-button{font-family:'Museum Foundry',serif;font-variant:small-caps;letter-spacing:0;position:absolute;left:666px;top:150px;transform:translate(-50%,-50%);width:154px;height:58px;border:3px solid #26221d;background:#fff;color:#111;font-size:18px;font-weight:900;z-index:4;cursor:pointer}
 
 .map-overlay{position:fixed;inset:0;background:rgba(0,0,0,.72);z-index:20;display:none;align-items:center;justify-content:center;padding:18px}
 .map-overlay.open{display:flex}
 .map-card{position:relative;width:min(94vw,980px);height:min(88vh,720px);background:#e8e3da;border:3px solid #26221d}
 .map-close{position:absolute;right:10px;top:8px;z-index:3;border:2px solid #26221d;background:#fff;font-size:24px;font-weight:900;width:42px;height:42px;cursor:pointer}
-.map-title{position:absolute;left:18px;top:12px;font-size:18px;font-weight:900;letter-spacing:.06em;white-space:nowrap;z-index:3}
+.map-title{position:absolute;left:18px;top:12px;width:max-content;padding:3px 6px;font-size:18px;font-weight:900;letter-spacing:0;white-space:pre-line;line-height:1.05;z-index:3}
 .large-map-svg{position:absolute;left:0;top:0;width:100%;height:100%}
 .large-side{stroke:#26221d;stroke-width:5;stroke-linecap:square}
 .large-art{fill:#fff;stroke:#26221d;stroke-width:2}
@@ -90,7 +90,7 @@ main{width:100vw;height:100dvh;display:flex;align-items:center;justify-content:c
 @media(max-width:1000px){.installation-stage{transform:scale(calc((100vw - 12px)/980));transform-origin:center center}}
 
 .front-door{position:absolute;left:330px;bottom:0;width:60px;height:31px;border:3px solid #26221d;border-bottom:0;background:#111;z-index:4}
-.front-door-label{position:absolute;left:360px;bottom:34px;transform:translateX(-50%);font-size:8px;font-weight:900;letter-spacing:.06em;z-index:4;white-space:nowrap}
+.front-door-label{position:absolute;left:360px;bottom:34px;transform:translateX(-50%);width:max-content;padding:2px 4px;font-size:8px;font-weight:900;letter-spacing:0;z-index:4;white-space:nowrap}
 .museum{position:fixed;left:12px;bottom:12px;border:1px solid #555;background:#fff;color:#111;text-decoration:none;font-weight:700;padding:10px 14px}
 @media(max-width:1000px){.cg-canvas{transform:scale(calc((100vw - 12px)/980));transform-origin:center center}}
 
@@ -118,14 +118,15 @@ main{width:100vw;height:100dvh;display:flex;align-items:center;justify-content:c
     <button id="hendecMapButton" class="installation-button" aria-label="Open Installation map">INSTALLATION</button>
 
     <div class="front-door" aria-label="Front door"></div>
-    <div class="front-door-label">FRONT DOOR</div>
+    <div class="front-door-label">ENTRANCE</div>
   </section>
   <a class="museum" href="index.html">MUSEUM</a>
 </main>
 <div id="installationMap" class="map-overlay" aria-hidden="true">
   <div class="map-card" role="dialog" aria-modal="true" aria-label="Installation map">
     <button id="mapClose" class="map-close" aria-label="Close map">×</button>
-    <div class="map-title">INSTALLATION</div>
+    <div class="map-title">COMMON GROUNDS CAFÉ
+INSTALLATION</div>
     <svg class="large-map-svg" viewBox="0 0 980 620" aria-label="20 artwork Installation map"><g id="largeHendecagon"></g></svg>
   </div>
 </div>

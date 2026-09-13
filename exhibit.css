@@ -2385,3 +2385,39 @@ button,
 .exhibit-shell[data-area="gallery"] .entrance-selections .museum-plate-glyph{
   display:inline-block;
 }
+
+/* v153 — Billy's nine targeted geometry/typography corrections. */
+/* Catacombs top-left: keep the established small type; shrink plate to content. */
+.exhibit-shell.catacombs-context[data-view="thumbnail"] .thumbnail-status{
+  width:max-content;
+  min-width:0;
+  max-width:none;
+}
+/* FYC top-left: authored two-line location name and content-fit plate. */
+.exhibit-shell[data-area="fyc"][data-view="thumbnail"] .thumbnail-status{
+  width:max-content;
+  min-width:0;
+  max-width:none;
+}
+/* GEH entrance: vertically center the location plate in the 300px scene. */
+.exhibit-shell.geh-mode[data-view="door"] .entrance-location-banner{
+  top:50%;
+  transform:translateY(-50%);
+}
+/* Give the rank plate enough physical plate around the complete rank wording. */
+.exhibit-shell.geh-mode[data-view="door"] .entrance-rank{
+  width:max-content;
+  max-width:100%;
+  padding:5px 14px;
+  min-height:42px;
+  white-space:nowrap;
+}
+/* Only the known overlong GEH ranked Theme labels get reduced type. */
+.exhibit-shell.geh-mode[data-view="overhead"] .overhead-slot.is-overhead-art[data-art="74"] > span,
+.exhibit-shell.geh-mode[data-view="overhead"] .overhead-slot.is-overhead-art[data-art="76"] > span,
+.exhibit-shell.geh-mode[data-view="overhead"] .overhead-slot.is-overhead-art[data-art="50"] > span,
+.exhibit-shell.geh-mode[data-view="overhead"] .overhead-slot.is-overhead-art[data-art="49"] > span,
+.exhibit-shell.geh-mode[data-view="overhead"] .overhead-slot.is-overhead-art[data-art="61"] > span,
+.exhibit-shell.geh-mode[data-view="overhead"] .overhead-slot.is-overhead-art[data-art="37"] > span{
+  font-size:10px;
+}
