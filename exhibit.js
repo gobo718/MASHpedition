@@ -805,7 +805,7 @@
         thumbnailGrid.appendChild(button);
       }
       thumbnailStatus.textContent=requestedArea==='se'
-        ? `${areaLabel}\nCURRENT SELECTIONS`
+        ? `SALON\nECLECTIQUE\nCURRENT\nSELECTIONS`
         : requestedArea==='collection'
           ? `COLLECTION\nPAGE ${Math.floor(thumbnailPage/2)+1}${thumbnailPage%2===0?'A':'B'} • ${start+1}-${end}`
           : catacombsMode

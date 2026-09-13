@@ -2421,3 +2421,18 @@ button,
 .exhibit-shell.geh-mode[data-view="overhead"] .overhead-slot.is-overhead-art[data-art="37"] > span{
   font-size:10px;
 }
+
+/* v155 — Salon Eclectique thumbnail identity: one word per line, plate fit to words. */
+.exhibit-shell[data-area="se"][data-view="thumbnail"] .thumbnail-status{
+  width:max-content;
+  min-width:0;
+  max-width:none;
+}
+
+
+/* v157 — Private Gallery thumbnail top-left plate: preserve wording/type/position; fit plate to its two lines. */
+.exhibit-shell[data-area="gallery"][data-view="thumbnail"] .thumbnail-status{
+  width:max-content;
+  min-width:0;
+  max-width:none;
+}

@@ -31,7 +31,7 @@ button,.hub-link{
 }
 .top-band{
   display:grid;
-  grid-template-columns:1fr 4fr 1fr
+  grid-template-columns:22.5% 55% 22.5%
 }
 .hub-grid{
   display:grid;
