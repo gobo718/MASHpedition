@@ -243,12 +243,9 @@
     entranceSelections.textContent='Selections Curated by Community Vote';
   }
   paintMuseumPlateText(entranceLocation,entranceLocation.textContent);
-  const entranceSelectionParts=[...entranceSelections.children];
-  if(entranceSelectionParts.length){
-    entranceSelectionParts.forEach(part=>paintMuseumPlateText(part,part.textContent));
-  }else{
-    paintMuseumPlateText(entranceSelections,entranceSelections.textContent);
-  }
+  // v152: Entrance supporting copy stays as authored plain text.
+  // Museum Foundry/small-caps styling comes from CSS; do not split this copy
+  // into per-glyph spans, which caused the visible single-letter regression.
 
 
 
