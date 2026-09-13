@@ -609,7 +609,7 @@
   }
 
   function addCollectionExhibitPlate(button){
-    if(!collectionContext || !button.classList.contains('is-art-slot')) return;
+    if(!(collectionContext || catacombsContext) || !button.classList.contains('is-art-slot')) return;
     const canvas=button.parentElement;
     if(!canvas) return;
 
@@ -672,7 +672,7 @@
 
   function renderCollectionExhibitPlates(buttons){
     clearCollectionExhibitPlates();
-    if(!collectionContext) return;
+    if(!(collectionContext || catacombsContext)) return;
     buttons.forEach(addCollectionExhibitPlate);
   }
 

@@ -2464,7 +2464,7 @@ button,
 
 /* v163 — Collection Exhibit plates: use the established Museum Foundry Narrow
    Small Caps plate treatment in Exhibit View. Front label locations are unchanged. */
-.exhibit-shell.collection-context:not([data-view="thumbnail"]) .collection-exhibit-theme-plate.museum-thumbnail-plate{
+.exhibit-shell:is(.collection-context,.catacombs-context):not([data-view="thumbnail"]) .collection-exhibit-theme-plate.museum-thumbnail-plate{
   box-sizing:border-box;
   padding:0;
   border:1px solid var(--line);
@@ -2477,17 +2477,17 @@ button,
   line-height:1.15;
   letter-spacing:0;
 }
-.exhibit-shell.collection-context:not([data-view="thumbnail"]) .collection-exhibit-theme-plate .museum-plate-text{
+.exhibit-shell:is(.collection-context,.catacombs-context):not([data-view="thumbnail"]) .collection-exhibit-theme-plate .museum-plate-text{
   display:inline-block;
   transform:scaleX(.78);
   transform-origin:center center;
 }
-.exhibit-shell.collection-context:not([data-view="thumbnail"]) .collection-exhibit-theme-plate .museum-plate-glyph{display:inline-block}
-.exhibit-shell.collection-context:not([data-view="thumbnail"]) .collection-exhibit-theme-plate .museum-cap{font-size:1em}
-.exhibit-shell.collection-context:not([data-view="thumbnail"]) .collection-exhibit-theme-plate .museum-smallcap{font-size:.70em}
-.exhibit-shell.collection-context:not([data-view="thumbnail"]) .collection-exhibit-theme-plate .museum-tier-high{position:relative;top:-0.2px}
-.exhibit-shell.collection-context:not([data-view="thumbnail"]) .collection-exhibit-theme-plate .museum-tier-mid{position:relative;top:0}
-.exhibit-shell.collection-context:not([data-view="thumbnail"]) .collection-exhibit-theme-plate .museum-tier-low{position:relative;top:0.2px}
+.exhibit-shell:is(.collection-context,.catacombs-context):not([data-view="thumbnail"]) .collection-exhibit-theme-plate .museum-plate-glyph{display:inline-block}
+.exhibit-shell:is(.collection-context,.catacombs-context):not([data-view="thumbnail"]) .collection-exhibit-theme-plate .museum-cap{font-size:1em}
+.exhibit-shell:is(.collection-context,.catacombs-context):not([data-view="thumbnail"]) .collection-exhibit-theme-plate .museum-smallcap{font-size:.70em}
+.exhibit-shell:is(.collection-context,.catacombs-context):not([data-view="thumbnail"]) .collection-exhibit-theme-plate .museum-tier-high{position:relative;top:-0.2px}
+.exhibit-shell:is(.collection-context,.catacombs-context):not([data-view="thumbnail"]) .collection-exhibit-theme-plate .museum-tier-mid{position:relative;top:0}
+.exhibit-shell:is(.collection-context,.catacombs-context):not([data-view="thumbnail"]) .collection-exhibit-theme-plate .museum-tier-low{position:relative;top:0.2px}
 
 /* v165 — angled Collection plates ride an overlay plane that copies the
    angled artwork's exact transform. The plate itself stays centered under the
