@@ -536,3 +536,9 @@ v68 Installation repair: one-artwork stepping, fixed clockwise/counterclockwise 
 
 ## v172 emergency calibration restoration
 Restored every deliberate +2px typography calibration that v171 incorrectly removed. No other v171 fixes were reverted. Existing tuned typography offsets are protected design values; no new screenshot-derived offsets were introduced.
+
+v173 — Collection Thumbnail information plate targeted fix
+- Changed only the Collection Thumbnail upper-left information plate sizing/centering.
+- Width is 116px, derived from the existing 11-thumbnail layout's own 116px side reservation; no screenshot-estimated measurement.
+- Existing Museum Foundry glyph/tier/optical calibration is untouched.
+- No thumbnail, navigation, emoji, caption, or other screen geometry changed.

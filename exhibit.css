@@ -2711,3 +2711,17 @@ button,
 .exhibit-shell[data-area="se"][data-view="thumbnail"] .salon-status-selections{
   margin-top:.575em; /* .5 of the established 1.15 line-height */
 }
+
+/* v173 — Collection Thumbnails: compact upper-left information plate only.
+   116px is the existing thumbnail-layout side reservation used by --thumb-11-size;
+   tying the plate to that established geometry prevents it from intruding into
+   the first thumbnail column. All other thumbnail geometry remains untouched. */
+.exhibit-shell.collection-context[data-view="thumbnail"] .thumbnail-status{
+  width:116px;
+  min-width:116px;
+  box-sizing:border-box;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+}
