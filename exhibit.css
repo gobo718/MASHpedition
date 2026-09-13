@@ -2230,3 +2230,65 @@ button,
 .exhibit-shell.catacombs-context[data-view="thumbnail"] .thumbnail-theme-label{
   display:none !important;
 }
+
+
+/* v145 — established Museum Foundry treatment expanded to museum-authored
+   Aerial, Thumbnail header, and Entrance information. Existing scene geometry
+   is preserved; only the non-exhibit thumbnail status moves from center to the
+   already-established 3px upper-left header position. */
+.overhead-slot.is-overhead-art,
+.overhead-center-label,
+.rank-selector button,
+.entrance-location-banner,
+.entrance-rank,
+.entrance-search,
+.entrance-selections,
+.thumbnail-status{
+  font-family:'Museum Foundry',serif;
+  font-variant:small-caps;
+  letter-spacing:0;
+}
+.overhead-slot.is-overhead-art > span,
+.overhead-center-label,
+.entrance-location-banner,
+.entrance-rank,
+.entrance-search,
+.entrance-selections,
+.thumbnail-status{
+  background:var(--control);
+  border:1px solid var(--line);
+}
+.overhead-slot.is-overhead-art > span{
+  padding:3px 6px;
+}
+.overhead-center-label{
+  padding:3px 8px;
+}
+.entrance-location-banner{
+  left:22px;
+  width:331px;
+  min-height:auto;
+  padding:8px 12px;
+}
+.entrance-selections{
+  padding:7px 10px;
+}
+.thumbnail-status{
+  top:3px;
+  left:3px;
+  right:auto;
+  width:auto;
+  min-width:148px;
+  height:auto;
+  padding:3px 6px;
+  display:block;
+  text-align:left;
+  line-height:1.15;
+  white-space:pre-line;
+  z-index:6;
+}
+/* Keep the established GEH/Collection/Catacombs upper-left dimensions exact. */
+.exhibit-shell:is(.geh-mode,.collection-context,.catacombs-context)[data-view="thumbnail"] .thumbnail-status{
+  left:3px;
+  width:148px;
+}

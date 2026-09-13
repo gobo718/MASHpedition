@@ -186,7 +186,7 @@
     (!areaPreset && params.get('geh')!=='0' && mix==='B');
   const areaLabel=(zazzlyMode && gehMode) ? 'GRAND EXHIBITION HALL' : (collectionContext ? 'COLLECTION' : (areaPreset?.label || (gehMode?'GRAND EXHIBITION HALL':'VIEWER SAMPLE')));
   const centerIdentityText=`${areaLabel} - ${params.get('emojis') || '😀 😎'}`;
-  overheadCenterIdentity.textContent=centerIdentityText;
+  paintMuseumPlateText(overheadCenterIdentity,centerIdentityText);
   roomCenterIdentity.textContent=centerIdentityText;
   const defaultResultCount=areaPreset?.count ?? (mix==='A'?120:22);
   const requestedCount=Number(params.get('count'))||defaultResultCount;
@@ -241,6 +241,13 @@
   } else {
     entranceSelections.textContent='Selections Curated by Community Vote';
   }
+  paintMuseumPlateText(entranceLocation,entranceLocation.textContent);
+  if(entranceSelections.children.length){
+    [...entranceSelections.children].forEach(part=>paintMuseumPlateText(part,part.textContent));
+  }else{
+    paintMuseumPlateText(entranceSelections,entranceSelections.textContent);
+  }
+
 
 
   // Presentation identity: Theme is set-level context only when Theme defines the set.
@@ -577,7 +584,7 @@
     button.dataset.rank=String(gehMode?gehRank:1);
     const suffix=gehMode?` · ${rankWord(gehRank)}`:'';
     button.setAttribute('aria-label',`${exhibitArtLabel(artNumber)}${gehMode?`, ${rankWord(gehRank)} place`:''}`);
-    if(span) span.textContent=`${exhibitArtLabel(artNumber)}${suffix}`;
+    if(span) paintMuseumPlateText(span,`${exhibitThemeWord(artNumber)}${suffix}`);
   }
 
   function renderOverhead(){
@@ -797,15 +804,16 @@
         thumbnailGrid.appendChild(button);
       }
       thumbnailStatus.textContent=requestedArea==='se'
-        ? `${areaLabel} · CURRENT SELECTIONS`
+        ? `${areaLabel}\nCURRENT SELECTIONS`
         : requestedArea==='collection'
           ? `COLLECTION\nPAGE ${Math.floor(thumbnailPage/2)+1}${thumbnailPage%2===0?'A':'B'} • ${start+1}-${end}`
           : catacombsMode
             ? `CATACOMBS\nPAGE ${Math.floor(thumbnailPage/2)+1}${thumbnailPage%2===0?'A':'B'} • ${start+1}-${end}`
-            : `${areaLabel} · PAGE ${thumbnailPage+1} / ${pageCount} · ${start+1}–${end} OF ${genericResultCount}`;
+            : `${areaLabel}\nPAGE ${thumbnailPage+1} / ${pageCount} • ${start+1}-${end}`;
       }
     }
 
+    paintMuseumPlateText(thumbnailStatus,thumbnailStatus.textContent);
     setView('thumbnail');
     applyThumbnailBrickLayout();
     updatePageNav();
