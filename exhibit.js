@@ -14,6 +14,7 @@
   const entranceEmojis=document.getElementById('entranceEmojis');
   const entranceRank=document.getElementById('entranceRank');
   const entranceSearch=document.getElementById('entranceSearch');
+  const entranceSearchSecondary=document.getElementById('entranceSearchSecondary');
   const entranceSelections=document.getElementById('entranceSelections');
   const exhibitControls=document.getElementById('exhibitControls');
   const overheadView=document.getElementById('overheadView');
@@ -102,7 +103,7 @@
     gallery:{mix:'A',label:'PRIVATE GALLERY',count:66,start:'thumbnail'},
     collection:{mix:'B',label:'COLLECTION',count:66,start:'exhibit'},
     fyc:{mix:'A',label:'FOR YOUR CONSIDERATION',count:66,start:'thumbnail'},
-    se:{mix:'A',label:'SALON ECLECTIQUE',count:12,start:'thumbnail'},
+    se:{mix:'A',label:'SALON ECLECTIQUE',count:11,start:'thumbnail'},
     geh:{mix:'B',label:'GRAND EXHIBITION HALL',count:66,start:'exhibit',geh:true},
     'cat-theme':{mix:'A',label:'CATACOMBS',count:66,start:'thumbnail'},
     'cat-search':{mix:'C',label:'CATACOMBS · SEARCH',count:66,start:'exhibit'}
@@ -191,7 +192,7 @@
   const defaultResultCount=areaPreset?.count ?? (mix==='A'?120:22);
   const requestedCount=Number(params.get('count'))||defaultResultCount;
   const genericResultCount=requestedArea==='se'
-    ? Math.max(3,Math.min(22,requestedCount))
+    ? 11
     : Math.max(1,Math.min(5000,requestedCount));
   const defaultStart=areaPreset?.start || 'door';
 
@@ -220,9 +221,13 @@
   entranceEmojis.hidden=['gallery','fyc','salon','catacombs'].includes(entranceKind);
   entranceRank.hidden=entranceKind!=='geh';
   entranceSearch.hidden=entranceKind!=='catacombs';
+  entranceSearchSecondary.hidden=entranceKind!=='catacombs';
   entranceSelections.hidden=false;
   if(entranceKind==='geh') entranceRank.textContent=`${rankWord(requestedRank)} PLACE`;
-  if(entranceKind==='catacombs') entranceSearch.textContent=searchDetails;
+  if(entranceKind==='catacombs') {
+    entranceSearch.textContent=searchDetails;
+    entranceSearchSecondary.textContent=params.get('theme') ? `THEME · ${params.get('theme')}` : (catSearchHasTheme ? 'THEME SEARCH' : 'GENERAL SEARCH');
+  }
   if(entranceKind==='collection') {
     const curatorLead=document.createElement('span');
     curatorLead.textContent='Selections Curated by';
@@ -303,6 +308,7 @@
   shell.dataset.area=requestedArea||'sample';
   shell.classList.toggle('geh-mode',gehMode);
   shell.classList.toggle('collection-context',collectionContext);
+  shell.classList.toggle('collection-entrance-context',entranceKind==='collection');
   shell.classList.toggle('catacombs-context',catacombsContext);
   shell.classList.toggle('catacombs-mode',catacombsMode);
 
@@ -842,7 +848,7 @@
           button.addEventListener('click',()=>openArtwork(art,1,'thumbnail'));
           thumbnailGrid.appendChild(button);
         }
-        thumbnailStatus.textContent='COLLECTION\nPAGE 4 • 67-78';
+        thumbnailStatus.textContent='COLLECTION\nPAGE 4 • 67–78';
       }else if(zazzlyMode && catacombsContext){
         thumbnailPage=0;
         const set=THEME_SETS.zazzly;
@@ -860,7 +866,7 @@
           button.addEventListener('click',()=>openArtwork(art,1,'thumbnail'));
           thumbnailGrid.appendChild(button);
         }
-        thumbnailStatus.textContent='CATACOMBS\nPAGE 4 • 67-78';
+        thumbnailStatus.textContent='CATACOMBS\nPAGE 4 • 67–78';
       }else{
       const pageCount=currentThumbnailPageCount();
       thumbnailPage=Math.max(0,Math.min(pageCount-1,thumbnailPage));
@@ -887,14 +893,25 @@
       thumbnailStatus.textContent=requestedArea==='se'
         ? `SALON\nECLECTIQUE\n \nCURRENT\nSELECTIONS`
         : requestedArea==='collection'
-          ? `COLLECTION\nPAGE ${Math.floor(thumbnailPage/2)+1}${thumbnailPage%2===0?'A':'B'} • ${start+1}-${end}`
+          ? `COLLECTION\nPAGE ${Math.floor(thumbnailPage/2)+1}${thumbnailPage%2===0?'A':'B'} • ${start+1}–${end}`
           : catacombsMode
-            ? `CATACOMBS\nPAGE ${Math.floor(thumbnailPage/2)+1}${thumbnailPage%2===0?'A':'B'} • ${start+1}-${end}`
-            : `${requestedArea==='fyc'?'FOR YOUR\nCONSIDERATION':areaLabel}\nPAGE ${thumbnailPage+1} / ${pageCount} • ${start+1}-${end}`;
+            ? `CATACOMBS\nPAGE ${start+1}–${end}`
+            : `${requestedArea==='fyc'?'FOR YOUR\nCONSIDERATION':areaLabel}\nPAGE ${thumbnailPage+1} / ${pageCount} • ${start+1}–${end}`;
       }
     }
 
-    paintMuseumPlateText(thumbnailStatus,thumbnailStatus.textContent);
+    if(requestedArea==='se'){
+      thumbnailStatus.replaceChildren();
+      const salonName=document.createElement('span');
+      salonName.className='salon-status-name';
+      paintMuseumPlateText(salonName,'SALON\nECLECTIQUE');
+      const salonSelections=document.createElement('span');
+      salonSelections.className='salon-status-selections';
+      paintMuseumPlateText(salonSelections,'CURRENT\nSELECTIONS');
+      thumbnailStatus.append(salonName,salonSelections);
+    }else{
+      paintMuseumPlateText(thumbnailStatus,thumbnailStatus.textContent);
+    }
     setView('thumbnail');
     applyThumbnailBrickLayout();
     updatePageNav();
@@ -1148,7 +1165,7 @@
       if(current!==lastStandardPage) return false;
       const next=new URLSearchParams(params);
       next.set('area','zazzly');
-      if(gehMode) next.set('geh','1');
+      if(gehMode) { next.set('geh','1'); next.set('rank',String(gehRank)); }
       else next.delete('geh');
       next.set('returnArea',requestedArea || (gehMode?'geh':'collection'));
       next.set('returnRoomPage',String(lastStandardPage));
@@ -1164,6 +1181,7 @@
       const returnArea=standardAreaForReturn();
       const returnRoomPage=standardRoomForReturn();
       next.set('area',returnArea);
+      if(gehMode) next.set('rank',String(gehRank));
       next.delete('geh');
       next.delete('returnArea');
       next.delete('returnRoomPage');
@@ -1414,6 +1432,7 @@
     if(zazzlyMode){
       const returnArea=standardAreaForReturn();
       const returnRoomPage=standardRoomForReturn();
+      if(gehMode) next.set('rank',String(gehRank));
       next.delete('returnArea');
       next.delete('returnRoomPage');
       next.set('area',returnArea);
@@ -1426,7 +1445,7 @@
       next.delete('entryDoor');
       // Zazzly is Room 4 of GEH when entered from GEH. Preserve that art-space
       // identity so the selected 1st–10th rank and rank controls remain active.
-      if(gehMode) next.set('geh','1');
+      if(gehMode) { next.set('geh','1'); next.set('rank',String(gehRank)); }
       next.set('area','zazzly');
     }
     next.set('start',presentation==='overhead'?'exhibit':'room');
@@ -1612,3 +1631,4 @@
   else if(requestedStart==='endless' && capabilities.endless && !(catacombsMode && !catSearchHasTheme)) renderEndless();
   else setView('door');
 })();
+

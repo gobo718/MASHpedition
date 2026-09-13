@@ -1523,8 +1523,8 @@ button{border-radius:0}
 }
 
 /* v48 — booked special art-space entrance treatments. */
-.exhibit-shell[data-area="collection"] .entrance-selections{position:relative;top:8px;}
-.exhibit-shell[data-area="collection"] .entrance-selections span{display:block;}
+.exhibit-shell.collection-entrance-context .entrance-selections{position:relative;top:8px;}
+.exhibit-shell.collection-entrance-context .entrance-selections span{display:block;}
 .exhibit-shell[data-area="gallery"] .entrance-emojis,
 .exhibit-shell[data-area="fyc"] .entrance-emojis,
 .exhibit-shell[data-area="se"] .entrance-emojis{display:none;}
@@ -2369,19 +2369,19 @@ button,
    v148/v149 plate flex styling exposed an older descendant-span rule in
    Collection/Gallery, causing Museum Foundry glyph spans to become blocks.
    Restrict those historical line rules to the two authored text lines only. */
-.exhibit-shell[data-area="collection"] .entrance-selections,
+.exhibit-shell.collection-entrance-context .entrance-selections,
 .exhibit-shell[data-area="gallery"] .entrance-selections{
   flex-direction:column;
 }
-.exhibit-shell[data-area="collection"] .entrance-selections > span,
+.exhibit-shell.collection-entrance-context .entrance-selections > span,
 .exhibit-shell[data-area="gallery"] .entrance-selections > span{
   display:block;
 }
-.exhibit-shell[data-area="collection"] .entrance-selections .museum-plate-text,
+.exhibit-shell.collection-entrance-context .entrance-selections .museum-plate-text,
 .exhibit-shell[data-area="gallery"] .entrance-selections .museum-plate-text{
   display:inline-block;
 }
-.exhibit-shell[data-area="collection"] .entrance-selections .museum-plate-glyph,
+.exhibit-shell.collection-entrance-context .entrance-selections .museum-plate-glyph,
 .exhibit-shell[data-area="gallery"] .entrance-selections .museum-plate-glyph{
   display:inline-block;
 }
@@ -2626,4 +2626,88 @@ button,
   font-size:22px;
   line-height:1.12;
   font-weight:700;
+}
+
+/* v171 — canonical corrections from the full audit. No screenshot-derived offsets. */
+/* Collection Entrance uses one presentation regardless of whether it is reached
+   from Collection proper or through the connected Zazzly room. */
+.exhibit-shell.collection-entrance-context[data-view="door"] .entrance-selections{
+  position:relative;
+  top:8px;
+  flex-direction:column;
+}
+.exhibit-shell.collection-entrance-context[data-view="door"] .entrance-selections > span{
+  display:block;
+  width:100%;
+  text-align:center;
+}
+
+/* Catacombs Entrance: exact 980px scene zones, reusing the established
+   0..375 / 605..980 side columns. The old DETAILS OF SEARCH header is gone.
+   CATACOMBS and the curation tagline share y=70; the two search-detail plates
+   occupy the matching left/right columns beneath that row. */
+.exhibit-shell.catacombs-context[data-view="door"] .entrance-exhibit-info{
+  left:0;
+  top:70px;
+  width:980px;
+  height:230px;
+  padding:0;
+  display:block;
+  overflow:visible;
+}
+.exhibit-shell.catacombs-context[data-view="door"] .entrance-selections{
+  position:absolute;
+  left:605px;
+  top:0;
+  width:375px;
+  max-width:375px;
+  min-height:54px;
+  margin:0;
+  padding:8px 18px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+}
+.exhibit-shell.catacombs-context[data-view="door"] .entrance-search{
+  position:absolute;
+  left:0;
+  top:126px;
+  width:375px;
+  max-width:375px;
+  min-height:64px;
+  margin:0;
+  padding:10px 18px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  font-size:18px;
+  line-height:1.12;
+}
+.exhibit-shell.catacombs-context[data-view="door"] .entrance-search-secondary{
+  left:605px;
+}
+
+/* The audited top-left range typography uses an en dash, and all multiline
+   identity blocks are centered by layout rather than manual x/y nudges. */
+.exhibit-shell[data-view="thumbnail"] .thumbnail-status{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+}
+/* Salon's requested half-line separation is structural: .5 line-height exactly,
+   not a guessed blank glyph or screenshot offset. */
+.exhibit-shell[data-area="se"][data-view="thumbnail"] .thumbnail-status{
+  flex-direction:column;
+}
+.exhibit-shell[data-area="se"][data-view="thumbnail"] .salon-status-name,
+.exhibit-shell[data-area="se"][data-view="thumbnail"] .salon-status-selections{
+  display:block;
+  white-space:pre-line;
+  text-align:center;
+}
+.exhibit-shell[data-area="se"][data-view="thumbnail"] .salon-status-selections{
+  margin-top:.575em; /* .5 of the established 1.15 line-height */
 }

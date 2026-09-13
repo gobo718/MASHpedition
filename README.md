@@ -532,3 +532,7 @@ v68 Installation repair: one-artwork stepping, fixed clockwise/counterclockwise 
 - Common Grounds café zone is expected to become an Annex-type area containing the café; final area name remains TBD.
 - Common Grounds Installation hendecagon will later keep its size/orientation but move farther toward the back; entrance will be enlarged.
 - Catacombs entrance: remove the placeholder DETAILS OF SEARCH box; align the curator/tagline top with the CATACOMBS plate and later provide substantial search-detail plate space on both sides beneath. Exact search-detail fields remain TBD.
+
+
+## v172 emergency calibration restoration
+Restored every deliberate +2px typography calibration that v171 incorrectly removed. No other v171 fixes were reverted. Existing tuned typography offsets are protected design values; no new screenshot-derived offsets were introduced.
