@@ -268,8 +268,8 @@
     if(thumbnailIdentity){
       if(requestedArea==='cat-search' || requestedArea==='cat-theme'){
         thumbnailIdentity.hidden=false;
-        thumbnailIdentityPrimary.textContent='';
-        thumbnailIdentitySecondary.textContent='DETAILS OF SEARCH';
+        thumbnailIdentityPrimary.textContent=entranceEmojiText;
+        thumbnailIdentitySecondary.textContent='';
       }else if(requestedArea==='fyc' || requestedArea==='se' || requestedArea==='gallery'){
         thumbnailIdentity.hidden=true;
       }else if(hasSharedPresentationPair){
@@ -752,7 +752,7 @@
           button.addEventListener('click',()=>openArtwork(art,1,'thumbnail'));
           thumbnailGrid.appendChild(button);
         }
-        thumbnailStatus.textContent='COLLECTION\nPAGE 7 / 7 · 67–78';
+        thumbnailStatus.textContent='COLLECTION\nPAGE 4 • 67-78';
       }else if(zazzlyMode && catacombsContext){
         thumbnailPage=0;
         const set=THEME_SETS.zazzly;
@@ -770,7 +770,7 @@
           button.addEventListener('click',()=>openArtwork(art,1,'thumbnail'));
           thumbnailGrid.appendChild(button);
         }
-        thumbnailStatus.textContent='CATACOMBS\nPAGE 7 / 7 · 67–78';
+        thumbnailStatus.textContent='CATACOMBS\nPAGE 4 • 67-78';
       }else{
       const pageCount=currentThumbnailPageCount();
       thumbnailPage=Math.max(0,Math.min(pageCount-1,thumbnailPage));
@@ -797,9 +797,9 @@
       thumbnailStatus.textContent=requestedArea==='se'
         ? `${areaLabel} · CURRENT SELECTIONS`
         : requestedArea==='collection'
-          ? `COLLECTION\nPAGE ${thumbnailPage+1} / 7 · ${start+1}–${end}`
+          ? `COLLECTION\nPAGE ${Math.floor(thumbnailPage/2)+1}${thumbnailPage%2===0?'A':'B'} • ${start+1}-${end}`
           : catacombsMode
-            ? `CATACOMBS · PAGE ${thumbnailPage+1} / 7 · ${start+1}–${end} OF ${genericResultCount}`
+            ? `CATACOMBS\nPAGE ${Math.floor(thumbnailPage/2)+1}${thumbnailPage%2===0?'A':'B'} • ${start+1}-${end}`
             : `${areaLabel} · PAGE ${thumbnailPage+1} / ${pageCount} · ${start+1}–${end} OF ${genericResultCount}`;
       }
     }
