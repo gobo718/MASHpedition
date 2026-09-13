@@ -653,7 +653,7 @@
 
       plate.classList.add('is-perspective-plate');
       plate.style.left=`${(230-plateWidth)/2}px`;
-      plate.style.top=`${frontGapTop+(frontGapHeight-plateHeight)/2}px`;
+      plate.style.top=`${230+(frontGapHeight-plateHeight)/2}px`;
     }else{
       // Front-facing reference: center in the 35px image-to-menu gap.
       const imageLeft=parseFloat(getComputedStyle(button).left)||0;
