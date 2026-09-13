@@ -604,6 +604,65 @@
     setView('overhead');
   }
 
+  function clearCollectionExhibitPlates(){
+    document.querySelectorAll('.collection-exhibit-theme-plate').forEach(node=>node.remove());
+  }
+
+  function addCollectionExhibitPlate(button){
+    if(!collectionContext || zazzlyMode || !button.classList.contains('is-art-slot')) return;
+    const canvas=button.parentElement;
+    if(!canvas) return;
+
+    const artNumber=Number(button.dataset.art);
+    const plate=document.createElement('div');
+    plate.className='collection-exhibit-theme-plate museum-thumbnail-plate';
+    const text=document.createElement('span');
+    text.className='collection-exhibit-theme-text';
+    paintMuseumPlateText(text,exhibitThemeWord(artNumber));
+    plate.appendChild(text);
+    canvas.appendChild(plate);
+
+    // STEP 1: measure the rendered Theme lettering, then build the plate around
+    // that measurement with a fixed comfortable margin. No centering yet.
+    const textRect=text.getBoundingClientRect();
+    const horizontalMargin=12;
+    const verticalMargin=6;
+    const plateWidth=Math.ceil(textRect.width+horizontalMargin);
+    const plateHeight=Math.ceil(textRect.height+verticalMargin);
+    plate.style.width=`${plateWidth}px`;
+    plate.style.height=`${plateHeight}px`;
+
+    // Front-facing reference location: center the completed plate in the actual
+    // 35px gap between the 230px image bottom (y=265) and menu boundary (y=300).
+    const imageLeft=parseFloat(getComputedStyle(button).left)||0;
+    const frontGapTop=265;
+    const frontGapHeight=35;
+    plate.style.left=`${imageLeft+(230-plateWidth)/2}px`;
+    plate.style.top=`${frontGapTop+(frontGapHeight-plateHeight)/2}px`;
+
+    // Angled plates use the exact same source-space relationship as the front
+    // plate, then receive the artwork's established perspective transform.
+    if(button.classList.contains('corner-art-22') || button.classList.contains('right-perspective-art')){
+      plate.classList.add('is-perspective-plate');
+      plate.style.transformOrigin='0 0';
+      plate.style.transform=getComputedStyle(button).transform;
+    }
+    if(canvas.classList.contains('right-corner-canvas')) plate.classList.add('is-right-mirrored');
+
+    // STEP 2: only after plate dimensions/location are frozen, independently
+    // center the lettering horizontally and vertically inside that plate.
+    text.style.position='absolute';
+    text.style.left='50%';
+    text.style.top='50%';
+    text.style.transform='translate(-50%,-50%)';
+  }
+
+  function renderCollectionExhibitPlates(buttons){
+    clearCollectionExhibitPlates();
+    if(!collectionContext || zazzlyMode) return;
+    buttons.forEach(addCollectionExhibitPlate);
+  }
+
   function renderRoom(start=lastRoomStart){
     if(catacombsMode && catSearchHasTheme) return;
     if(!capabilities.room){
@@ -616,14 +675,19 @@
     const trio=trioAt(roomStart);
     const type=viewTypeFor(roomStart);
 
+    let renderedButtons;
     if(type==='left'){
       trio.forEach((slot,i)=>paintRoomSlot(leftSlots[i],slot));
+      renderedButtons=leftSlots;
     }else if(type==='right'){
       trio.forEach((slot,i)=>paintRoomSlot(rightSlotsVisual[i],slot));
+      renderedButtons=rightSlotsVisual;
     }else{
       trio.forEach((slot,i)=>paintRoomSlot(wallSlots[i],slot));
+      renderedButtons=wallSlots;
     }
 
+    renderCollectionExhibitPlates(renderedButtons);
     setView(type);
   }
 

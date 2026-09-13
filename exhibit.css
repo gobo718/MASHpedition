@@ -2436,3 +2436,27 @@ button,
   min-width:0;
   max-width:none;
 }
+
+
+/* v161 — Collection Exhibit View Theme plates.
+   Plate sizing and text centering are intentionally separate calculations. */
+.collection-exhibit-theme-plate{
+  position:absolute;
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  overflow:visible;
+  z-index:6;
+  pointer-events:none;
+}
+.collection-exhibit-theme-text{
+  display:block;
+  width:max-content;
+  white-space:nowrap;
+  line-height:1;
+}
+/* The right-corner canvas is itself mirrored; counter-mirror only the plate
+   lettering so the physical plate geometry remains the exact room mirror. */
+.collection-exhibit-theme-plate.is-right-mirrored .collection-exhibit-theme-text{
+  transform:translate(-50%,-50%) scaleX(-1) !important;
+}
