@@ -111,7 +111,9 @@
   const requestedArea=(params.get('area')||'').toLowerCase();
   const catacombsMode=requestedArea==='cat-theme' || requestedArea==='cat-search';
   const zazzlyMode=requestedArea==='zazzly';
-  let catSearchHasTheme=requestedArea!=='cat-search';
+  const collectionContext=requestedArea==='collection' || (zazzlyMode && params.get('returnArea')==='collection');
+  const catacombsContext=catacombsMode || (zazzlyMode && ['cat-theme','cat-search'].includes(params.get('returnArea')));
+  let catSearchHasTheme=requestedArea!=='cat-search' && params.get('returnArea')!=='cat-search';
 
   // Authoritative Theme content. Presentation code resolves identities from
   // these definitions instead of maintaining view-specific copies.
@@ -182,9 +184,9 @@
   const maxUnlockedRank=Math.max(1,Math.min(10,Number(params.get('ranks'))||1));
   const gehMode=areaPreset?.geh===true || params.get('geh')==='1' ||
     (!areaPreset && params.get('geh')!=='0' && mix==='B');
-  const areaLabel=(zazzlyMode && gehMode) ? 'GRAND EXHIBITION HALL' : (areaPreset?.label || (gehMode?'GRAND EXHIBITION HALL':'VIEWER SAMPLE'));
-  const centerIdentityText=`${areaLabel} - ${params.get('emojis') || '😀 😎'}`;
-  overheadCenterIdentity.textContent=centerIdentityText;
+  const areaLabel=(zazzlyMode && gehMode) ? 'GRAND EXHIBITION HALL' : (collectionContext ? 'COLLECTION' : (areaPreset?.label || (gehMode?'GRAND EXHIBITION HALL':'VIEWER SAMPLE')));
+  const centerIdentityText=`${areaLabel} • ${params.get('emojis') || '😀 😎'}`;
+  paintMuseumPlateText(overheadCenterIdentity,centerIdentityText);
   roomCenterIdentity.textContent=centerIdentityText;
   const defaultResultCount=areaPreset?.count ?? (mix==='A'?120:22);
   const requestedCount=Number(params.get('count'))||defaultResultCount;
@@ -200,7 +202,7 @@
   const searchDetails=params.get('search') || 'DETAILS OF SEARCH';
   const requestedRank=Math.max(1,Math.min(10,Number(params.get('rank'))||1));
   const entranceKind=gehMode?'geh':(
-    requestedArea==='collection'?'collection':
+    collectionContext?'collection':
     requestedArea==='gallery'?'gallery':
     requestedArea==='fyc'?'fyc':
     requestedArea==='se'?'salon':
@@ -211,13 +213,14 @@
   // locations anywhere the art space is defined by one shared emoji pair.
   // Catacombs is intentionally excluded: its search presentations do not
   // carry a shared pair.
-  const emojiPairDefinedLocation=gehMode || requestedArea==='collection';
+  const emojiPairDefinedLocation=gehMode || collectionContext;
 
   entranceLocation.textContent=entranceKind==='catacombs'?'CATACOMBS':areaLabel;
   entranceEmojis.textContent=entranceEmojiText;
   entranceEmojis.hidden=['gallery','fyc','salon','catacombs'].includes(entranceKind);
   entranceRank.hidden=entranceKind!=='geh';
   entranceSearch.hidden=entranceKind!=='catacombs';
+  entranceSelections.hidden=false;
   if(entranceKind==='geh') entranceRank.textContent=`${rankWord(requestedRank)} PLACE`;
   if(entranceKind==='catacombs') entranceSearch.textContent=searchDetails;
   if(entranceKind==='collection') {
@@ -239,6 +242,11 @@
   } else {
     entranceSelections.textContent='Selections Curated by Community Vote';
   }
+  paintMuseumPlateText(entranceLocation,entranceLocation.textContent);
+  // v152: Entrance supporting copy stays as authored plain text.
+  // Museum Foundry/small-caps styling comes from CSS; do not split this copy
+  // into per-glyph spans, which caused the visible single-letter regression.
+
 
 
   // Presentation identity: Theme is set-level context only when Theme defines the set.
@@ -266,8 +274,8 @@
     if(thumbnailIdentity){
       if(requestedArea==='cat-search' || requestedArea==='cat-theme'){
         thumbnailIdentity.hidden=false;
-        thumbnailIdentityPrimary.textContent='';
-        thumbnailIdentitySecondary.textContent='DETAILS OF SEARCH';
+        thumbnailIdentityPrimary.textContent=entranceEmojiText;
+        thumbnailIdentitySecondary.textContent='';
       }else if(requestedArea==='fyc' || requestedArea==='se' || requestedArea==='gallery'){
         thumbnailIdentity.hidden=true;
       }else if(hasSharedPresentationPair){
@@ -294,6 +302,8 @@
   shell.dataset.mix=mix;
   shell.dataset.area=requestedArea||'sample';
   shell.classList.toggle('geh-mode',gehMode);
+  shell.classList.toggle('collection-context',collectionContext);
+  shell.classList.toggle('catacombs-context',catacombsContext);
   shell.classList.toggle('catacombs-mode',catacombsMode);
 
   // Map geometry is selected independently from the content/presentation layer.
@@ -340,7 +350,9 @@
   let gehRank=requestedRank;
   const requestedRoomPage=Number(params.get('roomPage'));
   let roomPage=Number.isInteger(requestedRoomPage) && requestedRoomPage>=0 ? requestedRoomPage : 0;
-  let thumbnailPage=0;
+  // A connected-area return can target a specific thumbnail page through
+  // roomPage. Preserve that page when the requested start view is thumbnails.
+  let thumbnailPage=params.get('start')==='thumbnail' ? roomPage : 0;
   let endlessIndex=0;
   let artworkReturn=null;
   let expandedScrollTop=0;
@@ -470,11 +482,15 @@
     capabilityButtons.forEach(([button,key])=>{
       button.hidden=!capabilities[key];
     });
-    if(catacombsMode){
+    // GEH never exposes Endless, including its connected Zazzly thumbnail room.
+    if(gehMode) endlessBtn.hidden=true;
+    // Collection never exposes Endless.
+    if(collectionContext) endlessBtn.hidden=true;
+    if(catacombsContext){
       // THEME search: THUMBNAILS + ENDLESS. NO THEME: AERIAL + EXHIBIT + THUMBNAILS.
       overheadBtn.disabled=catSearchHasTheme;
       roomBtn.disabled=catSearchHasTheme;
-      endlessBtn.disabled=!catSearchHasTheme;
+      endlessBtn.disabled=(requestedArea==='cat-theme')?false:!catSearchHasTheme;
       thumbnailBtn.disabled=false;
       catSearchHas.hidden=false;
       catSearchHasRadios.forEach(radio=>{ radio.checked=(radio.value===(catSearchHasTheme?'theme':'no-theme')); });
@@ -484,7 +500,7 @@
   }
 
   function setCatSearchHas(value){
-    if(!catacombsMode) return;
+    if(!catacombsContext) return;
     catSearchHasTheme=value==='theme';
     applyCapabilities();
     const view=shell.dataset.view;
@@ -569,7 +585,7 @@
     button.dataset.rank=String(gehMode?gehRank:1);
     const suffix=gehMode?` · ${rankWord(gehRank)}`:'';
     button.setAttribute('aria-label',`${exhibitArtLabel(artNumber)}${gehMode?`, ${rankWord(gehRank)} place`:''}`);
-    if(span) span.textContent=`${exhibitArtLabel(artNumber)}${suffix}`;
+    if(span) paintMuseumPlateText(span,`${exhibitThemeWord(artNumber)}${suffix}`);
   }
 
   function renderOverhead(){
@@ -588,6 +604,78 @@
     setView('overhead');
   }
 
+  function clearCollectionExhibitPlates(){
+    document.querySelectorAll('.collection-exhibit-theme-plate, .collection-exhibit-perspective-plane').forEach(node=>node.remove());
+  }
+
+  function addCollectionExhibitPlate(button){
+    if(!(collectionContext || catacombsContext || gehMode) || !button.classList.contains('is-art-slot')) return;
+    const canvas=button.parentElement;
+    if(!canvas) return;
+
+    const artNumber=Number(button.dataset.art);
+    const plate=document.createElement('div');
+    plate.className='collection-exhibit-theme-plate museum-thumbnail-plate';
+    const text=document.createElement('span');
+    text.className='collection-exhibit-theme-text';
+    paintMuseumPlateText(text,`${exhibitThemeWord(artNumber)}${gehMode?` · ${rankWord(gehRank)}`:''}`);
+    plate.appendChild(text);
+    canvas.appendChild(plate);
+
+    // STEP 1: size the plate from the actual rendered lettering only.
+    const textRect=text.getBoundingClientRect();
+    const horizontalMargin=12;
+    const verticalMargin=6;
+    const plateWidth=Math.ceil(textRect.width+horizontalMargin);
+    const plateHeight=Math.ceil(textRect.height+verticalMargin);
+    plate.style.width=`${plateWidth}px`;
+    plate.style.height=`${plateHeight}px`;
+
+    const isPerspective=button.classList.contains('corner-art-22') || button.classList.contains('right-perspective-art');
+    const frontGapTop=265;
+    const frontGapHeight=35;
+
+    if(isPerspective){
+      // The plate lives on an overlay plane with the EXACT same untransformed
+      // origin and transform as the angled artwork. This keeps it centered
+      // beneath that artwork in source coordinates before perspective is applied.
+      const plane=document.createElement('div');
+      plane.className='collection-exhibit-perspective-plane';
+      const buttonStyle=getComputedStyle(button);
+      plane.style.left=buttonStyle.left;
+      plane.style.top=buttonStyle.top;
+      plane.style.width='230px';
+      plane.style.height='300px';
+      plane.style.transformOrigin=buttonStyle.transformOrigin;
+      plane.style.transform=buttonStyle.transform;
+      canvas.appendChild(plane);
+      plane.appendChild(plate);
+
+      plate.classList.add('is-perspective-plate');
+      plate.style.left=`${(230-plateWidth)/2}px`;
+      plate.style.top=`${230+(frontGapHeight-plateHeight)/2}px`;
+    }else{
+      // Front-facing reference: center in the 35px image-to-menu gap.
+      const imageLeft=parseFloat(getComputedStyle(button).left)||0;
+      plate.style.left=`${imageLeft+(230-plateWidth)/2}px`;
+      plate.style.top=`${frontGapTop+(frontGapHeight-plateHeight)/2}px`;
+    }
+
+    if(canvas.classList.contains('right-corner-canvas')) plate.classList.add('is-right-mirrored');
+
+    // STEP 2: center the rendered lettering inside the already-fixed plate.
+    text.style.position='absolute';
+    text.style.left='50%';
+    text.style.top='50%';
+    text.style.transform='translate(-50%,-50%)';
+  }
+
+  function renderCollectionExhibitPlates(buttons){
+    clearCollectionExhibitPlates();
+    if(!(collectionContext || catacombsContext || gehMode)) return;
+    buttons.forEach(addCollectionExhibitPlate);
+  }
+
   function renderRoom(start=lastRoomStart){
     if(catacombsMode && catSearchHasTheme) return;
     if(!capabilities.room){
@@ -600,15 +688,23 @@
     const trio=trioAt(roomStart);
     const type=viewTypeFor(roomStart);
 
+    let renderedButtons;
     if(type==='left'){
       trio.forEach((slot,i)=>paintRoomSlot(leftSlots[i],slot));
+      renderedButtons=leftSlots;
     }else if(type==='right'){
       trio.forEach((slot,i)=>paintRoomSlot(rightSlotsVisual[i],slot));
+      renderedButtons=rightSlotsVisual;
     }else{
       trio.forEach((slot,i)=>paintRoomSlot(wallSlots[i],slot));
+      renderedButtons=wallSlots;
     }
 
+    // Make the target room canvas visible before measuring Theme lettering.
+    // getBoundingClientRect() on a hidden room returns zero-size text, which made
+    // the first room after a corner transition produce tiny/misplaced plates.
     setView(type);
+    renderCollectionExhibitPlates(renderedButtons);
   }
 
   function currentGenericPageCount(){
@@ -616,6 +712,7 @@
   }
 
   function currentThumbnailPageCount(){
+    if(zazzlyMode && (collectionContext || catacombsContext)) return 1;
     return Math.ceil(genericResultCount/THUMBNAIL_PAGE_SIZE);
   }
 
@@ -667,7 +764,7 @@
     // GEH rooms own explicit thumbnail maps. In particular, Zazzly's 12-item
     // room is intentionally 4 / 4 / 4 and must not be repacked by the generic
     // partial-page optimizer (which previously rewrote it into 5 / 7).
-    if(gehMode || buttons.length===THUMBNAIL_PAGE_SIZE) return;
+    if(gehMode || (zazzlyMode && (collectionContext || catacombsContext)) || buttons.length===THUMBNAIL_PAGE_SIZE) return;
     if(!buttons.length || buttons.length>=PAGE_SIZE) return;
     const best=chooseThumbnailBrick(buttons.length);
     if(!best) return;
@@ -707,7 +804,7 @@
           button.addEventListener('click',()=>openArtwork(art,gehRank,'thumbnail'));
           thumbnailGrid.appendChild(button);
         }
-        thumbnailStatus.textContent=`GRAND EXHIBITION HALLS\n${rankWord(gehRank).toUpperCase()} · PAGE 4 · 67–78`;
+        thumbnailStatus.textContent=`GRAND EXHIBITION HALL\n${rankWord(gehRank).toUpperCase()} · PAGE 4 · 67–78`;
       }else{
         thumbnailPage=Math.max(0,Math.min(standardThumbnailPageCount-1,thumbnailPage));
         const start=thumbnailPage*THUMBNAIL_PAGE_SIZE;
@@ -724,10 +821,47 @@
         }
         const room=Math.floor(thumbnailPage/2)+1;
         const half=thumbnailPage%2===0?'A':'B';
-        thumbnailStatus.textContent=`GRAND EXHIBITION HALLS\n${rankWord(gehRank).toUpperCase()} · PAGE ${room}${half} · ${start+1}–${end}`;
+        thumbnailStatus.textContent=`GRAND EXHIBITION HALL\n${rankWord(gehRank).toUpperCase()} · PAGE ${room}${half} · ${start+1}–${end}`;
       }
       updateRankButtons();
     }else{
+      if(zazzlyMode && collectionContext){
+        thumbnailPage=0;
+        const set=THEME_SETS.zazzly;
+        for(let i=0;i<set.items.length;i++){
+          const art=set.start+i;
+          const button=document.createElement('button');
+          button.type='button';
+          button.dataset.art=String(art);
+          button.textContent=exhibitArtLabel(art);
+          const label=document.createElement('span');
+          label.className='collection-thumbnail-theme-label museum-thumbnail-plate';
+          paintMuseumPlateText(label,exhibitThemeWord(art));
+          button.appendChild(label);
+          button.setAttribute('aria-label',exhibitThemeWord(art));
+          button.addEventListener('click',()=>openArtwork(art,1,'thumbnail'));
+          thumbnailGrid.appendChild(button);
+        }
+        thumbnailStatus.textContent='COLLECTION\nPAGE 4 • 67-78';
+      }else if(zazzlyMode && catacombsContext){
+        thumbnailPage=0;
+        const set=THEME_SETS.zazzly;
+        for(let i=0;i<set.items.length;i++){
+          const art=set.start+i;
+          const button=document.createElement('button');
+          button.type='button';
+          button.dataset.art=String(art);
+          button.textContent=`RESULT ${art}`;
+          const label=document.createElement('span');
+          label.className='catacombs-thumbnail-theme-label museum-thumbnail-plate';
+          paintMuseumPlateText(label,exhibitThemeWord(art));
+          button.appendChild(label);
+          button.setAttribute('aria-label',`Result ${art}, ${exhibitThemeWord(art)}`);
+          button.addEventListener('click',()=>openArtwork(art,1,'thumbnail'));
+          thumbnailGrid.appendChild(button);
+        }
+        thumbnailStatus.textContent='CATACOMBS\nPAGE 4 • 67-78';
+      }else{
       const pageCount=currentThumbnailPageCount();
       thumbnailPage=Math.max(0,Math.min(pageCount-1,thumbnailPage));
       const start=thumbnailPage*THUMBNAIL_PAGE_SIZE;
@@ -740,9 +874,9 @@
         const displayedArtNumber=zazzlyMode?66+artNumber:artNumber;
         const useRoomLabel=zazzlyMode || (emojiPairDefinedLocation && artNumber<=PAGE_SIZE);
         button.textContent=useRoomLabel?exhibitArtLabel(displayedArtNumber):`RESULT ${artNumber}`;
-        if(catacombsMode){
+        if(catacombsMode || requestedArea==='collection'){
           const label=document.createElement('span');
-          label.className='catacombs-thumbnail-theme-label museum-thumbnail-plate';
+          label.className=`${catacombsMode?'catacombs':'collection'}-thumbnail-theme-label museum-thumbnail-plate`;
           paintMuseumPlateText(label,exhibitThemeWord(displayedArtNumber));
           button.appendChild(label);
         }
@@ -751,10 +885,16 @@
         thumbnailGrid.appendChild(button);
       }
       thumbnailStatus.textContent=requestedArea==='se'
-        ? `${areaLabel} · CURRENT SELECTIONS`
-        : `${areaLabel} · PAGE ${thumbnailPage+1} / ${pageCount} · ${start+1}–${end} OF ${genericResultCount}`;
+        ? `SALON\nECLECTIQUE\n \nCURRENT\nSELECTIONS`
+        : requestedArea==='collection'
+          ? `COLLECTION\nPAGE ${Math.floor(thumbnailPage/2)+1}${thumbnailPage%2===0?'A':'B'} • ${start+1}-${end}`
+          : catacombsMode
+            ? `CATACOMBS\nPAGE ${Math.floor(thumbnailPage/2)+1}${thumbnailPage%2===0?'A':'B'} • ${start+1}-${end}`
+            : `${requestedArea==='fyc'?'FOR YOUR\nCONSIDERATION':areaLabel}\nPAGE ${thumbnailPage+1} / ${pageCount} • ${start+1}-${end}`;
+      }
     }
 
+    paintMuseumPlateText(thumbnailStatus,thumbnailStatus.textContent);
     setView('thumbnail');
     applyThumbnailBrickLayout();
     updatePageNav();
@@ -762,7 +902,7 @@
   }
 
   function renderEndless(){
-    if(catacombsMode && !catSearchHasTheme) return;
+    if(catacombsMode && requestedArea!=='cat-theme' && !catSearchHasTheme) return;
     if(!capabilities.endless){
       renderThumbnailPage();
       return;
@@ -958,22 +1098,33 @@
     if(!pageNav) return;
     const view=shell.dataset.view;
     const gehThumbnail=view==='thumbnail' && gehMode;
+    const connectedZazzlyThumbnail=view==='thumbnail' && zazzlyMode && (collectionContext || catacombsContext);
     const count=gehThumbnail ? (zazzlyMode?1:6) : pageCount();
-    const show=(view==='thumbnail' || view==='endless') && (count>1 || gehThumbnail);
+    const show=(view==='thumbnail' || view==='endless') && (count>1 || gehThumbnail || connectedZazzlyThumbnail);
     pageNav.hidden=!show;
     if(!show) return;
     const page=Math.max(0,Math.min(count-1,currentPageForView()));
     const unit=view==='thumbnail'?THUMBNAIL_PAGE_SIZE:PAGE_SIZE;
     const start=page*unit+1;
     const end=Math.min(genericResultCount,start+unit-1);
-    pagePrevBtn.disabled=gehThumbnail ? (!zazzlyMode && page<=0) : page<=0;
-    pageNextBtn.disabled=gehThumbnail ? zazzlyMode : page>=count-1;
+    pagePrevBtn.disabled=gehThumbnail ? (!zazzlyMode && page<=0) : (connectedZazzlyThumbnail ? false : page<=0);
+    pageNextBtn.disabled=gehThumbnail
+      ? zazzlyMode
+      : (connectedZazzlyThumbnail
+        ? true
+        : (((collectionContext || catacombsContext) && view==='thumbnail' && !zazzlyMode)
+          ? false
+          : page>=count-1));
     syncThumbnailPageControls();
     if(view==='thumbnail' && gehMode){
       if(zazzlyMode) pageStatus.textContent='PAGE 4';
       else pageStatus.textContent=`PAGE ${Math.floor(page/2)+1}${page%2===0?'A':'B'}`;
     }else{
-      pageStatus.textContent=view==='thumbnail' ? `PAGE ${page+1} / ${count}` : `${start}–${end}`;
+      if(view==='thumbnail' && (collectionContext || catacombsContext)){
+        pageStatus.textContent=zazzlyMode ? 'PAGE 7 / 7' : `PAGE ${page+1} / 7`;
+      }else{
+        pageStatus.textContent=view==='thumbnail' ? `PAGE ${page+1} / ${count}` : `${start}–${end}`;
+      }
     }
   }
 
@@ -984,8 +1135,8 @@
     else if(['left','wall','right'].includes(view)) renderRoom(lastRoomStart);
   }
 
-  function navigateGehRoomBoundary(direction,view){
-    if(!gehMode) return false;
+  function navigateConnectedZazzlyBoundary(direction,view){
+    if(!(gehMode || collectionContext || catacombsContext)) return false;
 
     // GEH has a fourth physical Theme room: Zazzly. Main/Alternate/Mature
     // live in the standard 22-item area; Zazzly has its own map/area, so
@@ -997,8 +1148,9 @@
       if(current!==lastStandardPage) return false;
       const next=new URLSearchParams(params);
       next.set('area','zazzly');
-      next.set('geh','1');
-      next.set('returnArea',requestedArea || 'geh');
+      if(gehMode) next.set('geh','1');
+      else next.delete('geh');
+      next.set('returnArea',requestedArea || (gehMode?'geh':'collection'));
       next.set('returnRoomPage',String(lastStandardPage));
       next.delete('roomPage');
       next.delete('entryDoor');
@@ -1028,7 +1180,7 @@
     const view=shell.dataset.view;
     const current=currentPageForView();
     const rawNext=current+delta;
-    if((rawNext<0 || rawNext>=pageCount()) && navigateGehRoomBoundary(delta,view)) return;
+    if((rawNext<0 || rawNext>=pageCount()) && navigateConnectedZazzlyBoundary(delta,view)) return;
     const next=Math.max(0,Math.min(pageCount()-1,rawNext));
     if(next===current) return;
     if(view!=='thumbnail') roomPage=next;
@@ -1046,9 +1198,10 @@
     rightBtn.disabled=false;
 
     if(view==='thumbnail'){
+      const connectedStandardThumb=(collectionContext || catacombsContext) && (requestedArea==='collection' || catacombsMode || zazzlyMode);
       const pages=gehMode ? (zazzlyMode?1:6) : currentThumbnailPageCount();
-      leftBtn.disabled=thumbnailPage<=0 && !(gehMode && zazzlyMode);
-      rightBtn.disabled=thumbnailPage>=pages-1 && !(gehMode && !zazzlyMode);
+      leftBtn.disabled=thumbnailPage<=0 && !((gehMode || connectedStandardThumb) && zazzlyMode);
+      rightBtn.disabled=thumbnailPage>=pages-1 && !((gehMode || connectedStandardThumb) && !zazzlyMode);
     }else if(view==='endless'){
       leftBtn.disabled=endlessIndex<=0;
       rightBtn.disabled=endlessIndex>=genericResultCount-1;

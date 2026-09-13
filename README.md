@@ -526,3 +526,9 @@ v68 Installation repair: one-artwork stepping, fixed clockwise/counterclockwise 
 - Zazzly artwork labels occupy global 67–78.
 - Door 4 in Room 3 now opens the Zazzly room. Door 5 is present as the balanced north door but has no destination yet.
 - Aerial/Thumbnails/Endless are intentionally withheld for this first room-only build rather than showing layouts that have not yet been designed for the 12-art room.
+
+## v169 follow-up notes
+- Common Grounds needs a smarter persistent bottom navigation bar; eliminate floating navigation buttons rather than adding more of them.
+- Common Grounds café zone is expected to become an Annex-type area containing the café; final area name remains TBD.
+- Common Grounds Installation hendecagon will later keep its size/orientation but move farther toward the back; entrance will be enlarged.
+- Catacombs entrance: remove the placeholder DETAILS OF SEARCH box; align the curator/tagline top with the CATACOMBS plate and later provide substantial search-detail plate space on both sides beneath. Exact search-detail fields remain TBD.
