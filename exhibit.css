@@ -2587,3 +2587,43 @@ button,
 .exhibit-shell.geh-mode:not([data-view="thumbnail"]) .collection-exhibit-theme-plate.is-right-mirrored .collection-exhibit-theme-text{
   transform:translate(-50%,calc(-50% + 2px)) scaleX(-1) !important;
 }
+
+/* v170 — typography-first optical centering pass.
+   Existing plate/room geometry stays fixed; only the visible text unit moves. */
+.exhibit-shell .entrance-location-banner .museum-plate-text,
+.exhibit-shell .entrance-rank .museum-plate-text,
+.exhibit-shell .entrance-search .museum-plate-text,
+.exhibit-shell .thumbnail-status .museum-plate-text,
+.exhibit-shell .overhead-center-label .museum-plate-text,
+.exhibit-shell .overhead-slot.is-overhead-art > span .museum-plate-text{
+  position:relative;
+  top:2px;
+}
+.exhibit-shell .entrance-selections{
+  text-align:center;
+}
+.exhibit-shell .entrance-selections > span{
+  text-align:center;
+}
+/* FYC wall lettering is intentionally NOT the Museum Foundry SmallCaps plate language. */
+.exhibit-shell[data-area="fyc"][data-view="door"] .entrance-location-banner,
+.exhibit-shell[data-area="fyc"][data-view="door"] .entrance-selections{
+  font-family:Georgia,'Times New Roman',serif;
+  font-variant:normal;
+  letter-spacing:0;
+  text-transform:none;
+}
+.exhibit-shell[data-area="fyc"][data-view="door"] .entrance-location-banner{
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+}
+.exhibit-shell[data-area="fyc"][data-view="door"] .entrance-location-banner .museum-plate-text{
+  top:0;
+}
+.exhibit-shell[data-area="fyc"][data-view="door"] .entrance-selections{
+  max-width:360px;
+  font-size:22px;
+  line-height:1.12;
+  font-weight:700;
+}

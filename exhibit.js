@@ -236,7 +236,7 @@
     worksName.textContent=residentName;
     entranceSelections.replaceChildren(worksLead,worksName);
   } else if(entranceKind==='fyc') {
-    entranceSelections.textContent='Freshly Painted Selections Begging for Your Opinion';
+    entranceSelections.innerHTML='Freshly Painted Selections<br>Begging for Your Opinion';
   } else if(entranceKind==='salon') {
     entranceSelections.textContent='Bespoke selections tailored to your requests, presented via curation by a personal docent.';
   } else {

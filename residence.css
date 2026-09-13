@@ -149,3 +149,7 @@ button{font:inherit;color:inherit;background:var(--panel);border:1px solid var(-
   justify-content:center;
   text-align:center;
 }
+
+/* v170 — Residence word plates: centered Museum Foundry lettering, geometry unchanged. */
+.word-button{line-height:1;}
+.word-button{padding-top:2px;}

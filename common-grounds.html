@@ -14,7 +14,7 @@ main{width:100vw;height:100dvh;display:flex;align-items:center;justify-content:c
 .donors{left:16px;top:16px;width:132px;height:220px;flex-direction:column;padding:8px}
 .cafe{left:210px;top:16px;width:300px;height:74px;flex-direction:column}
 .bookshop{right:16px;top:48px;width:92px;height:234px;flex-direction:column;padding:6px}
-.bookshop .vertical-title{writing-mode:vertical-rl;transform:rotate(180deg);font-size:17px;letter-spacing:.08em}
+.bookshop .vertical-title{writing-mode:horizontal-tb;transform:rotate(90deg);transform-origin:center center;font-size:17px;letter-spacing:.08em;white-space:nowrap}
 .hendec-svg{position:absolute;inset:0;width:980px;height:300px;z-index:2;overflow:visible;pointer-events:none}
 .hendec-fill{fill:#eee9df;stroke:none}
 .hendec-side{stroke:#26221d;stroke-width:4;stroke-linecap:square}
@@ -111,6 +111,7 @@ main{width:100vw;height:100dvh;display:flex;align-items:center;justify-content:c
 }
 /* v168 — center complete content blocks inside existing locked museum plates. */
 .zone,.front-door-label,.map-title,.installation-button{display:flex;align-items:center;justify-content:center;text-align:center;}
+.front-door-label > span{position:relative;top:2px;}
 
 
 </style>
@@ -129,7 +130,7 @@ main{width:100vw;height:100dvh;display:flex;align-items:center;justify-content:c
     <button id="hendecMapButton" class="installation-button" aria-label="Open Installation map">INSTALLATION</button>
 
     <div class="front-door" aria-label="Front door"></div>
-    <div class="front-door-label">ENTRANCE</div>
+    <div class="front-door-label"><span>ENTRANCE</span></div>
   </section>
   <a class="museum" href="index.html">MUSEUM</a>
 </main>
