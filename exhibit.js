@@ -609,7 +609,7 @@
   }
 
   function addCollectionExhibitPlate(button){
-    if(!collectionContext || zazzlyMode || !button.classList.contains('is-art-slot')) return;
+    if(!collectionContext || !button.classList.contains('is-art-slot')) return;
     const canvas=button.parentElement;
     if(!canvas) return;
 
@@ -645,7 +645,6 @@
     if(button.classList.contains('corner-art-22') || button.classList.contains('right-perspective-art')){
       plate.classList.add('is-perspective-plate');
       plate.style.transformOrigin='0 0';
-      plate.style.transform=getComputedStyle(button).transform;
     }
     if(canvas.classList.contains('right-corner-canvas')) plate.classList.add('is-right-mirrored');
 
@@ -659,7 +658,7 @@
 
   function renderCollectionExhibitPlates(buttons){
     clearCollectionExhibitPlates();
-    if(!collectionContext || zazzlyMode) return;
+    if(!collectionContext) return;
     buttons.forEach(addCollectionExhibitPlate);
   }
 

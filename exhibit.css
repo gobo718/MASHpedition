@@ -2460,3 +2460,42 @@ button,
 .collection-exhibit-theme-plate.is-right-mirrored .collection-exhibit-theme-text{
   transform:translate(-50%,-50%) scaleX(-1) !important;
 }
+
+
+/* v163 — Collection Exhibit plates: use the established Museum Foundry Narrow
+   Small Caps plate treatment in Exhibit View. Front label locations are unchanged. */
+.exhibit-shell.collection-context:not([data-view="thumbnail"]) .collection-exhibit-theme-plate.museum-thumbnail-plate{
+  box-sizing:border-box;
+  padding:0;
+  border:1px solid var(--line);
+  border-radius:0;
+  background:var(--control);
+  color:var(--ink);
+  font-family:'Museum Foundry',serif;
+  font-size:11px;
+  font-weight:400;
+  line-height:1.15;
+  letter-spacing:0;
+}
+.exhibit-shell.collection-context:not([data-view="thumbnail"]) .collection-exhibit-theme-plate .museum-plate-text{
+  display:inline-block;
+  transform:scaleX(.78);
+  transform-origin:center center;
+}
+.exhibit-shell.collection-context:not([data-view="thumbnail"]) .collection-exhibit-theme-plate .museum-plate-glyph{display:inline-block}
+.exhibit-shell.collection-context:not([data-view="thumbnail"]) .collection-exhibit-theme-plate .museum-cap{font-size:1em}
+.exhibit-shell.collection-context:not([data-view="thumbnail"]) .collection-exhibit-theme-plate .museum-smallcap{font-size:.70em}
+.exhibit-shell.collection-context:not([data-view="thumbnail"]) .collection-exhibit-theme-plate .museum-tier-high{position:relative;top:-0.2px}
+.exhibit-shell.collection-context:not([data-view="thumbnail"]) .collection-exhibit-theme-plate .museum-tier-mid{position:relative;top:0}
+.exhibit-shell.collection-context:not([data-view="thumbnail"]) .collection-exhibit-theme-plate .museum-tier-low{position:relative;top:0.2px}
+
+/* Same source-plane perspective as the angled artwork. */
+.collection-exhibit-theme-plate.is-perspective-plate{
+  transform-origin:0 0;
+  transform:matrix3d(
+    1,.25,0,.002173913043,
+    0,1.5,0,0,
+    0,0,1,0,
+    115,-57.5,0,1
+  );
+}
