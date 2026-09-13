@@ -81,7 +81,5 @@ button,.hub-link{
    Keep it a full capital; make only a subtle optical correction. */
 .information-desk-k{
   display:inline-block;
-  font-size:.96em;
-  transform:scaleX(.94);
-  transform-origin:center bottom;
+  font-size:calc(1em - 0.2px);
 }
