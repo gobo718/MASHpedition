@@ -1618,7 +1618,7 @@ button{border-radius:0}
 .cat-search-has legend{padding:0;font:inherit;white-space:nowrap}
 .cat-search-has label{display:flex;align-items:center;gap:4px;white-space:nowrap;font:inherit}
 .cat-search-has input{margin:0;width:14px;height:14px;accent-color:var(--ink)}
-.exhibit-shell.catacombs-mode[data-view="thumbnail"] .cat-search-has,
+.exhibit-shell.catacombs-context[data-view="thumbnail"] .cat-search-has,
 .exhibit-shell.catacombs-mode[data-view="endless"] .cat-search-has,
 .exhibit-shell.catacombs-mode[data-view="left"] .cat-search-has,
 .exhibit-shell.catacombs-mode[data-view="wall"] .cat-search-has,
@@ -1626,7 +1626,7 @@ button{border-radius:0}
 .exhibit-shell.catacombs-mode[data-view="overhead"] .cat-search-has{display:flex;position:absolute}
 /* THUMBNAILS: mirrored against the PAGE PREV/NEXT lower-left anchor.
    Three rows live in the otherwise-empty lower-right edge, outside the brick stack. */
-.exhibit-shell.catacombs-mode[data-view="thumbnail"] .cat-search-has{left:1.5%;right:auto;bottom:12%;flex-direction:column;align-items:flex-start;gap:3px}
+.exhibit-shell.catacombs-context[data-view="thumbnail"] .cat-search-has{left:1.5%;right:auto;top:50%;bottom:auto;transform:translateY(-50%);flex-direction:column;align-items:flex-start;gap:3px}
 /* ENDLESS: one straight line at the same vertical anchor as PAGE PREV/NEXT. */
 .exhibit-shell.catacombs-mode[data-view="endless"] .cat-search-has{right:1.5%;bottom:12%;flex-direction:row;align-items:center;gap:8px}
 .exhibit-shell.catacombs-mode[data-view="endless"] .cat-search-has legend{margin:0}
@@ -1857,11 +1857,11 @@ button{border-radius:0}
    those twelve buttons across the standard 7 / 8 / 7 tracks. Internal
    number/Theme/rank text and the Theme-only caption beneath each square are
    intentionally preserved. */
-.exhibit-shell:is(.geh-mode,.collection-context)[data-area="zazzly"][data-view="thumbnail"] .thumbnail-grid{
+.exhibit-shell:is(.geh-mode,.collection-context,.catacombs-context)[data-area="zazzly"][data-view="thumbnail"] .thumbnail-grid{
   grid-template-columns:repeat(12,minmax(0,1fr));
   grid-template-rows:repeat(3,minmax(0,1fr));
 }
-.exhibit-shell:is(.geh-mode,.collection-context)[data-area="zazzly"][data-view="thumbnail"] .thumbnail-grid button{
+.exhibit-shell:is(.geh-mode,.collection-context,.catacombs-context)[data-area="zazzly"][data-view="thumbnail"] .thumbnail-grid button{
   grid-column:span 3;
   width:var(--geh-thumb-size);
   height:var(--geh-thumb-size);
@@ -1869,19 +1869,19 @@ button{border-radius:0}
   justify-self:center;
   align-self:start;
 }
-.exhibit-shell:is(.geh-mode,.collection-context)[data-area="zazzly"][data-view="thumbnail"] .thumbnail-grid button:nth-child(-n+4){grid-row:1}
-.exhibit-shell:is(.geh-mode,.collection-context)[data-area="zazzly"][data-view="thumbnail"] .thumbnail-grid button:nth-child(n+5):nth-child(-n+8){grid-row:2}
-.exhibit-shell:is(.geh-mode,.collection-context)[data-area="zazzly"][data-view="thumbnail"] .thumbnail-grid button:nth-child(n+9){grid-row:3}
+.exhibit-shell:is(.geh-mode,.collection-context,.catacombs-context)[data-area="zazzly"][data-view="thumbnail"] .thumbnail-grid button:nth-child(-n+4){grid-row:1}
+.exhibit-shell:is(.geh-mode,.collection-context,.catacombs-context)[data-area="zazzly"][data-view="thumbnail"] .thumbnail-grid button:nth-child(n+5):nth-child(-n+8){grid-row:2}
+.exhibit-shell:is(.geh-mode,.collection-context,.catacombs-context)[data-area="zazzly"][data-view="thumbnail"] .thumbnail-grid button:nth-child(n+9){grid-row:3}
 
 /* v113 — Zazzly GEH thumbnail map: 3 / 4 / 5 top-to-bottom.
    Zazzly's 12-item page has its own geometry. Fewer items in the upper rows
    let every artwork viewport grow while keeping three rows, the internal
    identity text, and the tight Theme-only caption beneath each thumbnail. */
-.exhibit-shell:is(.geh-mode,.collection-context)[data-area="zazzly"][data-view="thumbnail"] .thumbnail-grid{
+.exhibit-shell:is(.geh-mode,.collection-context,.catacombs-context)[data-area="zazzly"][data-view="thumbnail"] .thumbnail-grid{
   grid-template-columns:repeat(60,minmax(0,1fr));
   grid-template-rows:repeat(3,minmax(0,1fr));
 }
-.exhibit-shell:is(.geh-mode,.collection-context)[data-area="zazzly"][data-view="thumbnail"] .thumbnail-grid button{
+.exhibit-shell:is(.geh-mode,.collection-context,.catacombs-context)[data-area="zazzly"][data-view="thumbnail"] .thumbnail-grid button{
   --geh-thumb-size:min(calc((100vw - 116px) / 5 - 10px),calc((100dvh - 79px) / 3 - 14px));
   width:var(--geh-thumb-size);
   height:var(--geh-thumb-size);
@@ -1890,17 +1890,17 @@ button{border-radius:0}
   align-self:start;
 }
 /* Row 1: three equal cells. */
-.exhibit-shell:is(.geh-mode,.collection-context)[data-area="zazzly"][data-view="thumbnail"] .thumbnail-grid button:nth-child(-n+3){
+.exhibit-shell:is(.geh-mode,.collection-context,.catacombs-context)[data-area="zazzly"][data-view="thumbnail"] .thumbnail-grid button:nth-child(-n+3){
   grid-row:1;
   grid-column:span 20;
 }
 /* Row 2: four equal cells. */
-.exhibit-shell:is(.geh-mode,.collection-context)[data-area="zazzly"][data-view="thumbnail"] .thumbnail-grid button:nth-child(n+4):nth-child(-n+7){
+.exhibit-shell:is(.geh-mode,.collection-context,.catacombs-context)[data-area="zazzly"][data-view="thumbnail"] .thumbnail-grid button:nth-child(n+4):nth-child(-n+7){
   grid-row:2;
   grid-column:span 15;
 }
 /* Row 3: five equal cells. */
-.exhibit-shell:is(.geh-mode,.collection-context)[data-area="zazzly"][data-view="thumbnail"] .thumbnail-grid button:nth-child(n+8):nth-child(-n+12){
+.exhibit-shell:is(.geh-mode,.collection-context,.catacombs-context)[data-area="zazzly"][data-view="thumbnail"] .thumbnail-grid button:nth-child(n+8):nth-child(-n+12){
   grid-row:3;
   grid-column:span 12;
 }
@@ -1994,13 +1994,13 @@ button{border-radius:0}
 /* v122 — Zazzly spacing only. The existing five-thumbnail bottom row remains
    untouched and is the spacing authority. Rows 1 and 2 use its same 12-column
    center-to-center interval, centered as shorter groups. */
-.exhibit-shell:is(.geh-mode,.collection-context)[data-area="zazzly"][data-view="thumbnail"] .thumbnail-grid button:nth-child(1){grid-row:1;grid-column:13 / span 12}
-.exhibit-shell:is(.geh-mode,.collection-context)[data-area="zazzly"][data-view="thumbnail"] .thumbnail-grid button:nth-child(2){grid-row:1;grid-column:25 / span 12}
-.exhibit-shell:is(.geh-mode,.collection-context)[data-area="zazzly"][data-view="thumbnail"] .thumbnail-grid button:nth-child(3){grid-row:1;grid-column:37 / span 12}
-.exhibit-shell:is(.geh-mode,.collection-context)[data-area="zazzly"][data-view="thumbnail"] .thumbnail-grid button:nth-child(4){grid-row:2;grid-column:7 / span 12 !important}
-.exhibit-shell:is(.geh-mode,.collection-context)[data-area="zazzly"][data-view="thumbnail"] .thumbnail-grid button:nth-child(5){grid-row:2;grid-column:19 / span 12 !important}
-.exhibit-shell:is(.geh-mode,.collection-context)[data-area="zazzly"][data-view="thumbnail"] .thumbnail-grid button:nth-child(6){grid-row:2;grid-column:31 / span 12 !important}
-.exhibit-shell:is(.geh-mode,.collection-context)[data-area="zazzly"][data-view="thumbnail"] .thumbnail-grid button:nth-child(7){grid-row:2;grid-column:43 / span 12 !important}
+.exhibit-shell:is(.geh-mode,.collection-context,.catacombs-context)[data-area="zazzly"][data-view="thumbnail"] .thumbnail-grid button:nth-child(1){grid-row:1;grid-column:13 / span 12}
+.exhibit-shell:is(.geh-mode,.collection-context,.catacombs-context)[data-area="zazzly"][data-view="thumbnail"] .thumbnail-grid button:nth-child(2){grid-row:1;grid-column:25 / span 12}
+.exhibit-shell:is(.geh-mode,.collection-context,.catacombs-context)[data-area="zazzly"][data-view="thumbnail"] .thumbnail-grid button:nth-child(3){grid-row:1;grid-column:37 / span 12}
+.exhibit-shell:is(.geh-mode,.collection-context,.catacombs-context)[data-area="zazzly"][data-view="thumbnail"] .thumbnail-grid button:nth-child(4){grid-row:2;grid-column:7 / span 12 !important}
+.exhibit-shell:is(.geh-mode,.collection-context,.catacombs-context)[data-area="zazzly"][data-view="thumbnail"] .thumbnail-grid button:nth-child(5){grid-row:2;grid-column:19 / span 12 !important}
+.exhibit-shell:is(.geh-mode,.collection-context,.catacombs-context)[data-area="zazzly"][data-view="thumbnail"] .thumbnail-grid button:nth-child(6){grid-row:2;grid-column:31 / span 12 !important}
+.exhibit-shell:is(.geh-mode,.collection-context,.catacombs-context)[data-area="zazzly"][data-view="thumbnail"] .thumbnail-grid button:nth-child(7){grid-row:2;grid-column:43 / span 12 !important}
 
 /* v124 — Thumbnail PAGE PREV/NEXT text only. 7px is intentionally below
    the existing 9px minimum so these two labels actually render smaller. */
@@ -2078,12 +2078,12 @@ button{border-radius:0}
 /* v133 — Catacombs thumbnails adopt the established Museum Foundry Theme
    plates from GEH. This is intentionally Catacombs-only; no room, search,
    pagination, or other area behavior is changed. */
-.exhibit-shell.catacombs-mode[data-view="thumbnail"] .thumbnail-grid button,
+.exhibit-shell.catacombs-context[data-view="thumbnail"] .thumbnail-grid button,
 .exhibit-shell.collection-context[data-view="thumbnail"] .thumbnail-grid button{
   position:relative;
   overflow:visible;
 }
-.exhibit-shell.catacombs-mode[data-view="thumbnail"] .catacombs-thumbnail-theme-label.museum-thumbnail-plate,
+.exhibit-shell.catacombs-context[data-view="thumbnail"] .catacombs-thumbnail-theme-label.museum-thumbnail-plate,
 .exhibit-shell.collection-context[data-view="thumbnail"] .collection-thumbnail-theme-label.museum-thumbnail-plate{
   position:absolute;
   left:50%;
@@ -2106,7 +2106,7 @@ button{border-radius:0}
   white-space:nowrap;
   pointer-events:none;
 }
-.exhibit-shell.catacombs-mode[data-view="thumbnail"] .museum-thumbnail-plate .museum-plate-text,
+.exhibit-shell.catacombs-context[data-view="thumbnail"] .museum-thumbnail-plate .museum-plate-text,
 .exhibit-shell.collection-context[data-view="thumbnail"] .museum-thumbnail-plate .museum-plate-text{
   display:inline-block;
   position:relative;
@@ -2114,29 +2114,29 @@ button{border-radius:0}
   transform:scaleX(.78);
   transform-origin:center center;
 }
-.exhibit-shell.catacombs-mode[data-view="thumbnail"] .museum-thumbnail-plate .museum-plate-glyph,
+.exhibit-shell.catacombs-context[data-view="thumbnail"] .museum-thumbnail-plate .museum-plate-glyph,
 .exhibit-shell.collection-context[data-view="thumbnail"] .museum-thumbnail-plate .museum-plate-glyph{
   display:inline-block;
 }
-.exhibit-shell.catacombs-mode[data-view="thumbnail"] .museum-thumbnail-plate .museum-cap,
+.exhibit-shell.catacombs-context[data-view="thumbnail"] .museum-thumbnail-plate .museum-cap,
 .exhibit-shell.collection-context[data-view="thumbnail"] .museum-thumbnail-plate .museum-cap{
   font-size:1em;
 }
-.exhibit-shell.catacombs-mode[data-view="thumbnail"] .museum-thumbnail-plate .museum-smallcap,
+.exhibit-shell.catacombs-context[data-view="thumbnail"] .museum-thumbnail-plate .museum-smallcap,
 .exhibit-shell.collection-context[data-view="thumbnail"] .museum-thumbnail-plate .museum-smallcap{
   font-size:.70em;
 }
-.exhibit-shell.catacombs-mode[data-view="thumbnail"] .museum-thumbnail-plate .museum-tier-high,
+.exhibit-shell.catacombs-context[data-view="thumbnail"] .museum-thumbnail-plate .museum-tier-high,
 .exhibit-shell.collection-context[data-view="thumbnail"] .museum-thumbnail-plate .museum-tier-high{
   position:relative;
   top:-0.2px;
 }
-.exhibit-shell.catacombs-mode[data-view="thumbnail"] .museum-thumbnail-plate .museum-tier-mid,
+.exhibit-shell.catacombs-context[data-view="thumbnail"] .museum-thumbnail-plate .museum-tier-mid,
 .exhibit-shell.collection-context[data-view="thumbnail"] .museum-thumbnail-plate .museum-tier-mid{
   position:relative;
   top:0;
 }
-.exhibit-shell.catacombs-mode[data-view="thumbnail"] .museum-thumbnail-plate .museum-tier-low,
+.exhibit-shell.catacombs-context[data-view="thumbnail"] .museum-thumbnail-plate .museum-tier-low,
 .exhibit-shell.collection-context[data-view="thumbnail"] .museum-thumbnail-plate .museum-tier-low{
   position:relative;
   top:0.2px;

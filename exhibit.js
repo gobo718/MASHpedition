@@ -112,7 +112,8 @@
   const catacombsMode=requestedArea==='cat-theme' || requestedArea==='cat-search';
   const zazzlyMode=requestedArea==='zazzly';
   const collectionContext=requestedArea==='collection' || (zazzlyMode && params.get('returnArea')==='collection');
-  let catSearchHasTheme=requestedArea!=='cat-search';
+  const catacombsContext=catacombsMode || (zazzlyMode && ['cat-theme','cat-search'].includes(params.get('returnArea')));
+  let catSearchHasTheme=requestedArea!=='cat-search' && params.get('returnArea')!=='cat-search';
 
   // Authoritative Theme content. Presentation code resolves identities from
   // these definitions instead of maintaining view-specific copies.
@@ -296,6 +297,7 @@
   shell.dataset.area=requestedArea||'sample';
   shell.classList.toggle('geh-mode',gehMode);
   shell.classList.toggle('collection-context',collectionContext);
+  shell.classList.toggle('catacombs-context',catacombsContext);
   shell.classList.toggle('catacombs-mode',catacombsMode);
 
   // Map geometry is selected independently from the content/presentation layer.
@@ -474,7 +476,7 @@
     capabilityButtons.forEach(([button,key])=>{
       button.hidden=!capabilities[key];
     });
-    if(catacombsMode){
+    if(catacombsContext){
       // THEME search: THUMBNAILS + ENDLESS. NO THEME: AERIAL + EXHIBIT + THUMBNAILS.
       overheadBtn.disabled=catSearchHasTheme;
       roomBtn.disabled=catSearchHasTheme;
@@ -488,7 +490,7 @@
   }
 
   function setCatSearchHas(value){
-    if(!catacombsMode) return;
+    if(!catacombsContext) return;
     catSearchHasTheme=value==='theme';
     applyCapabilities();
     const view=shell.dataset.view;
@@ -620,7 +622,7 @@
   }
 
   function currentThumbnailPageCount(){
-    if(zazzlyMode && collectionContext) return 1;
+    if(zazzlyMode && (collectionContext || catacombsContext)) return 1;
     return Math.ceil(genericResultCount/THUMBNAIL_PAGE_SIZE);
   }
 
@@ -672,7 +674,7 @@
     // GEH rooms own explicit thumbnail maps. In particular, Zazzly's 12-item
     // room is intentionally 4 / 4 / 4 and must not be repacked by the generic
     // partial-page optimizer (which previously rewrote it into 5 / 7).
-    if(gehMode || (zazzlyMode && collectionContext) || buttons.length===THUMBNAIL_PAGE_SIZE) return;
+    if(gehMode || (zazzlyMode && (collectionContext || catacombsContext)) || buttons.length===THUMBNAIL_PAGE_SIZE) return;
     if(!buttons.length || buttons.length>=PAGE_SIZE) return;
     const best=chooseThumbnailBrick(buttons.length);
     if(!best) return;
@@ -751,6 +753,24 @@
           thumbnailGrid.appendChild(button);
         }
         thumbnailStatus.textContent='COLLECTION\nPAGE 7 / 7 · 67–78';
+      }else if(zazzlyMode && catacombsContext){
+        thumbnailPage=0;
+        const set=THEME_SETS.zazzly;
+        for(let i=0;i<set.items.length;i++){
+          const art=set.start+i;
+          const button=document.createElement('button');
+          button.type='button';
+          button.dataset.art=String(art);
+          button.textContent=`RESULT ${art}`;
+          const label=document.createElement('span');
+          label.className='catacombs-thumbnail-theme-label museum-thumbnail-plate';
+          paintMuseumPlateText(label,exhibitThemeWord(art));
+          button.appendChild(label);
+          button.setAttribute('aria-label',`Result ${art}, ${exhibitThemeWord(art)}`);
+          button.addEventListener('click',()=>openArtwork(art,1,'thumbnail'));
+          thumbnailGrid.appendChild(button);
+        }
+        thumbnailStatus.textContent='CATACOMBS\nPAGE 7 / 7 · 67–78';
       }else{
       const pageCount=currentThumbnailPageCount();
       thumbnailPage=Math.max(0,Math.min(pageCount-1,thumbnailPage));
@@ -778,7 +798,9 @@
         ? `${areaLabel} · CURRENT SELECTIONS`
         : requestedArea==='collection'
           ? `COLLECTION\nPAGE ${thumbnailPage+1} / 7 · ${start+1}–${end}`
-          : `${areaLabel} · PAGE ${thumbnailPage+1} / ${pageCount} · ${start+1}–${end} OF ${genericResultCount}`;
+          : catacombsMode
+            ? `CATACOMBS · PAGE ${thumbnailPage+1} / 7 · ${start+1}–${end} OF ${genericResultCount}`
+            : `${areaLabel} · PAGE ${thumbnailPage+1} / ${pageCount} · ${start+1}–${end} OF ${genericResultCount}`;
       }
     }
 
@@ -985,7 +1007,7 @@
     if(!pageNav) return;
     const view=shell.dataset.view;
     const gehThumbnail=view==='thumbnail' && gehMode;
-    const connectedZazzlyThumbnail=view==='thumbnail' && zazzlyMode && collectionContext;
+    const connectedZazzlyThumbnail=view==='thumbnail' && zazzlyMode && (collectionContext || catacombsContext);
     const count=gehThumbnail ? (zazzlyMode?1:6) : pageCount();
     const show=(view==='thumbnail' || view==='endless') && (count>1 || gehThumbnail || connectedZazzlyThumbnail);
     pageNav.hidden=!show;
@@ -1001,7 +1023,7 @@
       if(zazzlyMode) pageStatus.textContent='PAGE 4';
       else pageStatus.textContent=`PAGE ${Math.floor(page/2)+1}${page%2===0?'A':'B'}`;
     }else{
-      if(view==='thumbnail' && collectionContext){
+      if(view==='thumbnail' && (collectionContext || catacombsContext)){
         pageStatus.textContent=zazzlyMode ? 'PAGE 7 / 7' : `PAGE ${page+1} / 7`;
       }else{
         pageStatus.textContent=view==='thumbnail' ? `PAGE ${page+1} / ${count}` : `${start}–${end}`;
@@ -1017,7 +1039,7 @@
   }
 
   function navigateConnectedZazzlyBoundary(direction,view){
-    if(!(gehMode || collectionContext)) return false;
+    if(!(gehMode || collectionContext || catacombsContext)) return false;
 
     // GEH has a fourth physical Theme room: Zazzly. Main/Alternate/Mature
     // live in the standard 22-item area; Zazzly has its own map/area, so
@@ -1079,10 +1101,10 @@
     rightBtn.disabled=false;
 
     if(view==='thumbnail'){
-      const connectedCollectionThumb=collectionContext && (requestedArea==='collection' || zazzlyMode);
+      const connectedStandardThumb=(collectionContext || catacombsContext) && (requestedArea==='collection' || catacombsMode || zazzlyMode);
       const pages=gehMode ? (zazzlyMode?1:6) : currentThumbnailPageCount();
-      leftBtn.disabled=thumbnailPage<=0 && !((gehMode || connectedCollectionThumb) && zazzlyMode);
-      rightBtn.disabled=thumbnailPage>=pages-1 && !((gehMode || connectedCollectionThumb) && !zazzlyMode);
+      leftBtn.disabled=thumbnailPage<=0 && !((gehMode || connectedStandardThumb) && zazzlyMode);
+      rightBtn.disabled=thumbnailPage>=pages-1 && !((gehMode || connectedStandardThumb) && !zazzlyMode);
     }else if(view==='endless'){
       leftBtn.disabled=endlessIndex<=0;
       rightBtn.disabled=endlessIndex>=genericResultCount-1;
