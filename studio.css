@@ -87,3 +87,6 @@ button,a{font:inherit;color:inherit}
   box-shadow:inset 0 0 0 2px #f7f3eb,inset 0 0 0 3px #26221d;
 }
 
+
+/* v168 — center complete content blocks inside existing locked museum plates. */
+.studio-zone{display:flex;align-items:center;justify-content:center;text-align:center;}

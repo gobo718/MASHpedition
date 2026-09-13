@@ -2503,3 +2503,28 @@ button,
 .collection-exhibit-perspective-plane .collection-exhibit-theme-plate{
   z-index:1;
 }
+
+/* v168 — Project plate-content centering pass, phase 1.
+   Plate geometry is LOCKED. Only contents are centered. Museum Foundry's
+   all-small-cap face has no descender requirement, so the established optical
+   +2px word correction is applied to the complete text unit. */
+.exhibit-shell .museum-thumbnail-plate,
+.exhibit-shell .museum-location-label,
+.exhibit-shell .museum-plaque-text,
+.exhibit-shell .overhead-slot.is-overhead-art > span,
+.exhibit-shell .overhead-center-label,
+.exhibit-shell .entrance-location-banner,
+.exhibit-shell .entrance-rank,
+.exhibit-shell .entrance-search,
+.exhibit-shell .entrance-selections,
+.exhibit-shell .thumbnail-status{
+  text-align:center;
+}
+.exhibit-shell:is(.collection-context,.catacombs-context):not([data-view="thumbnail"]) .collection-exhibit-theme-plate .collection-exhibit-theme-text{
+  top:50%;
+  left:50%;
+  transform:translate(-50%,calc(-50% + 2px));
+}
+.exhibit-shell:is(.collection-context,.catacombs-context):not([data-view="thumbnail"]) .collection-exhibit-theme-plate.is-right-mirrored .collection-exhibit-theme-text{
+  transform:translate(-50%,calc(-50% + 2px)) scaleX(-1) !important;
+}

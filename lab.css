@@ -363,3 +363,6 @@ a:active {
   border:1px solid #26221d;background:#f7f3eb;padding-left:5px;padding-right:5px;
 }
 
+
+/* v168 — center complete content blocks inside existing locked museum plates. */
+.machine-title,.agglomerator-title,.output-label{display:flex;align-items:center;justify-content:center;text-align:center;}

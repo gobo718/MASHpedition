@@ -115,3 +115,6 @@ button{font:inherit;color:inherit;background:var(--panel);border:1px solid var(-
   border:1px solid #26221d;background:#f7f3eb;padding-left:6px;padding-right:6px;
 }
 
+
+/* v168 — center complete content blocks inside existing locked museum plates. */
+.player-name,.player-title,.player-words,.board-title{display:flex;align-items:center;justify-content:center;text-align:center;}

@@ -84,3 +84,6 @@ button,.hub-link{
   transform:scaleX(.94);
   transform-origin:center bottom;
 }
+
+/* v168 — center complete content blocks inside existing locked Museum Hub plates. */
+.museum-hub .hub-link,.museum-hub button{display:flex;align-items:center;justify-content:center;text-align:center;}
