@@ -2736,3 +2736,7 @@ button,
   text-align:center;
   transform:translateY(1.333px);
 }
+
+.exhibit-shell.collection-context[data-view="thumbnail"] .thumbnail-status .museum-plate-text{
+  transform:translateY(1.333px);
+}
