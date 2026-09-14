@@ -443,10 +443,10 @@
       textWrap.appendChild(glyph);
     }
 
-    // v184 — Billy's empirically derived plate-centering rule.
+    // v187 — Billy's empirically derived plate-centering rule.
     // Preserve the established +2px plate calibration and all Museum Foundry
     // glyph/tier adjustments exactly. Apply this only as a separate wrapper
-    // translation: <=16px: font size × 0.11; >16px: (font size × 0.045) + 1.04px downward.
+    // translation: (font size × 0.045) + 0.78px downward for all font sizes.
     const applyProportionalMuseumCentering=()=>{
       const wrapStyle=getComputedStyle(textWrap);
       const establishedShift=parseFloat(wrapStyle.top)||0;
@@ -460,7 +460,7 @@
         textWrap.style.translate='';
         return;
       }
-      const downwardShift=fontSize <= 16 ? (fontSize * 0.11) : ((fontSize * 0.045) + 1.04);
+      const downwardShift=(fontSize * 0.045) + 0.78;
       textWrap.style.translate=`0 ${downwardShift}px`;
     };
     applyProportionalMuseumCentering();
