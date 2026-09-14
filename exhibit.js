@@ -248,7 +248,13 @@
     entranceSelections.textContent='Selections Curated by Community Vote';
   }
   paintMuseumPlateText(entranceLocation,entranceLocation.textContent);
-  // v152: Entrance supporting copy stays as authored plain text.
+  if(entranceKind==='catacombs') {
+    paintMuseumPlateText(entranceSearch,entranceSearch.textContent);
+    paintMuseumPlateText(entranceSearchSecondary,entranceSearchSecondary.textContent);
+    paintMuseumPlateText(entranceSelections,entranceSelections.textContent);
+  }
+  // v152: Entrance supporting copy stays as authored plain text except the
+  // three explicitly tested Catacombs entrance plates above.
   // Museum Foundry/small-caps styling comes from CSS; do not split this copy
   // into per-glyph spans, which caused the visible single-letter regression.
 
