@@ -542,3 +542,6 @@ v173 — Collection Thumbnail information plate targeted fix
 - Width is 116px, derived from the existing 11-thumbnail layout's own 116px side reservation; no screenshot-estimated measurement.
 - Existing Museum Foundry glyph/tier/optical calibration is untouched.
 - No thumbnail, navigation, emoji, caption, or other screen geometry changed.
+
+
+v219 diagnostic-only: added viewport-diagnostic.html and cache-bumped exhibit.html asset query strings to v219. No game CSS/JS/geometry/typography changes.

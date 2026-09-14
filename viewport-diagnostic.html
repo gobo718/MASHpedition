@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MASHPEDITION Viewport Diagnostic</title>
+<style>
+  html,body{margin:0;padding:0;font-family:monospace;background:#f7f4ec;color:#111}
+  main{padding:18px;max-width:900px;margin:0 auto}
+  h1{font:700 22px system-ui,sans-serif;margin:0 0 8px}
+  p{font:15px system-ui,sans-serif;margin:0 0 16px;line-height:1.35}
+  pre{white-space:pre-wrap;word-break:break-word;border:1px solid #111;padding:14px;background:#fff;font-size:16px;line-height:1.45}
+  button{font:700 16px system-ui,sans-serif;padding:10px 16px;margin:0 8px 12px 0}
+  .ruler{width:230px;height:37px;border:2px solid #111;box-sizing:border-box;background:#ddd;margin:12px 0}
+  .note{font-size:13px}
+</style>
+</head>
+<body>
+<main>
+<h1>MASHPEDITION VIEWPORT DIAGNOSTIC — v219</h1>
+<p>Open this in the browser/state that looks chonky. Screenshot this entire page. Do not change browser zoom first.</p>
+<button id="refresh">REFRESH VALUES</button>
+<pre id="out"></pre>
+<div class="ruler"></div>
+<p class="note">Reference rectangle: exactly 230 CSS px wide × 37 CSS px high.</p>
+</main>
+<script>
+function n(v){return v == null ? 'n/a' : String(Math.round(v*1000)/1000)}
+function report(){
+  const vv=window.visualViewport;
+  const lines=[
+    'timestamp: ' + new Date().toISOString(),
+    'location: ' + location.href,
+    '',
+    'window.innerWidth: ' + n(window.innerWidth),
+    'window.innerHeight: ' + n(window.innerHeight),
+    'documentElement.clientWidth: ' + n(document.documentElement.clientWidth),
+    'documentElement.clientHeight: ' + n(document.documentElement.clientHeight),
+    'screen.width: ' + n(screen.width),
+    'screen.height: ' + n(screen.height),
+    'screen.availWidth: ' + n(screen.availWidth),
+    'screen.availHeight: ' + n(screen.availHeight),
+    'devicePixelRatio: ' + n(window.devicePixelRatio),
+    '',
+    'visualViewport.width: ' + n(vv && vv.width),
+    'visualViewport.height: ' + n(vv && vv.height),
+    'visualViewport.scale: ' + n(vv && vv.scale),
+    'visualViewport.offsetLeft: ' + n(vv && vv.offsetLeft),
+    'visualViewport.offsetTop: ' + n(vv && vv.offsetTop),
+    '',
+    'orientation: ' + (screen.orientation ? screen.orientation.type + ' / ' + screen.orientation.angle : 'n/a'),
+    'userAgent: ' + navigator.userAgent
+  ];
+  document.getElementById('out').textContent=lines.join('\n');
+}
+document.getElementById('refresh').addEventListener('click',report);
+window.addEventListener('resize',report);
+if(window.visualViewport){window.visualViewport.addEventListener('resize',report);window.visualViewport.addEventListener('scroll',report)}
+report();
+</script>
+</body>
+</html>
