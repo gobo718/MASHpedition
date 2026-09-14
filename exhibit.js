@@ -1544,7 +1544,12 @@
 
   leftBtn.addEventListener('click',handleLeft);
   rightBtn.addEventListener('click',handleRight);
-  overheadBtn.addEventListener('click',renderOverhead);
+  overheadBtn.addEventListener('click',()=>{
+    if(shell.dataset.view==='thumbnail'){
+      roomPage=Math.floor(thumbnailPage*THUMBNAIL_PAGE_SIZE/PAGE_SIZE);
+    }
+    renderOverhead();
+  });
   roomBtn.addEventListener('click',()=>renderRoom(lastRoomStart));
   thumbnailBtn.addEventListener('click',renderThumbnailPage);
   endlessBtn.addEventListener('click',renderEndless);
