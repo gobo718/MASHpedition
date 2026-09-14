@@ -2754,3 +2754,11 @@ button,
   display:inline-block;
   transform:translateY(2px);
 }
+
+/* v215 — GEH Aerial center identity: text-only vertical correction.
+   Move only the rendered GRAND EXHIBITION HALL identity text 1.33px upward.
+   The aerial-center unit, identity plate/rectangle, rank controls, room map,
+   and protected Museum Foundry glyph calibration remain unchanged. */
+.exhibit-shell.geh-mode[data-view="overhead"] #overheadCenterIdentity > .museum-plate-text{
+  transform:translateY(-1.33px);
+}
