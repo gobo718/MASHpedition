@@ -2754,3 +2754,9 @@ button,
   display:inline-block;
   transform:translateY(2px);
 }
+
+/* v216 — Collection Exhibit plate wording optical placement only. */
+.exhibit-shell.collection-context[data-view="room"] .theme-plate .museum-plate-text,
+.exhibit-shell[data-area="collection"][data-view="room"] .theme-plate .museum-plate-text{
+  translate:0 1.333px;
+}
