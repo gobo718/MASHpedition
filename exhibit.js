@@ -443,10 +443,10 @@
       textWrap.appendChild(glyph);
     }
 
-    // v180 — scale-aware continuation of the established +2px plate-text calibration.
+    // v183 — Billy's empirically derived plate-centering rule.
     // Preserve the established +2px plate calibration and all Museum Foundry
-    // glyph/tier adjustments exactly. Add Billy's proportional plate-centering
-    // rule as a separate wrapper translation: 11% of the rendered CSS font size.
+    // glyph/tier adjustments exactly. Apply this only as a separate wrapper
+    // translation: (font size × 0.13) - 0.24px downward.
     const applyProportionalMuseumCentering=()=>{
       const wrapStyle=getComputedStyle(textWrap);
       const establishedShift=parseFloat(wrapStyle.top)||0;
@@ -460,7 +460,7 @@
         textWrap.style.translate='';
         return;
       }
-      textWrap.style.translate=`0 ${fontSize * 0.11}px`;
+      textWrap.style.translate=`0 ${(fontSize * 0.13) - 0.24}px`;
     };
     applyProportionalMuseumCentering();
     if(document.fonts?.ready){
