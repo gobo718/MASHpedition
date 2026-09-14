@@ -2740,3 +2740,20 @@ button,
 .exhibit-shell.collection-context[data-view="thumbnail"] .thumbnail-status .museum-plate-text{
   transform:translateY(1.333px);
 }
+
+.exhibit-shell.geh-context[data-view="thumbnail"] .thumbnail-status .museum-plate-text,
+.exhibit-shell.gallery-context[data-view="thumbnail"] .thumbnail-status .museum-plate-text{
+  transform:translateY(1.333px);
+}
+
+
+
+/* v209 — measured GEH Aerial text-only optical corrections.
+   Plate/button geometry and protected Museum glyph calibration remain untouched. */
+.exhibit-shell.geh-mode[data-view="overhead"] .overhead-center-label .museum-plate-text{
+  transform:translateY(-1.333px);
+}
+.exhibit-shell.geh-mode[data-view="overhead"] #exhibitRanks .rank-button-text{
+  display:inline-block;
+  transform:translateY(2px);
+}
