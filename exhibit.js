@@ -448,13 +448,8 @@
     // glyph/tier adjustments exactly. Apply this only as a separate wrapper
     // translation: (font size × 0.15) + (font size² × -0.002) - 0.25px downward for all font sizes.
     const applyProportionalMuseumCentering=()=>{
-      const wrapStyle=getComputedStyle(textWrap);
-      const establishedShift=parseFloat(wrapStyle.top)||0;
-      // This layer applies only where the established +2px plate calibration exists.
-      if(Math.abs(establishedShift-2)>0.01){
-        textWrap.style.translate='';
-        return;
-      }
+      // Independent centering layer. Existing top offsets and Museum Foundry
+      // glyph/tier calibration remain untouched; they are not a prerequisite.
       const fontSize=parseFloat(getComputedStyle(label).fontSize)||0;
       if(!fontSize){
         textWrap.style.translate='';
