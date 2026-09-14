@@ -226,6 +226,12 @@
   if(entranceKind==='geh') entranceRank.textContent=`${rankWord(requestedRank)} PLACE`;
   if(entranceKind==='catacombs') {
     entranceSearch.textContent=searchDetails;
+  // v199 diagnostic: wrap ONLY the existing DETAILS OF SEARCH text so the plate itself never moves.
+  const detailsDiagnosticText=document.createElement('span');
+  detailsDiagnosticText.textContent=entranceSearch.textContent;
+  entranceSearch.replaceChildren(detailsDiagnosticText);
+  detailsDiagnosticText.style.display='inline-block';
+  detailsDiagnosticText.style.transform='translateY(20px)';
     entranceSearchSecondary.textContent=params.get('theme') ? `THEME · ${params.get('theme')}` : (catSearchHasTheme ? 'THEME SEARCH' : 'GENERAL SEARCH');
   }
   if(entranceKind==='collection') {
