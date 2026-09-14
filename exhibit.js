@@ -251,6 +251,19 @@
     if(entranceKind==='catacombs') applyPlainMuseumOpticalCentering(entranceSelections);
   }
   paintMuseumPlateText(entranceLocation,entranceLocation.textContent);
+  if(entranceKind==='geh'){
+    const rankText=document.createElement('span');
+    rankText.textContent=entranceRank.textContent;
+    entranceRank.replaceChildren(rankText);
+    rankText.style.display='inline-block';
+    rankText.style.transform='translateY(4.667px)';
+
+    const selectionText=document.createElement('span');
+    selectionText.textContent=entranceSelections.textContent;
+    entranceSelections.replaceChildren(selectionText);
+    selectionText.style.display='inline-block';
+    selectionText.style.transform='translateY(2.667px)';
+  }
   // v152: Entrance supporting copy stays as authored plain text.
   // Museum Foundry/small-caps styling comes from CSS; do not split this copy
   // into per-glyph spans, which caused the visible single-letter regression.
@@ -471,7 +484,7 @@
         return;
       }
       const opticalShift=1.15 + 6.285 * Math.exp(-0.35 * (fontSize - 8)) - 3.485 * Math.exp(-0.60 * (fontSize - 11));
-      const appliedShift=label===overheadCenterIdentity ? opticalShift-2.997 : opticalShift;
+      const appliedShift=label===overheadCenterIdentity ? opticalShift-1.667 : opticalShift;
       textWrap.style.translate=`0 ${appliedShift}px`;
     };
     applyProportionalMuseumCentering();
@@ -981,6 +994,13 @@
     if(!gehMode || rank<1 || rank>maxUnlockedRank) return;
     gehRank=rank;
     entranceRank.textContent=`${rankWord(gehRank)} PLACE`;
+    if(shell.dataset.view==='entrance'){
+      const rankText=document.createElement('span');
+      rankText.textContent=entranceRank.textContent;
+      entranceRank.replaceChildren(rankText);
+      rankText.style.display='inline-block';
+      rankText.style.transform='translateY(4.667px)';
+    }
     updateRankButtons();
 
     if(shell.dataset.view==='overhead') renderOverhead();
