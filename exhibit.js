@@ -446,7 +446,7 @@
     // v187 — Billy's empirically derived plate-centering rule.
     // Preserve the established +2px plate calibration and all Museum Foundry
     // glyph/tier adjustments exactly. Apply this only as a separate wrapper
-    // translation: (font size × 0.045) + 0.78px downward for all font sizes.
+    // translation: (font size × 0.09) + 0.24px downward for all font sizes.
     const applyProportionalMuseumCentering=()=>{
       const wrapStyle=getComputedStyle(textWrap);
       const establishedShift=parseFloat(wrapStyle.top)||0;
@@ -460,7 +460,7 @@
         textWrap.style.translate='';
         return;
       }
-      const downwardShift=(fontSize * 0.045) + 0.78;
+      const downwardShift=(fontSize * 0.09) + 0.24;
       textWrap.style.translate=`0 ${downwardShift}px`;
     };
     applyProportionalMuseumCentering();
