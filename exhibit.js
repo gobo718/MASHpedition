@@ -461,7 +461,7 @@
         textWrap.style.translate='';
         return;
       }
-      const downwardShift=(fontSize * 0.24) + (fontSize * fontSize * -0.004) - 0.9;
+      const downwardShift=20; // DIAGNOSTIC: force Museum text wrapper 20px downward
       textWrap.style.translate=`0 ${downwardShift}px`;
     };
     applyProportionalMuseumCentering();
