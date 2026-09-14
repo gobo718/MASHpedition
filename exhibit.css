@@ -303,7 +303,8 @@ button{border-radius:0}
   top:0;
   width:980px;
   height:300px;
-  transform:translateX(-50%);
+  transform:translateX(-50%) scale(var(--fixed-scene-fit,1));
+  transform-origin:50% 0;
   overflow:hidden;
   background:transparent;
 }
@@ -597,7 +598,8 @@ button{border-radius:0}
   top:0;
   width:980px;
   height:300px;
-  transform:translateX(-50%);
+  transform:translateX(-50%) scale(var(--fixed-scene-fit,1));
+  transform-origin:50% 0;
   overflow:hidden;
   background:var(--wall);
 }

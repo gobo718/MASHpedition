@@ -1,5 +1,13 @@
 (()=>{
   const shell=document.getElementById('exhibitShell');
+
+  // v220 — The room/entrance/aerial artwork uses the locked 980px scene geometry.
+  // Fit that scene to a narrower landscape viewport without changing any internal
+  // coordinates, plate geometry, or Museum Foundry calibration.
+  function syncFixedSceneFit(){
+    shell.style.setProperty('--fixed-scene-fit',String(Math.min(1,window.innerWidth/980)));
+  }
+  syncFixedSceneFit();
   const roomStage=shell.querySelector('.room-stage');
   const viewLabel=document.getElementById('viewLabel');
   const leftBtn=document.getElementById('leftBtn');
@@ -1679,7 +1687,7 @@
     paintOverheadSlot(button,roomSlots[wrap(index)]);
   });
 
-  window.addEventListener('resize',()=>{ if(shell.dataset.view==='thumbnail') syncThumbnailPageControls(); });
+  window.addEventListener('resize',()=>{ syncFixedSceneFit(); if(shell.dataset.view==='thumbnail') syncThumbnailPageControls(); });
 
   const requestedStart=(params.get('start')||defaultStart).toLowerCase();
   if(requestedStart==='exhibit' && capabilities.exhibit && !(catacombsMode && catSearchHasTheme)) renderOverhead();
