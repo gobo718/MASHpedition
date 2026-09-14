@@ -471,7 +471,8 @@
         return;
       }
       const opticalShift=1.15 + 6.285 * Math.exp(-0.35 * (fontSize - 8)) - 3.485 * Math.exp(-0.60 * (fontSize - 11));
-      textWrap.style.translate=`0 ${opticalShift}px`;
+      const appliedShift=label===overheadCenterIdentity ? opticalShift-1.667 : opticalShift;
+      textWrap.style.translate=`0 ${appliedShift}px`;
     };
     applyProportionalMuseumCentering();
     if(document.fonts?.ready){

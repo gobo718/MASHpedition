@@ -2750,11 +2750,6 @@ button,
 
 /* v209 — measured GEH Aerial text-only optical corrections.
    Plate/button geometry and protected Museum glyph calibration remain untouched. */
-/* v212 — target the actual Aerial center location element by ID.
-   transform is deliberately separate from the renderer's protected inline translate layer. */
-#overheadCenterIdentity .museum-plate-text{
-  transform:translateY(-1.667px);
-}
 .exhibit-shell.geh-mode[data-view="overhead"] #exhibitRanks .rank-button-text{
   display:inline-block;
   transform:translateY(2px);
