@@ -227,8 +227,6 @@
   if(entranceKind==='catacombs') {
     entranceSearch.textContent=searchDetails;
     entranceSearchSecondary.textContent=params.get('theme') ? `THEME · ${params.get('theme')}` : (catSearchHasTheme ? 'THEME SEARCH' : 'GENERAL SEARCH');
-    applyMuseumVerticalShiftDirect(entranceSearch);
-    applyMuseumVerticalShiftDirect(entranceSearchSecondary);
   }
   if(entranceKind==='collection') {
     const curatorLead=document.createElement('span');
@@ -249,7 +247,6 @@
   } else {
     entranceSelections.textContent='Selections Curated by Community Vote';
   }
-  if(entranceKind==='catacombs') applyMuseumVerticalShiftDirect(entranceSelections);
   paintMuseumPlateText(entranceLocation,entranceLocation.textContent);
   // v152: Entrance supporting copy stays as authored plain text.
   // Museum Foundry/small-caps styling comes from CSS; do not split this copy
@@ -418,16 +415,7 @@
   const MUSEUM_HIGH_LETTERS=new Set('AKMNVWXY');
   const MUSEUM_LOW_LETTERS=new Set('BCDGJOQSU');
 
-  function applyMuseumVerticalShiftDirect(label){
-  if(!label) return;
-  const style=getComputedStyle(label);
-  const fontSize=parseFloat(style.fontSize)||0;
-  if(!fontSize) return;
-  const downwardShift=(fontSize*0.24)+(fontSize*fontSize*-0.004)-0.9;
-  label.style.translate=`0 ${downwardShift}px`;
-}
-
-function paintMuseumPlateText(label,text){
+  function paintMuseumPlateText(label,text){
     label.replaceChildren();
     const textWrap=document.createElement('span');
     textWrap.className='museum-plate-text';
