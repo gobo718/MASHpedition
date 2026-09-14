@@ -2735,3 +2735,15 @@ button,
   box-sizing:border-box;
   text-align:center;
 }
+
+/* v178 — size-aware vertical plate centering for large Museum Foundry entrance titles.
+   This is a plate-content placement correction, proportional to type size.
+   It is intentionally additive to — and does NOT alter — the protected Museum
+   Foundry glyph/tier calibration or the established +2px text calibration. */
+.exhibit-shell[data-view="door"] .entrance-location-banner .museum-plate-text{
+  transform:translateY(.17em);
+}
+/* FYC is intentionally outside the Museum Foundry plate language. */
+.exhibit-shell[data-area="fyc"][data-view="door"] .entrance-location-banner .museum-plate-text{
+  transform:none;
+}
