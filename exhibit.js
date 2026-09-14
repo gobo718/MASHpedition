@@ -1,11 +1,17 @@
 (()=>{
   const shell=document.getElementById('exhibitShell');
 
-  // v220 — The room/entrance/aerial artwork uses the locked 980px scene geometry.
-  // Fit that scene to a narrower landscape viewport without changing any internal
-  // coordinates, plate geometry, or Museum Foundry calibration.
+  // v221 — Fixed museum scenes keep their locked 980 × 300 design coordinates.
+  // The complete scene fits the actual usable game viewport as one unit; internal
+  // geometry and Museum Foundry calibration remain untouched.
+  const FIXED_SCENE_WIDTH=980;
+  const FIXED_SCENE_HEIGHT=300;
+  const GAME_BAR_HEIGHT=37;
   function syncFixedSceneFit(){
-    shell.style.setProperty('--fixed-scene-fit',String(Math.min(1,window.innerWidth/980)));
+    const availableWidth=window.innerWidth;
+    const availableHeight=Math.max(1,window.innerHeight-GAME_BAR_HEIGHT);
+    const fit=Math.min(1,availableWidth/FIXED_SCENE_WIDTH,availableHeight/FIXED_SCENE_HEIGHT);
+    shell.style.setProperty('--fixed-scene-fit',String(fit));
   }
   syncFixedSceneFit();
   const roomStage=shell.querySelector('.room-stage');
@@ -25,6 +31,7 @@
   const entranceSearchSecondary=document.getElementById('entranceSearchSecondary');
   const entranceSelections=document.getElementById('entranceSelections');
   const exhibitControls=document.getElementById('exhibitControls');
+  const displayModeBtn=document.getElementById('displayModeBtn');
   const overheadView=document.getElementById('overheadView');
   const overheadCenterIdentity=document.getElementById('overheadCenterIdentity');
   const roomCenterIdentity=document.getElementById('roomCenterIdentity');
@@ -558,8 +565,41 @@
       catSearchHas.hidden=false;
       catSearchHasRadios.forEach(radio=>{ radio.checked=(radio.value===(catSearchHasTheme?'theme':'no-theme')); });
     }
-    const visible=[...exhibitControls.querySelectorAll('button')].filter(button=>!button.hidden).length;
+    syncContextBar();
+  }
+
+  function syncContextBar(){
+    const visible=[...exhibitControls.children].filter(item=>!item.hidden).length;
     exhibitControls.style.setProperty('--control-count',String(visible));
+  }
+
+  function fullscreenElement(){
+    return document.fullscreenElement || document.webkitFullscreenElement || null;
+  }
+
+  function syncDisplayMode(){
+    if(!displayModeBtn) return;
+    displayModeBtn.textContent=fullscreenElement() ? 'BROWSER' : 'FULL';
+    const supported=Boolean(document.documentElement.requestFullscreen || document.documentElement.webkitRequestFullscreen);
+    displayModeBtn.hidden=!supported && !fullscreenElement();
+    syncFixedSceneFit();
+    syncContextBar();
+  }
+
+  async function toggleDisplayMode(){
+    try{
+      if(fullscreenElement()){
+        const exit=document.exitFullscreen || document.webkitExitFullscreen;
+        if(exit) await exit.call(document);
+      }else{
+        const enter=document.documentElement.requestFullscreen || document.documentElement.webkitRequestFullscreen;
+        if(enter) await enter.call(document.documentElement,{navigationUI:'hide'});
+      }
+    }catch(error){
+      console.warn('Fullscreen request was not completed.',error);
+    }finally{
+      syncDisplayMode();
+    }
   }
 
   function setCatSearchHas(value){
@@ -1148,32 +1188,6 @@
     return Math.max(1,shell.dataset.view==='thumbnail' ? currentThumbnailPageCount() : currentGenericPageCount());
   }
 
-  function syncThumbnailPageControls(){
-    if(!pageNav || shell.dataset.view!=='thumbnail' || pageNav.hidden) return;
-    const museum=document.querySelector('.museum-return');
-    if(!museum) return;
-    const museumRect=museum.getBoundingClientRect();
-    const shellRect=shell.getBoundingClientRect();
-    const gap=6;
-    const width=museumRect.width;
-    const height=museumRect.height;
-    pageNav.style.left='auto';
-    pageNav.style.right=`${Math.max(0,shellRect.right-museumRect.right)}px`;
-    pageNav.style.top=`${Math.max(0,museumRect.top-shellRect.top)}px`;
-    pageNav.style.bottom='auto';
-    pageNav.style.width=`${width}px`;
-    pageNav.style.height=`${(height+gap)*4-gap}px`;
-    [pagePrevBtn,pageNextBtn].forEach(button=>{
-      button.style.width=`${width}px`;
-      button.style.height=`${height}px`;
-    });
-    // v125 — halve only the blank space between MUSEUM and the PAGE control cluster.
-    // Keep the PAGE PREV/PAGE NEXT gap unchanged.
-    const museumToPageGap=(height+(2*gap))/2;
-    const pagePrevTop=height+museumToPageGap;
-    pagePrevBtn.style.top=`${pagePrevTop}px`;
-    pageNextBtn.style.top=`${pagePrevTop+height+gap}px`;
-  }
 
   function updatePageNav(){
     if(!pageNav) return;
@@ -1183,6 +1197,9 @@
     const count=gehThumbnail ? (zazzlyMode?1:6) : pageCount();
     const show=(view==='thumbnail' || view==='endless') && (count>1 || gehThumbnail || connectedZazzlyThumbnail);
     pageNav.hidden=!show;
+    pagePrevBtn.hidden=!show;
+    pageNextBtn.hidden=!show;
+    syncContextBar();
     if(!show) return;
     const page=Math.max(0,Math.min(count-1,currentPageForView()));
     const unit=view==='thumbnail'?THUMBNAIL_PAGE_SIZE:PAGE_SIZE;
@@ -1196,7 +1213,6 @@
         : (((collectionContext || catacombsContext) && view==='thumbnail' && !zazzlyMode)
           ? false
           : page>=count-1));
-    syncThumbnailPageControls();
     if(view==='thumbnail' && gehMode){
       if(zazzlyMode) pageStatus.textContent='PAGE 4';
       else pageStatus.textContent=`PAGE ${Math.floor(page/2)+1}${page%2===0?'A':'B'}`;
@@ -1601,6 +1617,9 @@
     button.addEventListener('click',()=>setRank(button.dataset.rank));
   });
 
+  displayModeBtn?.addEventListener('click',toggleDisplayMode);
+  document.addEventListener('fullscreenchange',syncDisplayMode);
+  document.addEventListener('webkitfullscreenchange',syncDisplayMode);
   pagePrevBtn?.addEventListener('click',()=>changePage(-1));
   pageNextBtn?.addEventListener('click',()=>changePage(1));
 
@@ -1687,7 +1706,8 @@
     paintOverheadSlot(button,roomSlots[wrap(index)]);
   });
 
-  window.addEventListener('resize',()=>{ syncFixedSceneFit(); if(shell.dataset.view==='thumbnail') syncThumbnailPageControls(); });
+  syncDisplayMode();
+  window.addEventListener('resize',()=>{ syncFixedSceneFit(); });
 
   const requestedStart=(params.get('start')||defaultStart).toLowerCase();
   if(requestedStart==='exhibit' && capabilities.exhibit && !(catacombsMode && catSearchHasTheme)) renderOverhead();

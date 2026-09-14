@@ -1,5 +1,10 @@
-# MASHpedition v220 — Fixed 980px Scene Fit
+MASHpedition v221 — Dynamic Game Viewport + Context Bar foundation
 
-Targeted fix only. The locked 980px Entrance / Left / Right / Wall / Aerial canvases now scale as a unit when the actual viewport is narrower than 980 CSS px. At the measured Chrome viewport of 821px the scale is exactly 821/980 = 0.837755..., the inverse of the observed 980/821 = 1.193666... chonky enlargement. Internal 980px geometry, plates, typography, Museum Foundry optical calibration, thumbnails, controls, and all unrelated behavior are unchanged.
-
-Includes the v219 viewport diagnostic page.
+- Fixed 980 × 300 museum scenes now fit by BOTH available viewport width and height.
+- Added FULL / BROWSER toggle using the browser Fullscreen API.
+- Moved MUSEUM into the existing bottom game bar.
+- Moved applicable PAGE PREV / PAGE NEXT controls into that same bar.
+- The bar is context-sensitive: pagination controls appear only when applicable; existing capability controls retain their established visibility rules.
+- Fixed the right-corner mirror so whole-scene viewport fitting is preserved there too.
+- Removed the obsolete JS that positioned pagination relative to the old floating MUSEUM button.
+- No Museum Foundry calibration, plate geometry, room coordinates, or content wording changed.

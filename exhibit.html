@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>MASHpedition Shared Artwork Viewer</title>
 <!-- v18: area samples + swipe navigation on Exhibit/Endless + v17 shared viewer -->
-<link rel="stylesheet" href="exhibit.css?v=220">
+<link rel="stylesheet" href="exhibit.css?v=221">
 </head>
 <body>
 <main class="exhibit-shell" id="exhibitShell" data-view="door" aria-label="Exhibit view">
@@ -249,10 +249,8 @@
       <div class="thumbnail-theme-label" id="thumbnailIdentitySecondary"></div>
     </div>
 
-    <nav class="page-nav" id="pageNav" aria-label="Exhibit room page navigation" hidden>
-      <button type="button" id="pagePrevBtn">PAGE PREV</button>
+    <nav class="page-nav" id="pageNav" aria-label="Exhibit room page status" hidden>
       <span id="pageStatus">1–22</span>
-      <button type="button" id="pageNextBtn">PAGE NEXT</button>
     </nav>
 
     <div class="geh-room-top-unit" aria-label="Grand Exhibition Hall rank layer">
@@ -282,7 +280,7 @@
     <div class="view-label" id="viewLabel">DOOR</div>
   </section>
 
-  <nav class="exhibit-controls" id="exhibitControls" aria-label="Viewing navigation">
+  <nav class="exhibit-controls" id="exhibitControls" aria-label="Context-sensitive game menu">
     <button type="button" id="leftBtn">LEFT</button>
     <button type="button" id="rightBtn">RIGHT</button>
     <button type="button" id="overheadBtn" data-capability="exhibit">AERIAL</button>
@@ -290,10 +288,12 @@
     <button type="button" id="thumbnailBtn" data-capability="thumbnail">THUMBNAILS</button>
     <button type="button" id="endlessBtn" data-capability="endless">ENDLESS</button>
     <button type="button" id="doorBtn">ENTRANCE</button>
+    <button type="button" id="pagePrevBtn" hidden>PAGE PREV</button>
+    <button type="button" id="pageNextBtn" hidden>PAGE NEXT</button>
+    <a class="museum-return" href="index.html">MUSEUM</a>
+    <button type="button" id="displayModeBtn">FULL</button>
   </nav>
-
-  <a class="museum-return" href="index.html">MUSEUM</a>
 </main>
-<script src="exhibit.js?v=220"></script>
+<script src="exhibit.js?v=221"></script>
 </body>
 </html>
