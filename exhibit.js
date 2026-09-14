@@ -426,7 +426,7 @@
     text.textContent=label.textContent;
     label.replaceChildren(text);
     text.style.display='inline-block';
-    const opticalShift=-6 * Math.exp(-0.35 * (fontSize - 8));
+    const opticalShift=-3 + 12.57 * Math.exp(-0.35 * (fontSize - 8));
     text.style.transform=`translateY(${opticalShift}px)`;
   }
 
@@ -470,7 +470,7 @@
         textWrap.style.translate='';
         return;
       }
-      const opticalShift=-6 * Math.exp(-0.35 * (fontSize - 8));
+      const opticalShift=-3 + 12.57 * Math.exp(-0.35 * (fontSize - 8));
       textWrap.style.translate=`0 ${opticalShift}px`;
     };
     applyProportionalMuseumCentering();
