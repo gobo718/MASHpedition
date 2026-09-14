@@ -426,7 +426,7 @@
     text.textContent=label.textContent;
     label.replaceChildren(text);
     text.style.display='inline-block';
-    const opticalShift=5.3 - 6.97 * Math.exp(-0.60 * (fontSize - 11));
+    const opticalShift=1.15 + 6.285 * Math.exp(-0.35 * (fontSize - 8)) - 3.485 * Math.exp(-0.60 * (fontSize - 11));
     text.style.transform=`translateY(${opticalShift}px)`;
   }
 
@@ -470,7 +470,7 @@
         textWrap.style.translate='';
         return;
       }
-      const opticalShift=5.3 - 6.97 * Math.exp(-0.60 * (fontSize - 11));
+      const opticalShift=1.15 + 6.285 * Math.exp(-0.35 * (fontSize - 8)) - 3.485 * Math.exp(-0.60 * (fontSize - 11));
       textWrap.style.translate=`0 ${opticalShift}px`;
     };
     applyProportionalMuseumCentering();
