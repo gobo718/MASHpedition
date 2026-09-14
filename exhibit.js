@@ -460,7 +460,7 @@
         textWrap.style.translate='';
         return;
       }
-      const downwardShift=(fontSize * 0.15) + (fontSize * fontSize * -0.002) - 0.25;
+      const downwardShift=(fontSize * 0.24) + (fontSize * fontSize * -0.004) - 0.9;
       textWrap.style.translate=`0 ${downwardShift}px`;
     };
     applyProportionalMuseumCentering();
