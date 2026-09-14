@@ -2734,4 +2734,5 @@ button,
   width:100%;
   box-sizing:border-box;
   text-align:center;
+  transform:translateY(1.333px);
 }
