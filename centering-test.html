@@ -1,0 +1,11 @@
+<!doctype html><meta charset=utf-8><style>
+@font-face{font-family:'Museum Foundry';src:url('./MuseumFoundry.otf') format('opentype')}
+body{margin:20px;background:#eee}
+.plate{width:500px;height:120px;border:1px solid #777;background:#f5f1e8;display:flex;align-items:center;justify-content:center;margin:10px;box-sizing:border-box;font-family:'Museum Foundry',serif;font-variant:small-caps;font-weight:900;line-height:1.02}
+.museum-plate-text{position:relative;top:2px;white-space:nowrap}
+.museum-plate-glyph{display:inline-block}.museum-cap{font-size:1em}.museum-smallcap{font-size:.70em}.museum-tier-high{position:relative;top:-.2px}.museum-tier-mid{position:relative;top:0}.museum-tier-low{position:relative;top:.2px}
+</style><body><div id=root></div><script>
+const HIGH=new Set('AKMNVWXY'),LOW=new Set('BCDGJOQSU');
+function paint(label,text){const w=document.createElement('span');w.className='museum-plate-text';label.append(w);for(const s of text){const ch=s.toUpperCase(),g=document.createElement('span');g.className='museum-plate-glyph '+(/[A-Z]/.test(s)?'museum-cap':('museum-smallcap '+(HIGH.has(ch)?'museum-tier-high':LOW.has(ch)?'museum-tier-low':'museum-tier-mid')));g.textContent=ch;w.append(g)}}
+for(const size of [11,15,18,22,26,30,34,40]){let d=document.createElement('div');d.className='plate';d.style.fontSize=size+'px';d.dataset.size=size;root.append(d);paint(d,'Catacombs')}
+</script>

@@ -442,6 +442,46 @@
       glyph.textContent=char;
       textWrap.appendChild(glyph);
     }
+
+    // v180 — scale-aware continuation of the established +2px plate-text calibration.
+    // The protected glyph/tier adjustments and +2px calibration are not changed.
+    // Only when the rendered font needs MORE than that established 2px correction
+    // do we add the growth amount. Museum Foundry's own typographic metrics are
+    // 700/-300 on a 1000-unit em, so its line-box center is -0.2em from baseline.
+    // Canvas actualBoundingBox* supplies the current word's real ink bounds, making
+    // the continuation both size-aware and text-aware rather than a fixed coefficient.
+    const applyScaleAwareMuseumCentering=()=>{
+      const wrapStyle=getComputedStyle(textWrap);
+      const establishedShift=parseFloat(wrapStyle.top)||0;
+      // This continuation belongs only to the already-established +2px centering layer.
+      // Other plate systems keep their existing positioning untouched.
+      if(Math.abs(establishedShift-2)>0.01){
+        textWrap.style.translate='';
+        return;
+      }
+      const style=getComputedStyle(label);
+      const fontSize=parseFloat(style.fontSize)||0;
+      if(!fontSize){
+        textWrap.style.translate='';
+        return;
+      }
+      const canvas=paintMuseumPlateText._measureCanvas || (paintMuseumPlateText._measureCanvas=document.createElement('canvas'));
+      const ctx=canvas.getContext('2d');
+      if(!ctx) return;
+      ctx.font=`${style.fontStyle} ${style.fontWeight} ${fontSize}px ${style.fontFamily}`;
+      const measured=ctx.measureText(String(text).toUpperCase().replace(/\n/g,' '));
+      if(!Number.isFinite(measured.actualBoundingBoxAscent) ||
+         !Number.isFinite(measured.actualBoundingBoxDescent)) return;
+      const inkCenter=(measured.actualBoundingBoxDescent-measured.actualBoundingBoxAscent)/2;
+      const typographicCenter=-0.2*fontSize; // (300 - 700) / 2 / 1000
+      const requiredShift=typographicCenter-inkCenter;
+      const growthShift=Math.max(0,requiredShift-establishedShift);
+      textWrap.style.translate=growthShift>0.001 ? `0 ${growthShift.toFixed(3)}px` : '';
+    };
+    applyScaleAwareMuseumCentering();
+    if(document.fonts?.ready){
+      document.fonts.ready.then(applyScaleAwareMuseumCentering);
+    }
   }
 
   function paintGehThumbnail(button,art,rank){
