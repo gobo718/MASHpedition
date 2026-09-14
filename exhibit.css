@@ -2741,8 +2741,8 @@ button,
   transform:translateY(1.333px);
 }
 
-.exhibit-shell.geh-context[data-view="thumbnail"] .thumbnail-status .museum-plate-text,
-.exhibit-shell.gallery-context[data-view="thumbnail"] .thumbnail-status .museum-plate-text{
+.exhibit-shell.geh-mode[data-view="thumbnail"] .thumbnail-status .museum-plate-text,
+.exhibit-shell[data-area="gallery"][data-view="thumbnail"] .thumbnail-status .museum-plate-text{
   transform:translateY(1.333px);
 }
 
