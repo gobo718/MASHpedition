@@ -226,9 +226,9 @@
   if(entranceKind==='geh') entranceRank.textContent=`${rankWord(requestedRank)} PLACE`;
   if(entranceKind==='catacombs') {
     entranceSearch.textContent=searchDetails;
-  applyPlainMuseumOpticalCentering(entranceSearch);
+    applyPlainMuseumOpticalCentering(entranceSearch);
     entranceSearchSecondary.textContent=params.get('theme') ? `THEME · ${params.get('theme')}` : (catSearchHasTheme ? 'THEME SEARCH' : 'GENERAL SEARCH');
-  applyPlainMuseumOpticalCentering(entranceSearchSecondary);
+    applyPlainMuseumOpticalCentering(entranceSearchSecondary);
   }
   if(entranceKind==='collection') {
     const curatorLead=document.createElement('span');
@@ -248,7 +248,7 @@
     entranceSelections.textContent='Bespoke selections tailored to your requests, presented via curation by a personal docent.';
   } else {
     entranceSelections.textContent='Selections Curated by Community Vote';
-  if(entranceKind==='catacombs') applyPlainMuseumOpticalCentering(entranceSelections);
+    if(entranceKind==='catacombs') applyPlainMuseumOpticalCentering(entranceSelections);
   }
   paintMuseumPlateText(entranceLocation,entranceLocation.textContent);
   // v152: Entrance supporting copy stays as authored plain text.
@@ -419,18 +419,18 @@
   const MUSEUM_LOW_LETTERS=new Set('BCDGJOQSU');
 
   function applyPlainMuseumOpticalCentering(label){
-  if(!label) return;
-  const fontSize=parseFloat(getComputedStyle(label).fontSize)||0;
-  if(!fontSize) return;
-  const text=document.createElement('span');
-  text.textContent=label.textContent;
-  label.replaceChildren(text);
-  text.style.display='inline-block';
-  const downwardShift=(fontSize * 0.24) + (fontSize * fontSize * -0.004) - 0.9;
-  text.style.transform=`translateY(${downwardShift}px)`;
-}
+    if(!label) return;
+    const fontSize=parseFloat(getComputedStyle(label).fontSize)||0;
+    if(!fontSize) return;
+    const text=document.createElement('span');
+    text.textContent=label.textContent;
+    label.replaceChildren(text);
+    text.style.display='inline-block';
+    const opticalShift=-6 * Math.exp(-0.35 * (fontSize - 8));
+    text.style.transform=`translateY(${opticalShift}px)`;
+  }
 
-function paintMuseumPlateText(label,text){
+  function paintMuseumPlateText(label,text){
     label.replaceChildren();
     const textWrap=document.createElement('span');
     textWrap.className='museum-plate-text';
@@ -470,8 +470,8 @@ function paintMuseumPlateText(label,text){
         textWrap.style.translate='';
         return;
       }
-      const downwardShift=(fontSize * 0.24) + (fontSize * fontSize * -0.004) - 0.9;
-      textWrap.style.translate=`0 ${downwardShift}px`;
+      const opticalShift=-6 * Math.exp(-0.35 * (fontSize - 8));
+      textWrap.style.translate=`0 ${opticalShift}px`;
     };
     applyProportionalMuseumCentering();
     if(document.fonts?.ready){
