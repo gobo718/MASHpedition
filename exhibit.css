@@ -2751,7 +2751,7 @@ button,
 /* v209 — measured GEH Aerial text-only optical corrections.
    Plate/button geometry and protected Museum glyph calibration remain untouched. */
 .exhibit-shell.geh-mode[data-view="overhead"] .overhead-center-label .museum-plate-text{
-  transform:translateY(-1.333px);
+  transform:translateY(-1.667px);
 }
 .exhibit-shell.geh-mode[data-view="overhead"] #exhibitRanks .rank-button-text{
   display:inline-block;
