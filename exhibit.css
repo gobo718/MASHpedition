@@ -2755,8 +2755,13 @@ button,
   transform:translateY(2px);
 }
 
-/* v216 — Collection Exhibit plate wording optical placement only. */
-.exhibit-shell.collection-context[data-view="room"] .theme-plate .museum-plate-text,
-.exhibit-shell[data-area="collection"][data-view="room"] .theme-plate .museum-plate-text{
-  translate:0 1.333px;
+
+/* v217 — Collection Exhibit only: actual generated plate-text wrapper.
+   Existing +2px calibration + requested 1.333px downward correction = 3.333px.
+   Plate geometry and Thumbnail view are untouched. */
+.exhibit-shell.collection-context:not([data-view="thumbnail"]) .collection-exhibit-theme-plate .collection-exhibit-theme-text{
+  transform:translate(-50%,calc(-50% + 3.333px));
+}
+.exhibit-shell.collection-context:not([data-view="thumbnail"]) .collection-exhibit-theme-plate.is-right-mirrored .collection-exhibit-theme-text{
+  transform:translate(-50%,calc(-50% + 3.333px)) scaleX(-1) !important;
 }
