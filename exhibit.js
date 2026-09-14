@@ -207,7 +207,7 @@
     requestedArea==='gallery'?'gallery':
     requestedArea==='fyc'?'fyc':
     requestedArea==='se'?'salon':
-    (requestedArea==='cat-search' || requestedArea==='cat-theme'?'catacombs':'generic')
+    catacombsContext?'catacombs':'generic'
   );
 
   // v58: the booked 01–22 Main-room Theme names follow the numbered

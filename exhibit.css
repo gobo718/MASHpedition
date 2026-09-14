@@ -2671,10 +2671,10 @@ button,
 }
 .exhibit-shell.catacombs-context[data-view="door"] .entrance-search{
   position:absolute;
-  left:0;
+  left:30px;
   top:126px;
-  width:375px;
-  max-width:375px;
+  width:315px;
+  max-width:315px;
   min-height:64px;
   margin:0;
   padding:10px 18px;
@@ -2686,7 +2686,7 @@ button,
   line-height:1.12;
 }
 .exhibit-shell.catacombs-context[data-view="door"] .entrance-search-secondary{
-  left:605px;
+  left:635px;
 }
 
 /* The audited top-left range typography uses an en dash, and all multiline
