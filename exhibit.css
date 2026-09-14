@@ -2730,6 +2730,7 @@ button,
    but make the Museum Foundry multiline text wrapper occupy the plate's content
    width so each line is mathematically centered inside that locked plate. */
 .exhibit-shell.catacombs-context[data-view="thumbnail"] .thumbnail-status .museum-plate-text{
+  display:block;
   width:100%;
   box-sizing:border-box;
   text-align:center;
