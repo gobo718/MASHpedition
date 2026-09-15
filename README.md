@@ -33,3 +33,13 @@ v225 Thumbnail menu correction
 - Thumbnail pagination remains PAGE PREV / PAGE NEXT.
 - LEFT / RIGHT behavior outside thumbnail views is unchanged.
 - No layout, typography, plate, Annex, or Museum Foundry changes.
+
+
+v226 universal menu ordering pass
+- Canonical relative order: LEFT, RIGHT, PREV, NEXT, ENTRANCE, EXHIBIT, THUMBNAILS, ENDLESS, SUBLOCATION, MUSEUM, FULL/BROWSER.
+- Absent controls simply disappear; remaining controls keep canonical relative order.
+- Existing AERIAL is preserved (not removed) and remains adjacent to the Exhibit navigation group.
+- Thumbnail contexts continue to hide LEFT/RIGHT.
+- PAGE PREV/PAGE NEXT labels are normalized to PREV/NEXT.
+- FULL/BROWSER remains one state-dependent final control.
+- No typography calibration, plate geometry, scene geometry, or unrelated behavior changed.
