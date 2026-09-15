@@ -240,6 +240,12 @@
   const emojiPairDefinedLocation=gehMode || collectionContext;
 
   entranceLocation.textContent=entranceKind==='catacombs'?'CATACOMBS':areaLabel;
+  // v239: Catacombs curator copy belongs to the LEFT location stack, not the
+  // right Search Details container. Reparent only for Catacombs; other Entrances
+  // retain their established DOM/geometry.
+  if(entranceKind==='catacombs' && entranceSelections.parentElement!==entranceLocation.parentElement){
+    entranceLocation.insertAdjacentElement('afterend',entranceSelections);
+  }
   entranceEmojis.textContent=entranceEmojiText;
   entranceEmojis.hidden=['gallery','fyc','salon'].includes(entranceKind);
   entranceRank.hidden=entranceKind!=='geh';

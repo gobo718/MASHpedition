@@ -1,3 +1,20 @@
+## v240 — Catacombs Entrance measured door/crop correction
+
+- Replaced the incorrect v239 230:265 responsive door assumption with Billy’s actual ruler-measured visible composition.
+- Horizontal geometry uses the supplied 32/16 wall + 22/16 door + 32/16 wall relationship, limiting the visible doorway to 22/86 of the available width.
+- Vertical geometry uses the supplied 7/32 visible wall above + 44/32 visible doorway, while respecting that another 22/32 of the physical door existed below the reference viewport. The visible black doorway is therefore square (44:44); the off-screen lower portion is not stretched into view.
+- The doorway remains centered and reaches the menu-bar floor. When height is the limiting dimension, the 7:44 visible wall-to-door relationship is preserved; wider/taller layouts may naturally show additional wall.
+- Museum Foundry glyph calibration/optical-centering math and unrelated views remain unchanged.
+
+## v239 — Catacombs Entrance screenshot correction
+
+- Corrected the responsive Catacombs Entrance door so it no longer stretches vertically with the viewport: it preserves the established 230:265 Door 1 aspect ratio, remains centered, reaches the menu-bar floor, and restores the measured visible wall band above it.
+- Kept the Catacombs location stack on the left: `CATACOMBS` with `SELECTIONS CURATED BY COMMUNITY VOTE` beneath it.
+- Kept the entire right plate exclusively for active Search Details; removed the accidental nested curator plate/search-text collision introduced in v238.
+- Aligned the temporary Theme/Emoji search-state test controls with the left edge of the Entrance location stack.
+- Made the Catacombs location title responsive enough to remain on one line in narrower landscape browser rectangles.
+- Museum Foundry glyph calibration/optical-centering math and unrelated views remain unchanged.
+
 # v238 — Catacombs Responsive Entrance
 
 - Builds the Catacombs Entrance as the first implementation of the universal responsive Entrance architecture.

@@ -3001,3 +3001,82 @@ button,
     display:none!important;
   }
 }
+
+
+/* v239 — Catacombs Entrance screenshot correction.
+   Billy's measured reference geometry describes the established Door 1 shape,
+   not a viewport-height-stretched rectangle. Keep the established 230:265 door
+   aspect, anchor it to the menu-bar floor, and preserve the measured 7/51 visible
+   wall band above it. Also restore the booked semantic composition: curator copy
+   under LOCATION on the left; the right plate contains Search Details only.
+   Museum Foundry calibration remains untouched. */
+@media (orientation:landscape){
+  .exhibit-shell.catacombs-context[data-view="door"] .door-placeholder{
+    left:50%;
+    top:13.7254901961%;
+    width:auto;
+    height:86.2745098039%;
+    aspect-ratio:230 / 265;
+    transform:translateX(-50%);
+  }
+  .exhibit-shell.catacombs-context[data-view="door"] .entrance-location-banner{
+    left:3%;
+    top:15%;
+    width:29%;
+    font-size:clamp(22px,3vw,34px);
+    overflow-wrap:normal;
+    white-space:nowrap;
+  }
+  .exhibit-shell.catacombs-context[data-view="door"] .entrance-selections{
+    position:absolute;
+    left:3%;
+    top:36%;
+    width:29%;
+    max-width:none;
+    min-height:0;
+    box-sizing:border-box;
+  }
+  .exhibit-shell.catacombs-context[data-view="door"] .entrance-exhibit-info{
+    left:auto;
+    right:3%;
+    top:15%;
+    width:29%;
+    height:70%;
+  }
+  .exhibit-shell.catacombs-context[data-view="door"] .entrance-search{
+    left:0;
+    right:auto;
+    top:0;
+    width:100%;
+    max-width:none;
+    min-height:100%;
+    max-height:100%;
+  }
+  .exhibit-shell.catacombs-context[data-view="door"] .cat-search-has{
+    left:3%;
+  }
+}
+
+/* v240 — Catacombs Entrance measured door/crop correction.
+   Billy's ruler measurements describe the VISIBLE composition, including the
+   parts of the physical door/wall that were outside the reference viewport.
+   Horizontal reference: 32/16 wall + 22/16 door + 32/16 wall, so the door may
+   occupy at most 22/86 of the available width.
+   Vertical reference: 7/32 visible wall above + 44/32 visible door, while a
+   further 22/32 of the physical door continued below the reference viewport.
+   Therefore the visible doorway is 44:44 (square), NOT the full physical-door
+   ratio.  The responsive facade fits that 7:44 wall/visible-door composition;
+   the unshown lower 22/32 remains conceptual/off-screen rather than stretching
+   the visible black rectangle. Museum Foundry calibration remains untouched. */
+@media (orientation:landscape){
+  .exhibit-shell.catacombs-context[data-view="door"] .door-placeholder{
+    left:50%;
+    right:auto;
+    top:auto;
+    bottom:0;
+    width:min(25.5813953488%, 86.2745098039cqh);
+    height:auto;
+    aspect-ratio:1 / 1;
+    transform:translateX(-50%);
+  }
+}
