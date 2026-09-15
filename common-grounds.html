@@ -11,7 +11,7 @@ body{overflow:hidden}
 main{width:100vw;height:100dvh;display:flex;align-items:center;justify-content:center;position:relative}
 .cg-canvas{position:relative;width:980px;height:300px;background:#e8e3da;border:3px solid #26221d;overflow:hidden;flex:none}
 .zone{position:absolute;border:3px solid #26221d;background:#f7f3eb;display:flex;align-items:center;justify-content:center;text-align:center;font-weight:900;letter-spacing:.05em;z-index:3}
-.donors{left:16px;top:16px;width:92.4px;height:220px;flex-direction:column;padding:8px}
+.donors{left:16px;top:16px;width:132px;height:220px;flex-direction:column;padding:8px}
 .cafe{left:210px;top:16px;width:300px;height:74px;flex-direction:column}
 .bookshop{right:16px;top:48px;width:92px;height:234px;flex-direction:column;padding:6px}
 .bookshop .vertical-title{writing-mode:horizontal-tb;transform:rotate(90deg);transform-origin:center center;font-size:17px;letter-spacing:.08em;white-space:nowrap}
@@ -219,33 +219,10 @@ INSTALLATION</div>
     for(const [el,x,y,anchor] of items){
       if(!el) continue;
       if(anchor==='center'){
-        // v235 — preserve the established responsive placement, with two explicit
-        // Concourse composition adjustments requested after the four-view audit.
-        if(el===donors){
-          // Narrow Donor's Club 30% from the right side. Its former left edge stays
-          // where v234 put it, then moves exactly 4px farther in from the wall.
-          const formerWidth=132;
-          const formerLeft=(x*sx)-(formerWidth/2);
-          el.style.left=`${formerLeft+4}px`;
-          el.style.top=`${y*sy}px`;
-          el.style.right='auto';
-          el.style.transform='translateY(-50%)';
-        }else if(el===cafe){
-          // Move the Café halfway back through its existing empty back-wall space.
-          // Furniture height is fixed; only the geographic gap is halved.
-          const halfHeight=el.offsetHeight/2;
-          const formerCenterY=y*sy;
-          const formerBackGap=Math.max(0,formerCenterY-halfHeight);
-          el.style.left=`${x*sx}px`;
-          el.style.top=`${halfHeight+(formerBackGap/2)}px`;
-          el.style.right='auto';
-          el.style.transform='translate(-50%,-50%)';
-        }else{
-          el.style.left=`${x*sx}px`;
-          el.style.top=`${y*sy}px`;
-          el.style.right='auto';
-          if(el!==installationButton) el.style.transform='translate(-50%,-50%)';
-        }
+        el.style.left=`${x*sx}px`;
+        el.style.top=`${y*sy}px`;
+        el.style.right='auto';
+        if(el!==installationButton) el.style.transform='translate(-50%,-50%)';
       }else{
         el.style.left=`${x*sx}px`;
         el.style.right='auto';

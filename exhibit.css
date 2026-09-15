@@ -1622,7 +1622,12 @@ button{border-radius:0}
 .exhibit-shell.catacombs-mode[data-view="overhead"] .cat-search-has{display:flex;position:absolute}
 /* THUMBNAILS: mirrored against the PAGE PREV/NEXT lower-left anchor.
    Three rows live in the otherwise-empty lower-right edge, outside the brick stack. */
-.exhibit-shell.catacombs-context[data-view="thumbnail"] .cat-search-has{left:1.5%;right:auto;top:50%;bottom:auto;transform:translateY(-50%);flex-direction:column;align-items:flex-start;gap:3px}
+/* v236 — Catacombs temporary search-state controls. The two test selectors
+   share the established left anchor. Theme is centered in the 25–50% band;
+   Emoji is centered in the 50–75% band. */
+.exhibit-shell.catacombs-context[data-view="thumbnail"] .cat-search-has{left:3px;right:auto;bottom:auto;transform:translateY(-50%);flex-direction:column;align-items:flex-start;gap:3px}
+.exhibit-shell.catacombs-context[data-view="thumbnail"] .cat-search-has-theme{top:37.5%}
+.exhibit-shell.catacombs-context[data-view="thumbnail"] .cat-search-has-emoji{top:62.5%}
 /* PARADE: one straight line at the same vertical anchor as PAGE PREV/NEXT. */
 .exhibit-shell.catacombs-mode[data-view="endless"] .cat-search-has{right:1.5%;bottom:12%;flex-direction:row;align-items:center;gap:8px}
 .exhibit-shell.catacombs-mode[data-view="endless"] .cat-search-has legend{margin:0}
@@ -2788,3 +2793,20 @@ button,
   transform:translateX(-50%) scale(var(--fixed-scene-fit,1)) scaleX(-1);
   transform-origin:50% 0;
 }
+
+/* v236 — Catacombs search-state test controls are one persistent two-pair
+   design aid across Catacombs presentations. Both pairs share the 3px left
+   location/status anchor; Theme centers in 25–50%, Emoji in 50–75%. */
+.exhibit-shell.catacombs-context .cat-search-has{
+  display:flex;
+  position:absolute;
+  left:3px;
+  right:auto;
+  bottom:auto;
+  transform:translateY(-50%);
+  flex-direction:column;
+  align-items:flex-start;
+  gap:3px;
+}
+.exhibit-shell.catacombs-context .cat-search-has-theme{top:37.5%}
+.exhibit-shell.catacombs-context .cat-search-has-emoji{top:62.5%}

@@ -51,6 +51,8 @@
   const pageStatus=document.getElementById('pageStatus');
   const catSearchHas=document.getElementById('catSearchHas');
   const catSearchHasRadios=[...document.querySelectorAll('input[name=\"catSearchHas\"]')];
+  const catSearchHasEmoji=document.getElementById('catSearchHasEmoji');
+  const catSearchHasEmojiRadios=[...document.querySelectorAll('input[name=\"catSearchHasEmoji\"]')];
   const endlessSlots=[
     document.getElementById('endlessLeftArt'),
     document.getElementById('endlessCenterArt'),
@@ -130,6 +132,7 @@
   const collectionContext=requestedArea==='collection' || (zazzlyMode && params.get('returnArea')==='collection');
   const catacombsContext=catacombsMode || (zazzlyMode && ['cat-theme','cat-search'].includes(params.get('returnArea')));
   let catSearchHasTheme=requestedArea!=='cat-search' && params.get('returnArea')!=='cat-search';
+  let catSearchHasEmojiPresent=true;
 
   // Authoritative Theme content. Presentation code resolves identities from
   // these definitions instead of maintaining view-specific copies.
@@ -233,7 +236,7 @@
 
   entranceLocation.textContent=entranceKind==='catacombs'?'CATACOMBS':areaLabel;
   entranceEmojis.textContent=entranceEmojiText;
-  entranceEmojis.hidden=['gallery','fyc','salon','catacombs'].includes(entranceKind);
+  entranceEmojis.hidden=['gallery','fyc','salon'].includes(entranceKind) || (entranceKind==='catacombs' && !catSearchHasEmojiPresent);
   entranceRank.hidden=entranceKind!=='geh';
   entranceSearch.hidden=entranceKind!=='catacombs';
   entranceSearchSecondary.hidden=entranceKind!=='catacombs';
@@ -313,6 +316,7 @@
       if(requestedArea==='cat-search' || requestedArea==='cat-theme'){
         thumbnailIdentity.hidden=false;
         thumbnailIdentityPrimary.textContent=entranceEmojiText;
+        thumbnailIdentityPrimary.hidden=!catSearchHasEmojiPresent;
         thumbnailIdentitySecondary.textContent='';
       }else if(requestedArea==='fyc' || requestedArea==='se' || requestedArea==='gallery'){
         thumbnailIdentity.hidden=true;
@@ -573,7 +577,9 @@
       endlessBtn.disabled=(requestedArea==='cat-theme')?false:!catSearchHasTheme;
       thumbnailBtn.disabled=false;
       catSearchHas.hidden=false;
+      catSearchHasEmoji.hidden=false;
       catSearchHasRadios.forEach(radio=>{ radio.checked=(radio.value===(catSearchHasTheme?'theme':'no-theme')); });
+      catSearchHasEmojiRadios.forEach(radio=>{ radio.checked=(radio.value===(catSearchHasEmojiPresent?'emoji':'no-emoji')); });
     }
     syncContextBar();
   }
@@ -619,6 +625,14 @@
     const view=shell.dataset.view;
     if(catSearchHasTheme && ['overhead','left','wall','right'].includes(view)) renderThumbnailPage();
     else if(!catSearchHasTheme && view==='endless') renderThumbnailPage();
+  }
+
+  function setCatSearchHasEmoji(value){
+    if(!catacombsContext) return;
+    catSearchHasEmojiPresent=value==='emoji';
+    catSearchHasEmojiRadios.forEach(radio=>{ radio.checked=(radio.value===(catSearchHasEmojiPresent?'emoji':'no-emoji')); });
+    if(entranceKind==='catacombs') entranceEmojis.hidden=!catSearchHasEmojiPresent;
+    if(thumbnailIdentityPrimary) thumbnailIdentityPrimary.hidden=!catSearchHasEmojiPresent;
   }
 
   function updateRankButtons(){
@@ -1670,6 +1684,7 @@
   pageNextBtn?.addEventListener('click',()=>changePage(1));
 
   catSearchHasRadios.forEach(radio=>radio.addEventListener('change',()=>{ if(radio.checked) setCatSearchHas(radio.value); }));
+  catSearchHasEmojiRadios.forEach(radio=>radio.addEventListener('change',()=>{ if(radio.checked) setCatSearchHasEmoji(radio.value); }));
 
   leftBtn.addEventListener('click',handleLeft);
   rightBtn.addEventListener('click',handleRight);

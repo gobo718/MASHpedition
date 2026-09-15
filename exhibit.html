@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>MASHpedition Shared Artwork Viewer</title>
 <!-- v18: area samples + swipe navigation on Exhibit/Endless + v17 shared viewer -->
-<link rel="stylesheet" href="exhibit.css?v=231">
+<link rel="stylesheet" href="exhibit.css?v=236">
 </head>
 <body>
 <main class="exhibit-shell" id="exhibitShell" data-view="door" aria-label="Exhibit view">
@@ -272,10 +272,15 @@
     </div>
 
 
-    <fieldset class="cat-search-has" id="catSearchHas" aria-label="Catacombs search has" hidden>
+    <fieldset class="cat-search-has cat-search-has-theme" id="catSearchHas" aria-label="Catacombs search has theme" hidden>
       <legend>SEARCH HAS:</legend>
       <label><span>THEME</span><input type="radio" name="catSearchHas" value="theme"></label>
       <label><span>NO THEME</span><input type="radio" name="catSearchHas" value="no-theme"></label>
+    </fieldset>
+    <fieldset class="cat-search-has cat-search-has-emoji" id="catSearchHasEmoji" aria-label="Catacombs search has emoji" hidden>
+      <legend>SEARCH HAS:</legend>
+      <label><span>EMOJI</span><input type="radio" name="catSearchHasEmoji" value="emoji"></label>
+      <label><span>NO EMOJI</span><input type="radio" name="catSearchHasEmoji" value="no-emoji"></label>
     </fieldset>
     <div class="view-label" id="viewLabel">DOOR</div>
   </section>
@@ -294,6 +299,6 @@
     <button type="button" id="displayModeBtn">FULL</button>
   </nav>
 </main>
-<script src="exhibit.js?v=231"></script>
+<script src="exhibit.js?v=236"></script>
 </body>
 </html>
