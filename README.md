@@ -4,7 +4,13 @@ Newest recorded version first. This file combines the preserved pre-v221 README 
 
 ## Recorded Version History
 
-### v234 — Concourse Installation Back-Center Placement
+### v235 — Concourse Café + Donor's Club Composition
+- Moved Common Grounds Café halfway back through its existing empty back-wall space at every responsive height; Café geometry and typography remain undistorted.
+- Narrowed Donor's Club horizontally by exactly 30% (132px → 92.4px).
+- Preserved the v234 Donor's Club left-edge placement, then moved that edge exactly 4 CSS px farther in from the wall; narrowing occurs entirely from the right side.
+- Preserved the locked v234 Installation geometry and all unrelated Concourse geometry.
+
+## v234 — Concourse Installation Back-Center Placement
 - Moved the Installation hendecagon toward the back wall.
 - Horizontally centers the regular hendecagon in the open span between Common Grounds Café and Bookshop.
 - Uses the existing 3 CSS px Entrance-sign-to-black-door clearance as the exact back-wall-to-hendecagon clearance.
