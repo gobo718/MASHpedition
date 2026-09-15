@@ -15,3 +15,6 @@ Built from v221.
 - Lab reserves bar space as Hybrid; final square Machine Screen remains for the Lab geometry pass.
 - Annex reserves bar space without changing protected Installation hendecagon geometry.
 - No Museum Foundry calibration, exhibit plate geometry, exhibit room coordinates, or wording changed.
+
+
+v223 Residence correction: keeps both reduced-height Residence screens plus one real menu-bar-height of clearance below Screen 2, so its bottom can scroll fully above the fixed bar. No typography calibration, protected Residence geometry, or unrelated page behavior changed.

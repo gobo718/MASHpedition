@@ -154,11 +154,13 @@ button{font:inherit;color:inherit;background:var(--panel);border:1px solid var(-
 .word-button{line-height:1;}
 .word-button{padding-top:2px;}
 
-/* v222 — Residence Hybrid viewport contract.
+/* v223 — Residence Hybrid viewport contract.
    One persistent menu bar consumes space once. Both scroll screens use the same
-   reduced height. The right-side Atelier is one square per screen, divided 2x2. */
+   reduced height. The right-side Atelier is one square per screen, divided 2x2.
+   One menu-bar-height remains as real clearance below Screen 2 so its bottom
+   can scroll fully above the persistent bar. */
 :root{--game-bar-height:37px;--res-screen-h:calc(100dvh - var(--game-bar-height))}
-body{height:100dvh;overflow-y:auto;padding-bottom:var(--game-bar-height)}
+body{min-height:100dvh;overflow-y:auto;padding-bottom:var(--game-bar-height)}
 .residence{
   width:100%;
   height:calc(2 * var(--res-screen-h));
