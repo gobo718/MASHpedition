@@ -70,3 +70,6 @@ v230 Parade runtime repair
 - PARADE buttons were correctly wired in v229, but clicking them called renderEndless(), which immediately failed because paintEndlessSlot() did not exist.
 - The restored renderer uses the same result/art numbering rules as Thumbnail View and preserves Zazzly/emoji-pair art labels.
 - No menu order, typography calibration, plate geometry, or unrelated layout behavior changed.
+
+
+v231: PARADE view switch is now committed before result-card painting; Parade slots/status are null-safe. Both exhibit CSS and JS cache keys bumped to 231.

@@ -1059,19 +1059,22 @@
       return;
     }
 
+    // v231: enter PARADE first. Rendering its three result cards must never be
+    // able to prevent the view switch itself.
+    setView('endless');
     endlessIndex=Math.max(0,Math.min(genericResultCount-1,endlessIndex));
-    paintEndlessSlot(endlessSlots[0],endlessIndex-1);
-    paintEndlessSlot(endlessSlots[1],endlessIndex);
-    paintEndlessSlot(endlessSlots[2],endlessIndex+1);
+    endlessSlots.forEach((slot,offset)=>{
+      if(slot) paintEndlessSlot(slot,endlessIndex+offset-1);
+    });
 
     const loadedPage=Math.floor(endlessIndex/PAGE_SIZE);
     const loadedStart=loadedPage*PAGE_SIZE;
     const loadedEnd=Math.min(genericResultCount,loadedStart+PAGE_SIZE);
-    endlessStatus.textContent=requestedArea==='se'
-      ? `${areaLabel} · CURRENT SELECTION`
-      : `${areaLabel} · RESULT ${endlessIndex+1} OF ${genericResultCount} · LOADED ${loadedStart+1}–${loadedEnd}`;
-
-    setView('endless');
+    if(endlessStatus){
+      endlessStatus.textContent=requestedArea==='se'
+        ? `${areaLabel} · CURRENT SELECTION`
+        : `${areaLabel} · RESULT ${endlessIndex+1} OF ${genericResultCount} · LOADED ${loadedStart+1}–${loadedEnd}`;
+    }
   }
 
   function setRank(rank){
