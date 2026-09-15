@@ -2607,27 +2607,13 @@ button,
 .exhibit-shell .entrance-selections > span{
   text-align:center;
 }
-/* FYC wall lettering is intentionally NOT the Museum Foundry SmallCaps plate language. */
-.exhibit-shell[data-area="fyc"][data-view="door"] .entrance-location-banner,
-.exhibit-shell[data-area="fyc"][data-view="door"] .entrance-selections{
-  font-family:Georgia,'Times New Roman',serif;
-  font-variant:normal;
-  letter-spacing:0;
-  text-transform:none;
-}
-.exhibit-shell[data-area="fyc"][data-view="door"] .entrance-location-banner{
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-}
-.exhibit-shell[data-area="fyc"][data-view="door"] .entrance-location-banner .museum-plate-text{
-  top:0;
-}
+/* v227 — FYC typography regression repair.
+   Restore FYC Entrance to the established Museum Foundry museum-signage system.
+   Existing plate/door geometry and wording remain unchanged. */
 .exhibit-shell[data-area="fyc"][data-view="door"] .entrance-selections{
   max-width:360px;
-  font-size:22px;
+  font-size:18px;
   line-height:1.12;
-  font-weight:700;
 }
 
 /* v171 — canonical corrections from the full audit. No screenshot-derived offsets. */

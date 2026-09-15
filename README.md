@@ -43,3 +43,6 @@ v226 universal menu ordering pass
 - PAGE PREV/PAGE NEXT labels are normalized to PREV/NEXT.
 - FULL/BROWSER remains one state-dependent final control.
 - No typography calibration, plate geometry, scene geometry, or unrelated behavior changed.
+
+
+v227 FYC typography regression repair: removed the FYC-only Georgia override and restored the established Museum Foundry/SmallCaps signage treatment to FYC Entrance identity and supporting copy. Wording, door geometry, plate geometry, menu geometry, and unrelated behavior are unchanged.
