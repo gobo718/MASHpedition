@@ -4,6 +4,15 @@ Newest recorded version first. This file combines the preserved pre-v221 README 
 
 ## Recorded Version History
 
+### v233 Concourse rename + Hybrid responsive geometry
+- ANNEX is now canonically CONCOURSE. Common Grounds remains specifically the Café within the Concourse.
+- Museum Map destination label now reads CONCOURSE; Installation returns to CONCOURSE; the Café is labeled COMMON GROUNDS CAFÉ.
+- Replaces v224 whole-map uniform scaling with Hybrid geometry: the Concourse canvas fills the entire usable viewport above the persistent menu bar.
+- Destination boxes, typography, plates, and the Installation are not non-uniformly stretched. Instead, their established centers/edges are remapped across the available rectangle so the geography/negative space conforms.
+- The Installation hendecagon is regenerated as a regular hendecagon at the responsive location using a single uniform radius scale.
+- At the original 980×300 reference size, established positions reproduce the prior geometry exactly.
+- Historical README entries retain the word Annex where that was the name at the time; history is not rewritten.
+
 ### v231: PARADE view switch is now committed before result-card painting; Parade slots/status are null-safe. Both exhibit CSS and JS cache keys bumped to 231.
 
 ### v230 Parade runtime repair

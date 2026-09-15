@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Common Grounds Café</title>
+<title>Concourse</title>
 <style>
 *{box-sizing:border-box}
 html,body{margin:0;width:100%;height:100%;font-family:Arial,sans-serif;background:#f2f2f2;color:#111}
@@ -101,8 +101,10 @@ main{width:100vw;height:100dvh;display:flex;align-items:center;justify-content:c
 }
 .museum{position:fixed;left:12px;bottom:12px;border:1px solid #555;background:#fff;color:#111;text-decoration:none;font-weight:700;padding:10px 14px}
 .cg-canvas{
-  transform:scale(var(--annex-fit,1));
-  transform-origin:center center;
+  /* v233 — Concourse Hybrid: the map itself fills the usable viewport.
+     Individual destinations and the Installation remain undistorted. */
+  width:100%;
+  height:100%;
 }
 
 @font-face{font-family:'Museum Foundry';src:url('MuseumFoundry.otf?v=146') format('opentype');font-style:normal;font-weight:400;font-display:swap;}
@@ -119,9 +121,10 @@ main{width:100vw;height:100dvh;display:flex;align-items:center;justify-content:c
 
 </style>
 <link rel="stylesheet" href="game-bar.css?v=226">
-<style>/* v224 — Annex Hybrid viewport fit.
-   The persistent menu bar owns the bottom strip. The complete Annex map fits into
-   the remaining viewport; uniform scaling preserves the Installation hendecagon. */
+<style>/* v233 — Concourse Hybrid responsive geometry.
+   The persistent menu bar owns the bottom strip. The Concourse geography expands
+   to the full remaining rectangle; destinations, typography, plates, and the
+   Installation hendecagon are not non-uniformly stretched. */
 body{padding-bottom:0;}
 main{
   width:100vw;
@@ -134,10 +137,10 @@ main{
 </head>
 <body>
 <main>
-  <section class="cg-canvas" aria-label="Common Grounds aerial room prototype">
+  <section class="cg-canvas" aria-label="Concourse aerial room prototype">
     <div class="zone donors">DONOR'S CLUB
     </div>
-    <div class="zone cafe">CAFÉ</div>
+    <div class="zone cafe">COMMON GROUNDS CAFÉ</div>
     <div class="zone bookshop"><span class="vertical-title">BOOKSHOP</span></div>
 
     <svg class="hendec-svg" viewBox="0 0 980 300" aria-hidden="true">
@@ -152,7 +155,7 @@ main{
 <div id="installationMap" class="map-overlay" aria-hidden="true">
   <div class="map-card" role="dialog" aria-modal="true" aria-label="Installation map">
     <button id="mapClose" class="map-close" aria-label="Close map">×</button>
-    <div class="map-title">COMMON GROUNDS CAFÉ
+    <div class="map-title">CONCOURSE
 INSTALLATION</div>
     <svg class="large-map-svg" viewBox="0 0 980 620" aria-label="20 artwork Installation map"><g id="largeHendecagon"></g></svg>
   </div>
@@ -176,26 +179,74 @@ INSTALLATION</div>
       <button id="installationLeft" type="button">LEFT</button>
       <button id="installationRight" type="button">RIGHT</button>
       <button id="installationMapBack" type="button">MAP</button>
-      <button id="installationExit" type="button">COMMON GROUNDS</button>
+      <button id="installationExit" type="button">CONCOURSE</button>
     </nav>
   </section>
 </div>
 
 <script>
 (()=>{
-  const ANNEX_WIDTH=980;
-  const ANNEX_HEIGHT=300;
+  const BASE_WIDTH=980;
+  const BASE_HEIGHT=300;
   const canvas=document.querySelector('.cg-canvas');
   const main=document.querySelector('main');
-  function syncAnnexFit(){
+  const donors=document.querySelector('.donors');
+  const cafe=document.querySelector('.cafe');
+  const bookshop=document.querySelector('.bookshop');
+  const installationButton=document.getElementById('hendecMapButton');
+  const frontDoor=document.querySelector('.front-door');
+  const frontDoorLabel=document.querySelector('.front-door-label');
+  const hendecSvg=document.querySelector('.hendec-svg');
+
+  // Reference positions are the established 980x300 Concourse composition.
+  // We remap centers/edges into the available rectangle while preserving each
+  // object's own width/height. This stretches geography, not the furniture.
+  const items=[
+    [donors,82,126,'center'],
+    [cafe,360,53,'center'],
+    [bookshop,918,165,'center'],
+    [installationButton,666,150,'center'],
+    [frontDoor,360,300,'bottom'],
+    [frontDoorLabel,360,266,'bottom']
+  ];
+
+  function syncConcourseGeometry(){
     if(!canvas || !main) return;
-    const fit=Math.min(1,main.clientWidth/ANNEX_WIDTH,main.clientHeight/ANNEX_HEIGHT);
-    canvas.style.setProperty('--annex-fit',String(fit));
+    const w=main.clientWidth;
+    const h=main.clientHeight;
+    const sx=w/BASE_WIDTH;
+    const sy=h/BASE_HEIGHT;
+
+    for(const [el,x,y,anchor] of items){
+      if(!el) continue;
+      if(anchor==='center'){
+        el.style.left=`${x*sx}px`;
+        el.style.top=`${y*sy}px`;
+        el.style.right='auto';
+        if(el!==installationButton) el.style.transform='translate(-50%,-50%)';
+      }else{
+        el.style.left=`${x*sx}px`;
+        el.style.right='auto';
+        el.style.top='auto';
+        el.style.bottom=`${Math.max(0,(BASE_HEIGHT-y)*sy)}px`;
+        if(el===frontDoorLabel) el.style.transform='translateX(-50%)';
+        else el.style.transform='translateX(-50%)';
+      }
+    }
+
+    // The SVG occupies the new rectangle. drawRoom() reads these dimensions and
+    // constructs a regular (never stretched) hendecagon at the remapped center.
+    hendecSvg.setAttribute('viewBox',`0 0 ${w} ${h}`);
+    hendecSvg.style.width=`${w}px`;
+    hendecSvg.style.height=`${h}px`;
+    window.dispatchEvent(new CustomEvent('concoursegeometrychange',{detail:{width:w,height:h,sx,sy}}));
   }
-  window.addEventListener('resize',syncAnnexFit,{passive:true});
-  document.addEventListener('fullscreenchange',syncAnnexFit);
-  document.addEventListener('webkitfullscreenchange',syncAnnexFit);
-  syncAnnexFit();
+
+  window.addEventListener('resize',syncConcourseGeometry,{passive:true});
+  document.addEventListener('fullscreenchange',syncConcourseGeometry);
+  document.addEventListener('webkitfullscreenchange',syncConcourseGeometry);
+  window.addEventListener('mashpeditionviewportchange',syncConcourseGeometry);
+  requestAnimationFrame(syncConcourseGeometry);
 })();
 </script>
 <script>
@@ -204,7 +255,14 @@ INSTALLATION</div>
   const n=11, entranceSide=7, start=-Math.PI/2;
   const points=(cx,cy,r)=>Array.from({length:n},(_,i)=>{const a=start+i*2*Math.PI/n;return{x:cx+r*Math.cos(a),y:cy+r*Math.sin(a)}});
   function drawRoom(){
-    const g=document.getElementById('hendecagonGeometry'), pts=points(666,150,112);
+    const g=document.getElementById('hendecagonGeometry');
+    const svg=document.querySelector('.hendec-svg');
+    const w=svg.clientWidth||980,h=svg.clientHeight||300;
+    const sx=w/980,sy=h/300;
+    const cx=666*sx,cy=150*sy;
+    const r=112*Math.min(sx,sy);
+    const pts=points(cx,cy,r);
+    g.replaceChildren();
     const poly=document.createElementNS(svgNS,'polygon');
     poly.setAttribute('points',pts.map(p=>`${p.x},${p.y}`).join(' ')); poly.setAttribute('class','hendec-fill'); g.appendChild(poly);
     for(let i=0;i<n;i++){ if(i===entranceSide) continue; const a=pts[i],b=pts[(i+1)%n]; const line=document.createElementNS(svgNS,'line');
@@ -221,6 +279,7 @@ INSTALLATION</div>
     }
   }
   drawRoom(); drawLarge();
+  window.addEventListener('concoursegeometrychange',drawRoom);
   const overlay=document.getElementById('installationMap'),button=document.getElementById('hendecMapButton'),close=document.getElementById('mapClose');
   const openMap=()=>{overlay.classList.add('open');overlay.setAttribute('aria-hidden','false');close.focus()};
   const closeMap=()=>{overlay.classList.remove('open');overlay.setAttribute('aria-hidden','true');button.focus()};
@@ -296,7 +355,7 @@ INSTALLATION</div>
   document.addEventListener('keydown',e=>{if(e.key==='Escape'){if(iv.classList.contains('open'))closeInstallation();else if(overlay.classList.contains('open'))closeMap()}if(iv.classList.contains('open')&&e.key==='ArrowLeft')document.getElementById('installationLeft').click();if(iv.classList.contains('open')&&e.key==='ArrowRight')document.getElementById('installationRight').click();});
 })();
 </script>
-<nav class="game-menu-bar" aria-label="Annex menu"><a href="index.html">MUSEUM</a><button type="button" data-display-mode>FULL</button></nav>
+<nav class="game-menu-bar" aria-label="Concourse menu"><a href="index.html">MUSEUM</a><button type="button" data-display-mode>FULL</button></nav>
 <script src="game-bar.js?v=226"></script>
 </body>
 </html>
