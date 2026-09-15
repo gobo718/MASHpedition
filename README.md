@@ -18,3 +18,11 @@ Built from v221.
 
 
 v223 Residence correction: keeps both reduced-height Residence screens plus one real menu-bar-height of clearance below Screen 2, so its bottom can scroll fully above the fixed bar. No typography calibration, protected Residence geometry, or unrelated page behavior changed.
+
+
+v224 Annex map correction
+- Fits the complete Annex map into the usable viewport above the persistent menu bar.
+- Fit uses both available width and available height.
+- Uniform map scaling preserves the Installation as a mathematically regular hendecagon.
+- Browser/fullscreen changes recalculate the fit.
+- No Museum Foundry calibration, Annex wording, plate geometry, Installation player geometry, or unrelated page behavior changed.

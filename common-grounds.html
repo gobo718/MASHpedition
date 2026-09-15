@@ -100,7 +100,10 @@ main{width:100vw;height:100dvh;display:flex;align-items:center;justify-content:c
   display:flex;align-items:center;justify-content:center;text-align:center;
 }
 .museum{position:fixed;left:12px;bottom:12px;border:1px solid #555;background:#fff;color:#111;text-decoration:none;font-weight:700;padding:10px 14px}
-@media(max-width:1000px){.cg-canvas{transform:scale(calc((100vw - 12px)/980));transform-origin:center center}}
+.cg-canvas{
+  transform:scale(var(--annex-fit,1));
+  transform-origin:center center;
+}
 
 @font-face{font-family:'Museum Foundry';src:url('MuseumFoundry.otf?v=146') format('opentype');font-style:normal;font-weight:400;font-display:swap;}
 .zone,.vertical-title,.front-door-label,.map-title{
@@ -115,9 +118,17 @@ main{width:100vw;height:100dvh;display:flex;align-items:center;justify-content:c
 
 
 </style>
-<link rel="stylesheet" href="game-bar.css?v=222">
-<style>/* v222 — Annex Hybrid: reserve the persistent menu bar without altering the regular Installation hendecagon geometry. */
-body{padding-bottom:var(--game-bar-height);}
+<link rel="stylesheet" href="game-bar.css?v=224">
+<style>/* v224 — Annex Hybrid viewport fit.
+   The persistent menu bar owns the bottom strip. The complete Annex map fits into
+   the remaining viewport; uniform scaling preserves the Installation hendecagon. */
+body{padding-bottom:0;}
+main{
+  width:100vw;
+  height:calc(100dvh - var(--game-bar-height));
+  min-height:0;
+  overflow:hidden;
+}
 .museum{display:none!important;}
 </style>
 </head>
@@ -170,6 +181,23 @@ INSTALLATION</div>
   </section>
 </div>
 
+<script>
+(()=>{
+  const ANNEX_WIDTH=980;
+  const ANNEX_HEIGHT=300;
+  const canvas=document.querySelector('.cg-canvas');
+  const main=document.querySelector('main');
+  function syncAnnexFit(){
+    if(!canvas || !main) return;
+    const fit=Math.min(1,main.clientWidth/ANNEX_WIDTH,main.clientHeight/ANNEX_HEIGHT);
+    canvas.style.setProperty('--annex-fit',String(fit));
+  }
+  window.addEventListener('resize',syncAnnexFit,{passive:true});
+  document.addEventListener('fullscreenchange',syncAnnexFit);
+  document.addEventListener('webkitfullscreenchange',syncAnnexFit);
+  syncAnnexFit();
+})();
+</script>
 <script>
 (()=>{
   const svgNS='http://www.w3.org/2000/svg';
@@ -269,6 +297,6 @@ INSTALLATION</div>
 })();
 </script>
 <nav class="game-menu-bar" aria-label="Annex menu"><a href="index.html">MUSEUM</a><button type="button" data-display-mode>FULL</button></nav>
-<script src="game-bar.js?v=222"></script>
+<script src="game-bar.js?v=224"></script>
 </body>
 </html>
