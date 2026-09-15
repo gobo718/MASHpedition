@@ -1,5 +1,59 @@
-MASHpedition v222 — Universal Menu Bar + Layout-Class Foundation
+# MASHpedition — Cumulative README / Version History
 
+Newest recorded version first. This file combines the preserved pre-v221 README with the v220–v231 README material. Historical text is preserved rather than reconstructed; versions that never had a README entry are not invented here.
+
+## Recorded Version History
+
+### v231: PARADE view switch is now committed before result-card painting; Parade slots/status are null-safe. Both exhibit CSS and JS cache keys bumped to 231.
+
+### v230 Parade runtime repair
+- Restored the missing paintEndlessSlot() renderer used by the shared Exhibit viewer.
+- PARADE buttons were correctly wired in v229, but clicking them called renderEndless(), which immediately failed because paintEndlessSlot() did not exist.
+- The restored renderer uses the same result/art numbering rules as Thumbnail View and preserves Zazzly/emoji-pair art labels.
+- No menu order, typography calibration, plate geometry, or unrelated layout behavior changed.
+
+### v229 Parade rename + repair
+- ENDLESS is renamed to PARADE in the user-facing view/menu vocabulary.
+- Existing internal `endless` state keys/classes are intentionally retained to avoid a risky unrelated refactor.
+- Integrated Exhibit viewer now labels the sequential feed PARADE / PARADE VIEW and accepts `start=parade` while retaining legacy `start=endless` compatibility.
+- Standalone sequential-feed page is retitled PARADE. THUMBNAILS and PARADE are now explicit mode buttons rather than one ambiguous toggle.
+- Standalone Thumbnail mode hides LEFT/RIGHT, matching the universal Thumbnail-menu rule; Parade restores LEFT/RIGHT.
+- No typography calibration, plate geometry, artwork geometry, or unrelated page behavior changed.
+
+### v228 FYC runtime repair
+- Fixes the v227 startup exception caused by painting lowercase FYC Museum Foundry glyphs before the glyph calibration sets were initialized.
+- Defers only the FYC supporting-copy paint until after those existing calibration tables/functions are ready.
+- Restores execution of the remainder of exhibit.js, including LEFT/RIGHT/ENTRANCE/AERIAL/EXHIBIT/THUMBNAILS/ENDLESS/FULL handlers.
+- MUSEUM remained functional because it is a normal link and did not depend on the aborted JS.
+- No Museum Foundry calibration values, plates, door geometry, menu geometry, wording, or unrelated behavior changed.
+
+### v227 FYC typography regression repair: removed the FYC-only Georgia override and restored the established Museum Foundry/SmallCaps signage treatment to FYC Entrance identity and supporting copy. Wording, door geometry, plate geometry, menu geometry, and unrelated behavior are unchanged.
+
+### v226 universal menu ordering pass
+- Canonical relative order: LEFT, RIGHT, PREV, NEXT, ENTRANCE, EXHIBIT, THUMBNAILS, ENDLESS, SUBLOCATION, MUSEUM, FULL/BROWSER.
+- Absent controls simply disappear; remaining controls keep canonical relative order.
+- Existing AERIAL is preserved (not removed) and remains adjacent to the Exhibit navigation group.
+- Thumbnail contexts continue to hide LEFT/RIGHT.
+- PAGE PREV/PAGE NEXT labels are normalized to PREV/NEXT.
+- FULL/BROWSER remains one state-dependent final control.
+- No typography calibration, plate geometry, scene geometry, or unrelated behavior changed.
+
+### v225 Thumbnail menu correction
+- Removes LEFT and RIGHT from the context-sensitive menu in every thumbnail view.
+- Thumbnail pagination remains PAGE PREV / PAGE NEXT.
+- LEFT / RIGHT behavior outside thumbnail views is unchanged.
+- No layout, typography, plate, Annex, or Museum Foundry changes.
+
+### v224 Annex map correction
+- Fits the complete Annex map into the usable viewport above the persistent menu bar.
+- Fit uses both available width and available height.
+- Uniform map scaling preserves the Installation as a mathematically regular hendecagon.
+- Browser/fullscreen changes recalculate the fit.
+- No Museum Foundry calibration, Annex wording, plate geometry, Installation player geometry, or unrelated page behavior changed.
+
+### v223 Residence correction: keeps both reduced-height Residence screens plus one real menu-bar-height of clearance below Screen 2, so its bottom can scroll fully above the fixed bar. No typography calibration, protected Residence geometry, or unrelated page behavior changed.
+
+### MASHpedition v222 — Universal Menu Bar + Layout-Class Foundation
 Built from v221.
 
 - Persistent bottom menu bar now exists on every current game page/system.
@@ -16,60 +70,548 @@ Built from v221.
 - Annex reserves bar space without changing protected Installation hendecagon geometry.
 - No Museum Foundry calibration, exhibit plate geometry, exhibit room coordinates, or wording changed.
 
+### MASHpedition v221 — Dynamic Game Viewport + Context Bar foundation
+- Fixed 980 × 300 museum scenes now fit by BOTH available viewport width and height.
+- Added FULL / BROWSER toggle using the browser Fullscreen API.
+- Moved MUSEUM into the existing bottom game bar.
+- Moved applicable PAGE PREV / PAGE NEXT controls into that same bar.
+- The bar is context-sensitive: pagination controls appear only when applicable; existing capability controls retain their established visibility rules.
+- Fixed the right-corner mirror so whole-scene viewport fitting is preserved there too.
+- Removed the obsolete JS that positioned pagination relative to the old floating MUSEUM button.
+- No Museum Foundry calibration, plate geometry, room coordinates, or content wording changed.
 
-v223 Residence correction: keeps both reduced-height Residence screens plus one real menu-bar-height of clearance below Screen 2, so its bottom can scroll fully above the fixed bar. No typography calibration, protected Residence geometry, or unrelated page behavior changed.
+### MASHpedition v220 — Fixed 980px Scene Fit
+Targeted fix only. The locked 980px Entrance / Left / Right / Wall / Aerial canvases now scale as a unit when the actual viewport is narrower than 980 CSS px. At the measured Chrome viewport of 821px the scale is exactly 821/980 = 0.837755..., the inverse of the observed 980/821 = 1.193666... chonky enlargement. Internal 980px geometry, plates, typography, Museum Foundry optical calibration, thumbnails, controls, and all unrelated behavior are unchanged.
+
+Includes the v219 viewport diagnostic page.
+
+### v219 diagnostic-only: added viewport-diagnostic.html and cache-bumped exhibit.html asset query strings to v219. No game CSS/JS/geometry/typography changes.
+
+### v173 — Collection Thumbnail information plate targeted fix
+- Changed only the Collection Thumbnail upper-left information plate sizing/centering.
+- Width is 116px, derived from the existing 11-thumbnail layout's own 116px side reservation; no screenshot-estimated measurement.
+- Existing Museum Foundry glyph/tier/optical calibration is untouched.
+- No thumbnail, navigation, emoji, caption, or other screen geometry changed.
+
+### v172 emergency calibration restoration
+Restored every deliberate +2px typography calibration that v171 incorrectly removed. No other v171 fixes were reverted. Existing tuned typography offsets are protected design values; no new screenshot-derived offsets were introduced.
+
+### v169 follow-up notes
+- Common Grounds needs a smarter persistent bottom navigation bar; eliminate floating navigation buttons rather than adding more of them.
+- Common Grounds café zone is expected to become an Annex-type area containing the café; final area name remains TBD.
+- Common Grounds Installation hendecagon will later keep its size/orientation but move farther toward the back; entrance will be enlarged.
+- Catacombs entrance: remove the placeholder DETAILS OF SEARCH box; align the curator/tagline top with the CATACOMBS plate and later provide substantial search-detail plate space on both sides beneath. Exact search-detail fields remain TBD.
+
+### v85 — Zazzly 12-art room prototype
+- Adds `area=zazzly` as a compact premium room using only the approved Exhibit 1 90-degree geometry.
+- Physical circuit: south `12 | Door 4 | 1`; west `2–5`; north `6 | Door 5 | 7`; east `8–11`.
+- Corner geometry is copied from Exhibit 1 at the four transitions (1/2, 5/6, 7/8, 11/12); no new perspective math was introduced.
+- Zazzly artwork labels occupy global 67–78.
+- Door 4 in Room 3 now opens the Zazzly room. Door 5 is present as the balanced north door but has no destination yet.
+- Aerial/Thumbnails/Endless are intentionally withheld for this first room-only build rather than showing layouts that have not yet been designed for the 12-art room.
+
+### v81 — Catacombs SEARCH HAS placement repair
+- Explicitly positions SEARCH HAS controls against established viewer anchors.
+- Exhibit selector moved above bottom controls to prevent overlap.
+- Thumbnail selector mirrors PAGE PREV/NEXT in the lower-right blank edge.
+- Endless selector uses the same lower baseline as page navigation.
+- Aerial selector is compact and aligned to the center identity line.
+- No approved room/art geometry changed.
+
+### v74
+- Corrected the Installation entrance wrap state: the entrance is one continuous black architectural side, not a 230px black artwork square.
+- Black now fills the full 300px scene height from x=418.501px through the corner at x=713.501px in the `20 · entrance · 1 angled` state.
+- Preserves v73 swipe navigation.
+
+### v73
+- Enabled horizontal swipe navigation in the Installation player view.
+- Swipe left advances exactly one Installation state; swipe right moves back exactly one state.
+- Uses a 42px minimum horizontal gesture and horizontal-dominance check to avoid accidental vertical swipes.
+- Preserves v72 entrance/geometry unchanged.
+
+### v69 Installation geometry QA
+- Re-derived Installation perspective from one base size and one gap unit.
+- Complete side frame mathematically fits inside 300px scene.
+- Clockwise/counterclockwise are exact mirrored constructions.
+- Navigation advances one artwork index per click.
+
+### v68 Installation repair: one-artwork stepping, fixed clockwise/counterclockwise mirrored perception, restored approved Exhibit corner spacing, full four-edge perspective frames, and LEFT/RIGHT grouped at bottom-left.
+
+### - v65: Installation artwork numbering now starts at the entrance and proceeds clockwise from 1 through 20.
+
+### v64 Common Grounds Installation map
+- Moved the INSTALLATION title to the top-left of the expanded map.
+- Expanded the Installation hendecagon vertically to use the previously wasted top space.
+- Preserved the regular 11-sided geometry, open entrance side, and 20 artwork positions.
+
+### v58 — Emoji-pair Main-room location labels
+- Corrects v57 scope: the booked `01 - Celebration` through `22 - Joy` names belong to the Main room's numbered locations anywhere an art-space location is defined by one shared emoji pair, not only the Exhibit presentation.
+- Applies the names to Collection Main-room thumbnails/artwork detail as well as the already-labeled Exhibit/Aerial surfaces and GEH Main-room surfaces.
+- Search/non-pair spaces remain result-labeled. Catacombs remains excluded from shared-pair naming.
+- Existing rank suffixes remain and use `1st`, `2nd`, `3rd`, etc. casing.
+- No geometry changed.
+
+### v56 — Catacombs entrance top alignment
+- Aligns the top of the right-side search block with the top of the left CATACOMBS text.
+- Position is calculated from the established 980×300 entrance geometry, not estimated from the screenshot.
+- No other entrance, thumbnail, room, or control geometry changed.
+
+### v55 — Adaptive thumbnail invocation fix
+- Fixes adaptive brick packing running while Thumbnail view was still hidden and therefore measuring a 0×0 grid.
+- Thumbnail view is now activated first, then the optimizer measures the real canvas and applies the chosen brick composition.
+- No optimizer rules or approved 22-item 7/8/7 geometry changed.
+
+### v54 — Adaptive brick thumbnails
+- Partial thumbnail pages (<22) now test every valid 1–3-row brick composition.
+- Adjacent rows cannot contain the same number of thumbnails.
+- The winning composition is the one that permits the largest square thumbnails in the existing thumbnail canvas.
+- Each row and the complete stack are centered.
+- The established 22-thumbnail 7 / 8 / 7 layout is unchanged.
+
+### v53 — Catacombs entrance correction
+- Catacombs Entrance no longer displays an emoji pair.
+- Removed the stray upper-left DETAILS OF SEARCH element that leaked into Entrance.
+- Entrance retains only the established right-side search details plus Selections Curated by Community Vote.
+- Catacombs Thumbnails retain text-only DETAILS OF SEARCH with no emoji/Theme placeholder.
+- Other v52 art-space cleanup remains unchanged.
+
+### v52 — Verified internal identity cleanup
+- Force-hides the actual legacy emoji/Theme block in Thumbnails and Endless for FYC, Salon Eclectique, and Private Gallery.
+- Catacombs hides the legacy emoji/Theme children and uses dedicated DETAILS OF SEARCH context.
+- Raises special entrance supporting copy on one shared high anchor.
+- GEH and Collection identity behavior untouched.
+
+### v51 — Art-space internal presentation cleanup
+- Private Gallery entrance copy centered, raised, enlarged, and split into The Works of / [USERNAME].
+- Removed presentation-level emoji/Theme identity from FYC, Salon Eclectique, and Private Gallery Endless/Thumbnails.
+- Catacombs non-Exhibit views remove generic emoji/Theme identity; Thumbnails uses smaller DETAILS OF SEARCH and Endless uses search details.
+- LEFT/RIGHT remain directional controls, not layouts.
+- Approved viewer geometry remains unchanged.
+
+### v50 — Art-space presentation cleanup
+- GEH selected rank persists when returning to ENTRANCE; selecting 6TH renders 6TH PLACE.
+- Removed presentation-level Theme from normal viewer identity. Theme is set-level context only when Theme defines the result set (currently Theme-filtered Catacombs; Common Grounds Theme Top 20 will use the same rule when built).
+- Presentation-level emoji pair remains only where the whole set shares the pair.
+- For Your Consideration and Private Gallery no longer show a false shared emoji/Theme identity in Endless/Thumbnails.
+- Salon Eclectique Endless/Thumbnails use docent name plus a deliberately vague selection description instead of emoji/Theme.
+- Salon initial sample is 3–22 selections and avoids announcing a closed/final total, allowing the docent to offer more later.
+- Approved room/viewer geometry preserved.
+
+### v48 — Art-Space Entrance Completion — 2026-09-10
+- Preserves the valid v47 Collection and Common Grounds map refinements above.
+- Restores the GEH Exhibit-room side rank controls to their established left `1ST–5TH` / right `6TH–10TH` arrangement.
+- GEH Thumbnail rank selector keeps its established 2-column × 5-row geometry but reads row-major: `1ST 2ND`, `3RD 4TH`, `5TH 6TH`, `7TH 8TH`, `9TH 10TH`.
+- FOR YOUR CONSIDERATION entrance: `Freshly Painted Selections Begging for Your Opinion`; no entrance emoji pair, rank, or community-curated line.
+- PRIVATE GALLERY entrance: `The Works of [USERNAME]`; no entrance emoji pair or curator line.
+- SALON ECLECTIQUE entrance: `Bespoke selections tailored to your requests, presented via curation by a personal docent.`; no entrance emoji pair.
+- Standard emoji-pair Exhibits use the exhibit-wide entrance emoji pair consistently for artwork display; mixed-pair art spaces are excluded from that rule.
+- Entrance rule: show an emoji pair only when every image in that Exhibit shares that pair.
+
+### v47 — Entrance Final Refinements — 2026-09-10
+- Collection entrance curator block moved down 8px without moving the location or emoji pair.
+- Collection curator copy split into two lines: `Selections Curated by` followed by the dynamic resident username.
+- Museum Hub `COMMON GROUNDS CAFÉ` label centered within its existing map box without changing the box geometry or museum geography.
+- A GEH rank-selector edit in v47 targeted the wrong rank controls; that specific rank-control change is not authoritative and was corrected in v48.
+
+### v46 (2026-09-10): Entrance emoji-only refinement. Raised emoji pair 8px while preserving the existing location, rank, and curator-line positions. Removed clipping on the entrance information container so native emoji glyphs are not cropped across their tops. No viewer geometry changes elsewhere.
+
+### v45 entrance alignment refinement (2026-09-10):
+- Raised the left location-name banner using the internal 980x300 entrance coordinate system.
+- Right-side emoji block now starts at the same internal Y coordinate as the location banner.
+- Increased vertical separation between emoji, rank/search detail, and selections message.
+- No viewer geometry or non-Entrance behavior changed.
+
+### v44 — Exhibit Entrance Facades
+- Replaces the temporary Door-only ENTRANCE view with the first shared exterior Exhibit facade.
+- Geometry is calculated from the existing authoritative 980x300 scene and 230px Door 1 at x=375; no screenshot measurements used.
+- Left of Door 1: large location banner. Right of Door 1: large emoji pair plus location-specific supporting copy.
+- GEH: ordinal PLACE + “Selections Curated by Community Vote”.
+- Collection: “Selections Curated by [resident username]”.
+- Catacombs: search details + “Selections Curated by Community Vote”.
+- No single Theme appears on the entrance; Themes represent individual selections inside the Exhibit.
+- Query samples: `?area=geh&rank=1&emojis=😀%20😎`, `?area=collection&resident=Creator01&emojis=🎭%20✨`, `?area=cat-search&search=SEARCH%20DETAILS&emojis=👻%20🌙`.
+
+### v43 — Museum Geography + Exhibit Entrance Template — 2026-09-10
+- Museum Hub left top-band label changed from `CATACOMBS · THEME` to player-facing `CATACOMBS`; its existing `cat-theme` route is preserved.
+- Museum Hub right top-band slot changed from `CATACOMBS · SEARCH` to `COMMON GROUNDS CAFÉ`.
+- `common-grounds.html` is a neutral Common Grounds destination shell only. It does **not** use Exhibit/Aerial and does not invent the still-TBD Installation geometry.
+- `exhibit-entrance.html` is a separate, generic entrance-template shell for exhibit-capable museum destinations. It is **not** the Common Grounds entrance and is intentionally not wired into the Museum Hub yet.
+- Existing v42 Exhibit/Aerial/Thumbnail/Endless viewer files and geometry were not modified.
+
+### Exhibit View v10 — 2026-09-08
+Fast correction pass to separate the exhibit room circuit from the endless-wall browser concept.
+
+What changed:
+- The exhibit room remains the fixed 24-state room circuit with corners and fixed DOOR positions.
+- The room's head-on three-art states are relabeled as FRONT WALL VIEW rather than being treated as a separate endless-wall system.
+- FRONT WALL presentation was corrected to look like three equal artworks hanging on a wall, with more visible wall space around them.
+- Added a separate ENDLESS WALL VIEW prototype on the same surface: no doors, no corners, no wrapping topology, just the repeated 3-art sequence 1/2/3 -> 2/3/4 -> 3/4/5 and so on forever.
+- THUMBNAIL cycles to THUMBNAIL VIEW, then ENDLESS WALL VIEW, then back to the exhibit room.
+- In ENDLESS WALL VIEW, LEFT/RIGHT and swipe move through the repeating 3-art sequence.
+- DOOR from ENDLESS WALL VIEW returns to the exhibit room.
+
+This is a fast structural correction so the two systems stop being conflated.
+
+## v10 — Exhibit vs Endless Wall separation
+
+The earlier build incorrectly conflated the Exhibit room's front-facing camera composition with the separate Endless Wall browsing system. They are now separate surfaces.
+
+### Exhibit View
+- Remains a physical 22-position exhibit room with the existing 24-state camera circuit.
+- It still includes left-corner, front-wall, and right-corner camera positions, including the fixed architectural door positions previously specified.
+- Front-wall camera positions now use three equal, normally sized framed works with visible wall around them.
+- The user-facing label now says EXHIBIT — FRONT WALL so it is not confused with Endless Wall.
+
+### Endless Wall
+- New separate `endless-wall.html` surface.
+- No room topology.
+- No doors.
+- No corners.
+- No dedicated exhibit spots.
+- No wraparound.
+- It simply repeats the Exhibit front-wall visual component forever: 1/2/3, then 2/3/4, then 3/4/5, etc.
+- Horizontal swipe and LEFT/RIGHT controls advance the sequence by one item.
+- Thumbnail View is a moving 22-item browsing window, arranged 7/8/7 with the first and last rows centered.
+- SALON ECLECTIQUE temporarily links to this surface because SALON uses the non-room scrolling-wall family rather than dedicated exhibit-room topology.
+
+---
+
+# Shared Viewing Matrix Restoration — 2026-09-08
+
+The previously established area/view matrix is restored without changing the Museum, Residence, Lab, or Studio geometry.
+
+- Mix A = Thumbnails + Endless Wall
+- Mix B = Exhibit View + Room View + Thumbnails
+- Mix C = Exhibit View + Room View + Thumbnails + Endless Wall
+
+Area routing:
+- Grand Exhibition Halls = Mix B
+- SALON ECLECTIQUE = Mix A
+- For Your Consideration = Mix A
+- Gallery = Mix A
+- Collection = Mix B
+- Catacombs · Theme = Mix A
+- Catacombs · Search (no Theme specified) = Mix C
+
+Rules preserved:
+- Exhibit View is only available where the result can populate Theme spots.
+- GEH 1ST / 2ND / 3RD controls appear only in Exhibit View and Thumbnail View; Room View remains first-place only.
+- Endless Wall is linear: no doors, no corners, no wrapping.
+- Endless Wall reuses the same three-image straight-wall dimensions as Room View.
+- Thumbnail View uses 22 positions in a centered 7 / 8 / 7 arrangement.
+- Generic large sets page 22 thumbnails at a time instead of rendering the full set at once.
+- Mosaics remain separate and are not routed through this viewer.
 
 
-v224 Annex map correction
-- Fits the complete Annex map into the usable viewport above the persistent menu bar.
-- Fit uses both available width and available height.
-- Uniform map scaling preserves the Installation as a mathematically regular hendecagon.
-- Browser/fullscreen changes recalculate the fit.
-- No Museum Foundry calibration, Annex wording, plate geometry, Installation player geometry, or unrelated page behavior changed.
+---
+
+### Exhibit View v9 — 2026-09-08
+Corrections / interaction pass:
+- Straight-wall states now use three truly equal-sized, equally aligned, non-distorted wall slots. The center image is no longer enlarged.
+- Horizontal swipe is supported across the exhibit room surface, including straight-wall states and Thumbnail View. Swipe left moves one state forward around the 24-state circuit; swipe right moves one state backward. This mirrors the RIGHT / LEFT controls.
+- Thumbnail View retains all 22 room thumbnails on one screen, arranged 7 / 8 / 7. The 7-item top and bottom rows are centered.
+- Grand Exhibition Hall exhibit addressing is capped at 66 (`MAX_EXHIBITS = 66`); any requested exhibit index above 66 clamps to 66. This matches the current 66-Theme ceiling rather than allowing stray 88-exhibit values.
+
+### Exhibit View v7 — 2026-09-08
+This revision replaces the earlier freeform room mock with the user-specified fixed exhibit camera circuit.
+
+Key rules implemented:
+- Never show more than 3 mashups at once.
+- No floor or ceiling. The player is visually inside a cube-like room perimeter.
+- Three reusable room compositions only: LEFT CORNER, STRAIGHT WALL, RIGHT CORNER.
+- LEFT CORNER shows: angled side-wall image, corner, front-center image, front-right image.
+- STRAIGHT WALL shows exactly 3 front-facing images.
+- RIGHT CORNER shows: front-left image, front-center image, corner, angled side-wall image.
+- Door is a fixed architectural position in the sequence, not just a generic back button.
+
+24-state room circuit implemented:
+1. 22 / corner / 1 / 2
+2. 1 / 2 / 3
+3. 2 / 3 / 4
+4. 3 / 4 / 5
+5. 4 / 5 / 6
+6. 5 / 6 / corner / 7
+7. 6 / corner / 7 / DOOR
+8. 7 / DOOR / 8
+9. DOOR / 8 / 9
+10. 8 / 9 / 10
+11. 9 / 10 / 11
+12. 10 / 11 / corner / 12
+13. 11 / corner / 12 / 13
+14. 12 / 13 / 14
+15. 13 / 14 / 15
+16. 14 / 15 / 16
+17. 15 / 16 / 17
+18. 16 / 17 / corner / 18
+19. 17 / corner / 18 / 19
+20. 18 / 19 / 20
+21. 19 / 20 / 21
+22. 20 / 21 / DOOR
+23. 21 / DOOR / 22
+24. DOOR / 22 / corner / 1
+
+The DOOR control jumps to the canonical straight-on door position: 7 / DOOR / 8.
+Thumbnail View still provides direct access to ART 1–22.
+
+## Preserved Legacy Foundation / Reference Notes
+
+The following material was present in the pre-v221 README but was not attached to a specific version number. It is preserved intact here instead of being assigned invented version numbers.
+
+# MASHpedition Residence — locked geometry build
+
+Unversioned structural build based on the Residence geometry reconstructed and approved on 2026-09-02.
+
+Screen 1:
+- Five equal 20% landscape columns.
+- Left 20%: Identity occupies top 80%; profile picture and identity text split that box 50/50 vertically.
+- Bottom 20% of left column: Mailbox, Guestbook, Trick-or-Treat Box, equal side-by-side.
+- Middle 40%: one continuous Microflex Board.
+- Right 40%: upper four Atelier slots, two columns by two rows.
+
+Screen 2:
+- Middle 40%: continuation of the same Microflex Board.
+- Right 40%: exact duplicate of the first-screen Atelier geometry, completing a continuous 2-column × 4-row Atelier.
+- Left 20%:
+  - top 1/3: Trophy + Prize Machine
+  - next 1/6: COLLECTION
+  - next 1/3: Sticker Machine + Computer
+  - bottom 1/6: GALLERY
+
+Structural verification:
+- Board = exactly 40% width × 200% screen height.
+- Atelier = exactly 40% width × 200% screen height.
+- Every Atelier slot = exactly 20% viewport width × 50% viewport height.
+- Second-screen left menu = exact 2:1:2:1 vertical ratio.
+- Collection and Gallery are the long word-labeled buttons.
+- Trophy, Prize Machine, Sticker Machine, and Computer use symbol buttons.
+
+---
+
+# Museum Hub Shell — Added 2026-09-03
+
+## Current Museum-Level Geography
+
+The current first-pass museum hub shell uses one landscape viewport.
+
+### Top Band — 1/6 of Screen Height
+
+The top band is divided horizontally:
+
+- **Left 1/6:** Catacombs
+- **Middle 2/3:** Residence
+- **Right 1/6:** Catacombs
+
+The Catacombs visually flank the Residence. The Residence is on the second level; the Catacombs are underground.
+
+### Central Region — 2/3 of Screen Height
+
+The central region is an equal 2 × 2 grid:
+
+| | |
+|---|---|
+| **Grand Exhibition Halls** | **SALON ECLECTIQUE** |
+| **Studio** | **Lab** |
+
+Geographic working positions:
+
+- Northwest: Grand Exhibition Halls
+- Northeast: SALON ECLECTIQUE
+- West: Studio
+- East: Lab
+
+### Bottom Atrium Band — 1/6 of Screen Height
+
+For now, the Atrium does not require a separate hub button. Its four destinations appear directly in the bottom band.
+
+Left to right:
+
+- **Information Desk — 25%**
+- **For Your Consideration — 50%**
+- **Gift Shop — 12.5%**
+- **Control Room — 12.5%**
+
+For Your Consideration is intentionally the dominant destination in this band.
+
+## Hub Abstraction
+
+At the museum level, major hubs should remain major hubs rather than exposing all of their internal rooms.
+
+The direct display of the four Atrium destinations is an intentional exception in the current shell. Do not similarly expand the Grand Exhibition Halls, SALON ECLECTIQUE, Studio, Lab, Residence, or Catacombs into their internal destinations unless that is deliberately designed later.
+
+Vaults are not a museum-level hub. They are a Catacombs-associated offshoot/special destination.
+
+## Current Flat Site Structure
+
+The working prototype is intentionally kept flat for easy maintenance and manual GitHub updates from a phone.
+
+- `index.html` — Museum Hub
+- `styles.css` — Museum Hub styles
+- `residence.html` — Residence
+- `residence.css` — Residence styles
+- `README.md` — accumulated working documentation
+
+Avoid introducing nested folders unless they become functionally necessary.
+
+The old root `app.js` was identified as stale code referencing elements not present in the approved Residence shell and is not part of the current flat prototype.
+
+## Current Navigation
+
+- Loading the site opens the Museum Hub.
+- Selecting **Residence** opens `residence.html`.
+- The Residence currently has a small **MUSEUM** return control linking to `index.html`.
+
+The MUSEUM control is **strictly temporary prototype navigation**. It is a fixed overlay and does not reserve, remove, resize, or restructure any part of the approved Residence geometry. It should be replaced when the actual navigation mechanism is designed.
+
+## Change-Control Note
+
+The Museum Hub shell currently defines structural geography only. It does not establish perspective, architecture, decorative styling, movement behavior, navigation chrome, or additional rooms.
+
+Exact shell proportions above are intentional and should be preserved unless explicitly revised.
 
 
-v225 Thumbnail menu correction
-- Removes LEFT and RIGHT from the context-sensitive menu in every thumbnail view.
-- Thumbnail pagination remains PAGE PREV / PAGE NEXT.
-- LEFT / RIGHT behavior outside thumbnail views is unchanged.
-- No layout, typography, plate, Annex, or Museum Foundry changes.
 
+---
 
-v226 universal menu ordering pass
-- Canonical relative order: LEFT, RIGHT, PREV, NEXT, ENTRANCE, EXHIBIT, THUMBNAILS, ENDLESS, SUBLOCATION, MUSEUM, FULL/BROWSER.
-- Absent controls simply disappear; remaining controls keep canonical relative order.
-- Existing AERIAL is preserved (not removed) and remains adjacent to the Exhibit navigation group.
-- Thumbnail contexts continue to hide LEFT/RIGHT.
-- PAGE PREV/PAGE NEXT labels are normalized to PREV/NEXT.
-- FULL/BROWSER remains one state-dependent final control.
-- No typography calibration, plate geometry, scene geometry, or unrelated behavior changed.
+# Laboratory Shell — Corrected Geometry 2026-09-08
 
+The Laboratory is a structural playground shell. Its current geometry follows Billy's explicit screen measurements and should not be reinterpreted into generic panels.
 
-v227 FYC typography regression repair: removed the FYC-only Georgia override and restored the established Museum Foundry/SmallCaps signage treatment to FYC Entrance identity and supporting copy. Wording, door geometry, plate geometry, menu geometry, and unrelated behavior are unchanged.
+## Laboratory screen geometry
 
+- **0–20% — Input/navigation column**
+  - 0–35%: `EMOJI A`
+  - 35–70%: `EMOJI B`
+  - 70–85%: `MOSAICS JOURNAL`
+  - 85–100%: `PRESETS`
+- **20–70% — `MUTOSIS MACHINE`**
+  - 0–5% blank
+  - 5–10% meter
+  - 10–15% blank
+  - 15–40% machine screen with 2.5% whole-screen blank space on each side and a 45% whole-screen screen area
+  - 40–45% blank
+  - 45–50% `ACTIVATE MUTOSIS`
+  - 50–55% blank
+  - 55–65%: Field 1 / dial / central gap / dial / Field 2 using whole-screen widths `2.5 / 15 / 5 / 5 / 5 / 15 / 2.5`
+  - 65–70% blank
+  - 70–80%: same arrangement for Fields 3 and 4
+  - 80–85% blank
+  - 85–95%: same arrangement for Fields 5 and 6
+  - 95–100% blank
+- **70–80% — `CHIMERIC AGGLOMERATOR`**
+  - 0–90% machine
+  - 90–95% meter
+  - 95–100% temporary `MUSEUM` return control
+  - The Museum control occupies what is canonically blank space only for prototype navigation. Remove it when real navigation replaces the temporary return control.
+- **80–100% — Output**
+  - 0–80% output area
+  - 80–90%: `SAVE` | `RETRY`
+  - 90–100%: `DISCARD` | `SUBMIT`
 
-v228 FYC runtime repair
-- Fixes the v227 startup exception caused by painting lowercase FYC Museum Foundry glyphs before the glyph calibration sets were initialized.
-- Defers only the FYC supporting-copy paint until after those existing calibration tables/functions are ready.
-- Restores execution of the remainder of exhibit.js, including LEFT/RIGHT/ENTRANCE/AERIAL/EXHIBIT/THUMBNAILS/ENDLESS/FULL handlers.
-- MUSEUM remained functional because it is a normal link and did not depend on the aborted JS.
-- No Museum Foundry calibration values, plates, door geometry, menu geometry, wording, or unrelated behavior changed.
+## Corrections carried forward
 
+- Mosaics are not a persistent Lab panel. The Lab exposes them through the `MOSAICS JOURNAL` control.
+- Generic permanent `LEFT / CENTER / RIGHT` machine controls are not part of the Lab shell. Weighting is an evolving/context-sensitive mechanic and must not be exposed as a universal toolbar.
+- **Chimeric Agglomerator** is the canonical name of the Laboratory's Gem-making apparatus.
+- The shell does not invent controls for the Chimeric Agglomerator beyond the meter specified above.
+- Residence files remain unchanged.
+- Story progression, unlock timing, final art treatment, and responsive refinements are not locked by this shell.
 
-v229 Parade rename + repair
-- ENDLESS is renamed to PARADE in the user-facing view/menu vocabulary.
-- Existing internal `endless` state keys/classes are intentionally retained to avoid a risky unrelated refactor.
-- Integrated Exhibit viewer now labels the sequential feed PARADE / PARADE VIEW and accepts `start=parade` while retaining legacy `start=endless` compatibility.
-- Standalone sequential-feed page is retitled PARADE. THUMBNAILS and PARADE are now explicit mode buttons rather than one ambiguous toggle.
-- Standalone Thumbnail mode hides LEFT/RIGHT, matching the universal Thumbnail-menu rule; Parade restores LEFT/RIGHT.
-- No typography calibration, plate geometry, artwork geometry, or unrelated page behavior changed.
+## Laboratory viewport correction — 2026-09-08
 
+- Restored the Laboratory outer canvas sizing behavior from the preceding Lab shell: `100vw × 100dvh` in landscape, with no forced 1000px minimum width or 560px minimum height.
+- The measured 20% / 50% / 10% / 20% internal Laboratory geometry is unchanged.
+- The 1000px minimum remains portrait-only, matching the earlier shell behavior.
 
-v230 Parade runtime repair
-- Restored the missing paintEndlessSlot() renderer used by the shared Exhibit viewer.
-- PARADE buttons were correctly wired in v229, but clicking them called renderEndless(), which immediately failed because paintEndlessSlot() did not exist.
-- The restored renderer uses the same result/art numbering rules as Thumbnail View and preserves Zazzly/emoji-pair art labels.
-- No menu order, typography calibration, plate geometry, or unrelated layout behavior changed.
+---
 
+# Studio Shell — Percentage Geometry Added 2026-09-08
 
-v231: PARADE view switch is now committed before result-card painting; Parade slots/status are null-safe. Both exhibit CSS and JS cache keys bumped to 231.
+The Studio now has its established all-open playground geometry. These are structural proportions, not progression timing.
+
+## Full Studio geometry
+
+The Studio occupies one landscape viewport and is divided vertically:
+
+- **0–20%:** top equipment band
+- **20–50%:** upper middle row
+- **50–80%:** lower middle row
+- **80–100%:** bottom equipment band
+
+Top band:
+
+- **Chromatic Attic — 75% width**
+- **Chromatic Amalgamator — 25% width**
+
+Upper middle row:
+
+- **Easel — 50% width**
+- **The Rough Stuff — 50% width**
+
+Lower middle row:
+
+- **Creation Station — 50% width**
+- **Presentation Station — 50% width**
+
+Bottom band:
+
+- **Paint Mixer — 25% width**
+- **Color Cellar — 75% width**
+
+This preserves the established progression geometry in its fully opened state: the original central 2×2 workspace occupies two 30%-high rows, Chromatic Attic / Chromatic Amalgamator occupy the top 20%, and Paint Mixer / Color Cellar occupy the bottom 20%.
+
+The small fixed `MUSEUM` control is temporary prototype navigation only and does not consume or resize Studio geometry.
+
+## Museum Atrium geometry — explicit percentage lock
+
+The existing Museum Hub already contained the intended Atrium proportions. They are now expressed explicitly in CSS rather than only as fractional units:
+
+- Entire Atrium band: **bottom 1/6 = 16.6667% of the viewport height**
+- **Information Desk — 25% width**
+- **For Your Consideration — 50% width**
+- **Gift Shop — 12.5% width**
+- **Control Room — 12.5% width**
+
+The Museum Hub remains:
+
+- top band: **1/6 = 16.6667% height**
+- central region: **2/3 = 66.6667% height**
+- Atrium band: **1/6 = 16.6667% height**
+
+No Lab or Residence geometry was changed while adding the Studio shell.
+
+---
+
+# Exhibit View Shell — Added 2026-09-08
+
+A first functional exhibit-navigation shell is now linked from **GRAND EXHIBITION HALLS**.
+
+This shell implements the recovered exhibit-view behavior without treating the separate scrolling-wall overlay as the same system.
+
+## Spatial exhibit views
+
+- **Door / Room View** — the default full-room entrance view.
+- **Left Corner View** — camera shifts toward the left side/corner and presents the left three-art grouping.
+- **Right Corner View** — corresponding right-side/corner three-art grouping.
+- **Wall View** — selecting an artwork squares the view flat to that artwork/wall rather than leaving it in room perspective.
+- **Artwork View** — selecting the artwork from Wall View moves into the artwork itself.
+- Artwork depth exposes structural placeholders for **Image Detail**, **Description Plaque**, and **Blurblets**.
+- **Thumbnail View** — a non-spatial quick selector for the exhibit's artworks.
+
+## Persistent exhibit controls
+
+The recovered persistent controls are present at the bottom of the exhibit surface:
+
+- `LEFT`
+- `RIGHT`
+- `THUMBNAIL`
+- `DOOR`
+
+In Room/Corner views, Left and Right move the camera to the corresponding corner. In Wall/Artwork depth, Left and Right move among artworks while staying in the exhibit viewing system.
+
+## Structural limits
+
+- Artwork boxes are placeholders only. No exhibit art style, wall decoration, room theme, exact architectural dimensions, or final animation timing is locked by this shell.
+- The perspective geometry is a functional prototype for the previously established discrete camera positions. It is not a claim that exact room measurements were recovered from the historical record.
+- **Mosaics remain a separate presentation system.**
+- The reusable left-to-right scrolling-wall overlay used by SALON ECLECTIQUE and other temporary/ranked sets remains a separate view family: centered artwork, partial neighboring artworks at the sides, and downward scroll to plaque then Blurblets.
+- The small `MUSEUM` control remains temporary prototype navigation and does not reserve exhibit geometry.
