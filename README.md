@@ -1,3 +1,13 @@
+# v241 — Catacombs Entrance Composition Cleanup
+
+- Locked the universal landscape Entrance facade at **37.5% left wall / 25% centered door / 37.5% right wall**.
+- Locked the door at **1:2.5**. Its width is always 25% of viewport width; vertical space never narrows or distorts it.
+- The door top never rises above the **15% minimum visible-wall line**. If the width-sized door is too tall, its lower portion is cropped below the viewport; if it is shorter, the additional space remains visible wall above it.
+- Rebuilt Catacombs Entrance content inside equal left/right wall territories: CATACOMBS and curator copy on the left, active Search Details only on the right.
+- Search Details is now content-height instead of an oversized empty billboard.
+- Temporary Theme/Emoji state controls remain independent diagnostics at their booked 37.5% / 62.5% vertical centers and do not participate in Entrance furniture geometry.
+- Museum Foundry calibration and unrelated views remain untouched.
+
 ## v240 — Catacombs Entrance measured door/crop correction
 
 - Replaced the incorrect v239 230:265 responsive door assumption with Billy’s actual ruler-measured visible composition.

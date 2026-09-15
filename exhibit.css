@@ -3080,3 +3080,109 @@ button,
     transform:translateX(-50%);
   }
 }
+
+/* v241 — Catacombs Entrance composition cleanup on the locked universal facade.
+   LANDSCAPE ARCHITECTURE IS NON-NEGOTIABLE:
+   37.5% left wall / 25% centered door / 37.5% right wall.
+   The door is always 1:2.5 and is sized from viewport WIDTH only. Height never
+   narrows, squashes, or rescales it; vertical shortage is cropped below the
+   viewport. The door top is never allowed above the 15% wall line. If the
+   width-sized door is shorter, the additional space remains wall above it.
+   Catacombs content is composed inside the two equal wall territories. */
+@media (orientation:landscape){
+  .exhibit-shell.catacombs-context[data-view="door"] .door-wall-canvas{
+    left:0;
+    top:0;
+    width:100%;
+    height:100%;
+    transform:none;
+    overflow:hidden;
+  }
+  .exhibit-shell.catacombs-context[data-view="door"] .door-placeholder{
+    left:37.5%;
+    right:auto;
+    top:max(15%, calc(100% - 62.5vw));
+    bottom:auto;
+    width:25%;
+    height:62.5vw;
+    aspect-ratio:auto;
+    transform:none;
+  }
+
+  /* Equal side territories. The visible plates are inset 3% from the outer
+     edge and 3% from the door, giving matching 31.5%-wide plate columns. */
+  .exhibit-shell.catacombs-context[data-view="door"] .entrance-location-banner{
+    left:3%;
+    right:auto;
+    top:15%;
+    width:31.5%;
+    max-width:none;
+    min-height:0;
+    box-sizing:border-box;
+    padding:8px 18px;
+    white-space:nowrap;
+    overflow:hidden;
+  }
+  .exhibit-shell.catacombs-context[data-view="door"] .entrance-selections{
+    position:absolute;
+    left:3%;
+    right:auto;
+    top:27%;
+    width:31.5%;
+    max-width:none;
+    min-height:0;
+    box-sizing:border-box;
+    padding:8px 18px;
+  }
+  .exhibit-shell.catacombs-context[data-view="door"] .entrance-exhibit-info{
+    position:absolute;
+    left:65.5%;
+    right:auto;
+    top:15%;
+    width:31.5%;
+    height:auto;
+    min-height:0;
+    max-height:none;
+    box-sizing:border-box;
+    display:block;
+  }
+  .exhibit-shell.catacombs-context[data-view="door"] .entrance-search{
+    position:relative;
+    left:auto;
+    right:auto;
+    top:auto;
+    width:100%;
+    max-width:none;
+    min-height:0;
+    max-height:none;
+    box-sizing:border-box;
+    padding:16px 18px;
+    display:flex;
+    flex-direction:column;
+    align-items:stretch;
+    justify-content:flex-start;
+    gap:8px;
+    overflow:visible;
+  }
+  .exhibit-shell.catacombs-context[data-view="door"] .entrance-search-secondary{display:none!important}
+  .exhibit-shell.catacombs-context[data-view="door"] .catacombs-search-detail-row{
+    width:100%;
+    overflow-wrap:normal;
+    word-break:normal;
+  }
+  .exhibit-shell.catacombs-context.catacombs-browse-exhibit[data-view="door"] .entrance-emojis{
+    left:3%;
+    right:auto;
+    top:72%;
+    width:31.5%;
+  }
+
+  /* Temporary state switches are diagnostic controls, not Entrance furniture.
+     Keep their booked 37.5% / 62.5% vertical centers and align them to the
+     same 3% left datum without allowing them to affect plate geometry. */
+  .exhibit-shell.catacombs-context[data-view="door"] .cat-search-has{
+    left:3%;
+    right:auto;
+    z-index:30;
+  }
+}
