@@ -115,6 +115,11 @@ main{width:100vw;height:100dvh;display:flex;align-items:center;justify-content:c
 
 
 </style>
+<link rel="stylesheet" href="game-bar.css?v=222">
+<style>/* v222 — Annex Hybrid: reserve the persistent menu bar without altering the regular Installation hendecagon geometry. */
+body{padding-bottom:var(--game-bar-height);}
+.museum{display:none!important;}
+</style>
 </head>
 <body>
 <main>
@@ -132,7 +137,6 @@ main{width:100vw;height:100dvh;display:flex;align-items:center;justify-content:c
     <div class="front-door" aria-label="Front door"></div>
     <div class="front-door-label"><span>ENTRANCE</span></div>
   </section>
-  <a class="museum" href="index.html">MUSEUM</a>
 </main>
 <div id="installationMap" class="map-overlay" aria-hidden="true">
   <div class="map-card" role="dialog" aria-modal="true" aria-label="Installation map">
@@ -264,5 +268,7 @@ INSTALLATION</div>
   document.addEventListener('keydown',e=>{if(e.key==='Escape'){if(iv.classList.contains('open'))closeInstallation();else if(overlay.classList.contains('open'))closeMap()}if(iv.classList.contains('open')&&e.key==='ArrowLeft')document.getElementById('installationLeft').click();if(iv.classList.contains('open')&&e.key==='ArrowRight')document.getElementById('installationRight').click();});
 })();
 </script>
+<nav class="game-menu-bar" aria-label="Annex menu"><a href="index.html">MUSEUM</a><button type="button" data-display-mode>FULL</button></nav>
+<script src="game-bar.js?v=222"></script>
 </body>
 </html>

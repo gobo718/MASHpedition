@@ -1,10 +1,17 @@
-MASHpedition v221 — Dynamic Game Viewport + Context Bar foundation
+MASHpedition v222 — Universal Menu Bar + Layout-Class Foundation
 
-- Fixed 980 × 300 museum scenes now fit by BOTH available viewport width and height.
-- Added FULL / BROWSER toggle using the browser Fullscreen API.
-- Moved MUSEUM into the existing bottom game bar.
-- Moved applicable PAGE PREV / PAGE NEXT controls into that same bar.
-- The bar is context-sensitive: pagination controls appear only when applicable; existing capability controls retain their established visibility rules.
-- Fixed the right-corner mirror so whole-scene viewport fitting is preserved there too.
-- Removed the obsolete JS that positioned pagination relative to the old floating MUSEUM button.
-- No Museum Foundry calibration, plate geometry, room coordinates, or content wording changed.
+Built from v221.
+
+- Persistent bottom menu bar now exists on every current game page/system.
+- FULL / BROWSER is available from each game menu bar.
+- MUSEUM moved into the bar where applicable; Museum Map correctly omits MUSEUM.
+- Existing Exhibit context bar remains the mature context-sensitive implementation.
+- Standalone Endless bar now includes FULL / BROWSER.
+- Residence Hybrid geometry now reserves one persistent bar across both scroll screens.
+  Each Residence screen uses viewport height minus bar height; the right Atelier region is
+  one square per screen and remains 2x2 (4 square art slots per screen, 8 total).
+  Profile image is protected as proportional geometry; remaining Residence regions conform.
+- Museum Map and Studio Map reserve bar space as conformable layouts.
+- Lab reserves bar space as Hybrid; final square Machine Screen remains for the Lab geometry pass.
+- Annex reserves bar space without changing protected Installation hendecagon geometry.
+- No Museum Foundry calibration, exhibit plate geometry, exhibit room coordinates, or wording changed.

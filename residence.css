@@ -153,3 +153,24 @@ button{font:inherit;color:inherit;background:var(--panel);border:1px solid var(-
 /* v170 — Residence word plates: centered Museum Foundry lettering, geometry unchanged. */
 .word-button{line-height:1;}
 .word-button{padding-top:2px;}
+
+/* v222 — Residence Hybrid viewport contract.
+   One persistent menu bar consumes space once. Both scroll screens use the same
+   reduced height. The right-side Atelier is one square per screen, divided 2x2. */
+:root{--game-bar-height:37px;--res-screen-h:calc(100dvh - var(--game-bar-height))}
+body{height:100dvh;overflow-y:auto;padding-bottom:var(--game-bar-height)}
+.residence{
+  width:100%;
+  height:calc(2 * var(--res-screen-h));
+  grid-template-columns:
+    calc((100vw - var(--res-screen-h))/3)
+    calc((100vw - var(--res-screen-h))/3)
+    calc((100vw - var(--res-screen-h))/3)
+    calc(var(--res-screen-h)/2)
+    calc(var(--res-screen-h)/2);
+  grid-template-rows:repeat(10,calc(var(--res-screen-h)/5));
+  overflow:hidden;
+}
+.atelier{grid-template-rows:repeat(4,calc(var(--res-screen-h)/2))}
+.profile-picture{aspect-ratio:1/1;align-self:start;width:100%;height:auto}
+.museum-exit{display:none!important}

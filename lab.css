@@ -390,3 +390,9 @@ a:active {
   text-align:center;
 }
 .agglomerator-placeholder{line-height:1;}
+
+/* v222 — reserve the persistent menu bar; Lab remains Hybrid and its final
+   square machine-screen geometry will be solved in the dedicated Lab pass. */
+:root{--game-bar-height:37px}
+.laboratory{height:calc(100dvh - var(--game-bar-height))}
+.museum-exit{display:none!important}

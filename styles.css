@@ -87,3 +87,7 @@ button,.hub-link{
 
 /* v168 — center complete content blocks inside existing locked Museum Hub plates. */
 .museum-hub .hub-link,.museum-hub button{display:flex;align-items:center;justify-content:center;text-align:center;}
+
+/* v222 — Museum Map is conformable and uses the viewport remaining above the bar. */
+:root{--game-bar-height:37px}
+.museum-hub{height:calc(100dvh - var(--game-bar-height))}

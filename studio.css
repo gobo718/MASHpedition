@@ -90,3 +90,8 @@ button,a{font:inherit;color:inherit}
 
 /* v168 — center complete content blocks inside existing locked museum plates. */
 .studio-zone{display:flex;align-items:center;justify-content:center;text-align:center;}
+
+/* v222 — Studio Map is conformable and uses the viewport remaining above the bar. */
+:root{--game-bar-height:37px}
+.studio-shell{height:calc(100dvh - var(--game-bar-height))}
+.museum-return{display:none!important}
