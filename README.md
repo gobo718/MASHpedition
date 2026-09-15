@@ -1,3 +1,23 @@
+# v238 — Catacombs Responsive Entrance
+
+- Builds the Catacombs Entrance as the first implementation of the universal responsive Entrance architecture.
+- Landscape uses the available game rectangle rather than shrinking a fixed 980×300 facade. The centered black door uses the measured 11/43 room-width proportion and reaches the menu-bar floor; location remains left and active Search Details remain right.
+- Portrait intentionally breaks from the physical-rotation rule used by maps/machines: the door becomes a close-up background and one unified information panel begins at roughly 15% down the screen. Location is above one restrained divider; search/context information is below it.
+- The portrait panel is structured as a reusable Entrance component; this build populates it for Catacombs only.
+- Corrects Catacombs Exhibit applicability to the booked rule: any Theme search disables Exhibit view; with no Theme, Exhibit remains applicable for zero, one, or two searched emoji.
+- Location/search emoji semantics are preserved: with no Theme, zero or one searched emoji keeps the current two-emoji Exhibit identity on the location side; two searched emoji are not redundantly duplicated there.
+- Museum Foundry glyph calibration, room/art geometry, and unrelated views are unchanged.
+
+# v237 — Catacombs Entrance Search Details Composition
+
+- Catacombs Entrance now places `Selections Curated by Community Vote` directly beneath the `CATACOMBS` location plate.
+- The whole right side is one variable Search Details plate; only active search filters are listed. Supported test/query fields include searched emoji, Theme, rank, modifier tags, submitted time frame, artist, and artist group.
+- Searched emoji appear in Search Details; the Entrance distinguishes searched emoji from the current Exhibit’s location identity.
+- Theme searches have no Exhibit view. With no Theme, Exhibit applicability remains available for zero, one, or two searched emoji.
+- With no Theme, zero or one searched emoji can still show the current exhibit emoji pair on the left as location identity; a searched pair stays on the search side without redundant left-side duplication.
+- Temporary Theme/No Theme and Emoji/No Emoji radio controls remain design scaffolding.
+- Museum Foundry glyph calibration and unrelated room/art geometry are unchanged.
+
 ## v236 — Catacombs Theme + Emoji Search-State Test Controls
 
 - Kept the existing temporary `SEARCH HAS: THEME / NO THEME` radio pair and added a matching temporary `SEARCH HAS: EMOJI / NO EMOJI` pair.

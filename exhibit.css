@@ -2810,3 +2810,194 @@ button,
 }
 .exhibit-shell.catacombs-context .cat-search-has-theme{top:37.5%}
 .exhibit-shell.catacombs-context .cat-search-has-emoji{top:62.5%}
+
+/* v237 — Catacombs Entrance search-state composition.
+   The Catacombs title owns its curator plate; the entire right column is one
+   variable Search Details plate. Search emoji live only in that plate. When
+   neither Theme nor emoji is searched, the current exhibit emoji pair becomes
+   location identity on the left beneath CATACOMBS. */
+.exhibit-shell.catacombs-context[data-view="door"] .entrance-location-banner{
+  left:30px;
+  top:70px;
+  width:315px;
+  min-height:54px;
+  padding:8px 18px;
+}
+.exhibit-shell.catacombs-context[data-view="door"] .entrance-selections{
+  left:30px;
+  top:64px;
+  width:315px;
+  max-width:315px;
+  min-height:54px;
+  padding:8px 18px;
+}
+.exhibit-shell.catacombs-context[data-view="door"] .entrance-search{
+  left:635px;
+  top:0;
+  width:315px;
+  max-width:315px;
+  min-height:190px;
+  max-height:220px;
+  padding:14px 18px;
+  display:flex;
+  flex-direction:column;
+  align-items:stretch;
+  justify-content:center;
+  gap:8px;
+  text-align:left;
+  font-size:clamp(12px,1.45vw,18px);
+  line-height:1.08;
+  overflow:hidden;
+}
+.exhibit-shell.catacombs-context[data-view="door"] .entrance-search-secondary{display:none!important}
+.exhibit-shell.catacombs-context[data-view="door"] .catacombs-search-detail-row{
+  width:100%;
+  overflow-wrap:anywhere;
+}
+.exhibit-shell.catacombs-context[data-view="door"] .entrance-emojis{
+  display:none;
+}
+.exhibit-shell.catacombs-context.catacombs-browse-exhibit[data-view="door"] .entrance-emojis{
+  display:block;
+  position:absolute;
+  left:30px;
+  top:132px;
+  width:315px;
+  margin:0;
+  text-align:center;
+  font-size:58px;
+  line-height:1;
+}
+
+/* v238 — Catacombs Entrance responsive architecture prototype.
+   LANDSCAPE: preserve the established centered-door facade, but let the Catacombs
+   entrance itself use the available game rectangle rather than shrinking a 980×300
+   screenshot. The door keeps Billy's measured 11/43 room-width proportion and
+   reaches the menu-bar floor. Left = location; right = active search state.
+   PORTRAIT: intentional Entrance exception. The door becomes a close-up background
+   and one reusable information panel begins about 15% down: location, one divider,
+   then contextual/search information. Museum Foundry calibration is untouched. */
+.entrance-portrait-panel{display:none}
+
+@media (orientation:landscape){
+  .exhibit-shell.catacombs-context[data-view="door"] .door-wall-canvas{
+    left:0;
+    top:0;
+    width:100%;
+    height:100%;
+    transform:none;
+  }
+  .exhibit-shell.catacombs-context[data-view="door"] .door-placeholder{
+    left:37.2093023256%;
+    top:7.3684210526%;
+    width:25.5813953488%;
+    height:92.6315789474%;
+  }
+  .exhibit-shell.catacombs-context[data-view="door"] .entrance-location-banner{
+    left:3%;
+    top:15%;
+    width:29%;
+    min-height:0;
+    box-sizing:border-box;
+  }
+  .exhibit-shell.catacombs-context[data-view="door"] .entrance-exhibit-info{
+    left:auto;
+    right:3%;
+    top:15%;
+    width:29%;
+    height:70%;
+  }
+  .exhibit-shell.catacombs-context[data-view="door"] .entrance-selections{
+    left:3%;
+    top:36%;
+    width:29%;
+    max-width:none;
+    min-height:0;
+    box-sizing:border-box;
+  }
+  .exhibit-shell.catacombs-context[data-view="door"] .entrance-search{
+    left:auto;
+    right:3%;
+    top:0;
+    width:100%;
+    max-width:none;
+    min-height:100%;
+    max-height:100%;
+    box-sizing:border-box;
+  }
+  .exhibit-shell.catacombs-context.catacombs-browse-exhibit[data-view="door"] .entrance-emojis{
+    left:3%;
+    top:58%;
+    width:29%;
+  }
+}
+
+@media (orientation:portrait){
+  .exhibit-shell.catacombs-context[data-view="door"]{
+    min-width:0;
+  }
+  .exhibit-shell.catacombs-context[data-view="door"] .door-wall-canvas{
+    left:0;
+    top:0;
+    width:100%;
+    height:100%;
+    transform:none;
+    overflow:hidden;
+  }
+  .exhibit-shell.catacombs-context[data-view="door"] .door-placeholder{
+    left:8%;
+    top:0;
+    width:84%;
+    height:100%;
+  }
+  .exhibit-shell.catacombs-context[data-view="door"] .entrance-location-banner,
+  .exhibit-shell.catacombs-context[data-view="door"] .entrance-exhibit-info{
+    display:none!important;
+  }
+  .exhibit-shell.catacombs-context[data-view="door"] .entrance-portrait-panel:not([hidden]){
+    position:absolute;
+    z-index:12;
+    left:8%;
+    right:8%;
+    top:15%;
+    display:flex;
+    flex-direction:column;
+    box-sizing:border-box;
+    max-height:70%;
+    padding:clamp(14px,4vw,26px);
+    border:1px solid rgba(74,71,65,.72);
+    background:rgba(247,244,237,.94);
+    color:#201d19;
+    overflow:hidden;
+  }
+  .entrance-portrait-location{
+    flex:0 0 auto;
+    text-align:center;
+    font-size:clamp(22px,7vw,40px);
+    line-height:1;
+    font-weight:900;
+    letter-spacing:.045em;
+  }
+  .entrance-portrait-divider{
+    flex:0 0 auto;
+    width:100%;
+    height:1px;
+    margin:clamp(12px,3vw,20px) 0;
+    background:rgba(74,71,65,.62);
+  }
+  .entrance-portrait-secondary{
+    min-height:0;
+    display:flex;
+    flex-direction:column;
+    gap:clamp(7px,2vw,12px);
+    overflow:auto;
+    text-align:center;
+    font-size:clamp(15px,4.4vw,24px);
+    line-height:1.12;
+    font-weight:800;
+    letter-spacing:.02em;
+  }
+  .exhibit-shell.catacombs-context[data-view="door"] .cat-search-has{
+    display:none!important;
+  }
+}

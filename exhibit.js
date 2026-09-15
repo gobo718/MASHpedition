@@ -29,6 +29,9 @@
   const entranceRank=document.getElementById('entranceRank');
   const entranceSearch=document.getElementById('entranceSearch');
   const entranceSearchSecondary=document.getElementById('entranceSearchSecondary');
+  const entrancePortraitPanel=document.getElementById('entrancePortraitPanel');
+  const entrancePortraitLocation=document.getElementById('entrancePortraitLocation');
+  const entrancePortraitSecondary=document.getElementById('entrancePortraitSecondary');
   const entranceSelections=document.getElementById('entranceSelections');
   const exhibitControls=document.getElementById('exhibitControls');
   const displayModeBtn=document.getElementById('displayModeBtn');
@@ -217,6 +220,8 @@
   // Exhibit ENTRANCE facade. Theme is intentionally absent: the exhibit's
   // individual selections are represented by Themes inside the room.
   const entranceEmojiText=params.get('emojis') || '😀 😎';
+  const searchedEmojiTokens=()=>catSearchHasEmojiPresent ? entranceEmojiText.trim().split(/\s+/).filter(Boolean).slice(0,2) : [];
+  const catSearchEmojiCount=()=>searchedEmojiTokens().length;
   const residentName=params.get('resident') || 'USERNAME OF RESIDENT';
   const searchDetails=params.get('search') || 'DETAILS OF SEARCH';
   const requestedRank=Math.max(1,Math.min(10,Number(params.get('rank'))||1));
@@ -236,17 +241,51 @@
 
   entranceLocation.textContent=entranceKind==='catacombs'?'CATACOMBS':areaLabel;
   entranceEmojis.textContent=entranceEmojiText;
-  entranceEmojis.hidden=['gallery','fyc','salon'].includes(entranceKind) || (entranceKind==='catacombs' && !catSearchHasEmojiPresent);
+  entranceEmojis.hidden=['gallery','fyc','salon'].includes(entranceKind);
   entranceRank.hidden=entranceKind!=='geh';
   entranceSearch.hidden=entranceKind!=='catacombs';
-  entranceSearchSecondary.hidden=entranceKind!=='catacombs';
+  entranceSearchSecondary.hidden=true;
   entranceSelections.hidden=false;
   if(entranceKind==='geh') entranceRank.textContent=`${rankWord(requestedRank)} PLACE`;
   if(entranceKind==='catacombs') {
-    entranceSearch.textContent=searchDetails;
-    applyPlainMuseumOpticalCentering(entranceSearch);
-    entranceSearchSecondary.textContent=params.get('theme') ? `THEME · ${params.get('theme')}` : (catSearchHasTheme ? 'THEME SEARCH' : 'GENERAL SEARCH');
-    applyPlainMuseumOpticalCentering(entranceSearchSecondary);
+    const searchedEmojis=searchedEmojiTokens();
+    const showExhibitIdentity=!catSearchHasTheme && searchedEmojis.length<2;
+    entranceEmojis.hidden=!showExhibitIdentity;
+    shell.classList.toggle('catacombs-browse-exhibit',showExhibitIdentity);
+
+    const details=[];
+    if(searchedEmojis.length) details.push(`EMOJI · ${searchedEmojis.join(' ')}`);
+    if(catSearchHasTheme) details.push(`THEME · ${params.get('theme') || 'SELECTED THEME'}`);
+    if(params.get('rank')) details.push(`RANK · ${params.get('rank')}`);
+    const modifiers=params.get('modifiers') || params.get('modifier') || params.get('tags');
+    if(modifiers) details.push(`MODIFIERS · ${modifiers}`);
+    const timeFrame=params.get('timeframe') || params.get('time') || params.get('submitted');
+    if(timeFrame) details.push(`SUBMITTED · ${timeFrame}`);
+    const artistGroup=params.get('artistGroup') || params.get('group');
+    const artist=params.get('artist');
+    if(artistGroup) details.push(`ARTIST GROUP · ${artistGroup}`);
+    else if(artist) details.push(`ARTIST · ${artist}`);
+    if(!details.length) details.push('ALL CATACOMBS');
+
+    entranceSearch.replaceChildren(...details.map((detail,index)=>{
+      const row=document.createElement('div');
+      row.className='catacombs-search-detail-row';
+      row.textContent=detail;
+      return row;
+    }));
+    entrancePortraitPanel.hidden=false;
+    entrancePortraitLocation.textContent='CATACOMBS';
+    const portraitLines=[];
+    if(showExhibitIdentity) portraitLines.push(`EXHIBIT · ${entranceEmojiText}`);
+    portraitLines.push(...details);
+    entrancePortraitSecondary.replaceChildren(...portraitLines.map(detail=>{
+      const row=document.createElement('div');
+      row.className='catacombs-search-detail-row';
+      row.textContent=detail;
+      return row;
+    }));
+  } else {
+    entrancePortraitPanel.hidden=true;
   }
   if(entranceKind==='collection') {
     const curatorLead=document.createElement('span');
@@ -571,9 +610,12 @@
     // Collection never exposes Parade.
     if(collectionContext) endlessBtn.hidden=true;
     if(catacombsContext){
-      // THEME search: THUMBNAILS + PARADE. NO THEME: AERIAL + EXHIBIT + THUMBNAILS.
+      // Catacombs Exhibit applicability is search-state driven:
+      // Any Theme search disables Exhibit view. Without a Theme, Exhibit remains
+      // applicable for zero, one, or two searched emoji.
+      const exhibitApplicable=!catSearchHasTheme;
       overheadBtn.disabled=catSearchHasTheme;
-      roomBtn.disabled=catSearchHasTheme;
+      roomBtn.disabled=!exhibitApplicable;
       endlessBtn.disabled=(requestedArea==='cat-theme')?false:!catSearchHasTheme;
       thumbnailBtn.disabled=false;
       catSearchHas.hidden=false;
@@ -621,7 +663,7 @@
   function setCatSearchHas(value){
     if(!catacombsContext) return;
     catSearchHasTheme=value==='theme';
-    applyCapabilities();
+    setCatSearchHasEmoji(catSearchHasEmojiPresent?'emoji':'no-emoji');
     const view=shell.dataset.view;
     if(catSearchHasTheme && ['overhead','left','wall','right'].includes(view)) renderThumbnailPage();
     else if(!catSearchHasTheme && view==='endless') renderThumbnailPage();
@@ -631,8 +673,42 @@
     if(!catacombsContext) return;
     catSearchHasEmojiPresent=value==='emoji';
     catSearchHasEmojiRadios.forEach(radio=>{ radio.checked=(radio.value===(catSearchHasEmojiPresent?'emoji':'no-emoji')); });
-    if(entranceKind==='catacombs') entranceEmojis.hidden=!catSearchHasEmojiPresent;
+    if(entranceKind==='catacombs') {
+      const searchedEmojis=searchedEmojiTokens();
+      const showExhibitIdentity=!catSearchHasTheme && searchedEmojis.length<2;
+      entranceEmojis.hidden=!showExhibitIdentity;
+      shell.classList.toggle('catacombs-browse-exhibit',showExhibitIdentity);
+      const details=[];
+      if(searchedEmojis.length) details.push(`EMOJI · ${searchedEmojis.join(' ')}`);
+      if(catSearchHasTheme) details.push(`THEME · ${params.get('theme') || 'SELECTED THEME'}`);
+      if(params.get('rank')) details.push(`RANK · ${params.get('rank')}`);
+      const modifiers=params.get('modifiers') || params.get('modifier') || params.get('tags');
+      if(modifiers) details.push(`MODIFIERS · ${modifiers}`);
+      const timeFrame=params.get('timeframe') || params.get('time') || params.get('submitted');
+      if(timeFrame) details.push(`SUBMITTED · ${timeFrame}`);
+      const artistGroup=params.get('artistGroup') || params.get('group');
+      const artist=params.get('artist');
+      if(artistGroup) details.push(`ARTIST GROUP · ${artistGroup}`);
+      else if(artist) details.push(`ARTIST · ${artist}`);
+      if(!details.length) details.push('ALL CATACOMBS');
+      entranceSearch.replaceChildren(...details.map(detail=>{
+        const row=document.createElement('div');
+        row.className='catacombs-search-detail-row';
+        row.textContent=detail;
+        return row;
+      }));
+      const portraitLines=[];
+      if(showExhibitIdentity) portraitLines.push(`EXHIBIT · ${entranceEmojiText}`);
+      portraitLines.push(...details);
+      entrancePortraitSecondary.replaceChildren(...portraitLines.map(detail=>{
+        const row=document.createElement('div');
+        row.className='catacombs-search-detail-row';
+        row.textContent=detail;
+        return row;
+      }));
+    }
     if(thumbnailIdentityPrimary) thumbnailIdentityPrimary.hidden=!catSearchHasEmojiPresent;
+    applyCapabilities();
   }
 
   function updateRankButtons(){

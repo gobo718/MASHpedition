@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>MASHpedition Shared Artwork Viewer</title>
 <!-- v18: area samples + swipe navigation on Exhibit/Endless + v17 shared viewer -->
-<link rel="stylesheet" href="exhibit.css?v=236">
+<link rel="stylesheet" href="exhibit.css?v=238">
 </head>
 <body>
 <main class="exhibit-shell" id="exhibitShell" data-view="door" aria-label="Exhibit view">
@@ -22,6 +22,11 @@
           <div class="entrance-search" id="entranceSearch" hidden>SEARCH DETAILS</div>
           <div class="entrance-search entrance-search-secondary" id="entranceSearchSecondary" hidden>SEARCH CONTEXT</div>
           <div class="entrance-selections" id="entranceSelections">Selections Curated by Community Vote</div>
+        </section>
+        <section class="entrance-portrait-panel" id="entrancePortraitPanel" aria-label="Portrait entrance information" hidden>
+          <div class="entrance-portrait-location" id="entrancePortraitLocation"></div>
+          <div class="entrance-portrait-divider" aria-hidden="true"></div>
+          <div class="entrance-portrait-secondary" id="entrancePortraitSecondary"></div>
         </section>
       </div>
     </section>
@@ -299,6 +304,6 @@
     <button type="button" id="displayModeBtn">FULL</button>
   </nav>
 </main>
-<script src="exhibit.js?v=236"></script>
+<script src="exhibit.js?v=238"></script>
 </body>
 </html>
