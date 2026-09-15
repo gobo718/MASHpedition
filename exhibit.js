@@ -404,7 +404,7 @@
     zoom:'ARTWORK VIEW',
     thumbnail:'THUMBNAILS',
     overhead:'AERIAL VIEW',
-    endless:'ENDLESS WALL VIEW'
+    endless:'PARADE VIEW'
   };
 
   const emojiPairs=[
@@ -562,12 +562,12 @@
     capabilityButtons.forEach(([button,key])=>{
       button.hidden=!capabilities[key];
     });
-    // GEH never exposes Endless, including its connected Zazzly thumbnail room.
+    // GEH never exposes Parade, including its connected Zazzly thumbnail room.
     if(gehMode) endlessBtn.hidden=true;
-    // Collection never exposes Endless.
+    // Collection never exposes Parade.
     if(collectionContext) endlessBtn.hidden=true;
     if(catacombsContext){
-      // THEME search: THUMBNAILS + ENDLESS. NO THEME: AERIAL + EXHIBIT + THUMBNAILS.
+      // THEME search: THUMBNAILS + PARADE. NO THEME: AERIAL + EXHIBIT + THUMBNAILS.
       overheadBtn.disabled=catSearchHasTheme;
       roomBtn.disabled=catSearchHasTheme;
       endlessBtn.disabled=(requestedArea==='cat-theme')?false:!catSearchHasTheme;
@@ -1448,7 +1448,7 @@
 
   // ---------------------------------------------------------------
   // v18 touch navigation.
-  // A deliberate horizontal swipe in Exhibit View or Endless Wall
+  // A deliberate horizontal swipe in Exhibit View or Parade
   // invokes the exact same LEFT/RIGHT behavior as the visible buttons.
   // Vertical-dominant gestures are ignored so normal page scrolling wins.
   // ---------------------------------------------------------------
@@ -1503,7 +1503,7 @@
 
   // Restore the approved swipe behavior without changing any room geometry.
   // Room camera states advance/reverse the 24-state circuit; Thumbnail View
-  // mirrors its current LEFT/RIGHT paging behavior; Exhibit and Endless Wall
+  // mirrors its current LEFT/RIGHT paging behavior; Exhibit and Parade
   // keep their existing swipe behavior.
   installHorizontalSwipe(roomStage,'left');
   installHorizontalSwipe(roomStage,'wall');
@@ -1733,7 +1733,7 @@
     renderRoom(zazzlyMode?13:(entryDoor && targetLocalDoor===1 ? 23 : entryDoor ? 8 : 1));
   }
   else if(requestedStart==='thumbnail' && capabilities.thumbnail) renderThumbnailPage();
-  else if(requestedStart==='endless' && capabilities.endless && !(catacombsMode && !catSearchHasTheme)) renderEndless();
+  else if((requestedStart==='parade' || requestedStart==='endless') && capabilities.endless && !(catacombsMode && !catSearchHasTheme)) renderEndless();
   else setView('door');
 })();
 

@@ -54,3 +54,12 @@ v228 FYC runtime repair
 - Restores execution of the remainder of exhibit.js, including LEFT/RIGHT/ENTRANCE/AERIAL/EXHIBIT/THUMBNAILS/ENDLESS/FULL handlers.
 - MUSEUM remained functional because it is a normal link and did not depend on the aborted JS.
 - No Museum Foundry calibration values, plates, door geometry, menu geometry, wording, or unrelated behavior changed.
+
+
+v229 Parade rename + repair
+- ENDLESS is renamed to PARADE in the user-facing view/menu vocabulary.
+- Existing internal `endless` state keys/classes are intentionally retained to avoid a risky unrelated refactor.
+- Integrated Exhibit viewer now labels the sequential feed PARADE / PARADE VIEW and accepts `start=parade` while retaining legacy `start=endless` compatibility.
+- Standalone sequential-feed page is retitled PARADE. THUMBNAILS and PARADE are now explicit mode buttons rather than one ambiguous toggle.
+- Standalone Thumbnail mode hides LEFT/RIGHT, matching the universal Thumbnail-menu rule; Parade restores LEFT/RIGHT.
+- No typography calibration, plate geometry, artwork geometry, or unrelated page behavior changed.

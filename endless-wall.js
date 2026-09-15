@@ -4,6 +4,7 @@
   const arts=[document.getElementById('wallA'),document.getElementById('wallB'),document.getElementById('wallC')];
   const thumbnailGrid=document.getElementById('thumbnailGrid');
   const thumbnailBtn=document.getElementById('thumbnailBtn');
+  const paradeBtn=document.getElementById('paradeBtn');
   const leftBtn=document.getElementById('leftBtn');
   const rightBtn=document.getElementById('rightBtn');
   const viewLabel=document.getElementById('viewLabel');
@@ -11,13 +12,21 @@
 
   function renderWall(){
     shell.dataset.view='wall';
-    viewLabel.textContent='ENDLESS WALL';
+    viewLabel.textContent='PARADE';
+    leftBtn.hidden=false;
+    rightBtn.hidden=false;
+    thumbnailBtn.hidden=false;
+    paradeBtn.hidden=true;
     arts.forEach((btn,i)=>{const n=start+i;btn.textContent=`ART ${n}`;btn.dataset.item=String(n);});
   }
 
   function renderThumbnails(){
     shell.dataset.view='thumbnail';
     viewLabel.textContent='THUMBNAILS';
+    leftBtn.hidden=true;
+    rightBtn.hidden=true;
+    thumbnailBtn.hidden=true;
+    paradeBtn.hidden=false;
     thumbnailGrid.replaceChildren();
     const first=Math.max(1,start-9);
     for(let i=0;i<22;i++){
@@ -36,7 +45,8 @@
 
   leftBtn.addEventListener('click',()=>move(-1));
   rightBtn.addEventListener('click',()=>move(1));
-  thumbnailBtn.addEventListener('click',()=>shell.dataset.view==='thumbnail'?renderWall():renderThumbnails());
+  thumbnailBtn.addEventListener('click',renderThumbnails);
+  paradeBtn.addEventListener('click',renderWall);
 
   let sx=0,sy=0,tracking=false,suppress=0; const MIN=42;
   stage.addEventListener('touchstart',e=>{if(e.touches.length!==1){tracking=false;return}const t=e.touches[0];sx=t.clientX;sy=t.clientY;tracking=true},{passive:true});
