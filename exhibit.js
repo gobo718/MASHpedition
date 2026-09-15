@@ -1292,6 +1292,11 @@
   function updateNavigationState(){
     const view=shell.dataset.view;
 
+    // Thumbnail views use PAGE PREV / PAGE NEXT only. LEFT / RIGHT remain
+    // available in the other spatial/artwork views, but are not menu controls
+    // on any thumbnail page.
+    leftBtn.hidden=(view==='thumbnail');
+    rightBtn.hidden=(view==='thumbnail');
     leftBtn.disabled=false;
     rightBtn.disabled=false;
 
@@ -1326,6 +1331,7 @@
       leftBtn.disabled=true;
       rightBtn.disabled=true;
     }
+    syncContextBar();
   }
 
   function stepSelectedArtwork(delta){

@@ -26,3 +26,10 @@ v224 Annex map correction
 - Uniform map scaling preserves the Installation as a mathematically regular hendecagon.
 - Browser/fullscreen changes recalculate the fit.
 - No Museum Foundry calibration, Annex wording, plate geometry, Installation player geometry, or unrelated page behavior changed.
+
+
+v225 Thumbnail menu correction
+- Removes LEFT and RIGHT from the context-sensitive menu in every thumbnail view.
+- Thumbnail pagination remains PAGE PREV / PAGE NEXT.
+- LEFT / RIGHT behavior outside thumbnail views is unchanged.
+- No layout, typography, plate, Annex, or Museum Foundry changes.
