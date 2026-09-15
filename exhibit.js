@@ -258,10 +258,9 @@
     worksName.textContent=residentName;
     entranceSelections.replaceChildren(worksLead,worksName);
   } else if(entranceKind==='fyc') {
-    const fycSelections=document.createElement('span');
-    fycSelections.append('Freshly Painted Selections',document.createElement('br'),'Begging for Your Opinion');
-    entranceSelections.replaceChildren(fycSelections);
-    paintMuseumPlateText(fycSelections,'Freshly Painted Selections\nBegging for Your Opinion');
+    // v228: author the FYC copy now, but defer Museum Foundry glyph painting
+    // until the glyph calibration tables below have been initialized.
+    entranceSelections.innerHTML='Freshly Painted Selections<br>Begging for Your Opinion';
   } else if(entranceKind==='salon') {
     entranceSelections.textContent='Bespoke selections tailored to your requests, presented via curation by a personal docent.';
   } else {
@@ -509,6 +508,14 @@
     if(document.fonts?.ready){
       document.fonts.ready.then(applyProportionalMuseumCentering);
     }
+  }
+
+  // v228 — FYC supporting copy must be painted only after the Museum Foundry
+  // calibration sets are initialized. v227 painted it earlier during startup,
+  // which hit the temporal-dead-zone on the first lowercase glyph and aborted
+  // the rest of exhibit.js before navigation handlers were attached.
+  if(entranceKind==='fyc'){
+    paintMuseumPlateText(entranceSelections,'Freshly Painted Selections\nBegging for Your Opinion');
   }
 
   function paintGehThumbnail(button,art,rank){

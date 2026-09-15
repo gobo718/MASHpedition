@@ -46,3 +46,11 @@ v226 universal menu ordering pass
 
 
 v227 FYC typography regression repair: removed the FYC-only Georgia override and restored the established Museum Foundry/SmallCaps signage treatment to FYC Entrance identity and supporting copy. Wording, door geometry, plate geometry, menu geometry, and unrelated behavior are unchanged.
+
+
+v228 FYC runtime repair
+- Fixes the v227 startup exception caused by painting lowercase FYC Museum Foundry glyphs before the glyph calibration sets were initialized.
+- Defers only the FYC supporting-copy paint until after those existing calibration tables/functions are ready.
+- Restores execution of the remainder of exhibit.js, including LEFT/RIGHT/ENTRANCE/AERIAL/EXHIBIT/THUMBNAILS/ENDLESS/FULL handlers.
+- MUSEUM remained functional because it is a normal link and did not depend on the aborted JS.
+- No Museum Foundry calibration values, plates, door geometry, menu geometry, wording, or unrelated behavior changed.
