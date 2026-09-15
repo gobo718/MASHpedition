@@ -4,7 +4,13 @@ Newest recorded version first. This file combines the preserved pre-v221 README 
 
 ## Recorded Version History
 
-### v233 Concourse rename + Hybrid responsive geometry
+### v234 — Concourse Installation Back-Center Placement
+- Moved the Installation hendecagon toward the back wall.
+- Horizontally centers the regular hendecagon in the open span between Common Grounds Café and Bookshop.
+- Uses the existing 3 CSS px Entrance-sign-to-black-door clearance as the exact back-wall-to-hendecagon clearance.
+- Installation remains a regular hendecagon; destination plates and typography are not stretched.
+
+## v233 Concourse rename + Hybrid responsive geometry
 - ANNEX is now canonically CONCOURSE. Common Grounds remains specifically the Café within the Concourse.
 - Museum Map destination label now reads CONCOURSE; Installation returns to CONCOURSE; the Café is labeled COMMON GROUNDS CAFÉ.
 - Replaces v224 whole-map uniform scaling with Hybrid geometry: the Concourse canvas fills the entire usable viewport above the persistent menu bar.

@@ -205,7 +205,6 @@ INSTALLATION</div>
     [donors,82,126,'center'],
     [cafe,360,53,'center'],
     [bookshop,918,165,'center'],
-    [installationButton,666,150,'center'],
     [frontDoor,360,300,'bottom'],
     [frontDoorLabel,360,266,'bottom']
   ];
@@ -234,8 +233,20 @@ INSTALLATION</div>
       }
     }
 
+    // v234 — Installation sits toward the back wall, centered in the open span
+    // between the Café and Bookshop. Preserve the exact 3px clearance already
+    // established between the Entrance sign and the black entrance door.
+    const cafeRight=(360*sx)+(cafe.offsetWidth/2);
+    const bookshopLeft=(918*sx)-(bookshop.offsetWidth/2);
+    const installationX=(cafeRight+bookshopLeft)/2;
+    const installationRadius=112*Math.min(sx,sy);
+    const entranceSignDoorGap=3;
+    const installationY=installationRadius+entranceSignDoorGap;
+    installationButton.style.left=`${installationX}px`;
+    installationButton.style.top=`${installationY}px`;
+
     // The SVG occupies the new rectangle. drawRoom() reads these dimensions and
-    // constructs a regular (never stretched) hendecagon at the remapped center.
+    // constructs a regular (never stretched) hendecagon at the same calculated center.
     hendecSvg.setAttribute('viewBox',`0 0 ${w} ${h}`);
     hendecSvg.style.width=`${w}px`;
     hendecSvg.style.height=`${h}px`;
@@ -259,8 +270,13 @@ INSTALLATION</div>
     const svg=document.querySelector('.hendec-svg');
     const w=svg.clientWidth||980,h=svg.clientHeight||300;
     const sx=w/980,sy=h/300;
-    const cx=666*sx,cy=150*sy;
     const r=112*Math.min(sx,sy);
+    const cafe=document.querySelector('.cafe');
+    const bookshop=document.querySelector('.bookshop');
+    const cafeRight=(360*sx)+((cafe?.offsetWidth||300)/2);
+    const bookshopLeft=(918*sx)-((bookshop?.offsetWidth||92)/2);
+    const cx=(cafeRight+bookshopLeft)/2;
+    const cy=r+3;
     const pts=points(cx,cy,r);
     g.replaceChildren();
     const poly=document.createElementNS(svgNS,'polygon');
