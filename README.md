@@ -63,3 +63,10 @@ v229 Parade rename + repair
 - Standalone sequential-feed page is retitled PARADE. THUMBNAILS and PARADE are now explicit mode buttons rather than one ambiguous toggle.
 - Standalone Thumbnail mode hides LEFT/RIGHT, matching the universal Thumbnail-menu rule; Parade restores LEFT/RIGHT.
 - No typography calibration, plate geometry, artwork geometry, or unrelated page behavior changed.
+
+
+v230 Parade runtime repair
+- Restored the missing paintEndlessSlot() renderer used by the shared Exhibit viewer.
+- PARADE buttons were correctly wired in v229, but clicking them called renderEndless(), which immediately failed because paintEndlessSlot() did not exist.
+- The restored renderer uses the same result/art numbering rules as Thumbnail View and preserves Zazzly/emoji-pair art labels.
+- No menu order, typography calibration, plate geometry, or unrelated layout behavior changed.

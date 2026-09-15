@@ -1025,6 +1025,33 @@
     updateNavigationState();
   }
 
+  function paintEndlessSlot(button,index){
+    button.classList.remove('is-empty');
+    button.disabled=false;
+    button.removeAttribute('data-art');
+    button.removeAttribute('data-result');
+
+    const span=button.querySelector('span');
+    if(index<0 || index>=genericResultCount){
+      button.classList.add('is-empty');
+      button.disabled=true;
+      button.setAttribute('aria-hidden','true');
+      if(span) span.textContent='';
+      return;
+    }
+
+    button.removeAttribute('aria-hidden');
+    const resultNumber=index+1;
+    const displayedArtNumber=zazzlyMode?66+resultNumber:resultNumber;
+    const useRoomLabel=zazzlyMode || (emojiPairDefinedLocation && resultNumber<=PAGE_SIZE);
+    const label=useRoomLabel?exhibitArtLabel(displayedArtNumber):`RESULT ${resultNumber}`;
+
+    button.dataset.result=String(index);
+    button.dataset.art=String(displayedArtNumber);
+    button.setAttribute('aria-label',label);
+    if(span) span.textContent=label;
+  }
+
   function renderEndless(){
     if(catacombsMode && requestedArea!=='cat-theme' && !catSearchHasTheme) return;
     if(!capabilities.endless){
