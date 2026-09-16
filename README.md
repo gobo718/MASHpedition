@@ -1,3 +1,8 @@
+## v258 — Residence Atelier Label Top Borders + Square Wide-Mode Images
+- Added the missing top border to every visible Atelier label box, completing the label rectangles while preserving the existing center dividers.
+- Corrected Atelier image slots so their width cannot exceed their calculated image height. This preserves square image geometry in the wide browser case that previously stretched Screen 1 images wider than tall.
+- Preserved the 20 CSS px label activation threshold, 3× font-size label-height cap, blank surplus above capped labels, 20% / 40% / 20% / 20% Residence partition, and all unrelated behavior.
+
 ## v257 — Residence Atelier Label Cap + Dividers
 - Added the missing vertical center divider through each visible pair of Atelier label boxes.
 - Preserved the 20 CSS px minimum top-space threshold before ATELIER n/8 words appear.

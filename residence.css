@@ -210,10 +210,12 @@ body{min-height:100dvh;overflow-y:auto;padding-bottom:var(--game-bar-height)}
   visibility:hidden;
   border:0;background:transparent;
 }
-.atelier-label.has-label{visibility:visible}
+.atelier-label.has-label{visibility:visible;border-top:1px solid var(--line)}
 .atelier-spot:nth-child(even) .atelier-label{border-left:1px solid var(--line)}
 .art-slot{
   flex:0 0 var(--atelier-image-h,100%);
-  width:100%;height:var(--atelier-image-h,100%);
+  width:min(100%,var(--atelier-image-h,100%));
+  height:var(--atelier-image-h,100%);
+  align-self:center;
   min-width:0;min-height:0;
 }
