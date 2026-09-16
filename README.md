@@ -1,3 +1,7 @@
+## v255 — Concourse Bookshop South-Edge Trim
+- Trimmed 10% from the Bookshop’s south/bottom side only.
+- Preserved the Bookshop’s north/top edge and width; no other Concourse geometry changed.
+
 ## v254 — Concourse Café / Donor’s Club Clearance
 - Narrowed the Common Grounds Café by 15% from the left only; its established right edge remains fixed.
 - Shortened Donor’s Club by 15% from the top only; its established bottom edge remains fixed.
