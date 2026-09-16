@@ -1,3 +1,8 @@
+## v259 — Residence Atelier Stable Uniform Squares
+- Fixed the actual wide-browser size snap: Residence screen height now uses the stable small viewport height, so browser chrome collapsing/expanding while scrolling cannot change Atelier sizing between Screen 1 and Screen 2.
+- All eight Atelier images use the same square calculation. When a 20% Atelier cell is wider than the vertically permitted square, the image stays square and the unused width becomes equal left/right margin.
+- Preserved v258 Atelier label top borders, center dividers, 20 CSS px label threshold, 3× font-size label cap, 20% / 40% / 20% / 20% partition, and unrelated behavior.
+
 ## v258 — Residence Atelier Label Top Borders + Square Wide-Mode Images
 - Added the missing top border to every visible Atelier label box, completing the label rectangles while preserving the existing center dividers.
 - Corrected Atelier image slots so their width cannot exceed their calculated image height. This preserves square image geometry in the wide browser case that previously stretched Screen 1 images wider than tall.

@@ -57,9 +57,15 @@
 
 </main>
 <nav class="game-menu-bar" aria-label="Residence menu"><a href="index.html">MUSEUM</a><button type="button" data-display-mode>FULL</button></nav>
-<script src="game-bar.js?v=257"></script>
+<script src="game-bar.js?v=259"></script>
 <script>
-/* v257 — Residence Atelier label cap.
+/* v259 — Residence Atelier stable square geometry.
+   Use the stable small viewport height so browser chrome collapsing while scrolling
+   cannot resize the Atelier between Residence screens. All eight spots use the
+   same min(cell width, cell height) square calculation; excess horizontal width
+   remains as equal left/right margin.
+
+   v257 — Residence Atelier label cap.
    Horizontal 20/40/20/20 geometry remains authoritative. Any height beyond
    the square image stays above it. At 20 CSS px the label appears. The label
    box may grow only to 3x its rendered font size; any further surplus becomes

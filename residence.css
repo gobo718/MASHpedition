@@ -159,7 +159,7 @@ button{font:inherit;color:inherit;background:var(--panel);border:1px solid var(-
    reduced height. The right-side Atelier is one square per screen, divided 2x2.
    One menu-bar-height remains as real clearance below Screen 2 so its bottom
    can scroll fully above the persistent bar. */
-:root{--game-bar-height:37px;--res-screen-h:calc(100dvh - var(--game-bar-height))}
+:root{--game-bar-height:37px;--res-screen-h:calc(100svh - var(--game-bar-height))}
 body{min-height:100dvh;overflow-y:auto;padding-bottom:var(--game-bar-height)}
 .residence{
   width:100%;
