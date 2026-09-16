@@ -28,6 +28,7 @@
   const entranceEmojis=document.getElementById('entranceEmojis');
   const entranceRank=document.getElementById('entranceRank');
   const entranceSearch=document.getElementById('entranceSearch');
+  const entranceExhibitInfo=shell.querySelector('.entrance-exhibit-info');
   const entranceSearchSecondary=document.getElementById('entranceSearchSecondary');
   const entrancePortraitPanel=document.getElementById('entrancePortraitPanel');
   const entrancePortraitLocation=document.getElementById('entrancePortraitLocation');
@@ -166,11 +167,18 @@
     frontDoor.style.aspectRatio='auto';
     frontDoor.style.transform='none';
 
-    // v243 — the landscape Entrance furniture shares the door's solved vertical
-    // datum. Do not recalculate this independently: the top Catacombs plate and
-    // the Search Details plate start exactly at the physical door top.
+    // v244 — one physical vertical datum for the whole landscape Entrance.
+    // LOCATION is a direct canvas child, while Search Details lives inside the
+    // entrance-exhibit-info wrapper. Anchor the actual outer plate/wrapper to
+    // doorTop; moving only the nested search content leaves its visible border
+    // behind. The curator plate follows immediately after the rendered LOCATION
+    // plate so it can never climb into/clamp the CATACOMBS lettering.
     if(entranceLocation) entranceLocation.style.top=`${doorTop}px`;
-    if(entranceSearch) entranceSearch.style.top=`${doorTop}px`;
+    if(entranceExhibitInfo) entranceExhibitInfo.style.top=`${doorTop}px`;
+    if(entranceSearch) entranceSearch.style.top='auto';
+    if(entranceSelections && entranceLocation){
+      entranceSelections.style.top=`${doorTop + entranceLocation.offsetHeight}px`;
+    }
 
     // Expose the solved numbers for a later independent audit without changing UI.
     frontDoor.dataset.geometryWidth=doorWidth.toFixed(3);

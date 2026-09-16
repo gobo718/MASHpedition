@@ -1,3 +1,9 @@
+## v244 — Catacombs Entrance furniture shares the door-top datum
+- Anchored the actual right-side Entrance information wrapper to the same computed `doorTop` used by the physical door and CATACOMBS plate.
+- Kept Search Details nested in that wrapper instead of independently offsetting its contents.
+- Positioned the curator plate immediately below the rendered CATACOMBS plate so the title cannot be clipped by the following plate.
+- Door geometry and Museum Foundry calibration are unchanged.
+
 ## v243 — Catacombs Entrance Plates Follow Door Top
 - Anchored the top of the Catacombs location plate and Search Details plate to the same computed `doorTop` used by the physical Entrance door.
 - Preserved the locked 37.5% / 25% / 37.5% horizontal architecture, 1:2.5 door ratio, and 15% minimum wall-above rule.
