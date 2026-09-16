@@ -1,3 +1,8 @@
+## v262 — Residence Atelier Complete Label Borders
+- Drew the missing outer left/right and bottom borders around every visible Atelier label row, while preserving the existing top border.
+- Adjacent label boxes share a single center stroke so the divider does not become double-thick.
+- Preserved v261 margin colors, equal-thirds spacing, square image sizing, label threshold/cap behavior, and all unrelated geometry.
+
 ## v261 — Residence Atelier Margin Color
 - Changed only the exposed Atelier margin/background areas to the established Residence grey surface.
 - Preserved v260 equal-thirds spacing, image sizing, label geometry, and border thickness.

@@ -211,8 +211,9 @@ body{min-height:100dvh;overflow-y:auto;padding-bottom:var(--game-bar-height)}
   visibility:hidden;
   border:0;background:var(--panel);
 }
-.atelier-label.has-label{visibility:visible;border-top:var(--atelier-border) solid var(--line)}
-.atelier-spot:nth-child(even) .atelier-label{border-left:var(--atelier-border) solid var(--line)}
+.atelier-label.has-label{visibility:visible;border:var(--atelier-border) solid var(--line)}
+/* Adjacent labels share one center stroke; outer left/right/top/bottom edges remain drawn. */
+.atelier-spot:nth-child(even) .atelier-label.has-label{border-left:0}
 .art-slot{
   flex:0 0 var(--atelier-image-h,100%);
   width:min(100%,var(--atelier-image-h,100%));
