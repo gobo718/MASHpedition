@@ -194,6 +194,29 @@
     }
     if(entranceSearch) entranceSearch.style.top='auto';
 
+    // v251 — simple two-plate Entrances conform as a matched pair in BOTH
+    // dimensions. Their outer left/right territories are already solved above;
+    // use the rendered left plate as the responsive height datum so the right
+    // visible plate matches it exactly at every viewport shape. This applies to
+    // Gallery, FYC, and Salon only. Collection, GEH, and Catacombs have
+    // intentionally different multi-element side compositions and are left intact.
+    if(['gallery','fyc','salon'].includes(entranceKind) && entranceLocation && entranceExhibitInfo && entranceSelections){
+      const matchedPlateHeight=entranceLocation.offsetHeight;
+      entranceExhibitInfo.style.height=`${matchedPlateHeight}px`;
+      entranceExhibitInfo.style.padding='0';
+      entranceExhibitInfo.style.justifyContent='center';
+      entranceSelections.style.position='relative';
+      entranceSelections.style.top='0px';
+      entranceSelections.style.width='100%';
+      entranceSelections.style.maxWidth='none';
+      entranceSelections.style.height='100%';
+      entranceSelections.style.margin='0';
+      entranceSelections.style.display='flex';
+      entranceSelections.style.flexDirection='column';
+      entranceSelections.style.alignItems='center';
+      entranceSelections.style.justifyContent='center';
+    }
+
     // v248 — complete the locked inter-plate standard on every existing
     // Entrance stack without changing destination content or side assignment.
     // Catacombs has the explicit two-plate LEFT stack. GEH has the explicit

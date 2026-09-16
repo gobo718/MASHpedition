@@ -1,3 +1,13 @@
+## v251 — Universal simple Entrance plate width + height conformity
+- Completed the Entrance-wide conformity sweep for the simple two-plate Entrance family: Private Gallery, For Your Consideration, and Salon Eclectique.
+- Their left and right outer plates now share the same responsive side-territory width and the exact same rendered height at every landscape viewport shape.
+- Collection, Grand Exhibition Hall, and Catacombs retain their intentionally different multi-element side compositions.
+- Locked door geometry, plate spacing, wording, and Museum Foundry calibration are unchanged.
+
+## v250 — Private Gallery Entrance right plate conforming width
+- Private Gallery’s visible right-side `THE WORKS OF / USERNAME OF RESIDENT` plate now fills the existing universal 31.5% right-side plate territory instead of retaining its older content-sized maximum width.
+- The locked Entrance door geometry, 37.5 / 25 / 37.5 architecture, plate positions, wording, and Museum Foundry calibration are unchanged.
+
 ## v249 — Entrance coordinate-space centering repair
 - Audited the complete 20-screenshot Entrance set across For Your Consideration, Collection, Private Gallery, Grand Exhibition Hall, and Salon Eclectique instead of sampling only a few screenshots.
 - Found the shared cause of the inconsistent centering: the universal Entrance solver measured the actual Door-view rectangle, but wrote those coordinates onto the inherited fixed 980×300 canvas, where they were scaled/offset a second time.

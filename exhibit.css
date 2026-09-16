@@ -3204,3 +3204,12 @@ button,
   height:100%;
   transform:none;
 }
+
+/* v250 — Private Gallery Entrance right plate conforms to its universal side territory.
+   The right-side wrapper already uses the locked 31.5% plate territory; the visible
+   THE WORKS OF / resident plaque now fills that wrapper instead of retaining its
+   older content-sized max-width. Door geometry and typography calibration unchanged. */
+.exhibit-shell[data-area="gallery"][data-view="door"] .entrance-selections{
+  width:100%;
+  max-width:none;
+}
