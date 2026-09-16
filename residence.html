@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>MASHpedition Residence</title>
-<link rel="stylesheet" href="residence.css?v=258">
+<link rel="stylesheet" href="residence.css?v=260">
 <link rel="stylesheet" href="game-bar.css?v=256">
 </head>
 <body>
@@ -86,6 +86,7 @@
       spot.style.setProperty('--atelier-label-h',labelH+'px');
       spot.style.setProperty('--atelier-top-blank',topBlank+'px');
       spot.style.setProperty('--atelier-image-h',imageH+'px');
+      spot.style.setProperty('--atelier-side-free',Math.max(0,w-imageH)+'px');
       label.classList.toggle('has-label',top>=20);
     }
   }

@@ -1,5 +1,5 @@
 *{box-sizing:border-box}
-:root{--line:#5f5f5f;--surface:#f4f4f4;--panel:#fff}
+:root{--line:#5f5f5f;--surface:#f4f4f4;--panel:#fff;--atelier-border:1px}
 html,body{margin:0;min-width:100%;background:var(--surface);color:#111;font-family:Arial,sans-serif}
 button{font:inherit;color:inherit;background:var(--panel);border:1px solid var(--line);border-radius:0}
 .residence{
@@ -199,6 +199,7 @@ body{min-height:100dvh;overflow-y:auto;padding-bottom:var(--game-bar-height)}
   width:100%;height:100%;min-width:0;min-height:0;
   display:flex;flex-direction:column;
   overflow:hidden;
+  background:var(--panel);
 }
 .atelier-label{
   flex:0 0 var(--atelier-label-h,0px);
@@ -210,12 +211,16 @@ body{min-height:100dvh;overflow-y:auto;padding-bottom:var(--game-bar-height)}
   visibility:hidden;
   border:0;background:transparent;
 }
-.atelier-label.has-label{visibility:visible;border-top:1px solid var(--line)}
-.atelier-spot:nth-child(even) .atelier-label{border-left:1px solid var(--line)}
+.atelier-label.has-label{visibility:visible;border-top:var(--atelier-border) solid var(--line)}
+.atelier-spot:nth-child(even) .atelier-label{border-left:var(--atelier-border) solid var(--line)}
 .art-slot{
   flex:0 0 var(--atelier-image-h,100%);
   width:min(100%,var(--atelier-image-h,100%));
   height:var(--atelier-image-h,100%);
-  align-self:center;
+  align-self:flex-start;
+  border:var(--atelier-border) solid var(--line);
   min-width:0;min-height:0;
 }
+/* Split horizontal surplus equally across left / center / right: 1/3 each. */
+.atelier-spot:nth-child(odd) .art-slot{margin-left:calc(var(--atelier-side-free,0px) * 2 / 3)}
+.atelier-spot:nth-child(even) .art-slot{margin-left:calc(var(--atelier-side-free,0px) / 3)}
