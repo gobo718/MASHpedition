@@ -1,3 +1,9 @@
+## v263 — Residence Atelier literal complete label rectangles
+- Every visible Atelier label now draws its own complete four-sided rectangle: top, right, bottom, and left.
+- Label rectangles use the same width and horizontal margin placement as their corresponding square image, so every label border visibly closes at the image edges.
+- No shared-border suppression: adjacent labels retain their own complete borders.
+- No Residence geometry, margin color, label threshold/cap, image sizing, or unrelated behavior changed.
+
 ## v262 — Residence Atelier Complete Label Borders
 - Drew the missing outer left/right and bottom borders around every visible Atelier label row, while preserving the existing top border.
 - Adjacent label boxes share a single center stroke so the divider does not become double-thick.
