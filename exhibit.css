@@ -3186,3 +3186,21 @@ button,
     z-index:30;
   }
 }
+
+/* v249 — Entrance geometry uses one coordinate space.
+   The universal Entrance solver reads the actual .door-wall-view rectangle, so
+   its positioned children must live in that same rectangle. The inherited
+   980×300 fixed-scene canvas was scaling/offsetting those solved coordinates a
+   second time, which made the door and side plates visibly off-center at some
+   viewport shapes. Door views alone now make their canvas fill the actual view;
+   all locked 37.5 / 25 / 37.5, 1:2.5, 15%-wall, and plate-spacing math remains
+   unchanged. */
+.exhibit-shell[data-view="door"] .door-wall-canvas{
+  left:0;
+  right:0;
+  top:0;
+  bottom:0;
+  width:100%;
+  height:100%;
+  transform:none;
+}

@@ -1,3 +1,9 @@
+## v249 — Entrance coordinate-space centering repair
+- Audited the complete 20-screenshot Entrance set across For Your Consideration, Collection, Private Gallery, Grand Exhibition Hall, and Salon Eclectique instead of sampling only a few screenshots.
+- Found the shared cause of the inconsistent centering: the universal Entrance solver measured the actual Door-view rectangle, but wrote those coordinates onto the inherited fixed 980×300 canvas, where they were scaled/offset a second time.
+- Door views now use the actual Door-view rectangle as their canvas coordinate space, so the locked 37.5% / 25% / 37.5% architecture is centered consistently at every tested viewport shape.
+- Door ratio (1:2.5), 15% minimum wall above, plate spacing, destination content, and Museum Foundry calibration are unchanged.
+
 ## v248 — Complete universal Entrance plate spacing
 - Completed the locked landscape Entrance plate-spacing setup across every Entrance stack that currently contains multiple plates.
 - Catacombs left stack remains: first plate 1/4 physical door width below door top; curation plate 1/8 physical door width below CATACOMBS.
