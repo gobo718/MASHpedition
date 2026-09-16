@@ -167,18 +167,19 @@
     frontDoor.style.aspectRatio='auto';
     frontDoor.style.transform='none';
 
-    // v245 — universal landscape Entrance plate-spacing standard.
-    // One gap unit is one quarter of the physical door width. Because the door
-    // is locked at 1:2.5, this is also exactly 10% of the total physical door
-    // height, even when part of that height is cropped below the viewport.
-    // Use the solved physical width, never visible door height, as the source.
+    // v246 — universal landscape Entrance plate-spacing standard.
+    // The initial inset is one quarter of physical door width (exactly 10% of
+    // the locked 1:2.5 physical door height). Inter-plate spacing is half that
+    // inset: one eighth of physical door width. Both derive from physical door
+    // width, never visible/cropped door height.
     const entranceGap=doorWidth * 0.25;
+    const interPlateGap=entranceGap * 0.5;
     const firstPlateTop=doorTop + entranceGap;
     if(entranceLocation) entranceLocation.style.top=`${firstPlateTop}px`;
     if(entranceExhibitInfo) entranceExhibitInfo.style.top=`${firstPlateTop}px`;
     if(entranceSearch) entranceSearch.style.top='auto';
     if(entranceSelections && entranceLocation){
-      entranceSelections.style.top=`${firstPlateTop + entranceLocation.offsetHeight + entranceGap}px`;
+      entranceSelections.style.top=`${firstPlateTop + entranceLocation.offsetHeight + interPlateGap}px`;
     }
 
     // Expose the solved numbers for a later independent audit without changing UI.

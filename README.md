@@ -1,3 +1,9 @@
+## v246 — Entrance initial inset + half-gap plate stacks
+- Kept the first left/right Entrance plates **25% of physical door width** below the physical door top.
+- Reduced spacing between successive plates to **12.5% of physical door width** (`entranceGap × 0.5`).
+- The same initial-inset/inter-plate rule applies to left and right plate stacks.
+- Door geometry, Museum Foundry calibration, temporary search controls, and unrelated layouts are unchanged.
+
 ## v245 — Entrance quarter-door-width plate spacing test
 - Established one landscape Entrance spacing unit as **25% of the physical door width**.
 - First left and right plates begin one spacing unit below the physical door top.
