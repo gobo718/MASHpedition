@@ -144,6 +144,57 @@
   // at least 15% wall above. If the full door fits, it sits on the floor. If it
   // cannot fit, its top stays at the 15% wall line and the excess continues below
   // the clipped door view. Height never feeds back into width.
+  // v252 — Entrance location plates keep a protected 10% inner margin on
+  // every side. The established font size is preserved whenever it fits; only
+  // an overflowing LEFT location label is reduced, and only enough to fit the
+  // 80% x 80% safe rectangle. Plate geometry and Museum Foundry calibration
+  // are untouched.
+  function fitEntranceLocationTextSafely(){
+    if(!entranceLocation || entranceLocation.hidden) return;
+
+    // Always begin from the stylesheet's established size so a later/larger
+    // viewport can restore the original typography instead of staying shrunk.
+    entranceLocation.style.fontSize='';
+    const baseSize=parseFloat(getComputedStyle(entranceLocation).fontSize)||0;
+    if(!baseSize) return;
+
+    const safeWidth=entranceLocation.clientWidth * 0.80;
+    const safeHeight=entranceLocation.clientHeight * 0.80;
+    if(safeWidth<=0 || safeHeight<=0) return;
+
+    const probe=entranceLocation.cloneNode(true);
+    probe.removeAttribute('id');
+    probe.style.position='fixed';
+    probe.style.left='-10000px';
+    probe.style.top='0';
+    probe.style.width=`${safeWidth}px`;
+    probe.style.height='auto';
+    probe.style.minHeight='0';
+    probe.style.padding='0';
+    probe.style.border='0';
+    probe.style.visibility='hidden';
+    probe.style.pointerEvents='none';
+    probe.style.transform='none';
+    document.body.appendChild(probe);
+
+    const fits=(size)=>{
+      probe.style.fontSize=`${size}px`;
+      return probe.scrollWidth <= safeWidth + 0.5 && probe.scrollHeight <= safeHeight + 0.5;
+    };
+
+    if(!fits(baseSize)){
+      let low=Math.min(8,baseSize);
+      let high=baseSize;
+      for(let i=0;i<12;i++){
+        const mid=(low+high)/2;
+        if(fits(mid)) low=mid;
+        else high=mid;
+      }
+      entranceLocation.style.fontSize=`${low.toFixed(3)}px`;
+    }
+    probe.remove();
+  }
+
   function syncEntranceDoorGeometry(){
     if(!frontDoor) return;
     const doorView=frontDoor.closest('.door-wall-view');
@@ -185,6 +236,12 @@
       entranceLocation.style.width='31.5%';
       entranceLocation.style.top=`${firstPlateTop}px`;
       entranceLocation.style.transform='none';
+      fitEntranceLocationTextSafely();
+      if(document.fonts?.ready){
+        document.fonts.ready.then(()=>{
+          if(shell.dataset.view==='door') fitEntranceLocationTextSafely();
+        });
+      }
     }
     if(entranceExhibitInfo){
       entranceExhibitInfo.style.left='65.5%';

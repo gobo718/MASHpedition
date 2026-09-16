@@ -1,3 +1,9 @@
+## v252 — Entrance Location Safe-Zone Font Fit
+- Added a narrowly scoped dynamic font fit to the LEFT Entrance location plate only.
+- Preserves the established font size whenever the label fits inside a protected 80% × 80% inner safe zone (10% breathing room on every side).
+- Shrinks only overflowing location text; plate dimensions, door geometry, right-side plates, and Museum Foundry calibration remain unchanged.
+- Re-evaluates from the original stylesheet font size after viewport changes so typography can grow back when space returns.
+
 ## v251 — Universal simple Entrance plate width + height conformity
 - Completed the Entrance-wide conformity sweep for the simple two-plate Entrance family: Private Gallery, For Your Consideration, and Salon Eclectique.
 - Their left and right outer plates now share the same responsive side-territory width and the exact same rendered height at every landscape viewport shape.
