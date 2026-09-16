@@ -1,3 +1,8 @@
+## v243 — Catacombs Entrance Plates Follow Door Top
+- Anchored the top of the Catacombs location plate and Search Details plate to the same computed `doorTop` used by the physical Entrance door.
+- Preserved the locked 37.5% / 25% / 37.5% horizontal architecture, 1:2.5 door ratio, and 15% minimum wall-above rule.
+- No Museum Foundry calibration or unrelated layout geometry changed.
+
 # v242 — Catacombs Entrance Literal Door Geometry
 
 - Replaced the Catacombs Entrance door's viewport-unit/cascade-dependent sizing with one explicit geometry calculation based on the actual usable Door view rectangle.

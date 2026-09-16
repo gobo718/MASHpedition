@@ -166,6 +166,12 @@
     frontDoor.style.aspectRatio='auto';
     frontDoor.style.transform='none';
 
+    // v243 — the landscape Entrance furniture shares the door's solved vertical
+    // datum. Do not recalculate this independently: the top Catacombs plate and
+    // the Search Details plate start exactly at the physical door top.
+    if(entranceLocation) entranceLocation.style.top=`${doorTop}px`;
+    if(entranceSearch) entranceSearch.style.top=`${doorTop}px`;
+
     // Expose the solved numbers for a later independent audit without changing UI.
     frontDoor.dataset.geometryWidth=doorWidth.toFixed(3);
     frontDoor.dataset.geometryHeight=doorHeight.toFixed(3);
