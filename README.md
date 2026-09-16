@@ -1,3 +1,7 @@
+## v261 — Residence Atelier Margin Color
+- Changed only the exposed Atelier margin/background areas to the established Residence grey surface.
+- Preserved v260 equal-thirds spacing, image sizing, label geometry, and border thickness.
+
 ## v260 — Residence Atelier Equal Thirds Margins + Unified Border Stroke
 - Changed wide-mode Atelier square placement so horizontal surplus is distributed equally as left / center / right margins: 33.333% / 33.333% / 33.333%, across every Atelier pair on both Residence screens.
 - Made the Atelier margin/background use the Residence white panel treatment instead of the grey surface showing through.
