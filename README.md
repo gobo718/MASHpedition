@@ -1,3 +1,16 @@
+## v265 — Studio Map complete Conformable viewport architecture
+- Completed the Studio Map Conformable pass rather than stopping at label centering.
+- The map now measures the actual available game viewport above the persistent menu bar and sizes the Studio shell to that rectangle on load, resize, and FULL/BROWSER viewport changes.
+- Preserved the established Studio proportions exactly: 20/30/30/20 rows; 75/25 top, 50/50 middle rows, and 25/75 bottom.
+- Preserved v264 Museum Foundry label optical-centering and existing responsive font sizing after geometry resolves.
+- Bumped the Studio stylesheet cache identity to v265.
+
+## v264 — Studio Map label optical centering
+- Applied the established Museum Foundry optical-centering formula to all eight Studio Map rectangle labels.
+- Studio rectangle geometry is unchanged; only each label text wrapper receives the existing font-size-derived vertical optical shift.
+- Recalculates after Museum Foundry loads and when the viewport changes.
+- Bumped the Studio stylesheet cache identity and the previously promised Residence stylesheet cache identity to v264.
+
 ## v263 — Residence Atelier literal complete label rectangles
 - Every visible Atelier label now draws its own complete four-sided rectangle: top, right, bottom, and left.
 - Label rectangles use the same width and horizontal margin placement as their corresponding square image, so every label border visibly closes at the image edges.

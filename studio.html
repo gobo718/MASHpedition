@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>MASHpedition Studio</title>
-<link rel="stylesheet" href="studio.css?v=222">
+<link rel="stylesheet" href="studio.css?v=265">
 <link rel="stylesheet" href="game-bar.css?v=226">
 </head>
 <body>
@@ -32,5 +32,43 @@
 </main>
 <nav class="game-menu-bar" aria-label="Studio menu"><a href="index.html">MUSEUM</a><button type="button" data-display-mode>FULL</button></nav>
 <script src="game-bar.js?v=226"></script>
+<script>
+(() => {
+  function sizeStudioMap(){
+    const root = document.documentElement;
+    const bar = document.querySelector('.game-menu-bar');
+    const width = root.clientWidth;
+    const height = Math.max(0, root.clientHeight - (bar?.getBoundingClientRect().height || 0));
+    root.style.setProperty('--studio-game-w', `${width}px`);
+    root.style.setProperty('--studio-game-h', `${height}px`);
+  }
+  function centerStudioLabels(){
+    document.querySelectorAll('.studio-zone').forEach(label => {
+      let text = label.querySelector(':scope > .studio-zone-text');
+      if(!text){
+        text = document.createElement('span');
+        text.className = 'studio-zone-text';
+        text.textContent = label.textContent;
+        label.replaceChildren(text);
+      }
+      const fontSize = parseFloat(getComputedStyle(label).fontSize) || 0;
+      if(!fontSize) return;
+      const opticalShift = 1.15
+        + 6.285 * Math.exp(-0.35 * (fontSize - 8))
+        - 3.485 * Math.exp(-0.60 * (fontSize - 11));
+      text.style.display = 'inline-block';
+      text.style.transform = `translateY(${opticalShift}px)`;
+    });
+  }
+  function layoutStudioMap(){
+    sizeStudioMap();
+    centerStudioLabels();
+  }
+  layoutStudioMap();
+  document.fonts?.ready?.then(layoutStudioMap);
+  addEventListener('resize', layoutStudioMap, {passive:true});
+  addEventListener('mashpeditionviewportchange', layoutStudioMap);
+})();
+</script>
 </body>
 </html>

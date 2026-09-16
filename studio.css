@@ -95,3 +95,12 @@ button,a{font:inherit;color:inherit}
 :root{--game-bar-height:37px}
 .studio-shell{height:calc(100dvh - var(--game-bar-height))}
 .museum-return{display:none!important}
+
+/* v265 — Studio Map complete landscape Conformable viewport architecture.
+   The map consumes the actual game rectangle above the persistent menu bar.
+   Existing 20/30/30/20 rows and 75/25, 50/50, 25/75 columns remain the
+   authoritative rectangle proportions and conform to that measured rectangle. */
+.studio-shell{
+  width:var(--studio-game-w,100vw);
+  height:var(--studio-game-h,calc(100dvh - var(--game-bar-height)));
+}
