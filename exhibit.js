@@ -144,6 +144,8 @@
   // at least 15% wall above. If the full door fits, it sits on the floor. If it
   // cannot fit, its top stays at the 15% wall line and the excess continues below
   // the clipped door view. Height never feeds back into width.
+  // v253 — Entrance location fitting preserves whole words. The fitter may
+  // shrink the established size, but it may never split a word merely to fit.
   // v252 — Entrance location plates keep a protected 10% inner margin on
   // every side. The established font size is preserved whenever it fits; only
   // an overflowing LEFT location label is reduced, and only enough to fit the
@@ -155,6 +157,8 @@
     // Always begin from the stylesheet's established size so a later/larger
     // viewport can restore the original typography instead of staying shrunk.
     entranceLocation.style.fontSize='';
+    entranceLocation.style.overflowWrap='normal';
+    entranceLocation.style.wordBreak='normal';
     const baseSize=parseFloat(getComputedStyle(entranceLocation).fontSize)||0;
     if(!baseSize) return;
 
@@ -175,6 +179,8 @@
     probe.style.visibility='hidden';
     probe.style.pointerEvents='none';
     probe.style.transform='none';
+    probe.style.overflowWrap='normal';
+    probe.style.wordBreak='normal';
     document.body.appendChild(probe);
 
     const fits=(size)=>{

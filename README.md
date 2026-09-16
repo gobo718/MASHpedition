@@ -1,3 +1,8 @@
+## v253 — Entrance Location Whole-Word Font Fit
+- Corrected the v252 LEFT Entrance location fitter so it never splits an individual word to satisfy the safe zone.
+- Location labels now preserve normal word boundaries and dynamically shrink only as far as necessary to fit the existing protected 80% × 80% inner safe rectangle.
+- Plate geometry, door geometry, right-side plates, wording, and Museum Foundry calibration remain unchanged.
+
 ## v252 — Entrance Location Safe-Zone Font Fit
 - Added a narrowly scoped dynamic font fit to the LEFT Entrance location plate only.
 - Preserves the established font size whenever the label fits inside a protected 80% × 80% inner safe zone (10% breathing room on every side).
