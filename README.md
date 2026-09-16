@@ -1,3 +1,11 @@
+## v247 — Universal landscape Entrance architecture
+- Stretched the locked Catacombs landscape Entrance geometry to every Entrance.
+- Every landscape Entrance now uses the actual Door-view rectangle with 37.5% left territory / 25% physical door / 37.5% right territory.
+- Door remains 1:2.5, width-derived only, with at least 15% visible wall above; excess physical door may continue below the viewport.
+- Left and right top plate territories use the same 3% outer/door inset and 31.5% plate width.
+- First plates begin 1/4 door width below the physical door top. Stacked plates use 1/8 door width between plates.
+- Existing destination-specific Entrance content and Museum Foundry calibration remain unchanged.
+
 ## v246 — Entrance initial inset + half-gap plate stacks
 - Kept the first left/right Entrance plates **25% of physical door width** below the physical door top.
 - Reduced spacing between successive plates to **12.5% of physical door width** (`entranceGap × 0.5`).

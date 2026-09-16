@@ -138,14 +138,14 @@
   let catSearchHasTheme=requestedArea!=='cat-search' && params.get('returnArea')!=='cat-search';
   let catSearchHasEmojiPresent=true;
 
-  // v242 — Catacombs Entrance door geometry is solved from the ACTUAL door-view
+  // v247 — Universal landscape Entrance geometry is solved from the ACTUAL door-view
   // rectangle, not viewport units and not inherited scene ratios. Billy's locked
   // invariants are literal: 37.5 / 25 / 37.5 horizontally; physical door 1:2.5;
   // at least 15% wall above. If the full door fits, it sits on the floor. If it
   // cannot fit, its top stays at the 15% wall line and the excess continues below
   // the clipped door view. Height never feeds back into width.
-  function syncCatacombsEntranceDoorGeometry(){
-    if(!catacombsContext || !frontDoor) return;
+  function syncEntranceDoorGeometry(){
+    if(!frontDoor) return;
     const doorView=frontDoor.closest('.door-wall-view');
     if(!doorView) return;
     const width=doorView.clientWidth;
@@ -175,10 +175,31 @@
     const entranceGap=doorWidth * 0.25;
     const interPlateGap=entranceGap * 0.5;
     const firstPlateTop=doorTop + entranceGap;
-    if(entranceLocation) entranceLocation.style.top=`${firstPlateTop}px`;
-    if(entranceExhibitInfo) entranceExhibitInfo.style.top=`${firstPlateTop}px`;
+
+    // v247 — stretch the locked Catacombs facade architecture to every
+    // landscape Entrance: 37.5 / 25 / 37.5, matching side plate territories,
+    // 1/4-door-width initial inset. Existing destination content stays intact.
+    if(entranceLocation){
+      entranceLocation.style.left='3%';
+      entranceLocation.style.right='auto';
+      entranceLocation.style.width='31.5%';
+      entranceLocation.style.top=`${firstPlateTop}px`;
+      entranceLocation.style.transform='none';
+    }
+    if(entranceExhibitInfo){
+      entranceExhibitInfo.style.left='65.5%';
+      entranceExhibitInfo.style.right='auto';
+      entranceExhibitInfo.style.width='31.5%';
+      entranceExhibitInfo.style.top=`${firstPlateTop}px`;
+    }
     if(entranceSearch) entranceSearch.style.top='auto';
-    if(entranceSelections && entranceLocation){
+
+    // Catacombs currently has the only explicit stacked left-side plates.
+    // Its second plate follows the universal 1/8-door-width inter-plate gap.
+    if(entranceKind==='catacombs' && entranceSelections && entranceLocation){
+      entranceSelections.style.left='3%';
+      entranceSelections.style.right='auto';
+      entranceSelections.style.width='31.5%';
       entranceSelections.style.top=`${firstPlateTop + entranceLocation.offsetHeight + interPlateGap}px`;
     }
 
@@ -651,7 +672,7 @@
     viewLabel.textContent=labels[next]||next.toUpperCase();
     updateNavigationState();
     updatePageNav();
-    if(next==='door') requestAnimationFrame(syncCatacombsEntranceDoorGeometry);
+    if(next==='door') requestAnimationFrame(syncEntranceDoorGeometry);
   }
 
   function applyCapabilities(){
@@ -1903,9 +1924,9 @@
   });
 
   syncDisplayMode();
-  window.addEventListener('resize',()=>{ syncFixedSceneFit(); syncCatacombsEntranceDoorGeometry(); });
+  window.addEventListener('resize',()=>{ syncFixedSceneFit(); syncEntranceDoorGeometry(); });
 
-  syncCatacombsEntranceDoorGeometry();
+  syncEntranceDoorGeometry();
 
   const requestedStart=(params.get('start')||defaultStart).toLowerCase();
   if(requestedStart==='exhibit' && capabilities.exhibit && !(catacombsMode && catSearchHasTheme)) renderOverhead();
