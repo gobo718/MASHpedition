@@ -1,3 +1,10 @@
+## v245 — Entrance quarter-door-width plate spacing test
+- Established one landscape Entrance spacing unit as **25% of the physical door width**.
+- First left and right plates begin one spacing unit below the physical door top.
+- Subsequent plates in a stack begin one spacing unit below the preceding plate.
+- Because the door is locked at 1:2.5, the spacing unit is exactly 10% of total physical door height and remains valid when the door is vertically cropped.
+- Door geometry, Museum Foundry calibration, and unrelated layouts are unchanged.
+
 ## v244 — Catacombs Entrance furniture shares the door-top datum
 - Anchored the actual right-side Entrance information wrapper to the same computed `doorTop` used by the physical door and CATACOMBS plate.
 - Kept Search Details nested in that wrapper instead of independently offsetting its contents.

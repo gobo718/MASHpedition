@@ -167,17 +167,18 @@
     frontDoor.style.aspectRatio='auto';
     frontDoor.style.transform='none';
 
-    // v244 — one physical vertical datum for the whole landscape Entrance.
-    // LOCATION is a direct canvas child, while Search Details lives inside the
-    // entrance-exhibit-info wrapper. Anchor the actual outer plate/wrapper to
-    // doorTop; moving only the nested search content leaves its visible border
-    // behind. The curator plate follows immediately after the rendered LOCATION
-    // plate so it can never climb into/clamp the CATACOMBS lettering.
-    if(entranceLocation) entranceLocation.style.top=`${doorTop}px`;
-    if(entranceExhibitInfo) entranceExhibitInfo.style.top=`${doorTop}px`;
+    // v245 — universal landscape Entrance plate-spacing standard.
+    // One gap unit is one quarter of the physical door width. Because the door
+    // is locked at 1:2.5, this is also exactly 10% of the total physical door
+    // height, even when part of that height is cropped below the viewport.
+    // Use the solved physical width, never visible door height, as the source.
+    const entranceGap=doorWidth * 0.25;
+    const firstPlateTop=doorTop + entranceGap;
+    if(entranceLocation) entranceLocation.style.top=`${firstPlateTop}px`;
+    if(entranceExhibitInfo) entranceExhibitInfo.style.top=`${firstPlateTop}px`;
     if(entranceSearch) entranceSearch.style.top='auto';
     if(entranceSelections && entranceLocation){
-      entranceSelections.style.top=`${doorTop + entranceLocation.offsetHeight}px`;
+      entranceSelections.style.top=`${firstPlateTop + entranceLocation.offsetHeight + entranceGap}px`;
     }
 
     // Expose the solved numbers for a later independent audit without changing UI.
