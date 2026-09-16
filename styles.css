@@ -91,3 +91,13 @@ button,.hub-link{
 /* v222 — Museum Map is conformable and uses the viewport remaining above the bar. */
 :root{--game-bar-height:37px}
 .museum-hub{height:calc(100dvh - var(--game-bar-height))}
+
+
+/* v267 — Museum Map complete landscape Conformable viewport architecture.
+   The map consumes the actual game rectangle above the persistent menu bar.
+   Existing 1/6–4/6–1/6 rows and all established column proportions remain
+   authoritative and conform to that measured rectangle. */
+.museum-hub{
+  width:var(--museum-game-w,100vw);
+  height:var(--museum-game-h,calc(100dvh - var(--game-bar-height)));
+}

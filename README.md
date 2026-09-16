@@ -1,3 +1,11 @@
+# v267 — Museum Map Complete Conformable Viewport
+
+- Museum Map now measures the actual available game viewport above the persistent menu bar at runtime.
+- Existing Museum Map rectangle proportions are preserved exactly: 1/6–4/6–1/6 horizontal bands, with the established 22.5/55/22.5, 50/50, and 25/50/12.5/12.5 column splits.
+- v266 Museum Foundry optical label centering remains applied after the conformable geometry resolves.
+- FULL/BROWSER and resize events recalculate both geometry and label centering.
+- No Museum Map plate proportions, links, wording, Information Desk K treatment, or unrelated screens changed.
+
 ## v266 — Museum Map dynamic label optical centering
 - Applies the established Museum Foundry optical-centering formula to every Museum Map rectangle label.
 - Recalculates from each label’s rendered font size after font load, resize, and viewport/fullscreen changes.
