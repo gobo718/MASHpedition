@@ -1,3 +1,12 @@
+# v242 — Catacombs Entrance Literal Door Geometry
+
+- Replaced the Catacombs Entrance door's viewport-unit/cascade-dependent sizing with one explicit geometry calculation based on the actual usable Door view rectangle.
+- Landscape horizontal architecture remains literal **37.5% left wall / 25% door / 37.5% right wall**.
+- Door width is exactly **25% of the Door view width**; physical height is exactly **2.5 × door width**. Height never feeds back into width.
+- Vertical placement is solved as `max(15% of usable height, usable height - physical door height)`: a fitting door sits on the floor with any extra wall above; a non-fitting door begins at the 15% wall line and continues below the clipped view.
+- The solved pixel width, height, top, and minimum-wall value are exposed as nonvisual `data-geometry-*` attributes on the door for independent auditing.
+- No Museum Foundry calibration, plate geometry, search-state semantics, or unrelated views were changed.
+
 # v241 — Catacombs Entrance Composition Cleanup
 
 - Locked the universal landscape Entrance facade at **37.5% left wall / 25% centered door / 37.5% right wall**.

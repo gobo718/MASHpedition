@@ -137,6 +137,42 @@
   let catSearchHasTheme=requestedArea!=='cat-search' && params.get('returnArea')!=='cat-search';
   let catSearchHasEmojiPresent=true;
 
+  // v242 — Catacombs Entrance door geometry is solved from the ACTUAL door-view
+  // rectangle, not viewport units and not inherited scene ratios. Billy's locked
+  // invariants are literal: 37.5 / 25 / 37.5 horizontally; physical door 1:2.5;
+  // at least 15% wall above. If the full door fits, it sits on the floor. If it
+  // cannot fit, its top stays at the 15% wall line and the excess continues below
+  // the clipped door view. Height never feeds back into width.
+  function syncCatacombsEntranceDoorGeometry(){
+    if(!catacombsContext || !frontDoor) return;
+    const doorView=frontDoor.closest('.door-wall-view');
+    if(!doorView) return;
+    const width=doorView.clientWidth;
+    const height=doorView.clientHeight;
+    if(width<=0 || height<=0) return;
+
+    const doorWidth=width * 0.25;
+    const doorHeight=doorWidth * 2.5;
+    const minimumWallAbove=height * 0.15;
+    const floorAnchoredTop=height - doorHeight;
+    const doorTop=Math.max(minimumWallAbove, floorAnchoredTop);
+
+    frontDoor.style.left=`${width * 0.375}px`;
+    frontDoor.style.right='auto';
+    frontDoor.style.top=`${doorTop}px`;
+    frontDoor.style.bottom='auto';
+    frontDoor.style.width=`${doorWidth}px`;
+    frontDoor.style.height=`${doorHeight}px`;
+    frontDoor.style.aspectRatio='auto';
+    frontDoor.style.transform='none';
+
+    // Expose the solved numbers for a later independent audit without changing UI.
+    frontDoor.dataset.geometryWidth=doorWidth.toFixed(3);
+    frontDoor.dataset.geometryHeight=doorHeight.toFixed(3);
+    frontDoor.dataset.geometryTop=doorTop.toFixed(3);
+    frontDoor.dataset.geometryWallMinimum=minimumWallAbove.toFixed(3);
+  }
+
   // Authoritative Theme content. Presentation code resolves identities from
   // these definitions instead of maintaining view-specific copies.
   const THEME_SETS={
@@ -599,6 +635,7 @@
     viewLabel.textContent=labels[next]||next.toUpperCase();
     updateNavigationState();
     updatePageNav();
+    if(next==='door') requestAnimationFrame(syncCatacombsEntranceDoorGeometry);
   }
 
   function applyCapabilities(){
@@ -1850,7 +1887,9 @@
   });
 
   syncDisplayMode();
-  window.addEventListener('resize',()=>{ syncFixedSceneFit(); });
+  window.addEventListener('resize',()=>{ syncFixedSceneFit(); syncCatacombsEntranceDoorGeometry(); });
+
+  syncCatacombsEntranceDoorGeometry();
 
   const requestedStart=(params.get('start')||defaultStart).toLowerCase();
   if(requestedStart==='exhibit' && capabilities.exhibit && !(catacombsMode && catSearchHasTheme)) renderOverhead();
