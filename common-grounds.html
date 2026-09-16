@@ -11,8 +11,8 @@ body{overflow:hidden}
 main{width:100vw;height:100dvh;display:flex;align-items:center;justify-content:center;position:relative}
 .cg-canvas{position:relative;width:980px;height:300px;background:#e8e3da;border:3px solid #26221d;overflow:hidden;flex:none}
 .zone{position:absolute;border:3px solid #26221d;background:#f7f3eb;display:flex;align-items:center;justify-content:center;text-align:center;font-weight:900;letter-spacing:.05em;z-index:3}
-.donors{left:16px;top:16px;width:132px;height:220px;flex-direction:column;padding:8px}
-.cafe{left:210px;top:16px;width:300px;height:74px;flex-direction:column}
+.donors{left:16px;top:49px;width:132px;height:187px;flex-direction:column;padding:8px}
+.cafe{left:255px;top:16px;width:255px;height:74px;flex-direction:column}
 .bookshop{right:16px;top:48px;width:92px;height:234px;flex-direction:column;padding:6px}
 .bookshop .vertical-title{writing-mode:horizontal-tb;transform:rotate(90deg);transform-origin:center center;font-size:17px;letter-spacing:.08em;white-space:nowrap}
 .hendec-svg{position:absolute;inset:0;width:980px;height:300px;z-index:2;overflow:visible;pointer-events:none}
@@ -202,8 +202,8 @@ INSTALLATION</div>
   // We remap centers/edges into the available rectangle while preserving each
   // object's own width/height. This stretches geography, not the furniture.
   const items=[
-    [donors,82,126,'center'],
-    [cafe,360,53,'center'],
+    [donors,82,142.5,'center'],
+    [cafe,382.5,53,'center'],
     [bookshop,918,165,'center'],
     [frontDoor,360,300,'bottom'],
     [frontDoorLabel,360,266,'bottom']
@@ -236,7 +236,7 @@ INSTALLATION</div>
     // v234 — Installation sits toward the back wall, centered in the open span
     // between the Café and Bookshop. Preserve the exact 3px clearance already
     // established between the Entrance sign and the black entrance door.
-    const cafeRight=(360*sx)+(cafe.offsetWidth/2);
+    const cafeRight=(382.5*sx)+(cafe.offsetWidth/2);
     const bookshopLeft=(918*sx)-(bookshop.offsetWidth/2);
     const installationX=(cafeRight+bookshopLeft)/2;
     const installationRadius=112*Math.min(sx,sy);
@@ -273,7 +273,7 @@ INSTALLATION</div>
     const r=112*Math.min(sx,sy);
     const cafe=document.querySelector('.cafe');
     const bookshop=document.querySelector('.bookshop');
-    const cafeRight=(360*sx)+((cafe?.offsetWidth||300)/2);
+    const cafeRight=(382.5*sx)+((cafe?.offsetWidth||255)/2);
     const bookshopLeft=(918*sx)-((bookshop?.offsetWidth||92)/2);
     const cx=(cafeRight+bookshopLeft)/2;
     const cy=r+3;

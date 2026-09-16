@@ -1,3 +1,9 @@
+## v254 — Concourse Café / Donor’s Club Clearance
+- Narrowed the Common Grounds Café by 15% from the left only; its established right edge remains fixed.
+- Shortened Donor’s Club by 15% from the top only; its established bottom edge remains fixed.
+- Updated the Concourse responsive reference centers so those one-sided reductions remain correct across viewport sizes.
+- No changes to Installation, Bookshop, Entrance, or other Concourse geometry.
+
 ## v253 — Entrance Location Whole-Word Font Fit
 - Corrected the v252 LEFT Entrance location fitter so it never splits an individual word to satisfy the safe zone.
 - Location labels now preserve normal word boundaries and dynamically shrink only as far as necessary to fit the existing protected 80% × 80% inner safe rectangle.
