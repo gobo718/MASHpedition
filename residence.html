@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>MASHpedition Residence</title>
-<link rel="stylesheet" href="residence.css?v=223">
-<link rel="stylesheet" href="game-bar.css?v=223">
+<link rel="stylesheet" href="residence.css?v=256">
+<link rel="stylesheet" href="game-bar.css?v=256">
 </head>
 <body>
 <main class="residence">
@@ -32,14 +32,14 @@
 </section>
 
 <section class="atelier" aria-label="Atelier">
-  <button class="art-slot" aria-label="Artwork 1"></button>
-  <button class="art-slot" aria-label="Artwork 2"></button>
-  <button class="art-slot" aria-label="Artwork 3"></button>
-  <button class="art-slot" aria-label="Artwork 4"></button>
-  <button class="art-slot" aria-label="Artwork 5"></button>
-  <button class="art-slot" aria-label="Artwork 6"></button>
-  <button class="art-slot" aria-label="Artwork 7"></button>
-  <button class="art-slot" aria-label="Artwork 8"></button>
+  <div class="atelier-spot"><div class="atelier-label">ATELIER 1/8</div><button class="art-slot" aria-label="Artwork 1"></button></div>
+  <div class="atelier-spot"><div class="atelier-label">ATELIER 2/8</div><button class="art-slot" aria-label="Artwork 2"></button></div>
+  <div class="atelier-spot"><div class="atelier-label">ATELIER 3/8</div><button class="art-slot" aria-label="Artwork 3"></button></div>
+  <div class="atelier-spot"><div class="atelier-label">ATELIER 4/8</div><button class="art-slot" aria-label="Artwork 4"></button></div>
+  <div class="atelier-spot"><div class="atelier-label">ATELIER 5/8</div><button class="art-slot" aria-label="Artwork 5"></button></div>
+  <div class="atelier-spot"><div class="atelier-label">ATELIER 6/8</div><button class="art-slot" aria-label="Artwork 6"></button></div>
+  <div class="atelier-spot"><div class="atelier-label">ATELIER 7/8</div><button class="art-slot" aria-label="Artwork 7"></button></div>
+  <div class="atelier-spot"><div class="atelier-label">ATELIER 8/8</div><button class="art-slot" aria-label="Artwork 8"></button></div>
 </section>
 
 <nav class="second-screen-menu" aria-label="Residence destinations">
@@ -57,6 +57,32 @@
 
 </main>
 <nav class="game-menu-bar" aria-label="Residence menu"><a href="index.html">MUSEUM</a><button type="button" data-display-mode>FULL</button></nav>
-<script src="game-bar.js?v=223"></script>
+<script src="game-bar.js?v=256"></script>
+<script>
+/* v256 — Residence conformable Atelier labels.
+   Horizontal 20/40/20/20 geometry is authoritative. Each Atelier cell gives
+   any height beyond its image width to the TOP label area. Words remain
+   absent until that top area reaches 20 CSS px. */
+(function(){
+  const spots=[...document.querySelectorAll('.atelier-spot')];
+  function fitAtelier(){
+    for(const spot of spots){
+      const label=spot.querySelector('.atelier-label');
+      const image=spot.querySelector('.art-slot');
+      const w=spot.clientWidth;
+      const h=spot.clientHeight;
+      const top=Math.max(0,h-w);
+      const imageH=Math.min(h,w);
+      spot.style.setProperty('--atelier-top',top+'px');
+      spot.style.setProperty('--atelier-image-h',imageH+'px');
+      label.classList.toggle('has-label',top>=20);
+    }
+  }
+  new ResizeObserver(fitAtelier).observe(document.querySelector('.residence'));
+  addEventListener('resize',fitAtelier);
+  addEventListener('mashpeditionviewportchange',fitAtelier);
+  fitAtelier();
+})();
+</script>
 </body>
 </html>

@@ -1,3 +1,11 @@
+## v256 — Residence Conformable Atelier System
+- Reclassified the landscape Residence layout from Hybrid to Conformable while preserving the established 20% / 40% / 20% / 20% horizontal partition.
+- Preserved eight Atelier positions across the two landscape Residence screens: ATELIER 1/8–4/8 on Screen 1 and ATELIER 5/8–8/8 on Screen 2.
+- Atelier image geometry no longer controls the widths of the rest of Residence. Each Atelier cell conforms to its allotted 20% width and half-screen height.
+- Any spare vertical room is reserved above the image only. At 0–19 CSS px it remains blank margin; at 20 CSS px or more the corresponding ATELIER n/8 label appears and the top label area expands with additional room.
+- Portrait Residence remains a separate future composition; no portrait rebuild is included here.
+- No Museum Foundry calibration, menu behavior, Concourse geometry, Entrance geometry, or unrelated page behavior changed.
+
 ## v255 — Concourse Bookshop South-Edge Trim
 - Trimmed 10% from the Bookshop’s south/bottom side only.
 - Preserved the Bookshop’s north/top edge and width; no other Concourse geometry changed.

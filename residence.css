@@ -176,3 +176,40 @@ body{min-height:100dvh;overflow-y:auto;padding-bottom:var(--game-bar-height)}
 .atelier{grid-template-rows:repeat(4,calc(var(--res-screen-h)/2))}
 .profile-picture{aspect-ratio:1/1;align-self:start;width:100%;height:auto}
 .museum-exit{display:none!important}
+
+/* v256 — Residence is Conformable in landscape.
+   Preserve the locked 20 / 40 / 20 / 20 horizontal partition and eight
+   Atelier positions across two screens. Atelier image geometry no longer
+   dictates the Residence columns. Any spare vertical room belongs above the
+   image; label words appear only when that top area reaches 20 CSS px. */
+.residence{
+  grid-template-columns:20vw 40vw 20vw 20vw;
+  grid-template-rows:repeat(10,calc(var(--res-screen-h)/5));
+}
+.identity,.quick-actions,.second-screen-menu{grid-column:1}
+.microflex-board{grid-column:2}
+.atelier{
+  grid-column:3/span 2;
+  grid-template-columns:repeat(2,20vw);
+  grid-template-rows:repeat(4,calc(var(--res-screen-h)/2));
+}
+.atelier-spot{
+  width:100%;height:100%;min-width:0;min-height:0;
+  display:flex;flex-direction:column;
+  overflow:hidden;
+}
+.atelier-label{
+  flex:0 0 var(--atelier-top,0px);
+  min-width:0;min-height:0;
+  overflow:hidden;
+  display:flex;align-items:center;justify-content:center;text-align:center;
+  font-family:'Museum Foundry',serif;font-variant:small-caps;letter-spacing:0;
+  visibility:hidden;
+  border:0;background:transparent;
+}
+.atelier-label.has-label{visibility:visible}
+.art-slot{
+  flex:0 0 var(--atelier-image-h,100%);
+  width:100%;height:var(--atelier-image-h,100%);
+  min-width:0;min-height:0;
+}
