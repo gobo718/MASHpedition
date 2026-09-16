@@ -1,3 +1,9 @@
+## v266 — Museum Map dynamic label optical centering
+- Applies the established Museum Foundry optical-centering formula to every Museum Map rectangle label.
+- Recalculates from each label’s rendered font size after font load, resize, and viewport/fullscreen changes.
+- Moves only an inner text wrapper; Museum Map plate/rectangle geometry is unchanged.
+- Preserves the existing INFORMATION DESK K treatment inside the moved text block.
+
 ## v265 — Studio Map complete Conformable viewport architecture
 - Completed the Studio Map Conformable pass rather than stopping at label centering.
 - The map now measures the actual available game viewport above the persistent menu bar and sizes the Studio shell to that rectangle on load, resize, and FULL/BROWSER viewport changes.

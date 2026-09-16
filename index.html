@@ -30,6 +30,40 @@
   </section>
 </main>
 <nav class="game-menu-bar" aria-label="Museum menu"><button type="button" data-display-mode>FULL</button></nav>
+<script>
+/* v266 — Museum Map label optical centering. Move only the visible text, never the plates. */
+(function(){
+  const labels = document.querySelectorAll('.museum-hub .hub-link, .museum-hub button');
+
+  function ensureTextWrapper(label){
+    let wrapper = label.querySelector(':scope > .museum-map-label-text');
+    if(wrapper) return wrapper;
+    wrapper = document.createElement('span');
+    wrapper.className = 'museum-map-label-text';
+    while(label.firstChild) wrapper.appendChild(label.firstChild);
+    label.appendChild(wrapper);
+    return wrapper;
+  }
+
+  function centerMuseumMapLabels(){
+    labels.forEach(label => {
+      const text = ensureTextWrapper(label);
+      const fontSize = parseFloat(getComputedStyle(label).fontSize) || 16;
+      const opticalShift =
+        1.15
+        + 6.285 * Math.exp(-0.35 * (fontSize - 8))
+        - 3.485 * Math.exp(-0.60 * (fontSize - 11));
+      text.style.display = 'inline-block';
+      text.style.transform = `translateY(${opticalShift}px)`;
+    });
+  }
+
+  centerMuseumMapLabels();
+  addEventListener('resize', centerMuseumMapLabels);
+  addEventListener('mashpeditionviewportchange', centerMuseumMapLabels);
+  if(document.fonts && document.fonts.ready) document.fonts.ready.then(centerMuseumMapLabels);
+})();
+</script>
 <script src="game-bar.js?v=226"></script>
 </body>
 </html>
