@@ -181,7 +181,9 @@ body{min-height:100dvh;overflow-y:auto;padding-bottom:var(--game-bar-height)}
    Preserve the locked 20 / 40 / 20 / 20 horizontal partition and eight
    Atelier positions across two screens. Atelier image geometry no longer
    dictates the Residence columns. Any spare vertical room belongs above the
-   image; label words appear only when that top area reaches 20 CSS px. */
+   image; label words appear only when that top area reaches 20 CSS px.
+   Label boxes stop growing at 3x their rendered font size; further surplus stays
+   as blank margin ABOVE the label so the label remains attached to the image. */
 .residence{
   grid-template-columns:20vw 40vw 20vw 20vw;
   grid-template-rows:repeat(10,calc(var(--res-screen-h)/5));
@@ -199,7 +201,8 @@ body{min-height:100dvh;overflow-y:auto;padding-bottom:var(--game-bar-height)}
   overflow:hidden;
 }
 .atelier-label{
-  flex:0 0 var(--atelier-top,0px);
+  flex:0 0 var(--atelier-label-h,0px);
+  margin-top:var(--atelier-top-blank,0px);
   min-width:0;min-height:0;
   overflow:hidden;
   display:flex;align-items:center;justify-content:center;text-align:center;
@@ -208,6 +211,7 @@ body{min-height:100dvh;overflow-y:auto;padding-bottom:var(--game-bar-height)}
   border:0;background:transparent;
 }
 .atelier-label.has-label{visibility:visible}
+.atelier-spot:nth-child(even) .atelier-label{border-left:1px solid var(--line)}
 .art-slot{
   flex:0 0 var(--atelier-image-h,100%);
   width:100%;height:var(--atelier-image-h,100%);

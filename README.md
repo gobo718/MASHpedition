@@ -1,3 +1,10 @@
+## v257 — Residence Atelier Label Cap + Dividers
+- Added the missing vertical center divider through each visible pair of Atelier label boxes.
+- Preserved the 20 CSS px minimum top-space threshold before ATELIER n/8 words appear.
+- Capped each visible Atelier label box at 3× its rendered font size.
+- Once that cap is reached, any additional vertical surplus remains blank above the label; the label stays directly attached to the top of its image.
+- Preserved the v256 20% / 40% / 20% / 20% Residence partition, eight Atelier positions, image geometry, portrait deferral, and all unrelated behavior.
+
 ## v256 — Residence Conformable Atelier System
 - Reclassified the landscape Residence layout from Hybrid to Conformable while preserving the established 20% / 40% / 20% / 20% horizontal partition.
 - Preserved eight Atelier positions across the two landscape Residence screens: ATELIER 1/8–4/8 on Screen 1 and ATELIER 5/8–8/8 on Screen 2.

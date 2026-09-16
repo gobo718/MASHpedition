@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>MASHpedition Residence</title>
-<link rel="stylesheet" href="residence.css?v=256">
+<link rel="stylesheet" href="residence.css?v=257">
 <link rel="stylesheet" href="game-bar.css?v=256">
 </head>
 <body>
@@ -57,23 +57,28 @@
 
 </main>
 <nav class="game-menu-bar" aria-label="Residence menu"><a href="index.html">MUSEUM</a><button type="button" data-display-mode>FULL</button></nav>
-<script src="game-bar.js?v=256"></script>
+<script src="game-bar.js?v=257"></script>
 <script>
-/* v256 — Residence conformable Atelier labels.
-   Horizontal 20/40/20/20 geometry is authoritative. Each Atelier cell gives
-   any height beyond its image width to the TOP label area. Words remain
-   absent until that top area reaches 20 CSS px. */
+/* v257 — Residence Atelier label cap.
+   Horizontal 20/40/20/20 geometry remains authoritative. Any height beyond
+   the square image stays above it. At 20 CSS px the label appears. The label
+   box may grow only to 3x its rendered font size; any further surplus becomes
+   blank margin ABOVE the label, keeping the label attached to the image. */
 (function(){
   const spots=[...document.querySelectorAll('.atelier-spot')];
   function fitAtelier(){
     for(const spot of spots){
       const label=spot.querySelector('.atelier-label');
-      const image=spot.querySelector('.art-slot');
       const w=spot.clientWidth;
       const h=spot.clientHeight;
       const top=Math.max(0,h-w);
       const imageH=Math.min(h,w);
-      spot.style.setProperty('--atelier-top',top+'px');
+      const fontSize=parseFloat(getComputedStyle(label).fontSize)||16;
+      const maxLabelH=fontSize*3;
+      const labelH=top>=20?Math.min(top,maxLabelH):top;
+      const topBlank=Math.max(0,top-labelH);
+      spot.style.setProperty('--atelier-label-h',labelH+'px');
+      spot.style.setProperty('--atelier-top-blank',topBlank+'px');
       spot.style.setProperty('--atelier-image-h',imageH+'px');
       label.classList.toggle('has-label',top>=20);
     }
