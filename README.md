@@ -1,3 +1,10 @@
+## v248 — Complete universal Entrance plate spacing
+- Completed the locked landscape Entrance plate-spacing setup across every Entrance stack that currently contains multiple plates.
+- Catacombs left stack remains: first plate 1/4 physical door width below door top; curation plate 1/8 physical door width below CATACOMBS.
+- Grand Exhibition Hall right stack now uses the same 1/8 physical door width gap between its rank plate and community-vote curation plate.
+- Collection, Private Gallery, For Your Consideration, and Salon Eclectique currently have no second plate in a side stack, so no inter-plate gap is required there; their universal first-plate/side-territory geometry remains active.
+- Door geometry, destination content, plate side assignment, Museum Foundry calibration, and unrelated layouts remain unchanged.
+
 ## v247 — Universal landscape Entrance architecture
 - Stretched the locked Catacombs landscape Entrance geometry to every Entrance.
 - Every landscape Entrance now uses the actual Door-view rectangle with 37.5% left territory / 25% physical door / 37.5% right territory.

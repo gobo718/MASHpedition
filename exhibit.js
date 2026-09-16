@@ -194,13 +194,23 @@
     }
     if(entranceSearch) entranceSearch.style.top='auto';
 
-    // Catacombs currently has the only explicit stacked left-side plates.
-    // Its second plate follows the universal 1/8-door-width inter-plate gap.
+    // v248 — complete the locked inter-plate standard on every existing
+    // Entrance stack without changing destination content or side assignment.
+    // Catacombs has the explicit two-plate LEFT stack. GEH has the explicit
+    // two-plate RIGHT stack (rank followed by curation). The remaining Entrance
+    // types currently have only one plate in each side stack, so there is no
+    // inter-plate gap to apply until another plate exists.
     if(entranceKind==='catacombs' && entranceSelections && entranceLocation){
       entranceSelections.style.left='3%';
       entranceSelections.style.right='auto';
       entranceSelections.style.width='31.5%';
       entranceSelections.style.top=`${firstPlateTop + entranceLocation.offsetHeight + interPlateGap}px`;
+    }
+    if(entranceKind==='geh' && entranceRank && entranceSelections){
+      // Preserve GEH's established right-side content flow and typography.
+      // Replace only the old fixed rank→curation spacing with the universal
+      // 1/8-physical-door-width gap.
+      entranceRank.style.marginBottom=`${interPlateGap}px`;
     }
 
     // Expose the solved numbers for a later independent audit without changing UI.
