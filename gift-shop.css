@@ -1,0 +1,11 @@
+@font-face{font-family:MuseumFoundry;src:url("MuseumFoundry.otf") format("opentype");font-display:swap}
+*{box-sizing:border-box}
+html,body{margin:0;width:100%;height:100%;background:#111;color:#eee}
+body{font-family:MuseumFoundry,serif;overflow:hidden}
+.gift-shop{height:calc(100dvh - var(--game-bar-h,44px));min-height:0;padding:4vmin;background:#d7d2c8}
+.gift-shop-space{width:100%;height:100%;border:1px solid #222;background:#eee9df;display:grid;grid-template-rows:auto 1fr;gap:3vmin;padding:3vmin}
+.gift-shop-title{text-align:center;color:#111;font-size:clamp(18px,3vw,42px);letter-spacing:.06em}
+.vending-machines{justify-self:center;align-self:center;width:min(72vw,620px);height:min(48vh,360px);border:2px solid #222;background:#d2cdc3;color:#111;font:inherit;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1em}
+.machine-icon{font-size:clamp(42px,8vw,92px)}
+.machine-label{font-size:clamp(18px,3vw,38px);letter-spacing:.05em}
+.machine-purpose{font-size:clamp(11px,1.5vw,18px);letter-spacing:.04em}

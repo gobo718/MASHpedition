@@ -1,3 +1,11 @@
+## v272 — Residence Vault square + Gift Shop Vending Machines
+
+- Reassigned the former Residence Prize Machine square to VAULT, linking directly to the private Vault thumbnail view.
+- Removed the Prize/Vending Machine destination from the Residence without changing Residence geometry.
+- Added a Gift Shop destination from the Museum map.
+- Added the Gift Shop Vending Machines collection/cash-in destination for meter-produced rewards.
+- Preserved the Residence Trophy Room, Sticker Machine, Computer, Collection, Gallery, Atelier, and all unrelated geometry/behavior.
+
 ## v271 — Gallery becomes public artist selection; former Gallery preserved as Vault
 - Gallery entrance wording is now THE ARTIST'S SELECTION / Original works created and curated by the artist.
 - Added VAULT as the renamed private personal-work area.
