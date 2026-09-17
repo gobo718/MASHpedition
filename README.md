@@ -1,3 +1,11 @@
+## v270 — Chromatic Attic staged Chromalucent display
+- Added Chromatic Attic as a working Studio destination.
+- Temporary progression radios preview 3, 6, 13, and 22 Chromalucents.
+- Chromalucents are floating glowing cube crystals with a rough rock-candy outer layer.
+- Final 22-crystal display is arranged in three horizontal rows: 7 / 8 / 7.
+- Short folded-landscape rules keep the complete display inside one game screen.
+- Existing Color Cellar and unrelated Studio geometry remain unchanged.
+
 ## v269 — Color Cellar folded-landscape fit
 - Color Cellar only: constrained the initial bookshelf shelf rows and large pigment jars by available landscape height so all five pigments remain above the game bar on a folded landscape screen.
 - Full-open layout and all unrelated geometry/behavior are unchanged.

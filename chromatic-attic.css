@@ -1,0 +1,49 @@
+@font-face{font-family:MuseumFoundry;src:url("MuseumFoundry.otf") format("opentype");font-display:swap}
+*{box-sizing:border-box}
+html,body{margin:0;width:100%;height:100%;overflow:hidden}
+body{font-family:Arial,sans-serif;background:#171522;color:#eee}
+.attic-room{height:calc(100% - 42px);min-height:0;display:grid;grid-template-rows:auto minmax(0,1fr);background:
+radial-gradient(circle at 50% 42%,#302c42 0,#211e30 45%,#15131d 100%)}
+.attic-head{display:flex;align-items:center;gap:24px;padding:10px 14px;border-bottom:3px solid #393342;background:#292535;min-width:0}
+.plate{font-family:MuseumFoundry,Georgia,serif;font-size:24px;white-space:nowrap;border:4px double #aaa2b5;padding:7px 18px;color:#f4f0f8;background:#211e2a}
+.stage-picker{margin:0;min-width:0;display:flex;align-items:center;gap:10px;flex-wrap:wrap;border:1px solid #777080;padding:5px 10px 7px}
+.stage-picker legend{font-weight:700;font-size:13px;padding:0 5px}
+.stage-picker label{white-space:nowrap;font-size:14px}
+.stage-picker input{width:20px;height:20px;vertical-align:middle;margin:0 3px 0 0}
+.crystal-display{position:relative;min-height:0;display:flex;align-items:center;justify-content:center;padding:20px 7% 28px;overflow:hidden}
+.crystal-field{width:min(92%,1000px);height:min(82%,560px);display:grid;align-content:center;gap:clamp(18px,5vh,46px)}
+.crystal-row{display:flex;justify-content:center;align-items:center;gap:clamp(24px,5.2vw,68px)}
+.crystal{--c:#fff;position:relative;width:clamp(42px,6.2vw,74px);aspect-ratio:1;flex:0 0 auto;filter:drop-shadow(0 0 7px var(--c)) drop-shadow(0 0 16px var(--c));animation:float 3.8s ease-in-out infinite alternate}
+.crystal:nth-child(even){animation-delay:-1.7s}
+.crystal-core{position:absolute;inset:13%;background:var(--c);border:2px solid rgba(255,255,255,.55);box-shadow:inset 7px 7px 10px rgba(255,255,255,.25),inset -8px -8px 12px rgba(0,0,0,.28),0 0 16px var(--c)}
+.crystal::before,.crystal::after{content:"";position:absolute;inset:0;background:
+linear-gradient(135deg,transparent 0 15%,var(--c) 16% 26%,transparent 27% 42%,var(--c) 43% 55%,transparent 56% 72%,var(--c) 73% 84%,transparent 85%),
+linear-gradient(45deg,transparent 0 21%,rgba(255,255,255,.8) 22% 27%,transparent 28% 58%,rgba(255,255,255,.55) 59% 65%,transparent 66%);
+clip-path:polygon(8% 24%,22% 18%,27% 5%,43% 14%,55% 2%,66% 16%,84% 12%,91% 31%,100% 43%,89% 56%,96% 75%,76% 82%,66% 98%,49% 88%,32% 97%,24% 82%,5% 76%,12% 59%,0 45%,12% 36%)}
+.crystal::after{transform:rotate(90deg) scale(.91);opacity:.65}
+.crystal-name{position:absolute;left:50%;top:108%;transform:translateX(-50%);font-size:clamp(8px,1.25vw,12px);font-weight:700;white-space:nowrap;text-shadow:0 1px 3px #000}
+.stage-note{position:absolute;right:16px;bottom:12px;border:1px solid #777080;background:#292535;padding:7px 12px;font-weight:700;font-size:13px}
+@keyframes float{from{transform:translateY(-5px) rotate(-1deg)}to{transform:translateY(7px) rotate(1deg)}}
+@media (prefers-reduced-motion:reduce){.crystal{animation:none}}
+@media (orientation:landscape) and (max-height:450px){
+  .attic-room{height:calc(100% - 42px)}
+  .attic-head{padding:4px 10px;gap:14px}
+  .plate{font-size:clamp(14px,4.8vh,19px);padding:4px 11px}
+  .stage-picker{padding:2px 7px 4px;gap:6px}
+  .stage-picker legend{font-size:clamp(8px,2.8vh,11px)}
+  .stage-picker label{font-size:clamp(9px,3.1vh,12px)}
+  .stage-picker input{width:16px;height:16px}
+  .crystal-display{padding:6px 5% 12px}
+  .crystal-field{height:94%;gap:clamp(7px,2.7vh,12px)}
+  .crystal-row{gap:clamp(15px,4.2vw,42px)}
+  .crystal{width:clamp(26px,10.5vh,40px)}
+  .crystal-name{font-size:clamp(5px,2.1vh,8px)}
+  .stage-note{right:8px;bottom:5px;padding:3px 7px;font-size:clamp(7px,2.5vh,10px)}
+}
+@media (max-width:600px) and (orientation:portrait){
+  .attic-head{align-items:flex-start;gap:8px;flex-direction:column}
+  .plate{font-size:20px}
+  .crystal-display{padding-left:3%;padding-right:3%}
+  .crystal-row{gap:clamp(10px,3vw,20px)}
+  .crystal{width:clamp(30px,9vw,48px)}
+}
