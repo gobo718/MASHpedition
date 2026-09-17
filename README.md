@@ -877,3 +877,10 @@ In Room/Corner views, Left and Right move the camera to the corresponding corner
 - **Mosaics remain a separate presentation system.**
 - The reusable left-to-right scrolling-wall overlay used by SALON ECLECTIQUE and other temporary/ranked sets remains a separate view family: centered artwork, partial neighboring artworks at the sides, and downward scroll to plaque then Blurblets.
 - The small `MUSEUM` control remains temporary prototype navigation and does not reserve exhibit geometry.
+
+## v273 — Easel + The Rough Stuff infrastructure
+- Studio now links to Easel, The Rough Stuff, Creation Station, and Presentation Station.
+- Easel: top-left Studio selection-room icons; top-right 11 rudimentary current-selection/default icons; central project surface; Save to Drafts/Delete; STUDIO–MUSEUM–FULL/BROWSER bottom bar.
+- Easel-entry selection sessions: Attic, Cellar, Creation, Presentation show RETURN TO PROJECT at top left and the same 11-selection overlay at top right; normal room bottom navigation is suppressed until returning to Easel.
+- The Rough Stuff: Thumbnail View + Parade Mode, rudimentary sorting shell, one-day Trash placeholder, Blurblet/Meme WIP samples, owned-image reference vs crooked curled-corner Post-it surrogate for a non-owned image reference, and Blurbloops PC placeholder.
+- Global Tags/favorites deliberately NOT implemented; only a disabled future marker appears in Rough Stuff.

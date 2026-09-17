@@ -1,0 +1,7 @@
+/* v273 — rudimentary Easel selection-session chrome. */
+.easel-return{position:fixed;top:6px;left:6px;z-index:90;padding:7px 10px;border:1px solid #4a4741;background:#f7f4ed;color:#171717;text-decoration:none;font:700 11px Arial,sans-serif;letter-spacing:.04em}
+.easel-loadout{position:fixed;top:6px;right:6px;z-index:90;display:grid;grid-template-columns:repeat(6,minmax(34px,1fr));gap:3px;max-width:min(47vw,330px);padding:4px;border:1px solid #4a4741;background:rgba(247,244,237,.94)}
+.easel-loadout .slot{min-width:34px;text-align:center;font-family:Arial,sans-serif;color:#171717}
+.easel-loadout .ico{display:block;font-size:18px;line-height:20px}
+.easel-loadout .def{display:block;font-size:6px;font-weight:800;letter-spacing:.02em}
+.easel-session .game-menu-bar{display:none!important}
