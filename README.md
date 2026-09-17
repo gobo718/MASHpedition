@@ -1,3 +1,8 @@
+## v269 — Color Cellar folded-landscape fit
+- Color Cellar only: constrained the initial bookshelf shelf rows and large pigment jars by available landscape height so all five pigments remain above the game bar on a folded landscape screen.
+- Full-open layout and all unrelated geometry/behavior are unchanged.
+- Bumped only the Color Cellar stylesheet cache key.
+
 ## v268 — Color Cellar staged display preview
 - Added Color Cellar as a linked Studio location.
 - Initial five pigments use a two-shelf wooden bookshelf: Red / Yellow / Blue on top; White / Black on bottom.
