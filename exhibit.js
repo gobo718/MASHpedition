@@ -121,7 +121,8 @@
   const THUMBNAIL_PAGE_SIZE=11;
 
   const AREA_PRESETS={
-    gallery:{mix:'A',label:'PRIVATE GALLERY',count:66,start:'thumbnail'},
+    gallery:{mix:'A',label:'GALLERY',count:66,start:'thumbnail'},
+    vault:{mix:'A',label:'VAULT',count:66,start:'thumbnail'},
     collection:{mix:'B',label:'COLLECTION',count:66,start:'exhibit'},
     fyc:{mix:'A',label:'FOR YOUR CONSIDERATION',count:66,start:'thumbnail'},
     se:{mix:'A',label:'SALON ECLECTIQUE',count:11,start:'thumbnail'},
@@ -263,7 +264,7 @@
     // visible plate matches it exactly at every viewport shape. This applies to
     // Gallery, FYC, and Salon only. Collection, GEH, and Catacombs have
     // intentionally different multi-element side compositions and are left intact.
-    if(['gallery','fyc','salon'].includes(entranceKind) && entranceLocation && entranceExhibitInfo && entranceSelections){
+    if(['gallery','vault','fyc','salon'].includes(entranceKind) && entranceLocation && entranceExhibitInfo && entranceSelections){
       const matchedPlateHeight=entranceLocation.offsetHeight;
       entranceExhibitInfo.style.height=`${matchedPlateHeight}px`;
       entranceExhibitInfo.style.padding='0';
@@ -397,6 +398,7 @@
   const entranceKind=gehMode?'geh':(
     collectionContext?'collection':
     requestedArea==='gallery'?'gallery':
+    requestedArea==='vault'?'vault':
     requestedArea==='fyc'?'fyc':
     requestedArea==='se'?'salon':
     catacombsContext?'catacombs':'generic'
@@ -416,7 +418,7 @@
     entranceLocation.insertAdjacentElement('afterend',entranceSelections);
   }
   entranceEmojis.textContent=entranceEmojiText;
-  entranceEmojis.hidden=['gallery','fyc','salon'].includes(entranceKind);
+  entranceEmojis.hidden=['gallery','vault','fyc','salon'].includes(entranceKind);
   entranceRank.hidden=entranceKind!=='geh';
   entranceSearch.hidden=entranceKind!=='catacombs';
   entranceSearchSecondary.hidden=true;
@@ -469,6 +471,12 @@
     curatorName.textContent=residentName;
     entranceSelections.replaceChildren(curatorLead,curatorName);
   } else if(entranceKind==='gallery') {
+    const artistSelection=document.createElement('span');
+    artistSelection.textContent="THE ARTIST'S SELECTION";
+    const artistDescription=document.createElement('span');
+    artistDescription.textContent='Original works created and curated by the artist.';
+    entranceSelections.replaceChildren(artistSelection,artistDescription);
+  } else if(entranceKind==='vault') {
     const worksLead=document.createElement('span');
     worksLead.textContent='The Works of';
     const worksName=document.createElement('span');
@@ -517,7 +525,7 @@
       if(requestedArea==='cat-search' || requestedArea==='cat-theme'){
         endlessIdentity.hidden=false;
         endlessIdentity.textContent=searchDetails;
-      }else if(requestedArea==='fyc' || requestedArea==='se' || requestedArea==='gallery'){
+      }else if(requestedArea==='fyc' || requestedArea==='se' || requestedArea==='gallery' || requestedArea==='vault'){
         endlessIdentity.hidden=true;
       }else if(hasSharedPresentationPair){
         endlessIdentity.hidden=false;
@@ -532,7 +540,7 @@
         thumbnailIdentityPrimary.textContent=entranceEmojiText;
         thumbnailIdentityPrimary.hidden=!catSearchHasEmojiPresent;
         thumbnailIdentitySecondary.textContent='';
-      }else if(requestedArea==='fyc' || requestedArea==='se' || requestedArea==='gallery'){
+      }else if(requestedArea==='fyc' || requestedArea==='se' || requestedArea==='gallery' || requestedArea==='vault'){
         thumbnailIdentity.hidden=true;
       }else if(hasSharedPresentationPair){
         thumbnailIdentity.hidden=false;
@@ -556,7 +564,7 @@
       }[mix]);
 
   shell.dataset.mix=mix;
-  shell.dataset.area=requestedArea||'sample';
+  shell.dataset.area=(requestedArea==='vault'?'gallery':requestedArea)||'sample';
   shell.classList.toggle('geh-mode',gehMode);
   shell.classList.toggle('collection-context',collectionContext);
   shell.classList.toggle('collection-entrance-context',entranceKind==='collection');

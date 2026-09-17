@@ -1,3 +1,10 @@
+## v271 — Gallery becomes public artist selection; former Gallery preserved as Vault
+- Gallery entrance wording is now THE ARTIST'S SELECTION / Original works created and curated by the artist.
+- Added VAULT as the renamed private personal-work area.
+- Vault preserves the former Gallery entrance wording: The Works of / [resident name].
+- Existing Gallery exhibit geometry and unrelated behavior are unchanged.
+- Residence GALLERY button continues to open Gallery; no Residence icon was reassigned to Vault in this change.
+
 ## v270 — Chromatic Attic staged Chromalucent display
 - Added Chromatic Attic as a working Studio destination.
 - Temporary progression radios preview 3, 6, 13, and 22 Chromalucents.
