@@ -1,3 +1,19 @@
+## v274 — Easel measured-fit layout + established room menu bar
+
+- Replaced the Easel bottom navigation with the established Chromatic Attic room menu-bar structure instead of an Easel-specific imitation.
+- Reduced the v273 Easel navigation/selection icon dimensions by exactly 15% from their existing coded sizes.
+- Reorganized active selections into Creation equipment at top right (Font, Brush, Text Effect), Materials at bottom left (three material/color slots plus Gradient), and Presentation equipment at bottom right (Finish, Canvas, Frame).
+- Easel fitting now creates temporary centered 16:9 landscape and 9:16 portrait fixtures from the actual available game rectangle, measures their maximum proportional footprints at the first viewport boundary, and removes the fixtures immediately after measurement.
+- The central rudimentary project surface uses the measured landscape footprint; portrait fit is measured at the same time for later project-orientation use.
+- No unrelated Studio, Museum, Residence, Color Cellar, Chromatic Attic, or exhibit geometry was changed.
+
+## v273 — Easel + The Rough Stuff infrastructure
+- Studio now links to Easel, The Rough Stuff, Creation Station, and Presentation Station.
+- Easel: top-left Studio selection-room icons; top-right 11 rudimentary current-selection/default icons; central project surface; Save to Drafts/Delete; STUDIO–MUSEUM–FULL/BROWSER bottom bar.
+- Easel-entry selection sessions: Attic, Cellar, Creation, Presentation show RETURN TO PROJECT at top left and the same 11-selection overlay at top right; normal room bottom navigation is suppressed until returning to Easel.
+- The Rough Stuff: Thumbnail View + Parade Mode, rudimentary sorting shell, one-day Trash placeholder, Blurblet/Meme WIP samples, owned-image reference vs crooked curled-corner Post-it surrogate for a non-owned image reference, and Blurbloops PC placeholder.
+- Global Tags/favorites deliberately NOT implemented; only a disabled future marker appears in Rough Stuff.
+
 ## v272 — Residence Vault square + Gift Shop Vending Machines
 
 - Reassigned the former Residence Prize Machine square to VAULT, linking directly to the private Vault thumbnail view.
@@ -877,10 +893,3 @@ In Room/Corner views, Left and Right move the camera to the corresponding corner
 - **Mosaics remain a separate presentation system.**
 - The reusable left-to-right scrolling-wall overlay used by SALON ECLECTIQUE and other temporary/ranked sets remains a separate view family: centered artwork, partial neighboring artworks at the sides, and downward scroll to plaque then Blurblets.
 - The small `MUSEUM` control remains temporary prototype navigation and does not reserve exhibit geometry.
-
-## v273 — Easel + The Rough Stuff infrastructure
-- Studio now links to Easel, The Rough Stuff, Creation Station, and Presentation Station.
-- Easel: top-left Studio selection-room icons; top-right 11 rudimentary current-selection/default icons; central project surface; Save to Drafts/Delete; STUDIO–MUSEUM–FULL/BROWSER bottom bar.
-- Easel-entry selection sessions: Attic, Cellar, Creation, Presentation show RETURN TO PROJECT at top left and the same 11-selection overlay at top right; normal room bottom navigation is suppressed until returning to Easel.
-- The Rough Stuff: Thumbnail View + Parade Mode, rudimentary sorting shell, one-day Trash placeholder, Blurblet/Meme WIP samples, owned-image reference vs crooked curled-corner Post-it surrogate for a non-owned image reference, and Blurbloops PC placeholder.
-- Global Tags/favorites deliberately NOT implemented; only a disabled future marker appears in Rough Stuff.
