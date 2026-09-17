@@ -1,3 +1,9 @@
+## v268 — Color Cellar staged display preview
+- Added Color Cellar as a linked Studio location.
+- Initial five pigments use a two-shelf wooden bookshelf: Red / Yellow / Blue on top; White / Black on bottom.
+- Added temporary radio controls for the seven booked Color Cellar progression stages (5, 15, 44, 90, 177, 287, 509).
+- Later stages preview the booked case counts and Earthy bucket separation without changing existing Studio map geometry.
+
 # v267 — Museum Map Complete Conformable Viewport
 
 - Museum Map now measures the actual available game viewport above the persistent menu bar at runtime.

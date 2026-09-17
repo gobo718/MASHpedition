@@ -104,3 +104,6 @@ button,a{font:inherit;color:inherit}
   width:var(--studio-game-w,100vw);
   height:var(--studio-game-h,calc(100dvh - var(--game-bar-height)));
 }
+
+/* v268 — linked Studio zones retain map-button presentation. */
+.studio-zone{text-decoration:none;}

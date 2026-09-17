@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>MASHpedition Color Cellar</title>
+<link rel="stylesheet" href="color-cellar.css?v=268">
+<link rel="stylesheet" href="game-bar.css?v=226">
+</head>
+<body>
+<main class="cellar" aria-label="Color Cellar">
+  <header class="cellar-head">
+    <div class="plate">COLOR CELLAR</div>
+    <fieldset class="stage-picker" aria-label="Temporary Color Cellar progression preview">
+      <legend>TEMPORARY PROGRESSION PREVIEW</legend>
+      <label><input type="radio" name="stage" value="1" checked> 1 · 5</label>
+      <label><input type="radio" name="stage" value="2"> 2 · 15</label>
+      <label><input type="radio" name="stage" value="3"> 3 · 44</label>
+      <label><input type="radio" name="stage" value="4"> 4 · 90</label>
+      <label><input type="radio" name="stage" value="5"> 5 · 177</label>
+      <label><input type="radio" name="stage" value="6"> 6 · 287</label>
+      <label><input type="radio" name="stage" value="7"> 7 · 509</label>
+    </fieldset>
+  </header>
+  <section id="display" class="display" aria-live="polite"></section>
+</main>
+<nav class="game-menu-bar" aria-label="Color Cellar menu"><a href="studio.html">STUDIO</a><a href="index.html">MUSEUM</a><button type="button" data-display-mode>FULL</button></nav>
+<script src="game-bar.js?v=226"></script>
+<script src="color-cellar.js?v=268"></script>
+</body>
+</html>
