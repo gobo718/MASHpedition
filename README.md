@@ -1,3 +1,11 @@
+# v281 — Residence Trick-or-Treat Relocation
+
+- Kept `🚠` in the former Trick-or-Treat quick-action position for visiting other Residences.
+- Relocated the existing `🎃` Trick-or-Treat Box to the previously empty top-left corner of the Microflex Board instead of deleting it.
+- Preserved the v280 `❤️` Sticker Machine change.
+- Reused the board's established 8px inset and the existing quick-action icon sizing; no new dimensions were invented.
+- No other Residence geometry or controls changed.
+
 # v280 — Residence Visit + Sticker Icons
 
 - Replaced the small top-left Microflex Board `🎃` quick-action icon with `🚠` for visiting other Residences.

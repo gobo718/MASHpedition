@@ -61,6 +61,16 @@ button{font:inherit;color:inherit;background:var(--panel);border:1px solid var(-
 }
 .board-title{padding:8px;font-weight:700;font-size:.82em;letter-spacing:.04em}
 .board-space{min-height:0}
+
+/* v281 — relocate the existing Trick-or-Treat Box into the previously empty top-left Microflex Board corner. */
+.microflex-trick-or-treat{
+  position:absolute;
+  top:8px;
+  left:8px;
+  min-width:0;
+  min-height:0;
+  font-size:clamp(20px,3.8vw,46px);
+}
 .event-strip{padding:8px;display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
 .event-strip div{aspect-ratio:1;border:1px solid var(--line);background:var(--surface)}
 
