@@ -1,3 +1,9 @@
+# v280 — Residence Visit + Sticker Icons
+
+- Replaced the small top-left Microflex Board `🎃` quick-action icon with `🚠` for visiting other Residences.
+- Replaced the Sticker Machine `🏷️` icon with `❤️`.
+- No Residence geometry, sizing, navigation, or other controls changed.
+
 # v279 — Vault Four-Line Private Works Sign
 
 - Corrected the Vault Entrance sign to the intended four-line authored layout: `The Private` / `Works of` / `Username of` / `Resident` for the default resident label.
