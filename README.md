@@ -1,3 +1,10 @@
+# v279 — Vault Four-Line Private Works Sign
+
+- Corrected the Vault Entrance sign to the intended four-line authored layout: `The Private` / `Works of` / `Username of` / `Resident` for the default resident label.
+- Dynamic resident labels split only between words; no word itself is broken.
+- Reduced the sign from the Gallery's established 24px treatment to the already-established 22px museum-signage size; no new dimension was invented.
+- Preserved the existing text-first plate sizing and Museum Foundry optical-centering rules.
+
 # v278 — Vault Private Works Plate Rule Repair
 
 - Corrected the Vault Entrance right-hand sign using the established plate construction order: render the authored text first, let that text determine the plate size, then apply the existing plate padding and optical-centering rule.

@@ -477,11 +477,18 @@
     artistDescription.textContent='Original works created and curated by the artist.';
     entranceSelections.replaceChildren(artistSelection,artistDescription);
   } else if(entranceKind==='vault') {
-    const worksLead=document.createElement('span');
-    worksLead.textContent='The Private Works of';
-    const worksName=document.createElement('span');
-    worksName.textContent=residentName;
-    entranceSelections.replaceChildren(worksLead,worksName);
+    const vaultAuthoredLines=['The Private','Works of'];
+    const residentWords=residentName.trim().split(/\s+/);
+    if(residentWords.length>1){
+      vaultAuthoredLines.push(residentWords.slice(0,-1).join(' '),residentWords.at(-1));
+    }else{
+      vaultAuthoredLines.push(residentName);
+    }
+    entranceSelections.replaceChildren(...vaultAuthoredLines.map(line=>{
+      const span=document.createElement('span');
+      span.textContent=line;
+      return span;
+    }));
   } else if(entranceKind==='fyc') {
     // v228: author the FYC copy now, but defer Museum Foundry glyph painting
     // until the glyph calibration tables below have been initialized.
@@ -745,8 +752,7 @@
   // in CSS: rendered authored lines first, existing plate padding second.
   if(entranceKind==='vault'){
     const vaultLines=Array.from(entranceSelections.children);
-    if(vaultLines[0]) paintMuseumPlateText(vaultLines[0],'The Private Works of');
-    if(vaultLines[1]) paintMuseumPlateText(vaultLines[1],residentName);
+    vaultLines.forEach(line=>paintMuseumPlateText(line,line.textContent));
   }
 
   if(entranceKind==='fyc'){
