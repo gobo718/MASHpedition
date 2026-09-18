@@ -1,0 +1,7 @@
+/* v276 — Presentation Station infrastructure. Reuses the established Creation Station panel geometry exactly. */
+.presentation-panel{width:min(92vw,760px);display:grid;gap:14px;text-align:center}
+.presentation-panel h1,.presentation-panel h2{margin:0}
+.presentation-choices{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.presentation-choices button{border:2px solid var(--line);background:var(--panel);color:var(--ink);font-weight:900;text-decoration:none;padding:14px 8px}
+.station-view{border:2px solid var(--line);background:var(--panel);padding:18px}
+@media(max-width:650px){.presentation-panel{width:94vw}}

@@ -1,3 +1,10 @@
+## v276 — Presentation Station infrastructure
+
+- Replaced the Presentation Station placeholder with the three established presentation categories: CANVASES, FRAMES, and FINISHES.
+- Reused the existing Creation Station three-choice panel geometry rather than inventing new dimensions.
+- Added only category-selection infrastructure; no canvas, frame, finish inventory, unlock logic, or persistence was invented.
+- Preserved Easel-session behavior so Presentation Station still returns to the active Easel project when entered from Easel.
+
 ## v275 — Creation Station infrastructure
 
 - Replaced the Creation Station placeholder with known infrastructure only: FONTS, TEXT EFFECTS, and PALETTES.
