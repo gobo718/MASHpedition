@@ -50,6 +50,7 @@ button{font:inherit;color:inherit;background:var(--panel);border:1px solid var(-
 
 /* Middle 40%, one continuous board across both screens */
 .microflex-board{
+  position:relative;
   grid-column:2/span 2;
   grid-row:1/span 10;
   border:1px solid var(--line);

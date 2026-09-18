@@ -1,3 +1,9 @@
+# v282 — Residence Trick-or-Treat Position Fix
+
+- Anchored the relocated `🎃` Trick-or-Treat Box to the Microflex Board itself, placing it in the board's top-left corner.
+- Preserved `🚠` in the former Trick-or-Treat quick-action position and `❤️` for the Sticker Machine.
+- No other Residence geometry or behavior changed.
+
 # v281 — Residence Trick-or-Treat Relocation
 
 - Kept `🚠` in the former Trick-or-Treat quick-action position for visiting other Residences.
