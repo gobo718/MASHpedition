@@ -264,7 +264,7 @@
     // visible plate matches it exactly at every viewport shape. This applies to
     // Gallery, FYC, and Salon only. Collection, GEH, and Catacombs have
     // intentionally different multi-element side compositions and are left intact.
-    if(['gallery','vault','fyc','salon'].includes(entranceKind) && entranceLocation && entranceExhibitInfo && entranceSelections){
+    if(['gallery','fyc','salon'].includes(entranceKind) && entranceLocation && entranceExhibitInfo && entranceSelections){
       const matchedPlateHeight=entranceLocation.offsetHeight;
       entranceExhibitInfo.style.height=`${matchedPlateHeight}px`;
       entranceExhibitInfo.style.padding='0';
@@ -740,9 +740,9 @@
   // calibration sets are initialized. v227 painted it earlier during startup,
   // which hit the temporal-dead-zone on the first lowercase glyph and aborted
   // the rest of exhibit.js before navigation handlers were attached.
-  // v277 — Vault entrance sign uses the established Museum Foundry plate-drawing
-  // routine first, then that routine's established optical-centering calibration.
-  // Keep the existing two authored lines and all plate geometry untouched.
+  // v278 — Vault lettering uses the established Museum Foundry glyph/optical-centering
+  // routine. The visible plate itself is content-sized by the established plate rule
+  // in CSS: rendered authored lines first, existing plate padding second.
   if(entranceKind==='vault'){
     const vaultLines=Array.from(entranceSelections.children);
     if(vaultLines[0]) paintMuseumPlateText(vaultLines[0],'The Private Works of');

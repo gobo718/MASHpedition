@@ -1,3 +1,10 @@
+# v278 — Vault Private Works Plate Rule Repair
+
+- Corrected the Vault Entrance right-hand sign using the established plate construction order: render the authored text first, let that text determine the plate size, then apply the existing plate padding and optical-centering rule.
+- `THE PRIVATE WORKS OF` and the resident name remain intact authored lines; words are never split to fit a pre-sized box.
+- Removed Vault from the unrelated matched-height Gallery/FYC/Salon plate rule that caused the v277 overflow.
+- No door or room geometry changed.
+
 ## v277 — Vault private-works entrance sign
 
 - Changed the Vault entrance wording from `The Works of` to `The Private Works of`.

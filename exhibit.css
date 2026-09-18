@@ -3213,3 +3213,4 @@ button,
   width:100%;
   max-width:none;
 }
+\n\n/* v278 — Vault Entrance right-hand plate repair.\n   Do not force the Vault plate to the old Gallery matched-box geometry.\n   Established plate rule: authored text establishes intrinsic size, then the\n   existing entrance plate padding supplies the comfort margin. Each authored\n   line is indivisible; words are never broken to satisfy a box. The existing\n   right-side flex territory then centers the finished plate. */\n.exhibit-shell[data-area="gallery"][data-view="door"] .entrance-selections:has(> span:first-child .museum-plate-text){\n  width:max-content;\n  max-width:none;\n  height:max-content;\n  top:0;\n  margin:0;\n  padding:7px 10px;\n  flex-direction:column;\n  align-self:center;\n}\n.exhibit-shell[data-area="gallery"][data-view="door"] .entrance-selections > span{\n  width:max-content;\n  max-width:none;\n  white-space:nowrap;\n  overflow-wrap:normal;\n  word-break:normal;\n}\n
