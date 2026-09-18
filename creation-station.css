@@ -1,0 +1,13 @@
+/* v275 — Creation Station infrastructure only. Geometry inherits the existing selection-room/game-bar dimensions. */
+.creation-panel{width:min(92vw,760px);display:grid;gap:14px;text-align:center}
+.creation-panel h1,.creation-panel h2,.creation-panel p{margin:0}
+.creation-choices{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.creation-choices button,.palette-sources a,.palette-slots button{border:2px solid var(--line);background:var(--panel);color:var(--ink);font-weight:900;text-decoration:none}
+.creation-choices button{padding:14px 8px}
+.station-view{border:2px solid var(--line);background:var(--panel);padding:18px}
+.station-view p{margin-top:10px;font-size:11px;font-weight:800;letter-spacing:.06em}
+.palette-slots{display:grid;grid-template-columns:repeat(11,1fr);gap:4px;margin-top:14px}
+.palette-slots button{aspect-ratio:1;padding:0;min-width:0}
+.palette-sources{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}
+.palette-sources a{padding:12px 6px}
+@media(max-width:650px){.creation-panel{width:94vw}.palette-slots{gap:2px}.palette-slots button{font-size:9px}}

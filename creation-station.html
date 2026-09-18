@@ -1,1 +1,27 @@
-<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>MASHpedition CREATION STATION</title><link rel="stylesheet" href="selection-room.css?v=273"><link rel="stylesheet" href="game-bar.css?v=226"><link rel="stylesheet" href="easel-session.css?v=273"></head><body><main class="room"><div class="placeholder">CREATION STATION<small>RUDIMENTARY SELECTION ROOM</small></div></main><nav class="game-menu-bar"><a href="studio.html">STUDIO</a><a href="index.html">MUSEUM</a><button type="button" data-display-mode>FULL</button></nav><script src="game-bar.js?v=226"></script><script src="easel-session.js?v=273"></script></body></html>
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>MASHpedition CREATION STATION</title><link rel="stylesheet" href="selection-room.css?v=275"><link rel="stylesheet" href="creation-station.css?v=275"><link rel="stylesheet" href="game-bar.css?v=226"><link rel="stylesheet" href="easel-session.css?v=273"></head>
+<body>
+<main class="room creation-station">
+  <section class="creation-panel" aria-label="Creation Station">
+    <h1>CREATION STATION</h1>
+    <div class="creation-choices">
+      <button type="button" data-station-view="fonts">FONTS</button>
+      <button type="button" data-station-view="effects">TEXT EFFECTS</button>
+      <button type="button" data-station-view="palettes">PALETTES</button>
+    </div>
+    <section class="station-view" data-view="fonts" hidden><h2>FONTS</h2><p>TYPE · BRUSH · HAND-LETTERED</p></section>
+    <section class="station-view" data-view="effects" hidden><h2>TEXT EFFECTS</h2><p>TEXT EFFECT COLLECTION</p></section>
+    <section class="station-view palette-view" data-view="palettes" hidden>
+      <h2>PALETTE</h2>
+      <div class="palette-slots" aria-label="11 palette slots">
+        <button type="button">1</button><button type="button">2</button><button type="button">3</button><button type="button">4</button><button type="button">5</button><button type="button">6</button><button type="button">7</button><button type="button">8</button><button type="button">9</button><button type="button">10</button><button type="button">11</button>
+      </div>
+      <div class="palette-sources">
+        <a href="color-cellar.html?creation=palette">COLOR CELLAR</a>
+        <a href="chromatic-attic.html?creation=palette">CHROMATIC ATTIC</a>
+      </div>
+    </section>
+  </section>
+</main>
+<nav class="game-menu-bar" aria-label="Creation Station menu"><a href="studio.html">STUDIO</a><a href="index.html">MUSEUM</a><button type="button" data-display-mode>FULL</button></nav>
+<script src="game-bar.js?v=226"></script><script src="creation-station.js?v=275"></script><script src="easel-session.js?v=273"></script></body></html>

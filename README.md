@@ -1,3 +1,12 @@
+## v275 — Creation Station infrastructure
+
+- Replaced the Creation Station placeholder with known infrastructure only: FONTS, TEXT EFFECTS, and PALETTES.
+- Folded brush/hand-painted lettering into Fonts rather than preserving Brush as a separate category.
+- Added an 11-slot Palette structure for quick-access Paint, Chromalucent, and saved Gradient choices.
+- Palette material selection can enter Color Cellar or Chromatic Attic in a controlled Creation Station session; normal room navigation is suppressed and RETURN TO CREATION STATION returns directly to the Palette view.
+- No font inventory, text-effect inventory, gradient recipe system, unlock logic, or persistence was invented.
+- Existing room/menu geometry is reused; no new global dimensions were introduced.
+
 ## v274 — Easel measured-fit layout + established room menu bar
 
 - Replaced the Easel bottom navigation with the established Chromatic Attic room menu-bar structure instead of an Easel-specific imitation.

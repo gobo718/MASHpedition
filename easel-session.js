@@ -1,5 +1,11 @@
 (()=>{
- const p=new URLSearchParams(location.search); if(p.get('easel')!=='1')return;
+ const p=new URLSearchParams(location.search);
+ if(p.get('creation')==='palette'){
+  document.body.classList.add('easel-session');
+  const back=document.createElement('a'); back.className='easel-return'; back.href='creation-station.html?view=palettes'; back.textContent='RETURN TO CREATION STATION'; document.body.append(back);
+  return;
+ }
+ if(p.get('easel')!=='1')return;
  document.body.classList.add('easel-session');
  const back=document.createElement('a'); back.className='easel-return'; back.href='easel.html'; back.textContent='RETURN TO PROJECT'; document.body.append(back);
  const icons=['🖌️','🫟','🖼️','📊','🔡','📄','✏️','✨','🌈','🎨','🎨'];
