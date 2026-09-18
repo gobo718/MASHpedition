@@ -1,3 +1,10 @@
+## v277 — Vault private-works entrance sign
+
+- Changed the Vault entrance wording from `The Works of` to `The Private Works of`.
+- Applied the established Museum Foundry plate-drawing routine to both authored lines of the Vault right-hand sign.
+- The plate-drawing routine then applies the existing optical-centering calibration; no new centering dimensions were invented.
+- Preserved the established Vault plate, door, and Entrance geometry.
+
 ## v276 — Presentation Station infrastructure
 
 - Replaced the Presentation Station placeholder with the three established presentation categories: CANVASES, FRAMES, and FINISHES.

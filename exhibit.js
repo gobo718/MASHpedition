@@ -478,7 +478,7 @@
     entranceSelections.replaceChildren(artistSelection,artistDescription);
   } else if(entranceKind==='vault') {
     const worksLead=document.createElement('span');
-    worksLead.textContent='The Works of';
+    worksLead.textContent='The Private Works of';
     const worksName=document.createElement('span');
     worksName.textContent=residentName;
     entranceSelections.replaceChildren(worksLead,worksName);
@@ -740,6 +740,15 @@
   // calibration sets are initialized. v227 painted it earlier during startup,
   // which hit the temporal-dead-zone on the first lowercase glyph and aborted
   // the rest of exhibit.js before navigation handlers were attached.
+  // v277 — Vault entrance sign uses the established Museum Foundry plate-drawing
+  // routine first, then that routine's established optical-centering calibration.
+  // Keep the existing two authored lines and all plate geometry untouched.
+  if(entranceKind==='vault'){
+    const vaultLines=Array.from(entranceSelections.children);
+    if(vaultLines[0]) paintMuseumPlateText(vaultLines[0],'The Private Works of');
+    if(vaultLines[1]) paintMuseumPlateText(vaultLines[1],residentName);
+  }
+
   if(entranceKind==='fyc'){
     paintMuseumPlateText(entranceSelections,'Freshly Painted Selections\nBegging for Your Opinion');
   }
